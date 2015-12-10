@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="56dip"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:background="#00000000"
+            android:clickable="false"
+            android:src="@drawable/smyk_back" />
+
+        <LinearLayout
+            android:id="@+id/goods_search_box"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/backBtn"
+            android:background="@drawable/corners_rect_gray" >
+
+            <EditText
+                android:id="@+id/layout_search_bar_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:background="@null"
+                android:gravity="left|center_vertical"
+                android:hint="请输入要搜索的内容"
+                android:padding="4dp"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/layout_search_bar_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5.0dp"
+            android:layout_marginRight="5.0dp"
+            android:layout_marginTop="5.0dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/black"
+            android:textSize="@dimen/body" />
+    </RelativeLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:id="@+id/layout_search_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <Spinner
+            android:id="@+id/layout_search_bar_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/smyk_seachline"
+            android:gravity="center_vertical"
+            android:hint="请输入要搜索的内容"
+            android:paddingLeft="5.0dp"
+            android:singleLine="true"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/body" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5.0dp"
+            android:layout_marginRight="5.0dp"
+            android:layout_marginTop="5.0dp"
+            android:background="@drawable/selector_button_blue"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="最近搜索：" />
+
+    <com.gps808.app.view.SingleSelectCheckBoxs
+        android:id="@+id/key_single"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/key_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/text"
+        android:dividerHeight="1px"
+        android:visibility="gone" >
+    </ListView>
+
+</LinearLayout>

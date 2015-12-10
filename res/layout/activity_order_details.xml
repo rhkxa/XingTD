@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <View
+                style="@style/blackline"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/order_details_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:text="货运单号：134676134676431"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/order_details_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:text="下单时间：2014-58-62"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <View
+                style="@style/blackline"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/order_details_address_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="James" />
+
+                    <TextView
+                        android:id="@+id/order_details_address_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="13831166925" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/order_details_address_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="石家庄桥西区红旗大街尹泰花园西区8号楼10单元809室"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/subhead" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <View
+                style="@style/blackline"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="8dp" >
+
+                <com.gps808.app.view.NoRollListView
+                    android:id="@+id/order_details_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:divider="@color/text"
+                    android:dividerHeight="1px" />
+                
+
+                <View
+                    style="@style/blackline"
+                    android:layout_marginLeft="16dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp" >
+
+                    <TextView
+                        android:id="@+id/order_details_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="共：30件"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/body" />
+
+                    <TextView
+                        android:id="@+id/order_details_total_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="￥3000.00"
+                        android:textColor="@color/tag_blue"
+                        android:textSize="@dimen/caption" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/order_details_total_money"
+                        android:text="合计："
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/caption" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <View
+                style="@style/blackline"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="客服电话:"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/subhead" />
+
+                    <TextView
+                        android:id="@+id/order_details_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="400-1111-000"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/subhead" />
+                </LinearLayout>
+
+                <View
+                    style="@style/blackline"
+                    android:layout_marginLeft="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="16dp" >
+
+                    <TextView
+                        android:id="@+id/order_details_place_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="用户下单时间：2014-05-20 12:80:96"
+                        android:textColor="@color/text"
+                        android:textSize="@dimen/body" />
+
+                    <TextView
+                        android:id="@+id/order_details_handle_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="4dp"
+                        android:text="平台确认时间：2015-09-30 12:80:96"
+                        android:textColor="@color/text"
+                        android:textSize="@dimen/body" />
+                </LinearLayout>
+
+                <View style="@style/blackline" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

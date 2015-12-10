@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="RoundedImageView">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_outside_color" format="color" />
+        <attr name="border_inside_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="CropImageView">
+        <attr name="guidelines">
+            <enum name="on" value="2" />
+            <enum name="onTouch" value="1" />
+            <enum name="off" value="0" />
+        </attr>
+        <attr name="fixAspectRatio" format="boolean" />
+        <attr name="aspectRatioX" format="integer" />
+        <attr name="aspectRatioY" format="integer" />
+        <attr name="imageResource" format="reference" />
+    </declare-styleable>
+
+    <attr name="floatingActionButtonStyle" format="reference" />
+
+    <declare-styleable name="FloatingActionButton">
+
+        <!-- Background color -->
+        <attr name="floatingActionButtonColor" format="color|reference" />
+        <!-- Size of action button -->
+        <attr name="floatingActionButtonSize" format="enum">
+
+            <!-- 56dp -->
+            <enum name="normal" value="0" />
+            <!-- 40dp -->
+            <enum name="mini" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SwitchButton">
+        <attr name="onDrawable" format="reference" />
+        <attr name="offDrawable" format="reference" />
+        <attr name="thumbDrawable" format="reference" />
+        <attr name="thumb_margin" format="dimension|reference" />
+        <attr name="thumb_marginTop" format="dimension|reference" />
+        <attr name="thumb_marginBottom" format="dimension|reference" />
+        <attr name="thumb_marginLeft" format="dimension|reference" />
+        <attr name="thumb_marginRight" format="dimension|reference" />
+        <attr name="thumb_width" format="dimension|reference" />
+        <attr name="thumb_height" format="dimension|reference" />
+        <attr name="onColor" format="color|reference" />
+        <attr name="offColor" format="color|reference" />
+        <attr name="thumbColor" format="color|reference" />
+        <attr name="thumbPressedColor" format="color|reference" />
+        <attr name="animationVelocity" format="integer" />
+        <attr name="radius" format="integer" />
+        <attr name="measureFactor" format="float" />
+        <attr name="insetLeft" format="dimension|reference" />
+        <attr name="insetRight" format="dimension|reference" />
+        <attr name="insetTop" format="dimension|reference" />
+        <attr name="insetBottom" format="dimension|reference" />
+    </declare-styleable>
+    <!-- used to set the minTextSize via xml -->
+    <attr name="autoScaleTextViewStyle" format="reference" />
+
+    <declare-styleable name="AutoScaleTextView">
+        <attr name="minTextSize" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="PengRadioButton">
+
+        <!-- 设置top图片的宽度 -->
+        <attr name="peng_drawableTopWith" format="dimension" />
+        <!-- 设置top图片的高度 -->
+        <attr name="peng_drawableTopHeight" format="dimension" />
+        <attr name="peng_drawableBottomWith" format="dimension" />
+        <attr name="peng_drawableBottomHeight" format="dimension" />
+        <attr name="peng_drawableRightWith" format="dimension" />
+        <attr name="peng_drawableRightHeight" format="dimension" />
+        <attr name="peng_drawableLeftWith" format="dimension" />
+        <attr name="peng_drawableLeftHeight" format="dimension" />
+        <!-- 设置top的图片资源 -->
+        <attr name="peng_drawableTop" format="reference" />
+        <attr name="peng_drawableBottom" format="reference" />
+        <attr name="peng_drawableRight" format="reference" />
+        <attr name="peng_drawableLeft" format="reference" />
+    </declare-styleable>
+     <declare-styleable name="FancyButtonsAttrs">
+        <attr name="fb_defaultColor" format="color"  />
+        <attr name="fb_text" format="string"  />
+
+        <attr name="fb_textColor" format="color"  />
+        <attr name="fb_iconColor" format="color"  />
+
+        <attr name="fb_textFont" format="string"  />
+        <attr name="fb_iconFont" format="string"  />
+
+        <attr name="fb_textSize" format="dimension"  />
+        <attr name="fb_iconResource" format="integer"  />
+        <attr name="fb_fontIconResource" format="string"  />
+        <attr name="fb_fontIconSize" format="dimension"  />
+        <attr name="fb_iconSize" format="dimension"  />
+        <attr name="fb_iconPosition" format="enum">
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+            <enum name="top" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+
+        <attr name="fb_textPosition" format="enum">
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+            <enum name="top" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+
+        <attr name="fb_textGravity" format="enum">
+            <enum name="top" value="0x30" />
+            <enum name="bottom" value="0x50" />
+            <enum name="left" value="0x03" />
+            <enum name="right" value="0x05" />
+            <enum name="center_vertical" value="0x10" />
+            <enum name="fill_vertical" value="0x70" />
+            <enum name="center_horizontal" value="0x01" />
+            <enum name="fill_horizontal" value="0x07" />
+            <enum name="center" value="0x11" />
+            <enum name="fill" value="0x77" />
+            <enum name="clip_vertical" value="0x80" />
+            <enum name="clip_horizontal" value="0x08" />
+            <enum name="start" value="0x00800003" />
+            <enum name="end" value="0x00800005" />
+        </attr>
+
+        <attr name="fb_iconPaddingLeft" format="dimension" />
+        <attr name="fb_iconPaddingRight" format="dimension" />
+        <attr name="fb_iconPaddingTop" format="dimension" />
+        <attr name="fb_iconPaddingBottom" format="dimension" />
+
+        <attr name="fb_borderColor" format="color" />
+        <attr name="fb_borderWidth" format="dimension"/>
+        <attr name="fb_focusColor" format="color" />
+        <attr name="fb_radius" format="dimension" />
+
+        <attr name="fb_ghost" format="boolean"></attr>
+    </declare-styleable>
+   
+</resources>

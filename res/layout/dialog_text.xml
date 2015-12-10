@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+   <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tag_blue" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text=" "
+                android:textColor="@color/white"
+                android:textSize="@dimen/title" />
+        </LinearLayout>
+
+        
+        <EditText
+            android:id="@+id/price_et"
+            android:layout_width="match_parent" 
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/corners_rect_gray"
+            android:gravity="center_vertical"
+            android:hint=""
+            android:inputType="number"
+            android:textColor="@color/text"
+            android:textSize="@dimen/body" />
+
+          <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="您本次的金额为 "
+                android:textColor="@color/black"
+                android:textSize="@dimen/caption" />
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/selector_button_blue"
+            android:padding="8dp"
+            android:text="确定"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>

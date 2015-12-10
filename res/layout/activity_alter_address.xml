@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="16dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="联系人"
+                android:textColor="@color/black"
+                android:textSize="@dimen/subhead" />
+
+            <EditText
+                android:id="@+id/address_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="96dp"
+                android:background="@color/white"
+                android:hint="收货人姓名"
+                android:textColor="@color/black"
+                android:textSize="@dimen/body" />
+        </RelativeLayout>
+
+        <View style="@style/blackline" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="性别"
+                android:textColor="@color/black"
+                android:textSize="@dimen/subhead" />
+
+            <RadioGroup
+                android:id="@+id/address_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="96dp"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/sex_man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:button="@drawable/selector_chose"
+                    android:checked="true"
+                    android:paddingLeft="8dp"
+                    android:text="先生" />
+
+                <RadioButton
+                    android:id="@+id/sex_woman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:button="@drawable/selector_chose"
+                    android:paddingLeft="8dp"
+                    android:text="女士" />
+            </RadioGroup>
+        </RelativeLayout>
+
+        <View style="@style/blackline" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="手机号码"
+                android:textColor="@color/black"
+                android:textSize="@dimen/subhead" />
+
+            <EditText
+                android:id="@+id/address_mobi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="96dp"
+                android:background="@color/white"
+                android:hint="联系您的电话"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/body" />
+        </RelativeLayout>
+
+        <View style="@style/blackline" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="所在地区"
+                android:textColor="@color/black"
+                android:textSize="@dimen/subhead" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="96dp"
+                android:background="@color/white"
+                android:text="河北石家庄"
+                android:textColor="@color/black"
+                android:textSize="@dimen/body" />
+        </RelativeLayout>
+
+        <View style="@style/blackline" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="详细地址"
+                android:textColor="@color/black"
+                android:textSize="@dimen/subhead" />
+
+            <EditText
+                android:id="@+id/address_addr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="96dp"
+                android:background="@color/white"
+                android:hint="请具体到楼号门牌号"
+                android:textColor="@color/black"
+                android:textSize="@dimen/body" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <TextView
+        android:id="@+id/address_default"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="设置为默认地址 "
+        android:textColor="@color/app_green" />
+
+    <TextView
+        android:id="@+id/address_delete"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="删除当前地址 "
+        android:textColor="@color/app_pink" />
+
+</LinearLayout>

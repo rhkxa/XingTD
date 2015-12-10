@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/item_bill_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="jia"
+            android:textSize="@dimen/body" />
+
+        <TextView
+            android:id="@+id/item_bill_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="已消费"
+            android:textColor="@color/black"
+            android:textSize="@dimen/body" />
+
+        <TextView
+            android:id="@+id/item_bill_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="收益 +1.2"
+            android:textColor="@color/app_pink"
+            android:textSize="@dimen/body"
+            android:textStyle="italic" />
+    </RelativeLayout>
+
+</LinearLayout>

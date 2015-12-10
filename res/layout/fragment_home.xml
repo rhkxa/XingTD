@@ -1,0 +1,156 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/main_relativelayout_header"
+        android:layout_width="match_parent"
+        android:layout_height="56dip"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/main_head_logo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/smyk_logo" />
+
+        <TextView
+            android:id="@+id/main_head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5.0dip"
+            android:layout_toRightOf="@id/main_head_logo"
+            android:text="石家庄"
+            android:textColor="@color/text"
+            android:textSize="@dimen/title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/layout_search_bar_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_marginRight="60dp"
+            android:layout_toRightOf="@id/main_head_title"
+            android:gravity="center_vertical"
+            android:hint="请输入要搜索的内容"
+            android:paddingLeft="8dp"
+            android:singleLine="true"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/body" />
+
+        <ImageView
+            android:id="@+id/main_head_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:src="@drawable/smyk_search" />
+    </RelativeLayout>
+
+    <View style="@style/blackline" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        xmlns:app="http://schemas.android.com/apk/res/com.xtd.activity"
+        android:id="@+id/pull_refresh_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="fill_parent"
+                android:layout_height="180dp" />
+<!--  
+          <com.xtd.custom.View.Indicator.UnderlinePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="@color/gray"
+                app:fades="false"
+                app:selectedColor="@color/red" />
+                
+
+            <com.xtd.custom.View.Generally.NoRollGridView
+                android:id="@+id/home_options_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:numColumns="4"
+                android:padding="8dp" />
+          
+-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.gps808.app.view.NoRollListView
+                    android:id="@+id/home_active_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/app_backgroud"
+                    android:dividerHeight="2dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <com.gps808.app.view.NoRollListView
+                    android:id="@+id/home_game_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/text"
+                    android:dividerHeight="1px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <com.gps808.app.view.NoRollGridView
+                    android:id="@+id/home_cate_gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:horizontalSpacing="4dp"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.gps808.app.view.NoRollListView
+                    android:id="@+id/home_goods_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/app_backgroud"
+                    android:dividerHeight="2dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+</LinearLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <color name="tag_blue">#39d8ff </color>
+      <color name="app_blue">#39d8ff </color>
+    
+    <color name="footer_text">#6a6a6a </color>
+    <color name="sign_backgroud">#febf10</color>
+    <color name="footer_color">#eaeaea</color>
+    <color name="text">#b1babf</color>
+    <color name="backgroud_green">#a0d468</color>
+    <color name="app_green">#3cd7d2 </color>
+    <color name="app_focus_color">#9bd823</color>
+    <color name="app_pink">#f35a5a</color>
+    <color name="app_yellow">#ffffbe26</color>
+    <color name="app_text">#4e342e</color>
+    <color name="app_textcolor">#6f9c3b</color>
+    <color name="app_textcolor3">#858581</color>
+    <color name="app_backgroud">#f7f7f7</color>
+    <color name="actionbarcolor">#00b5c6</color>
+    <color name="list_bottom">#f8f8f8</color>
+    <color name="ripple_color">#cccccc</color>
+    <color name="ecru">#fcf5e6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#808080</color>
+    <color name="red">#FF0000</color>
+    <color name="gold">#FFD700</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#008000</color>
+    <color name="blue">#0000FF</color>
+    <color name="purple">#800080</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="orange">#FFA500</color>
+    <color name="graywhite">#F5F5F5</color>
+    <color name="grayslate">#708090</color>
+    <color name="lightblue">#0083FF</color>
+    <color name="trans_blue">#8800bfff</color>
+    <color name="full_transparent">#00000000</color>
+    <color name="half_transparent">#aa000000</color>
+    <color name="holo_dark_green">#00CCCC</color>
+    <color name="leftmneu_backgroud_light">#2a3744</color>
+    <color name="leftmneu_backgroud">#2f3d4c</color>
+    <color name="leftmneu_text">#fcf1df</color>
+    <color name="leftmneu_text_light">#8793a0</color>
+    <color name="dark_selecotor_color">#19ffffff</color>
+
+    <integer-array name="gplus_colors">
+        <item>@color/gplus_color_1</item>
+        <item>@color/gplus_color_2</item>
+        <item>@color/gplus_color_3</item>
+    </integer-array>
+    <!-- 特长标签的几个颜色 -->
+    <color name="specialty_coral">#f08080</color> <!-- 瑚色 -->
+    <color name="specialty_wood">#deb887</color>
+    <color name="specialty_blue">#add8e6</color>
+    <color name="specialty_tan">#C1D88F</color>
+    <color name="specialty_purple">#9370db</color>
+    <color name="common_clicked_color">#0f000000</color>
+    <color name="gplus_color_1">#3e802f</color>
+    <color name="gplus_color_2">#427fed</color>
+    <color name="gplus_color_3">#f4b400</color>
+    <color name="calendar_select">#6dcb29</color>
+    <color name="calendar_unselect">#f5f0ec</color>
+    <color name="red_button_nor">#ffe85628</color>
+    <color name="red_button_clicked">#ffcc4c23</color>
+    <color name="text_color">#ffCC0000</color>
+    <color name="text_press_color">#ff00ffff</color>
+    <color name="text_default_color">#ffffffff</color>
+</resources>

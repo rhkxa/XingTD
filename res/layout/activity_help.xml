@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" >
+
+        <LinearLayout
+            android:id="@+id/my_order"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="如何查询订单"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
+
+        <LinearLayout
+            android:id="@+id/my_shopping"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="如何修改订单"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
+
+        <LinearLayout
+            android:id="@+id/my_points"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="已审核订单是否能取消"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
+
+        <LinearLayout
+            android:id="@+id/my_address"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="如何退货"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
+
+        <LinearLayout
+            android:id="@+id/my_help"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="优惠券使用规则"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
+    </LinearLayout>
+
+</LinearLayout>

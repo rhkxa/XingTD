@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/collect_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </ListView>
+
+        <LinearLayout
+            android:id="@+id/collect_edit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_backgroud"
+            android:padding="8dp"  android:visibility="gone">
+
+            <com.gps808.app.view.FancyButton
+                android:id="@+id/collect_joinshop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="3"
+                android:background="@drawable/selector_button_blue"
+                android:text="加入购物车"
+                fancy:fb_defaultColor="@color/app_green"
+                fancy:fb_focusColor="@color/app_focus_color"
+                fancy:fb_radius="2dp"
+                fancy:fb_text="加入购物车"
+                fancy:fb_textColor="@color/white" />
+
+            <com.gps808.app.view.FancyButton
+                android:id="@+id/collect_del"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:background="@color/app_pink"
+                fancy:fb_defaultColor="#ff5f69"
+                fancy:fb_focusColor="#ff838b"
+                fancy:fb_radius="2dp"
+                fancy:fb_text="删除"
+                fancy:fb_textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

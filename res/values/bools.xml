@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="default_circle_indicator_centered">true</bool>
+    <bool name="default_circle_indicator_snap">false</bool>
+    <bool name="default_line_indicator_centered">true</bool>
+    <bool name="default_title_indicator_selected_bold">true</bool>
+    <bool name="default_underline_indicator_fades">true</bool>
+    <bool name="is_360_had_aplash_image">true</bool>
+    <bool name="is_aliyun_had_aplash_image">false</bool>
+    <bool name="is_anzhi_had_aplash_image">false</bool>
+    <bool name="is_auto_update">true</bool>
+    <bool name="is_baidu_had_aplash_image">true</bool>
+    <bool name="is_had_activity_area">false</bool>
+
+    <item name="is_had_splash_image" type="bool">@bool/is_wandoujia_had_aplash_image</item>
+
+    <bool name="is_had_trigger">false</bool>
+    <bool name="is_huawei_had_aplash_image">true</bool>
+    <bool name="is_le_had_aplash_image">true</bool>
+    <bool name="is_meizu_had_aplash_image">false</bool>
+    <bool name="is_qq_had_aplash_image">false</bool>
+    <bool name="is_samsung_had_aplash_image">false</bool>
+    <bool name="is_sougo_had_aplash_image">false</bool>
+    <bool name="is_suning_had_aplash_image">false</bool>
+    <bool name="is_taobao_had_aplash_image">true</bool>
+    <bool name="is_uc_had_aplash_image">false</bool>
+    <bool name="is_wandoujia_had_aplash_image">false</bool>
+    <bool name="is_xiaomi_had_aplash_image">false</bool>
+    <bool name="spb_default_mirror_mode">false</bool>
+    <bool name="spb_default_progressiveStart_activated">false</bool>
+    <bool name="spb_default_reversed">false</bool>
+
+    <integer name="default_underline_indicator_fade_delay">300</integer>
+    <integer name="default_underline_indicator_fade_length">400</integer>
+
+    <color name="default_underline_indicator_selected_color">#FF33B5E5</color>
+
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/backlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="56dip"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:background="@color/app_backgroud"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/main_head_search"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/yz_icon_search" />
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="搜单品或活动"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            style="@style/blackline"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_backgroud" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="热门分类" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/menu_grid"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:horizontalSpacing="4dp"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="4dp" >
+        </GridView>
+    </LinearLayout>
+
+</LinearLayout>

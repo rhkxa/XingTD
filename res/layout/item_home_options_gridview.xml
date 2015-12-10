@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/item_home_options_gridview_imageview"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/item_home_options_gridview_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="谷歌"
+        android:textColor="@color/text"
+        android:textSize="@dimen/button" />
+
+</LinearLayout>

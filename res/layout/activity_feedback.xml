@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <EditText
+        android:id="@+id/feedback_edit"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="请尽量详细描述反馈，平台会在第一时间帮您解决问题……"
+        android:padding="8dp"
+        android:textColor="@color/text"
+        android:textSize="@dimen/body" />
+
+    <Button
+        android:id="@+id/feedback_ok"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/selector_button_blue"
+        android:text="确定"
+        android:textColor="@color/white" />
+
+</LinearLayout>

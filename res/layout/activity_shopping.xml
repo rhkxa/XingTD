@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <com.gps808.app.view.Swipemenulistview.SwipeMenuListView
+        android:id="@+id/shopping_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="8dp" >
+
+        <com.gps808.app.view.FancyButton
+            android:id="@+id/all_chose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:background="@null"
+            fancy:fb_defaultColor="@color/white"
+            fancy:fb_iconResource="@drawable/smyk_no"
+            fancy:fb_iconSize="8dp"
+            fancy:fb_text="全选"
+            fancy:fb_textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/shopping_all_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总计：0元"
+                android:textColor="@color/tag_blue"
+                android:textSize="@dimen/body" />
+
+            <TextView
+                android:id="@+id/shopping_economize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已节省0元"
+                android:textColor="@color/text"
+                android:textSize="@dimen/caption"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <com.gps808.app.view.FancyButton
+            android:id="@+id/shopping_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/selector_button_blue"
+            fancy:fb_defaultColor="@color/app_green"
+            fancy:fb_focusColor="@color/app_focus_color"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="结算(0)"
+            fancy:fb_textColor="@color/white" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <RadioGroup
+        android:id="@+id/item_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/item_radio1"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="待收货订单"
+            android:textColor="@drawable/tab_text"
+            android:textSize="@dimen/body" />
+
+        <RadioButton
+            android:id="@+id/item_radio2"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="往期订单"
+            android:textColor="@drawable/tab_text"
+            android:textSize="@dimen/body" />
+
+        <RadioButton
+            android:id="@+id/item_radio3"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="已完成"
+            android:textColor="@drawable/tab_text"
+            android:textSize="@dimen/body"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/item_radio4"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="已取消"
+            android:textColor="@drawable/tab_text"
+            android:textSize="@dimen/body"
+            android:visibility="gone" />
+    </RadioGroup>
+
+    <View style="@style/blackline" />
+
+    
+    <FrameLayout
+        android:id="@+id/order_list_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+</LinearLayout>

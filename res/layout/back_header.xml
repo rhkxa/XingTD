@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="56dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/backlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants" >
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:background="#00000000"
+                android:clickable="false"
+                android:src="@drawable/smyk_back" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="标题名称"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title" />
+
+        <TextView
+            android:id="@+id/right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:text="返回"
+            android:textColor="@color/app_green"
+            android:textSize="@dimen/body"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/all_comments"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/layout_backgroud_selector"
+            android:gravity="center"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        style="@style/blackline"
+        android:layout_below="@id/headerlayout" />
+
+</RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="24dp"
+    android:background="@drawable/backgroud_black_frame"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/currency_subtract"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/backgroud_black_frame"
+        android:gravity="center"
+        android:src="@drawable/smyk_order_subtract" />
+
+    <TextView
+        android:id="@+id/show_text"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="1" />
+
+    <ImageButton
+        android:id="@+id/currency_add"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/backgroud_black_frame"
+        android:gravity="center"
+        android:src="@drawable/smyk_order_add" />
+
+</LinearLayout>

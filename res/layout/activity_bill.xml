@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp" >
+
+        <ImageView
+            android:id="@+id/bill_share_wechat"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:src="@drawable/yz_share_wechat" />
+
+        <ImageView
+            android:id="@+id/bill_share_pengyou"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:src="@drawable/yz_share_pengyou" />
+
+        <ImageView
+            android:id="@+id/bill_share_weibo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:src="@drawable/yz_share_weibo" />
+
+        <ImageView
+            android:id="@+id/bill_share_qq"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:src="@drawable/yz_share_qq" />
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/bill_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="总收益：0.00" />
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/bill_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="收益余额：0.00" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp" >
+
+                <Button
+                    android:id="@+id/bill_setmoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="4dp"
+                    android:background="@color/app_green"
+                    android:padding="8dp"
+                    android:text="转入余额"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button" />
+
+                <Button
+                    android:id="@+id/bill_getmoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="4dp"
+                    android:background="@color/app_pink"
+                    android:padding="8dp"
+                    android:text="提现"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="100dp"
+            android:background="@color/text" />
+
+        <LinearLayout
+            android:id="@+id/bill_ranking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/yz_icon_ranking" />
+
+            <TextView
+                android:id="@+id/bill_my_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的排名：33"
+                android:textColor="@color/app_pink"
+                android:textSize="@dimen/caption" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合伙人排行榜" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史收益帐单"
+            android:textColor="@color/text"
+            android:textSize="@dimen/body" />
+
+        <ListView
+            android:id="@+id/bill_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/text"
+            android:dividerHeight="1px" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

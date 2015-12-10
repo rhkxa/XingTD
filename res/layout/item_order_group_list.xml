@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="货运单号:1354875421245"
+            android:textSize="@dimen/body"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/order_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="卖家已发货"
+            android:textColor="@color/app_pink"
+            android:textSize="@dimen/body" />
+
+        <TextView
+            android:id="@+id/order_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_id"
+            android:text="2014-12-16"
+            android:textColor="@color/text"
+            android:textSize="@dimen/caption"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View style="@style/blackline" />
+
+    <com.gps808.app.view.NoRollListView
+        android:id="@+id/item_order_child_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/text"
+        android:dividerHeight="1px" />
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="8dp" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/order_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="共：30件 实付："
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/order_total_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/order_total"
+                    android:text="￥3000.00"
+                    android:textColor="@color/tag_blue"
+                    android:textSize="@dimen/caption" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/order_total_money"
+                    android:text=""
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/caption"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <com.gps808.app.view.FancyButton
+                android:id="@+id/item_order_group_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="8dp"
+                fancy:fb_defaultColor="@color/app_green"
+                fancy:fb_focusColor="@color/app_focus_color"
+                fancy:fb_radius="2dp"
+                fancy:fb_text="确认收货"
+                fancy:fb_textColor="@color/white" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" >
+
+            <com.gps808.app.view.FancyButton
+                android:id="@+id/item_order_group_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                fancy:fb_defaultColor="@color/app_green"
+                fancy:fb_focusColor="@color/app_focus_color"
+                fancy:fb_radius="2dp"
+                fancy:fb_text="评价"
+                fancy:fb_textColor="@color/white" />
+
+            <com.gps808.app.view.FancyButton
+                android:id="@+id/item_order_group_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                fancy:fb_borderColor="@color/black"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/white"
+                fancy:fb_focusColor="@color/app_focus_color"
+                fancy:fb_radius="2dp"
+                fancy:fb_text="删除订单"
+                fancy:fb_textColor="@color/black" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
