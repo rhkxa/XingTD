@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.bean.PUser;
-import com.gps808.app.bean.XUser;
+import com.gps808.app.bean.XbUser;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.CyptoUtils;
 import com.gps808.app.utils.HttpUtil;
@@ -193,8 +193,8 @@ public class LoginActivity extends BaseActivity {
 								JSONObject response) {
 							if (Utils.requestOk(response)) {
 
-								XUser xbUser = JSON.parseObject(
-										response.toString(), XUser.class);
+								XbUser xbUser = JSON.parseObject(
+										response.toString(), XbUser.class);
 								Utils.ToastMessage(LoginActivity.this,
 										xbUser.getUserName() + "登录成功");
 								mPreferences.setUserNick(xbUser.getUserName());

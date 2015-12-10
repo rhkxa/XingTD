@@ -1,6 +1,6 @@
 package com.gps808.app.bean;
 
-public class XUser {	
+public class XbUser {	
 	private String userId;
 	private String userName;
 	private String userType;

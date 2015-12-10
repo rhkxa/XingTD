@@ -344,13 +344,12 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 	}
 
 	private void toUploadPush(Context context,String channelId,String appId,String userId){
-//		 {"channelId":"4923859573096872165","appId":"0696110321", "userId":"0696110321" }
-
 		String url=UrlConfig.getPush();
 		UpPush upPush=new UpPush();
 		upPush.setAppId(appId);
 		upPush.setChannelId(channelId);
 		upPush.setUserId(userId);
+		upPush.setDeviceType(3);
 		StringEntity entity=null;
 		try {
 			LogUtils.DebugLog("post json"+JSON.toJSONString(upPush));

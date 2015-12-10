@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.gps808.app.R;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -48,6 +49,7 @@ public class XtdApplication extends Application {
 
 		super.onCreate();
 		// initLocation(getApplicationContext());
+		SDKInitializer.initialize(this);
 		initImageLoader(getApplicationContext());
 		CrashHandler crashHandler = CrashHandler.getInstance();
 		crashHandler.init(getApplicationContext());

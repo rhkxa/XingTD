@@ -4,6 +4,13 @@ public class UpPush {
 	private String channelId;
 	private String appId;
 	private String userId;
+	private int deviceType;
+	public int getDeviceType() {
+		return deviceType;
+	}
+	public void setDeviceType(int deviceType) {
+		this.deviceType = deviceType;
+	}
 
 	public String getChannelId() {
 		return channelId;

@@ -1,7 +1,7 @@
 package com.gps808.app.activity;
 
 import com.gps808.app.R;
-import com.gps808.app.location.LocationProvider;
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,9 +24,8 @@ public class WelcomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		LocationProvider locationProvider = new LocationProvider(
-				WelcomeActivity.this.getApplicationContext());
-		locationProvider.startLocation();
+	
+
 		final View view = View.inflate(this, R.layout.activity_welcome, null);
 		setContentView(view);
 		ImageView imageView = (ImageView) findViewById(R.id.welcome_image);
