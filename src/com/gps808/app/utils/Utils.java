@@ -442,8 +442,6 @@ public class Utils {
 
 	}
 
-	
-
 	public static void toLogin(Context context) {
 		Intent intent = new Intent(context, LoginActivity.class);
 		context.startActivity(intent);
@@ -452,12 +450,11 @@ public class Utils {
 
 	public static void toShop(Context context) {
 		Class<?> cls = null;
-		
-			cls = ShoppingActivity.class;
 
-	
-			cls = LoginActivity.class;
-		
+		cls = ShoppingActivity.class;
+
+		cls = LoginActivity.class;
+
 		Intent intent = new Intent(context, cls);
 		context.startActivity(intent);
 	}
@@ -478,23 +475,19 @@ public class Utils {
 	}
 
 	public static void toOrder(Context context, String state) {
-	
-			Intent intent = new Intent(context, OrderActivity.class);
-			intent.putExtra("state", state);
-			context.startActivity(intent);
-		
-			toLogin(context);
-		
+
+		Intent intent = new Intent(context, OrderActivity.class);
+		intent.putExtra("state", state);
+		context.startActivity(intent);
+
+		toLogin(context);
 
 	}
 
-	
-	
-
-	
-
-	
-
-
+	public static double[] getLng(String lng){
+		String[] strLng=lng.split(":");
+		double[] douLng={Double.parseDouble(strLng[0]),Double.parseDouble(strLng[1])};
+		return douLng;
+	}
 
 }

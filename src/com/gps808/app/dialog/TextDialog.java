@@ -18,7 +18,7 @@ public class TextDialog extends Dialog {
 	private EditText comment;
 	private Context context;
 	private OnClickListener mOnClickListener;
-	private TextView title,result;
+	private TextView title, result;
 	private String tag;
 	int money = 0;
 
@@ -27,6 +27,7 @@ public class TextDialog extends Dialog {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.tag = tag;
+		setCanceledOnTouchOutside(true);
 
 	}
 
@@ -41,7 +42,7 @@ public class TextDialog extends Dialog {
 	private void init() {
 		title = (TextView) findViewById(R.id.title);
 		title.setText(tag);
-		result=(TextView) findViewById(R.id.result);
+		result = (TextView) findViewById(R.id.result);
 		btn_ok = (Button) findViewById(R.id.btn_ok);
 		comment = (EditText) findViewById(R.id.price_et);
 		if (tag.equals("提现")) {
@@ -58,7 +59,7 @@ public class TextDialog extends Dialog {
 					Utils.ToastMessage(context, "请输入");
 					return;
 				}
-				
+
 				if (tag.equals("提现")) {
 					money = Integer.valueOf(comment.getText().toString()) * 10;
 				} else {

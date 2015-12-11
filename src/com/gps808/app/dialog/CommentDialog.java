@@ -1,13 +1,12 @@
 package com.gps808.app.dialog;
 
-import org.json.JSONObject;
+
 
 import com.gps808.app.R;
-import com.gps808.app.utils.HttpUtil;
+
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
-import com.gps808.app.utils.Utils;
-import com.loopj.android.http.JsonHttpResponseHandler;
+
 
 import android.app.Dialog;
 import android.content.Context;

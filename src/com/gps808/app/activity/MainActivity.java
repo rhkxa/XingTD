@@ -34,7 +34,10 @@ import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
+
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerDragListener;
 import com.baidu.mapapi.map.GroundOverlayOptions;
@@ -69,6 +72,7 @@ public class MainActivity extends BaseActivity {
 
 	private long mExitTime = 0;
 
+	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
 	// private BadgeView badge;
 	// 初始化全局 bitmap 信息，不用时及时 recycle
 	BitmapDescriptor bdA = BitmapDescriptorFactory
@@ -89,9 +93,8 @@ public class MainActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this, false);
 		initWithApiKey();
-		UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,
-				false);
 		init();
 	}
 
@@ -100,7 +103,16 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
 		mBaiduMap.setMapStatus(msu);
-		initOverlay();
+		// 隐藏百度logo和 ZoomControl
+		int count = mMapView.getChildCount();
+		for (int i = 0; i < count; i++) {
+			View child = mMapView.getChildAt(i);
+			if (child instanceof ImageView || child instanceof ZoomControls) {
+				child.setVisibility(View.INVISIBLE);
+			}
+		}
+		getVehicleLocation("");
+		// initOverlay();
 		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(final Marker marker) {
 				Button button = new Button(getApplicationContext());
@@ -150,8 +162,24 @@ public class MainActivity extends BaseActivity {
 	}
 
 	public void initOverlay() {
+		// getVehicleLocation("");
+		List<LatLng> latLngs = new ArrayList<LatLng>();
+		for (int i = 0; i < vehicle.size(); i++) {
+			LogUtils.DebugLog("经纬度"
+					+ Utils.getLng(vehicle.get(i).getLocation())[0] + ","
+					+ Utils.getLng(vehicle.get(i).getLocation())[1]);
+			LatLng ll = new LatLng(
+					Utils.getLng(vehicle.get(i).getLocation())[1],
+					Utils.getLng(vehicle.get(i).getLocation())[0]);
+			latLngs.add(ll);
+			mBaiduMap.addOverlay(new MarkerOptions().position(ll).icon(bdA)
+					.zIndex(9).draggable(true));
+		}
 		// add marker overlay
 		LatLng llA = new LatLng(39.963175, 116.400244);
+		// LatLng llA = new
+		// LatLng(Utils.getLng(vehicle.get(0).getLocation())[1],
+		// Utils.getLng(vehicle.get(0).getLocation())[0]);
 		LatLng llB = new LatLng(39.942821, 116.369199);
 		LatLng llC = new LatLng(39.939723, 116.425541);
 		LatLng llD = new LatLng(39.906965, 116.401394);
@@ -295,9 +323,10 @@ public class MainActivity extends BaseActivity {
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONArray response) {
 						// TODO Auto-generated method stub
-						List<XbVehicle> vehicle = JSON.parseArray(
-								response.toString(), XbVehicle.class);
-						LogUtils.DebugLog(vehicle.get(0).getAddr());
+						vehicle = JSON.parseArray(response.toString(),
+								XbVehicle.class);
+						LogUtils.DebugLog("result json", response.toString());
+						initOverlay();
 						super.onSuccess(statusCode, headers, response);
 					}
 				});

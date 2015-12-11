@@ -10,14 +10,13 @@
         android:layout_height="56dip"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@color/white"
+        android:background="@color/app_blue"
         android:orientation="horizontal" >
 
         <LinearLayout
             android:id="@+id/backlayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/layout_backgroud_selector"
             android:descendantFocusability="blocksDescendants" >
 
             <ImageButton
@@ -25,7 +24,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
-                android:background="#00000000"
+                android:background="@color/full_transparent"
                 android:clickable="false"
                 android:src="@drawable/smyk_back" />
         </LinearLayout>
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="标题名称"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/title" />
 
         <TextView

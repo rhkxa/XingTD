@@ -6,7 +6,7 @@ package com.gps808.app.bean;
  *
  */
 public class Update {
-	private int appVer;
+	private Float appVer;
 
 	private String releaseTime;
 
@@ -16,11 +16,11 @@ public class Update {
 
 	private String updateUrl;
 
-	public int getAppVer() {
+	public Float getAppVer() {
 		return appVer;
 	}
 
-	public void setAppVer(int appVer) {
+	public void setAppVer(Float appVer) {
 		this.appVer = appVer;
 	}
 
@@ -32,6 +32,7 @@ public class Update {
 		this.releaseTime = releaseTime;
 	}
 
+	
 	public boolean isForceUpdate() {
 		return forceUpdate;
 	}

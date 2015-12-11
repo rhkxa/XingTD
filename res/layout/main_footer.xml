@@ -1,82 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.xtd.activity"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white" >
+    android:layout_height="56dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/corners_rect_white" >
 
-    <View style="@style/grayline" />
-
-    <RadioGroup
-        android:id="@+id/main_linearlayout_footer"
-        android:layout_width="match_parent"
+    <com.gps808.app.view.PengButton
+        android:id="@+id/main_home"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp" >
-<!--  
-        <com.xtd.custom.View.Generally.PengRadioButton
-            android:id="@+id/main_home"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center"
-            android:text="首页"
-            android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
-            app:peng_drawableTop="@drawable/main_home_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+        android:layout_weight="1"
+        android:background="@null"
+        android:button="@null"
+        android:checked="true"
+        android:gravity="center"
+        android:text="首页"
+        android:textColor="@drawable/tab_text"
+        android:textSize="10sp"
+        app:peng_drawableTop="@drawable/main_home_selector"
+        app:peng_drawableTopHeight="8dp"
+        app:peng_drawableTopWith="8dp" />
 
-        <com.xtd.custom.View.Generally.PengRadioButton
-            android:id="@+id/main_menu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:gravity="center"
-            android:text="分类"
-            android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
-            app:peng_drawableTop="@drawable/main_menu_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+    <com.gps808.app.view.PengButton
+        android:id="@+id/main_menu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:button="@null"
+        android:gravity="center"
+        android:text="分类"
+        android:textColor="@drawable/tab_text"
+        android:textSize="10sp"
+        app:peng_drawableTop="@drawable/main_menu_selector"
+        app:peng_drawableTopHeight="8dp"
+        app:peng_drawableTopWith="8dp" />
 
-        <com.xtd.custom.View.Generally.PengRadioButton
-            android:id="@+id/main_gift"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:gravity="center"
-            android:text="购物车"
-            android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
-            app:peng_drawableTop="@drawable/main_sales_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+    <com.gps808.app.view.PengButton
+        android:id="@+id/main_gift"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:button="@null"
+        android:gravity="center"
+        android:text="购物车"
+        android:textColor="@drawable/tab_text"
+        android:textSize="10sp"
+        app:peng_drawableTop="@drawable/main_sales_selector"
+        app:peng_drawableTopHeight="8dp"
+        app:peng_drawableTopWith="8dp" />
 
-        <com.xtd.custom.View.Generally.PengRadioButton
-            android:id="@+id/main_myself"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:gravity="center"
-            android:text="我的"
-            android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
-            app:peng_drawableTop="@drawable/main_my_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" /> -->
-    </RadioGroup>
+    <com.gps808.app.view.PengButton
+        android:id="@+id/main_myself"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:button="@null"
+        android:gravity="center"
+        android:text="我的"
+        android:textColor="@drawable/tab_text"
+        android:textSize="10sp"
+        app:peng_drawableTop="@drawable/main_my_selector"
+        app:peng_drawableTopHeight="8dp"
+        app:peng_drawableTopWith="8dp" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.bean.Update;
+import com.gps808.app.dialog.CustomChoseDialog;
+import com.gps808.app.dialog.TextDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 
@@ -159,7 +161,11 @@ public class UpdateManager {
 						if (curVersionCode < mUpdate.getAppVer()) {
 							apkUrl = mUpdate.getUpdateUrl();
 							updateMsg = mUpdate.getVersionDesc();
+							if(mUpdate.isForceUpdate()){
+								showDownloadDialog();
+							}else{
 							showNoticeDialog();
+							}
 						} else if (isShowMsg) {
 							showLatestOrFailDialog(DIALOG_TYPE_LATEST);
 						}
@@ -232,25 +238,37 @@ public class UpdateManager {
 	 * 显示版本更新通知对话框
 	 */
 	private void showNoticeDialog() {
-		AlertDialog.Builder builder = new Builder(mContext);
-		builder.setTitle("软件版本更新");
-		builder.setMessage(updateMsg);
-
-		builder.setNegativeButton("以后再说", new OnClickListener() {
+//		AlertDialog.Builder builder = new Builder(mContext);
+//		builder.setTitle("软件版本更新");
+//		builder.setMessage(updateMsg);
+//		
+//		builder.setNegativeButton("以后再说", new OnClickListener() {
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//			}
+//		});
+//		builder.setPositiveButton("立即更新", new OnClickListener() {
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//				showDownloadDialog();
+//			}
+//		});
+//		noticeDialog = builder.create();
+//		noticeDialog.setCanceledOnTouchOutside(false);
+//    	noticeDialog.show();
+		android.view.View.OnClickListener ok=new View.OnClickListener() {
+			
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		builder.setPositiveButton("立即更新", new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
 				showDownloadDialog();
 			}
-		});
-		noticeDialog = builder.create();
-		noticeDialog.show();
+		};
+		
+		CustomChoseDialog update=new CustomChoseDialog(mContext, "软件版本更新", updateMsg, ok, null);
+		update.show();
 	}
 
 	/**

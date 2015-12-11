@@ -1,9 +1,11 @@
 package com.gps808.app.activity;
 
+import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,22 +21,26 @@ import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.bean.PUser;
 import com.gps808.app.bean.XbUser;
+import com.gps808.app.dialog.CustomOkDialog;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.CyptoUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
+import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
+import com.gps808.app.utils.XtdApplication;
 
 /**
  * 登录界面
  * 
- * @author rhk
+ * @author JIA
  * 
  */
 public class LoginActivity extends BaseActivity {
+	private long mExitTime = 0;
 	private Button login;
 	private TextView phonenumber;
 	private EditText userName;
@@ -53,6 +59,8 @@ public class LoginActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		// UpdateManager.getUpdateManager().checkAppUpdate(LoginActivity.this,
+		// false);
 		init();
 	}
 
@@ -74,7 +82,7 @@ public class LoginActivity extends BaseActivity {
 		savePwdBox = (CheckBox) findViewById(R.id.savePwdBox);
 		login = (Button) findViewById(R.id.login);
 		phonenumber = (TextView) findViewById(R.id.phonenumber);
-		call = (RelativeLayout) findViewById(R.id.call_phone);
+		// call = (RelativeLayout) findViewById(R.id.call_phone);
 		// login_serve = (TextView) findViewById(R.id.login_serve);
 		login_to_register = (TextView) findViewById(R.id.login_to_register);
 		login_forget_pass = (TextView) findViewById(R.id.login_forget_pass);
@@ -131,16 +139,16 @@ public class LoginActivity extends BaseActivity {
 			}
 		}
 
-		call.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				// 打电话
-				Utils.callPhone(LoginActivity.this, phonenumber.getText()
-						.toString());
-			}
-		});
+		// call.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// // TODO Auto-generated method stub
+		// // 打电话
+		// Utils.callPhone(LoginActivity.this, phonenumber.getText()
+		// .toString());
+		// }
+		// });
 		// login_serve.setOnClickListener(new OnClickListener() {
 		//
 		// @Override
@@ -157,9 +165,12 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(LoginActivity.this,
-						RegisterActivity.class);
-				startActivity(intent);
+				// Intent intent = new Intent(LoginActivity.this,
+				// RegisterActivity.class);
+				// startActivity(intent);
+				CustomOkDialog register = new CustomOkDialog(
+						LoginActivity.this, "新用户", "请电话联系", null);
+				register.show();
 			}
 		});
 
@@ -215,11 +226,36 @@ public class LoginActivity extends BaseActivity {
 
 							LogUtils.DebugLog(response.toString());
 						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers,
+								Throwable throwable, JSONObject errorResponse) {
+							// TODO Auto-generated method stub
+							Utils.ToastMessage(LoginActivity.this, "登陆失败，请重试");
+							super.onFailure(statusCode, headers, throwable,
+									errorResponse);
+						}
 					});
 
 		} else {
 			Utils.showSuperCardToast(LoginActivity.this, getResources()
 					.getString(R.string.network_not_connected));
 		}
+	}
+
+	// 双击退出
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if ((System.currentTimeMillis() - mExitTime) > 2000) {
+				Utils.showSuperCardToast(LoginActivity.this, getResources()
+						.getString(R.string.exit));
+				mExitTime = System.currentTimeMillis();
+			} else {
+				XtdApplication.getInstance().exit();
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

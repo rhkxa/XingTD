@@ -38,7 +38,7 @@ public class FancyButton extends LinearLayout {
 	private int mDefaultTextColor = Color.WHITE;
 	private int mDefaultIconColor = Color.WHITE;
 	private int mTextPosition = 1;
-	private int mDefaultTextSize = 14;
+	private int mDefaultTextSize = 18;
 	private int mDefaultTextGravity = 0x11; // Gravity.CENTER
 	private String mText = null;
 
