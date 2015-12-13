@@ -1,4 +1,5 @@
 package com.gps808.app.adapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,17 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.gps808.app.R;
-import com.gps808.app.bean.BnRank;
 import com.gps808.app.bean.XbVehicle;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-
 
 import java.util.List;
-
-
 
 public class VehicleListAdapter extends BaseAdapter {
 	private Context mContext;
@@ -52,41 +46,44 @@ public class VehicleListAdapter extends BaseAdapter {
 		if (arg1 == null) {
 
 			arg1 = LayoutInflater.from(mContext).inflate(
-					R.layout.item_ranking_list, null);
+					R.layout.item_vehicles_list, null);
 			vh = new ViewHolder(arg1);
 			arg1.setTag(vh);
 		} else {
 			vh = (ViewHolder) arg1.getTag();
 		}
 
-//		ImageLoader.getInstance().displayImage(datalist.get(arg0).getFace(),
-//				vh.item_ranking_headimg);
-//		vh.item_ranking_money.setText("月销售额："+datalist.get(arg0).getMonthly_icome()+"万");
-//		vh.item_ranking_name.setText(datalist.get(arg0).getNickname());
-//		vh.item_ranking_num.setText("NO."+datalist.get(arg0).getRank());
-		
+		// ImageLoader.getInstance().displayImage(datalist.get(arg0).getFace(),
+		// vh.item_ranking_headimg);
+		vh.item_vehicle_name.setText(datalist.get(arg0).getPlateNo());
+		String status = "";
+		if (datalist.get(arg0).isOnline()) {
+			status = "在线";
+
+		} else {
+			status = "离线";
+		}
+		vh.item_vehicle_status.setText(status);
 
 		return arg1;
 	}
 
 	class ViewHolder {
-		ImageView item_ranking_headimg;
-		TextView item_ranking_name;
-		TextView item_ranking_money;
-		TextView item_ranking_num;
+		ImageView item_vehicle_image;
+		TextView item_vehicle_name;
+		TextView item_vehicle_status;
 
 		public ViewHolder(View arg1) {
-//			item_ranking_headimg = (ImageView) arg1
-//					.findViewById(R.id.item_ranking_headimg);
-//			item_ranking_name = (TextView) arg1
-//					.findViewById(R.id.item_ranking_name);
-			item_ranking_money = (TextView) arg1
-					.findViewById(R.id.item_ranking_money);
-			item_ranking_num = (TextView) arg1
-					.findViewById(R.id.item_ranking_num);
+			item_vehicle_image = (ImageView) arg1
+					.findViewById(R.id.item_vehicle_image);
+			// item_ranking_name = (TextView) arg1
+			// .findViewById(R.id.item_ranking_name);
+			item_vehicle_name = (TextView) arg1
+					.findViewById(R.id.item_vehicle_name);
+			item_vehicle_status = (TextView) arg1
+					.findViewById(R.id.item_vehicle_status);
 		}
 
 	}
 
 }
-

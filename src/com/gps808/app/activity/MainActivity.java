@@ -1,6 +1,5 @@
 package com.gps808.app.activity;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,16 +104,26 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public boolean onMarkerClick(final Marker marker) {
 				// 获得marker中的数据
-				XbVehicle xbVehicle = JSON.parseObject(marker.getExtraInfo()
+				final XbVehicle xbVehicle = JSON.parseObject(marker.getExtraInfo()
 						.getString("info"), XbVehicle.class);
 				InfoWindow mInfoWindow;
-				OnInfoWindowClickListener onInfoWindowClickListener;
+				OnInfoWindowClickListener onInfoWindowClickListener=new OnInfoWindowClickListener() {
+					
+					@Override
+					public void onInfoWindowClick() {
+						// TODO Auto-generated method stub
+						Intent intent=new Intent(MainActivity.this, CarDetailsActivity.class);
+						intent.putExtra("vid", xbVehicle.getvId());
+						startActivity(intent);
+					}
+				};
 				LayoutInflater inflater = LayoutInflater
 						.from(MainActivity.this);
 				View mMarkerLy = inflater.inflate(R.layout.popwindows_show,
 						null);
-				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
-						marker.getPosition(), -100);
+				// mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
+				// marker.getPosition(), -100);
+				mInfoWindow=new InfoWindow(BitmapDescriptorFactory.fromView(popupInfo(mMarkerLy, xbVehicle)), marker.getPosition(), -100, onInfoWindowClickListener);
 				// 显示InfoWindow
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;

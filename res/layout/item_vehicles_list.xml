@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_center"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/layout_backgroud_selector"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:padding="8dp" >
+
+    <ImageView
+        android:id="@+id/item_vehicle_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/item_vehicle_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="个人中心"
+        android:textColor="@color/text"
+        android:textSize="@dimen/body" />
+
+    <TextView
+        android:id="@+id/item_vehicle_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="在线"
+        android:textColor="@color/app_green"
+        android:textSize="@dimen/body" />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_margin="4dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/yz_next" />
+
+</LinearLayout>

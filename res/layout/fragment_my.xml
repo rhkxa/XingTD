@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.xtd.activity"
+    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true" >
 
-<!--             <com.xtd.custom.View.Generally.CircleImageView
+            <com.gps808.app.view.CircleImageView
                 android:id="@+id/my_headimage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -70,7 +70,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/app_name"
                 android:textColor="@color/black"
-                android:textSize="@dimen/body" /> -->
+                android:textSize="@dimen/body" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -79,8 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="horizontal" >
-<!-- 
-        <com.xtd.custom.View.Generally.PengButton
+
+        <com.gps808.app.view.PengButton
             android:id="@+id/my_wallet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             app:peng_drawableTopHeight="10dp"
             app:peng_drawableTopWith="10dp" />
 
-        <com.xtd.custom.View.Generally.PengButton
+        <com.gps808.app.view.PengButton
             android:id="@+id/my_collet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
             app:peng_drawableTopHeight="10dp"
             app:peng_drawableTopWith="10dp" />
 
-        <com.xtd.custom.View.Generally.PengButton
+        <com.gps808.app.view.PengButton
             android:id="@+id/my_join"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
             app:peng_drawableTopHeight="10dp"
             app:peng_drawableTopWith="10dp" />
 
-        <com.xtd.custom.View.Generally.PengButton
+        <com.gps808.app.view.PengButton
             android:id="@+id/my_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -141,8 +141,6 @@
             app:peng_drawableTop="@drawable/yz_my_address"
             app:peng_drawableTopHeight="10dp"
             app:peng_drawableTopWith="10dp" />
---> 
-       
     </LinearLayout>
 
     <View style="@style/blackline" />

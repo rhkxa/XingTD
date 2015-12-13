@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -25,7 +27,6 @@
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@color/full_transparent"
-            android:focusable="false"
             android:gravity="left|center_vertical"
             android:hint="请输入车牌号或手机号"
             android:padding="4dp"

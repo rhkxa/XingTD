@@ -119,6 +119,7 @@
         <activity android:name="com.gps808.app.activity.VehiclesActivity" />
         <activity android:name="com.gps808.app.activity.RoutesActivity" />
         <activity android:name="com.gps808.app.activity.PolicesActivity" />
+        <activity android:name="com.gps808.app.activity.CarDetailsActivity" />
         <activity
             android:name="com.gps808.app.activity.FinishPayActivity"
             android:exported="true"

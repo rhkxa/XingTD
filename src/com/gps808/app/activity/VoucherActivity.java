@@ -24,7 +24,7 @@ public class VoucherActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_voucher);
+		setContentView(R.layout.activity_vehicle);
 		init();
 		loadData();
 	}
