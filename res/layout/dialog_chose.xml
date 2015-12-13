@@ -67,9 +67,7 @@
                     fancy:fb_defaultColor="@color/white"
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_text="取消"
-                    android:visibility="gone"
-                    fancy:fb_textColor="@color/black"
-                     />
+                    fancy:fb_textColor="@color/black" />
 
                 <com.gps808.app.view.FancyButton
                     android:id="@+id/dialog_ok"
@@ -84,8 +82,7 @@
                     fancy:fb_defaultColor="@color/white"
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_text="确认"
-                    fancy:fb_textColor="@color/app_blue"
-                  />
+                    fancy:fb_textColor="@color/app_blue" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

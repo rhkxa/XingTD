@@ -7,9 +7,12 @@ import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import com.alibaba.fastjson.JSON;
@@ -23,7 +26,6 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.gps808.app.R;
-import com.gps808.app.bean.UpSearch;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
@@ -33,21 +35,21 @@ import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
+import com.gps808.app.view.PengButton;
+
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.ZoomControls;
-
+import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
-import com.baidu.mapapi.map.BaiduMap.OnMarkerDragListener;
-import com.baidu.mapapi.map.GroundOverlayOptions;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
+import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.model.LatLngBounds;
 
 /**
  * 主界面
@@ -64,14 +66,8 @@ public class MainActivity extends BaseActivity {
 	 */
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
-	private Marker mMarkerA;
-	private Marker mMarkerB;
-	private Marker mMarkerC;
-	private Marker mMarkerD;
 	private InfoWindow mInfoWindow;
-
 	private long mExitTime = 0;
-
 	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
 	// private BadgeView badge;
 	// 初始化全局 bitmap 信息，不用时及时 recycle
@@ -79,21 +75,14 @@ public class MainActivity extends BaseActivity {
 			.fromResource(R.drawable.icon_marka);
 	BitmapDescriptor bdB = BitmapDescriptorFactory
 			.fromResource(R.drawable.icon_markb);
-	BitmapDescriptor bdC = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markc);
-	BitmapDescriptor bdD = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markd);
-	final BitmapDescriptor bd = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_gcoding);
-	BitmapDescriptor bdGround = BitmapDescriptorFactory
-			.fromResource(R.drawable.ground_overlay);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this, false);
+		UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,
+				false);
 		initWithApiKey();
 		init();
 	}
@@ -111,139 +100,101 @@ public class MainActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
-		getVehicleLocation("");
-		// initOverlay();
+		// 对Marker的点击弹出PopWindows
 		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+			@Override
 			public boolean onMarkerClick(final Marker marker) {
-				Button button = new Button(getApplicationContext());
-				button.setBackgroundResource(R.drawable.popup);
-				OnInfoWindowClickListener listener = null;
-				if (marker == mMarkerA || marker == mMarkerD) {
-					button.setText("更改位置");
-					listener = new OnInfoWindowClickListener() {
-						public void onInfoWindowClick() {
-							LatLng ll = marker.getPosition();
-							LatLng llNew = new LatLng(ll.latitude + 0.005,
-									ll.longitude + 0.005);
-							marker.setPosition(llNew);
-							mBaiduMap.hideInfoWindow();
-						}
-					};
-					LatLng ll = marker.getPosition();
-					mInfoWindow = new InfoWindow(BitmapDescriptorFactory
-							.fromView(button), ll, -47, listener);
-					mBaiduMap.showInfoWindow(mInfoWindow);
-				} else if (marker == mMarkerB) {
-					button.setText("更改图标");
-					button.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							marker.setIcon(bd);
-							mBaiduMap.hideInfoWindow();
-						}
-					});
-					LatLng ll = marker.getPosition();
-					mInfoWindow = new InfoWindow(button, ll, -47);
-					mBaiduMap.showInfoWindow(mInfoWindow);
-				} else if (marker == mMarkerC) {
-					button.setText("删除");
-					button.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							marker.remove();
-							mBaiduMap.hideInfoWindow();
-						}
-					});
-					LatLng ll = marker.getPosition();
-					mInfoWindow = new InfoWindow(button, ll, -47);
-					mBaiduMap.showInfoWindow(mInfoWindow);
-				}
+				// 获得marker中的数据
+				XbVehicle xbVehicle = JSON.parseObject(marker.getExtraInfo()
+						.getString("info"), XbVehicle.class);
+				InfoWindow mInfoWindow;
+				OnInfoWindowClickListener onInfoWindowClickListener;
+				LayoutInflater inflater = LayoutInflater
+						.from(MainActivity.this);
+				View mMarkerLy = inflater.inflate(R.layout.popwindows_show,
+						null);
+				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
+						marker.getPosition(), -100);
+				// 显示InfoWindow
+				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
 		});
-	}
+		mBaiduMap.setOnMapClickListener(new OnMapClickListener() {
 
-	public void initOverlay() {
-		// getVehicleLocation("");
-		List<LatLng> latLngs = new ArrayList<LatLng>();
-		for (int i = 0; i < vehicle.size(); i++) {
-			LogUtils.DebugLog("经纬度"
-					+ Utils.getLng(vehicle.get(i).getLocation())[0] + ","
-					+ Utils.getLng(vehicle.get(i).getLocation())[1]);
-			LatLng ll = new LatLng(
-					Utils.getLng(vehicle.get(i).getLocation())[1],
-					Utils.getLng(vehicle.get(i).getLocation())[0]);
-			latLngs.add(ll);
-			mBaiduMap.addOverlay(new MarkerOptions().position(ll).icon(bdA)
-					.zIndex(9).draggable(true));
-		}
-		// add marker overlay
-		LatLng llA = new LatLng(39.963175, 116.400244);
-		// LatLng llA = new
-		// LatLng(Utils.getLng(vehicle.get(0).getLocation())[1],
-		// Utils.getLng(vehicle.get(0).getLocation())[0]);
-		LatLng llB = new LatLng(39.942821, 116.369199);
-		LatLng llC = new LatLng(39.939723, 116.425541);
-		LatLng llD = new LatLng(39.906965, 116.401394);
-
-		MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
-				.zIndex(9).draggable(true);
-
-		ooA.animateType(MarkerAnimateType.drop);
-
-		mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
-		MarkerOptions ooB = new MarkerOptions().position(llB).icon(bdB)
-				.zIndex(5);
-
-		// 掉下动画
-		ooB.animateType(MarkerAnimateType.drop);
-
-		mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
-		MarkerOptions ooC = new MarkerOptions().position(llC).icon(bdC)
-				.perspective(false).anchor(0.5f, 0.5f).rotate(30).zIndex(7);
-
-		// 生长动画
-		ooC.animateType(MarkerAnimateType.grow);
-
-		mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
-		ArrayList<BitmapDescriptor> giflist = new ArrayList<BitmapDescriptor>();
-		giflist.add(bdA);
-		giflist.add(bdB);
-		giflist.add(bdC);
-		MarkerOptions ooD = new MarkerOptions().position(llD).icons(giflist)
-				.zIndex(0).period(10);
-
-		// 生长动画
-		ooD.animateType(MarkerAnimateType.grow);
-		mMarkerD = (Marker) (mBaiduMap.addOverlay(ooD));
-
-		// add ground overlay
-		LatLng southwest = new LatLng(39.92235, 116.380338);
-		LatLng northeast = new LatLng(39.947246, 116.414977);
-		LatLngBounds bounds = new LatLngBounds.Builder().include(northeast)
-				.include(southwest).build();
-
-		OverlayOptions ooGround = new GroundOverlayOptions()
-				.positionFromBounds(bounds).image(bdGround).transparency(0.8f);
-		mBaiduMap.addOverlay(ooGround);
-
-		MapStatusUpdate u = MapStatusUpdateFactory
-				.newLatLng(bounds.getCenter());
-		mBaiduMap.setMapStatus(u);
-
-		mBaiduMap.setOnMarkerDragListener(new OnMarkerDragListener() {
-			public void onMarkerDrag(Marker marker) {
+			@Override
+			public boolean onMapPoiClick(MapPoi arg0) {
+				return false;
 			}
 
-			public void onMarkerDragEnd(Marker marker) {
-				Toast.makeText(
-						MainActivity.this,
-						"拖拽结束，新位置：" + marker.getPosition().latitude + ", "
-								+ marker.getPosition().longitude,
-						Toast.LENGTH_LONG).show();
-			}
-
-			public void onMarkerDragStart(Marker marker) {
+			@Override
+			public void onMapClick(LatLng arg0) {
+				mBaiduMap.hideInfoWindow();
 			}
 		});
+		// 底部四个按钮
+		PengButton main_vehicles = (PengButton) findViewById(R.id.main_vehicles);
+		PengButton main_police = (PengButton) findViewById(R.id.main_police);
+		PengButton main_routes = (PengButton) findViewById(R.id.main_routes);
+		PengButton main_myself = (PengButton) findViewById(R.id.main_myself);
+		OnClickListener bottomClick = new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Class cls = null;
+				switch (arg0.getId()) {
+				case R.id.main_vehicles:
+					cls = VehiclesActivity.class;
+					break;
+				case R.id.main_police:
+					cls = PolicesActivity.class;
+					break;
+				case R.id.main_routes:
+					cls = RoutesActivity.class;
+					break;
+				case R.id.main_myself:
+					cls = VehiclesActivity.class;
+					break;
+
+				}
+				Intent intent = new Intent(MainActivity.this, cls);
+				startActivity(intent);
+			}
+		};
+		main_vehicles.setOnClickListener(bottomClick);
+		main_police.setOnClickListener(bottomClick);
+		main_routes.setOnClickListener(bottomClick);
+		main_myself.setOnClickListener(bottomClick);
+		getVehicleLocation("");
+
+	}
+
+	/**
+	 * 初始化图层
+	 */
+	public void addInfosOverlay(List<XbVehicle> infos) {
+		mBaiduMap.clear();
+		LatLng latLng = null;
+		OverlayOptions overlayOptions = null;
+		Marker marker = null;
+		for (XbVehicle info : infos) {
+			// 位置
+			LogUtils.DebugLog("经纬度" + Utils.getLng(info.getLocation())[0] + ","
+					+ Utils.getLng(info.getLocation())[1]);
+			latLng = new LatLng(Utils.getLng(info.getLocation())[1],
+					Utils.getLng(info.getLocation())[0]);
+			// 图标
+			overlayOptions = new MarkerOptions().position(latLng).icon(bdA)
+					.zIndex(5).animateType(MarkerAnimateType.drop);
+			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+			Bundle bundle = new Bundle();
+			bundle.putString("info", JSON.toJSONString(info));
+			marker.setExtraInfo(bundle);
+		}
+		// 将地图移到到最后一个经纬度位置
+		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(latLng);
+		mBaiduMap.setMapStatus(u);
 	}
 
 	/**
@@ -253,10 +204,8 @@ public class MainActivity extends BaseActivity {
 	 */
 	public void clearOverlay(View view) {
 		mBaiduMap.clear();
-		mMarkerA = null;
-		mMarkerB = null;
-		mMarkerC = null;
-		mMarkerD = null;
+		// mMarkerA = null;
+		// mMarkerB = null;
 	}
 
 	/**
@@ -266,7 +215,7 @@ public class MainActivity extends BaseActivity {
 	 */
 	public void resetOverlay(View view) {
 		clearOverlay(null);
-		initOverlay();
+
 	}
 
 	@Override
@@ -274,6 +223,93 @@ public class MainActivity extends BaseActivity {
 		// MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()
 		mMapView.onPause();
 		super.onPause();
+	}
+
+	// 以apikey的方式绑定
+	private void initWithApiKey() {
+		// Push: 无账号初始化，用api key绑定
+		PushManager.startWork(getApplicationContext(),
+				PushConstants.LOGIN_TYPE_API_KEY,
+				PushUtils.getMetaValue(MainActivity.this, "api_key"));
+	}
+
+	private void getVehicleLocation(String key) {
+
+		JSONObject postData = new JSONObject();
+		StringEntity entity = null;
+		try {
+			postData.put("plateNo", key);
+			postData.put("simNo", key);
+			entity = new StringEntity(postData.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String url = UrlConfig.getVehicleLocations();
+		HttpUtil.post(MainActivity.this, url, entity, "application/json",
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONArray response) {
+						// TODO Auto-generated method stub
+						vehicle = JSON.parseArray(response.toString(),
+								XbVehicle.class);
+						LogUtils.DebugLog("result json", response.toString());
+						addInfosOverlay(vehicle);
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+	}
+
+	/**
+	 * 根据info为布局上的控件设置信息
+	 * 
+	 * @param mMarkerInfo2
+	 * @param info
+	 */
+	protected View popupInfo(View mMarkerLy, XbVehicle xbVehicle) {
+		ViewHolder viewHolder = null;
+		if (mMarkerLy.getTag() == null) {
+			viewHolder = new ViewHolder();
+			viewHolder.popwindows_track = (Button) mMarkerLy
+					.findViewById(R.id.popwindows_track);
+			viewHolder.popwindows_trail = (Button) mMarkerLy
+					.findViewById(R.id.popwindows_trail);
+			viewHolder.popwindows_weather = (Button) mMarkerLy
+					.findViewById(R.id.popwindows_weather);
+			viewHolder.popwindows_name = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_name);
+			viewHolder.popwindows_state = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_state);
+			viewHolder.popwindows_time = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_time);
+
+			mMarkerLy.setTag(viewHolder);
+		}
+		viewHolder = (ViewHolder) mMarkerLy.getTag();
+		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
+		if (xbVehicle.isOnline()) {
+			viewHolder.popwindows_state.setText("在线:" + xbVehicle.getSpeed());
+		} else {
+			viewHolder.popwindows_state.setText("离线:");
+		}
+		viewHolder.popwindows_name.setText(xbVehicle.getPlateNo());
+		return mMarkerLy;
+	}
+
+	/**
+	 * 复用弹出面板mMarkerLy的控件
+	 * 
+	 * @author zhy
+	 * 
+	 */
+	private class ViewHolder {
+		Button popwindows_track;
+		Button popwindows_trail;
+		Button popwindows_weather;
+		TextView popwindows_name;
+		TextView popwindows_state;
+		TextView popwindows_time;
 	}
 
 	@Override
@@ -291,45 +327,6 @@ public class MainActivity extends BaseActivity {
 		// 回收 bitmap 资源
 		bdA.recycle();
 		bdB.recycle();
-		bdC.recycle();
-		bdD.recycle();
-		bd.recycle();
-		bdGround.recycle();
-	}
-
-	// 以apikey的方式绑定
-	private void initWithApiKey() {
-		// Push: 无账号初始化，用api key绑定
-		PushManager.startWork(getApplicationContext(),
-				PushConstants.LOGIN_TYPE_API_KEY,
-				PushUtils.getMetaValue(MainActivity.this, "api_key"));
-	}
-
-	private void getVehicleLocation(String key) {
-		UpSearch search = new UpSearch();
-		search.setPlateNo(key);
-		search.setSimNo(key);
-		StringEntity entity = null;
-		try {
-			entity = new StringEntity(JSON.toJSONString(search));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String url = UrlConfig.getVehicleLocations();
-		HttpUtil.post(MainActivity.this, url, entity, "application/json",
-				new jsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(int statusCode, Header[] headers,
-							JSONArray response) {
-						// TODO Auto-generated method stub
-						vehicle = JSON.parseArray(response.toString(),
-								XbVehicle.class);
-						LogUtils.DebugLog("result json", response.toString());
-						initOverlay();
-						super.onSuccess(statusCode, headers, response);
-					}
-				});
 	}
 
 	// 双击退出

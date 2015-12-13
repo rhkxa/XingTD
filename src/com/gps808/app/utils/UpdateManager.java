@@ -19,7 +19,6 @@ import com.gps808.app.dialog.CustomChoseDialog;
 import com.gps808.app.dialog.TextDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -161,10 +160,10 @@ public class UpdateManager {
 						if (curVersionCode < mUpdate.getAppVer()) {
 							apkUrl = mUpdate.getUpdateUrl();
 							updateMsg = mUpdate.getVersionDesc();
-							if(mUpdate.isForceUpdate()){
+							if (mUpdate.isForceUpdate()) {
 								showDownloadDialog();
-							}else{
-							showNoticeDialog();
+							} else {
+								showNoticeDialog();
 							}
 						} else if (isShowMsg) {
 							showLatestOrFailDialog(DIALOG_TYPE_LATEST);
@@ -184,7 +183,7 @@ public class UpdateManager {
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
 				// TODO Auto-generated method stub
-				LogUtils.DebugLog("result",response.toString());
+				LogUtils.DebugLog("result", response.toString());
 				Message msg = new Message();
 				final Update update = JSON.parseObject(response.toString(),
 						Update.class);
@@ -193,7 +192,6 @@ public class UpdateManager {
 				handler.sendMessage(msg);
 				super.onSuccess(statusCode, headers, response);
 			}
-		
 
 		});
 
@@ -238,37 +236,45 @@ public class UpdateManager {
 	 * 显示版本更新通知对话框
 	 */
 	private void showNoticeDialog() {
-//		AlertDialog.Builder builder = new Builder(mContext);
-//		builder.setTitle("软件版本更新");
-//		builder.setMessage(updateMsg);
-//		
-//		builder.setNegativeButton("以后再说", new OnClickListener() {
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				dialog.dismiss();
-//			}
-//		});
-//		builder.setPositiveButton("立即更新", new OnClickListener() {
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				dialog.dismiss();
-//				showDownloadDialog();
-//			}
-//		});
-//		noticeDialog = builder.create();
-//		noticeDialog.setCanceledOnTouchOutside(false);
-//    	noticeDialog.show();
-		android.view.View.OnClickListener ok=new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+		// AlertDialog.Builder builder = new Builder(mContext);
+		// builder.setTitle("软件版本更新");
+		// builder.setMessage(updateMsg);
+		//
+		// builder.setNegativeButton("以后再说", new OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// dialog.dismiss();
+		// }
+		// });
+		// builder.setPositiveButton("立即更新", new OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// dialog.dismiss();
+		// showDownloadDialog();
+		// }
+		// });
+		// noticeDialog = builder.create();
+		// noticeDialog.setCanceledOnTouchOutside(false);
+		// noticeDialog.show();
+		CustomChoseDialog.Builder builder = new CustomChoseDialog.Builder(
+				mContext);
+		builder.setMessage(updateMsg);
+		builder.setTitle("版本更新");
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				// 设置你的操作事项
 				showDownloadDialog();
 			}
-		};
-		
-		CustomChoseDialog update=new CustomChoseDialog(mContext, "软件版本更新", updateMsg, ok, null);
-		update.show();
+		});
+
+		builder.setNegativeButton("取消",
+				new android.content.DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
 	}
 
 	/**
@@ -308,10 +314,8 @@ public class UpdateManager {
 		@Override
 		public void run() {
 			try {
-				String apkName = "XtdApp_" + mUpdate.getReleaseTime()
-						+ ".apk";
-				String tmpApk = "XtdApp_" + mUpdate.getReleaseTime()
-						+ ".tmp";
+				String apkName = "XtdApp_" + mUpdate.getReleaseTime() + ".apk";
+				String tmpApk = "XtdApp_" + mUpdate.getReleaseTime() + ".tmp";
 				// 判断是否挂载了SD卡
 				String storageState = Environment.getExternalStorageState();
 				if (storageState.equals(Environment.MEDIA_MOUNTED)) {

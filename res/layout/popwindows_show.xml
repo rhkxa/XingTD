@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_backgroud"
+        android:orientation="vertical"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/popwindows_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="冀J310UB"
+            android:textColor="@color/black"
+            android:textSize="@dimen/body" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="状态:"
+                android:textColor="@color/red"
+                android:textSize="@dimen/caption" />
+
+            <TextView
+                android:id="@+id/popwindows_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:padding="2dp"
+                android:text="在线79KM/H"
+                android:textColor="@color/app_green"
+                android:textSize="@dimen/caption" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/popwindows_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="时间:2015-11-11 19:00:00"
+                android:textColor="@color/text"
+                android:textSize="@dimen/caption" />
+
+            <TextView
+                android:id="@+id/popwindows_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/popwindows_time"
+                android:singleLine="true"
+                android:text="位置:沧州市新华路189号 "
+                android:textColor="@color/text"
+                android:textSize="@dimen/caption" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/yz_next" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/popwindows_track"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/full_transparent"
+            android:text="跟踪"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/button" />
+
+        <Button
+            android:id="@+id/popwindows_trail"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/full_transparent"
+            android:text="轨迹回放"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/button" />
+
+        <Button
+            android:id="@+id/popwindows_weather"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/full_transparent"
+            android:text="天气"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/button" />
+    </LinearLayout>
+
+</LinearLayout>

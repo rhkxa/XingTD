@@ -2,8 +2,12 @@ package com.gps808.app.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gps808.app.R;
@@ -11,82 +15,170 @@ import com.gps808.app.view.FancyButton;
 
 public class CustomChoseDialog extends Dialog {
 
-	private Context context;
-	private View.OnClickListener okClickListener;
-	private View.OnClickListener noClickListener;
-	private String title, content;
-	private TextView dialog_title, dialog_content;
-	private FancyButton dialog_ok, dialog_no;
-
-	public CustomChoseDialog(Context context, String title, String content,
-			View.OnClickListener okClickListener,
-			View.OnClickListener noClickListener) {
-		super(context, R.style.Dialog);
-		// TODO Auto-generated constructor stub
-		this.context = context;
-		this.okClickListener = okClickListener;
-		this.noClickListener = noClickListener;
-		this.title = title;
-		this.content = content;
-		setCanceledOnTouchOutside(false);
-
-	}
-
 	public CustomChoseDialog(Context context) {
-		super(context, R.style.Dialog);
-		// TODO Auto-generated constructor stub
-		this.context = context;
+		super(context);
 		setCanceledOnTouchOutside(false);
-
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dialog_chose);
-		init();
+	public CustomChoseDialog(Context context, int theme) {
+		super(context, theme);
 	}
 
-	private void init() {
-		// TODO Auto-generated method stub
-		dialog_content = (TextView) findViewById(R.id.dialog_content);
-		dialog_title = (TextView) findViewById(R.id.dialog_title);
-		dialog_ok = (FancyButton) findViewById(R.id.dialog_ok);
-		dialog_no = (FancyButton) findViewById(R.id.dialog_no);
-		dialog_title.setText(title);
-		dialog_content.setText(content);
-		dialog_ok.setOnClickListener(okClickListener);
-		if(noClickListener==null){
-			noClickListener=no;
+	public static class Builder {
+		private Context context;
+		private String title;
+		private String message;
+		private String positiveButtonText;
+		private String negativeButtonText;
+		private View contentView;
+		private DialogInterface.OnClickListener positiveButtonClickListener;
+		private DialogInterface.OnClickListener negativeButtonClickListener;
+
+		public Builder(Context context) {
+			this.context = context;
 		}
-		dialog_no.setOnClickListener(noClickListener);
 
-	}
-
-	public void setTitle(String title) {
-		dialog_title.setText(title);
-	}
-
-	public void setContent(String content) {
-		dialog_content.setText(content);
-	}
-
-	public void setOkClick(android.view.View.OnClickListener listener) {
-		dialog_ok.setOnClickListener(listener);
-	}
-
-	public void setNoClick(android.view.View.OnClickListener listener) {
-		dialog_no.setOnClickListener(listener);
-	}
-
-
-	private android.view.View.OnClickListener no=new View.OnClickListener() {
-		
-		@Override
-		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			dismiss();
+		public Builder setMessage(String message) {
+			this.message = message;
+			return this;
 		}
-	};
+
+		/**
+		 * Set the Dialog message from resource
+		 * 
+		 * @param title
+		 * @return
+		 */
+		public Builder setMessage(int message) {
+			this.message = (String) context.getText(message);
+			return this;
+		}
+
+		/**
+		 * Set the Dialog title from resource
+		 * 
+		 * @param title
+		 * @return
+		 */
+		public Builder setTitle(int title) {
+			this.title = (String) context.getText(title);
+			return this;
+		}
+
+		/**
+		 * Set the Dialog title from String
+		 * 
+		 * @param title
+		 * @return
+		 */
+
+		public Builder setTitle(String title) {
+			this.title = title;
+			return this;
+		}
+
+		public Builder setContentView(View v) {
+			this.contentView = v;
+			return this;
+		}
+
+		/**
+		 * Set the positive button resource and it's listener
+		 * 
+		 * @param positiveButtonText
+		 * @return
+		 */
+		public Builder setPositiveButton(int positiveButtonText,
+				DialogInterface.OnClickListener listener) {
+			this.positiveButtonText = (String) context
+					.getText(positiveButtonText);
+			this.positiveButtonClickListener = listener;
+			return this;
+		}
+
+		public Builder setPositiveButton(String positiveButtonText,
+				DialogInterface.OnClickListener listener) {
+			this.positiveButtonText = positiveButtonText;
+			this.positiveButtonClickListener = listener;
+			return this;
+		}
+
+		public Builder setNegativeButton(int negativeButtonText,
+				DialogInterface.OnClickListener listener) {
+			this.negativeButtonText = (String) context
+					.getText(negativeButtonText);
+			this.negativeButtonClickListener = listener;
+			return this;
+		}
+
+		public Builder setNegativeButton(String negativeButtonText,
+				DialogInterface.OnClickListener listener) {
+			this.negativeButtonText = negativeButtonText;
+			this.negativeButtonClickListener = listener;
+			return this;
+		}
+
+		public CustomChoseDialog create() {
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			// instantiate the dialog with the custom Theme
+			final CustomChoseDialog dialog = new CustomChoseDialog(context,
+					R.style.Dialog);
+			View layout = inflater.inflate(R.layout.dialog_chose, null);
+			dialog.addContentView(layout, new LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			// set the dialog title
+			((TextView) layout.findViewById(R.id.dialog_title)).setText(title);
+			// set the confirm button
+			if (positiveButtonText != null) {
+				((FancyButton) layout.findViewById(R.id.dialog_ok))
+						.setText(positiveButtonText);
+				if (positiveButtonClickListener != null) {
+					((FancyButton) layout.findViewById(R.id.dialog_ok))
+							.setOnClickListener(new View.OnClickListener() {
+								public void onClick(View v) {
+									positiveButtonClickListener.onClick(dialog,
+											DialogInterface.BUTTON_POSITIVE);
+								}
+							});
+				}
+			} else {
+				// if no confirm button just set the visibility to GONE
+				layout.findViewById(R.id.dialog_ok).setVisibility(View.GONE);
+			}
+			// set the cancel button
+			if (negativeButtonText != null) {
+				((FancyButton) layout.findViewById(R.id.dialog_no))
+						.setText(negativeButtonText);
+				if (negativeButtonClickListener != null) {
+					((FancyButton) layout.findViewById(R.id.dialog_no))
+							.setOnClickListener(new View.OnClickListener() {
+								public void onClick(View v) {
+									negativeButtonClickListener.onClick(dialog,
+											DialogInterface.BUTTON_NEGATIVE);
+								}
+							});
+				}
+			} else {
+				// if no confirm button just set the visibility to GONE
+				layout.findViewById(R.id.dialog_ok).setVisibility(View.GONE);
+			}
+			// set the content message
+			if (message != null) {
+				((TextView) layout.findViewById(R.id.dialog_content))
+						.setText(message);
+			} else if (contentView != null) {
+				// if no message set
+				// add the contentView to the dialog body
+				((LinearLayout) layout.findViewById(R.id.dialog_content))
+						.removeAllViews();
+				((LinearLayout) layout.findViewById(R.id.dialog_content))
+						.addView(contentView, new LayoutParams(
+								LayoutParams.FILL_PARENT,
+								LayoutParams.FILL_PARENT));
+			}
+			dialog.setContentView(layout);
+			return dialog;
+		}
+	}
 }

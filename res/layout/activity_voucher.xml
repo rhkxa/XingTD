@@ -2,12 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
     android:orientation="vertical" >
-     <fragment
+
+    <fragment
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         class="com.gps808.app.fragment.HeaderFragment" />
-     
+
+    <RadioGroup
+        android:id="@+id/voucher_rg"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/voucher_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_radiobutton_line"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@drawable/tab_text" />
+
+        <RadioButton
+            android:id="@+id/voucher_onlion"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_radiobutton_line"
+            android:button="@null"
+            android:gravity="center"
+            android:text="在线"
+            android:textColor="@drawable/tab_text" />
+
+        <RadioButton
+            android:id="@+id/voucher_offline"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_radiobutton_line"
+            android:button="@null"
+            android:gravity="center"
+            android:text="离线"
+            android:textColor="@drawable/tab_text" />
+    </RadioGroup>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        layout="@layout/widget_search_layout" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/voucher_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="fill" >
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>

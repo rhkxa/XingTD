@@ -16,14 +16,11 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.baidu.android.pushservice.PushMessageReceiver;
-import com.gps808.app.bean.UpPush;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.loopj.android.http.JsonHttpResponseHandler;
-
 
 /*
  * Push消息处理receiver。请编写您需要的回调函数， 一般来说： onBind是必须的，用来处理startWork返回值；
@@ -150,7 +147,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 			JSONObject customJson = null;
 			try {
 				customJson = new JSONObject(customContentString);
-			
+
 				if (!customJson.isNull("id")) {
 					myvalue = customJson.getString("id");
 				}
@@ -304,7 +301,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 	}
 
 	private void updateContent(Context context, String content) {
-		Log.d(TAG, "updateContent"+content);
+		Log.d(TAG, "updateContent" + content);
 		String logText = "" + PushUtils.logStringCache;
 
 		// if (!logText.equals("")) {
@@ -322,51 +319,54 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 		// WelcomeActivity.class);
 		// intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		// context.getApplicationContext().startActivity(intent);
-        
-//		if (!StringUtils.isEmpty(content)) {
-//			//Log.d(TAG, "updateContent跳转到商品详情");
-//			Intent intent = new Intent();
-//			intent.putExtra("goods_id", content);
-//			// intent.putExtra("cityid", content);
-//			intent.setClass(context.getApplicationContext(),
-//					GoodsDetailActivity.class);
-//			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//			context.getApplicationContext().startActivity(intent);
-//			
-//		} else {
-//			//Log.d(TAG, "updateContent打开应用");
-//			Intent intent = new Intent();
-//			intent.setClass(context.getApplicationContext(),
-//					WelcomeActivity.class);
-//			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//			context.getApplicationContext().startActivity(intent);
-//		}
+
+		// if (!StringUtils.isEmpty(content)) {
+		// //Log.d(TAG, "updateContent跳转到商品详情");
+		// Intent intent = new Intent();
+		// intent.putExtra("goods_id", content);
+		// // intent.putExtra("cityid", content);
+		// intent.setClass(context.getApplicationContext(),
+		// GoodsDetailActivity.class);
+		// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		// context.getApplicationContext().startActivity(intent);
+		//
+		// } else {
+		// //Log.d(TAG, "updateContent打开应用");
+		// Intent intent = new Intent();
+		// intent.setClass(context.getApplicationContext(),
+		// WelcomeActivity.class);
+		// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		// context.getApplicationContext().startActivity(intent);
+		// }
 	}
 
-	private void toUploadPush(Context context,String channelId,String appId,String userId){
-		String url=UrlConfig.getPush();
-		UpPush upPush=new UpPush();
-		upPush.setAppId(appId);
-		upPush.setChannelId(channelId);
-		upPush.setUserId(userId);
-		upPush.setDeviceType(3);
-		StringEntity entity=null;
+	private void toUploadPush(Context context, String channelId, String appId,
+			String userId) {
+		String url = UrlConfig.getPush();
+
+		JSONObject postData = new JSONObject();
+		StringEntity entity = null;
 		try {
-			LogUtils.DebugLog("post json"+JSON.toJSONString(upPush));
-			 entity=new StringEntity(JSON.toJSONString(upPush));
-		} catch (UnsupportedEncodingException e) {
+			postData.put("channelId", channelId);
+			postData.put("appId", appId);
+			postData.put("userId", userId);
+			postData.put("deviceType", 3);
+			LogUtils.DebugLog("post json" + postData.toString());
+			entity = new StringEntity(postData.toString());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		HttpUtil.post(context, url, entity, "application/json", new JsonHttpResponseHandler(){
-			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-					JSONObject response) {
-				// TODO Auto-generated method stub
-				LogUtils.DebugLog("push绑定成功");
-				super.onSuccess(statusCode, headers, response);
-			}
-		});
+
+		HttpUtil.post(context, url, entity, "application/json",
+				new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						LogUtils.DebugLog("push绑定成功");
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
 	}
 }

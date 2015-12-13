@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/goods_search_box"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/corners_rect_white" >
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="8dp"
+            android:src="@drawable/smyk_search" />
+
+        <EditText
+            android:id="@+id/layout_search_bar_edittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:background="@color/full_transparent"
+            android:focusable="false"
+            android:gravity="left|center_vertical"
+            android:hint="请输入车牌号或手机号"
+            android:padding="4dp"
+            android:textSize="@dimen/body" />
+    </LinearLayout>
+
+</LinearLayout>
