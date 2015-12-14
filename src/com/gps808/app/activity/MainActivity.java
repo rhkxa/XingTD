@@ -66,7 +66,6 @@ public class MainActivity extends BaseActivity {
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
-	private OverlayManager overlayManager;
 	private long mExitTime = 0;
 	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
 	// private BadgeView badge;
@@ -193,7 +192,6 @@ public class MainActivity extends BaseActivity {
 		Marker marker = null;
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (XbVehicle info : infos) {
-
 			// 位置
 			latLng = new LatLng(Utils.getLng(info.getLocation())[1],
 					Utils.getLng(info.getLocation())[0]);
@@ -222,8 +220,6 @@ public class MainActivity extends BaseActivity {
 	 */
 	public void clearOverlay(View view) {
 		mBaiduMap.clear();
-		// mMarkerA = null;
-		// mMarkerB = null;
 	}
 
 	/**
@@ -246,7 +242,6 @@ public class MainActivity extends BaseActivity {
 	
 
 	private void getVehicleLocation(String key) {
-
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
@@ -279,7 +274,7 @@ public class MainActivity extends BaseActivity {
 	 * @param mMarkerInfo2
 	 * @param info
 	 */
-	protected View popupInfo(View mMarkerLy, XbVehicle xbVehicle) {
+	private View popupInfo(View mMarkerLy, XbVehicle xbVehicle) {
 		ViewHolder viewHolder = null;
 		if (mMarkerLy.getTag() == null) {
 			viewHolder = new ViewHolder();

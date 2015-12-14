@@ -26,7 +26,6 @@ public class SetupActivity extends BaseActivity {
 			setup_update;
 	private CircleImageView personal_headimage;
 	private SwitchButton push_switch;
-	private BnUser user=new BnUser();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +47,12 @@ public class SetupActivity extends BaseActivity {
 		setup_agrement = (LinearLayout) findViewById(R.id.setup_agrement);
 		setup_introduce = (LinearLayout) findViewById(R.id.setup_introduce);
 		setup_update = (LinearLayout) findViewById(R.id.setup_update);
-//		personal_headimage = (CircleImageView) findViewById(R.id.personal_headimage);
-//		push_switch = (SwitchButton) findViewById(R.id.push_switch);
+		personal_headimage = (CircleImageView) findViewById(R.id.personal_headimage);
+		push_switch = (SwitchButton) findViewById(R.id.push_switch);
 
 		setup_agrement.setOnClickListener(click);
 		setup_score.setOnClickListener(click);
 		setup_introduce.setOnClickListener(click);
-		
-		ImageLoader.getInstance().displayImage(user.getFace(),
-				personal_headimage);
 		setup_user.setOnClickListener(new OnClickListener() {
 
 			@Override

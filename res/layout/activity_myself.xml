@@ -59,7 +59,7 @@
         android:padding="8dp" >
 
         <com.gps808.app.view.PengButton
-            android:id="@+id/my_wallet"
+            android:id="@+id/my_car"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -71,11 +71,11 @@
             android:textColor="@drawable/tab_text"
             android:textSize="14sp"
             app:peng_drawableTop="@drawable/ic_launcher"
-            app:peng_drawableTopHeight="20dp"
-            app:peng_drawableTopWith="20dp" />
+            app:peng_drawableTopHeight="16dp"
+            app:peng_drawableTopWith="16dp" />
 
         <com.gps808.app.view.PengButton
-            android:id="@+id/my_collet"
+            android:id="@+id/my_routes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -86,11 +86,11 @@
             android:textColor="@drawable/tab_text"
             android:textSize="14sp"
             app:peng_drawableTop="@drawable/ic_launcher"
-            app:peng_drawableTopHeight="20dp"
-            app:peng_drawableTopWith="20dp" />
+            app:peng_drawableTopHeight="16dp"
+            app:peng_drawableTopWith="16dp" />
 
         <com.gps808.app.view.PengButton
-            android:id="@+id/my_address"
+            android:id="@+id/my_police"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -101,11 +101,11 @@
             android:textColor="@drawable/tab_text"
             android:textSize="14sp"
             app:peng_drawableTop="@drawable/ic_launcher"
-            app:peng_drawableTopHeight="20dp"
-            app:peng_drawableTopWith="20dp" />
+            app:peng_drawableTopHeight="16dp"
+            app:peng_drawableTopWith="16dp" />
 
         <com.gps808.app.view.PengButton
-            android:id="@+id/my_join"
+            android:id="@+id/my_driver"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -138,7 +138,7 @@
             android:orientation="vertical" >
 
             <LinearLayout
-                android:id="@+id/my_center"
+                android:id="@+id/my_help"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/layout_backgroud_selector"
@@ -151,7 +151,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/yz_my_center" />
+                    android:src="@drawable/ic_launcher" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -173,7 +173,7 @@
             <View style="@style/blackline" />
 
             <LinearLayout
-                android:id="@+id/my_order"
+                android:id="@+id/my_about"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/layout_backgroud_selector"
@@ -186,7 +186,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/yz_my_order" />
+                    android:src="@drawable/ic_launcher" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -212,7 +212,7 @@
                 android:layout_marginTop="8dp" />
 
             <LinearLayout
-                android:id="@+id/my_voucher"
+                android:id="@+id/my_setup"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/layout_backgroud_selector"
@@ -225,7 +225,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/yz_my_voucher" />
+                    android:src="@drawable/ic_launcher" />
 
                 <TextView
                     android:layout_width="0dp"

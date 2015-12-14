@@ -10,10 +10,10 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        class="com.gps808.app.fragment.HeaderFragment" />
+        class="com.yzss.fragment.HeaderFragment" />
 
     <RelativeLayout
-        android:id="@+id/personal_head"
+        android:id="@+id/setup_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_backgroud_selector"
@@ -26,87 +26,28 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:text="头像"
+            android:text="帐户管理"
             android:textColor="@color/text"
             android:textSize="@dimen/body" />
 
-      <com.gps808.app.view.CircleImageView
+        <com.gps808.app.view.CircleImageView
             android:id="@+id/personal_headimage"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/smyk_logo"
             app:border_color="@color/white"
-            app:border_width="1dp" /> 
+            app:border_width="1dp" />
     </RelativeLayout>
 
     <View style="@style/blackline" />
 
-    <RelativeLayout
-        android:id="@+id/personal_nick"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:text="昵称"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
-
-        <TextView
-            android:id="@+id/personal_nick_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="12345678901"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
-    </RelativeLayout>
-
-    <View style="@style/blackline" />
-
-    <LinearLayout
-        android:id="@+id/personal_sex"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:text="性别"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
-
-        <TextView
-            android:id="@+id/personal_sex_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
-            android:text="女"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
-    </LinearLayout>
-
-    <View style="@style/blackline" />
+    <View
+        style="@style/blackline"
+        android:layout_marginTop="8dp" />
 
     <RelativeLayout
-        android:id="@+id/personal_user"
+        android:id="@+id/setup_push"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/white"
@@ -120,21 +61,107 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
-            android:text="帐号"
+            android:text="接收推送"
             android:textColor="@color/text"
             android:textSize="@dimen/body" />
 
-        <TextView
-            android:id="@+id/personal_user_text"
+        <com.gps808.app.view.Switch.SwitchButton
+            android:id="@+id/push_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="32dp"
-            android:text="12345"
+            app:onColor="@color/app_green" />
+    </RelativeLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:id="@+id/setup_score"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/layout_backgroud_selector"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="评分"
             android:textColor="@color/text"
             android:textSize="@dimen/body" />
-    </RelativeLayout>
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <View
+        style="@style/blackline"
+        android:layout_marginTop="8dp" />
+
+    <LinearLayout
+        android:id="@+id/setup_agrement"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/layout_backgroud_selector"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="用户协议"
+            android:textColor="@color/text"
+            android:textSize="@dimen/body" />
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:id="@+id/setup_introduce"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/layout_backgroud_selector"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="版本介绍"
+            android:textColor="@color/text"
+            android:textSize="@dimen/body" />
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <LinearLayout
+        android:id="@+id/setup_update"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="检查新版本"
+            android:textColor="@color/text"
+            android:textSize="@dimen/body" />
+    </LinearLayout>
 
     <View style="@style/blackline" />
 

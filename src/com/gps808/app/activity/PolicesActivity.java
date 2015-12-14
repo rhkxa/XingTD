@@ -47,7 +47,7 @@ public class PolicesActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_police);
 		init();
-		getData(true);
+		getData(false);
 
 	}
 
