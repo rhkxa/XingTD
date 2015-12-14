@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.xtd.activity">
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,15 +11,15 @@
         android:layout_margin="4dp"
         android:background="@drawable/backgroud_black_frame"
         android:padding="8dp" >
-  
-   <!--        <com.xtd.custom.View.Generally.CircleImageView
+
+        <com.gps808.app.view.CircleImageView
             android:id="@+id/item_ranking_headimg"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:src="@drawable/smyk_logo"
             app:border_color="@color/white"
-            app:border_width="1dp"  /> 
+            app:border_width="1dp" />
 
         <TextView
             android:id="@+id/item_ranking_name"
@@ -29,7 +30,7 @@
             android:layout_toRightOf="@id/item_ranking_headimg"
             android:text="jia"
             android:textSize="@dimen/body" />
--->
+
         <TextView
             android:id="@+id/item_ranking_num"
             android:layout_width="wrap_content"

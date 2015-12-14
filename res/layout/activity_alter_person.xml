@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.xtd.activity"
+    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
@@ -30,14 +30,14 @@
             android:textColor="@color/text"
             android:textSize="@dimen/body" />
 
-   <!--      <com.xtd.custom.View.Generally.CircleImageView
+      <com.gps808.app.view.CircleImageView
             android:id="@+id/personal_headimage"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/smyk_logo"
             app:border_color="@color/white"
-            app:border_width="1dp" /> -->
+            app:border_width="1dp" /> 
     </RelativeLayout>
 
     <View style="@style/blackline" />

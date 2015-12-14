@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.xtd.activity"
+    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
@@ -92,15 +92,14 @@
                         android:id="@+id/pager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
-<!--  
-                   <com.xtd.custom.View.Indicator.CirclePageIndicator
+
+                    <com.gps808.app.view.Indicator.CirclePageIndicator
                         android:id="@+id/indicator"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:padding="10dp"
                         app:fillColor="@color/red" />
-                -->
                 </FrameLayout>
 
                 <View style="@style/blackline" />

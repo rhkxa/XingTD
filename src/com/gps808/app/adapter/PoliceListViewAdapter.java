@@ -11,13 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gps808.app.R;
+import com.gps808.app.bean.XbPolice;
 import com.gps808.app.bean.XbVehicle;
 
 public class PoliceListViewAdapter extends BaseAdapter {
 	private Context mContext;
-	private List<XbVehicle> datalist;
+	private List<XbPolice> datalist;
 
-	public PoliceListViewAdapter(Context mContext, List<XbVehicle> datalist) {
+	public PoliceListViewAdapter(Context mContext, List<XbPolice> datalist) {
 		this.mContext = mContext;
 		this.datalist = datalist;
 	}
@@ -25,8 +26,8 @@ public class PoliceListViewAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-//		return datalist.size();
-	return 5;
+		 return datalist.size();
+
 	}
 
 	@Override
@@ -57,33 +58,28 @@ public class PoliceListViewAdapter extends BaseAdapter {
 
 		// ImageLoader.getInstance().displayImage(datalist.get(arg0).getFace(),
 		// vh.item_ranking_headimg);
-//		vh.item_vehicle_name.setText(datalist.get(arg0).getPlateNo());
-//		String status = "";
-//		if (datalist.get(arg0).isOnline()) {
-//			status = "在线";
-//
-//		} else {
-//			status = "离线";
-//		}
-//		vh.item_vehicle_status.setText(status);
+		vh.item_police_addr.setText(datalist.get(arg0).getPlateNo());
+		vh.item_police_name.setText(datalist.get(arg0).getAlarmName());
+		vh.item_police_time.setText(datalist.get(arg0).getTime());
 
 		return arg1;
 	}
 
 	class ViewHolder {
-		ImageView item_vehicle_image;
-		TextView item_vehicle_name;
-		TextView item_vehicle_status;
+		ImageView item_police_image;
+		TextView item_police_name;
+		TextView item_police_time;
+		TextView item_police_addr;
 
 		public ViewHolder(View arg1) {
-//			item_vehicle_image = (ImageView) arg1
-//					.findViewById(R.id.item_vehicle_image);
-			// item_ranking_name = (TextView) arg1
-			// .findViewById(R.id.item_ranking_name);
-//			item_vehicle_name = (TextView) arg1
-//					.findViewById(R.id.item_vehicle_name);
-//			item_vehicle_status = (TextView) arg1
-//					.findViewById(R.id.item_vehicle_status);
+			item_police_image = (ImageView) arg1
+					.findViewById(R.id.item_police_image);
+			item_police_name = (TextView) arg1
+					.findViewById(R.id.item_police_name);
+			item_police_time = (TextView) arg1
+					.findViewById(R.id.item_police_time);
+			item_police_addr = (TextView) arg1
+					.findViewById(R.id.item_police_addr);
 		}
 
 	}

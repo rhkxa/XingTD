@@ -18,10 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.gps808.app.R;
 import com.gps808.app.bean.PUser;
 import com.gps808.app.bean.XbUser;
 import com.gps808.app.dialog.CustomOkDialog;
+import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.CyptoUtils;
 import com.gps808.app.utils.HttpUtil;
@@ -61,6 +64,7 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.activity_login);
 		// UpdateManager.getUpdateManager().checkAppUpdate(LoginActivity.this,
 		// false);
+		initWithApiKey();
 		init();
 	}
 
@@ -206,8 +210,7 @@ public class LoginActivity extends BaseActivity {
 
 								XbUser xbUser = JSON.parseObject(
 										response.toString(), XbUser.class);
-								Utils.ToastMessage(LoginActivity.this,
-										xbUser.getUserName() + "登录成功");
+								Utils.ToastMessage(LoginActivity.this, "登录成功");
 								mPreferences.setUserNick(xbUser.getUserName());
 								mPreferences.setUserId(xbUser.getUserId());
 								mPreferences.setUserState(xbUser.getUserType());
@@ -219,6 +222,7 @@ public class LoginActivity extends BaseActivity {
 										MainActivity.class);
 								startActivity(intent);
 								finish();
+
 							} else {
 								Utils.ToastMessage(LoginActivity.this,
 										Utils.getKey(response, "errorMsg"));
@@ -241,6 +245,14 @@ public class LoginActivity extends BaseActivity {
 			Utils.showSuperCardToast(LoginActivity.this, getResources()
 					.getString(R.string.network_not_connected));
 		}
+	}
+
+	// 以apikey的方式绑定
+	private void initWithApiKey() {
+		// Push: 无账号初始化，用api key绑定
+		PushManager.startWork(getApplicationContext(),
+				PushConstants.LOGIN_TYPE_API_KEY,
+				PushUtils.getMetaValue(LoginActivity.this, "api_key"));
 	}
 
 	// 双击退出

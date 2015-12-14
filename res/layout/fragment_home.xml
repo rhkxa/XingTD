@@ -59,7 +59,7 @@
     <View style="@style/blackline" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-        xmlns:app="http://schemas.android.com/apk/res/com.xtd.activity"
+        xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
         android:id="@+id/pull_refresh_scrollview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -75,25 +75,23 @@
                 android:id="@+id/pager"
                 android:layout_width="fill_parent"
                 android:layout_height="180dp" />
-<!--  
-          <com.xtd.custom.View.Indicator.UnderlinePageIndicator
+
+            <com.gps808.app.view.Indicator.LinePageIndicator
                 android:id="@+id/indicator"
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:background="@color/gray"
                 app:fades="false"
                 app:selectedColor="@color/red" />
-                
 
-            <com.xtd.custom.View.Generally.NoRollGridView
+            <com.gps808.app.view.NoRollGridView
                 android:id="@+id/home_options_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:numColumns="4"
                 android:padding="8dp" />
-          
--->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -145,7 +145,7 @@ public class UrlConfig {
 	 *            多少行
 	 * @return
 	 */
-	public static final String getVehicleAlarms(String startPage, String pageNo) {
+	public static final String getVehicleAlarms(int startPage, int pageNo) {
 		return SERVER + "vehicle/alarms?startPage=" + startPage + "&pageNo="
 				+ pageNo;
 	}

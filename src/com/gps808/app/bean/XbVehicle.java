@@ -7,7 +7,7 @@ public class XbVehicle {
 //	4.speed:车速，单位km/h；
 //	5.location：车辆坐标信息，由经度、纬度组成，由“:”分隔，已经偏转为百度坐标；
 //	6.address:位置信息
-	private String vId;
+	private String vid;
 
 	private String plateNo;
 
@@ -23,12 +23,16 @@ public class XbVehicle {
 
 	private String addr;
 
-	public String getvId() {
-		return vId;
+	
+
+
+
+	public String getVid() {
+		return vid;
 	}
 
-	public void setvId(String vId) {
-		this.vId = vId;
+	public void setVid(String vid) {
+		this.vid = vid;
 	}
 
 	public String getPlateNo() {

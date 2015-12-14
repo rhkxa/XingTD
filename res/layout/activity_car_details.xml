@@ -19,7 +19,7 @@
         android:padding="8dp" >
 
         <com.gps808.app.view.CircleImageView
-            android:id="@+id/my_headimage"
+            android:id="@+id/car_detail_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="8dp"
@@ -35,7 +35,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/popwindows_name"
+                android:id="@+id/car_detail_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -45,7 +45,7 @@
                 android:textSize="@dimen/subhead" />
 
             <TextView
-                android:id="@+id/popwindows_time"
+                android:id="@+id/car_detail_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -54,10 +54,9 @@
                 android:textSize="@dimen/caption" />
 
             <TextView
-                android:id="@+id/popwindows_position"
+                android:id="@+id/car_detail_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/popwindows_time"
                 android:text="位置:沧州市新华路189号(东路直行400米右转到达) "
                 android:textColor="@color/white"
                 android:textSize="@dimen/caption" />
@@ -72,7 +71,7 @@
         android:orientation="vertical" >
 
         <RelativeLayout
-            android:id="@+id/car_name"
+            android:id="@+id/car_phone"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/white"
@@ -91,7 +90,7 @@
                 android:textSize="@dimen/body" />
 
             <TextView
-                android:id="@+id/car_name_text"
+                android:id="@+id/car_phone_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

@@ -26,11 +26,11 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
+import com.gps808.app.map.OverlayManager;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
-import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
@@ -44,11 +44,11 @@ import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MapPoi;
-import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
 
 /**
  * 主界面
@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity {
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
+	private OverlayManager overlayManager;
 	private long mExitTime = 0;
 	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
 	// private BadgeView badge;
@@ -80,9 +81,9 @@ public class MainActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,
-				false);
-		initWithApiKey();
+		// UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,
+		// false);
+
 		init();
 	}
 
@@ -104,16 +105,17 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public boolean onMarkerClick(final Marker marker) {
 				// 获得marker中的数据
-				final XbVehicle xbVehicle = JSON.parseObject(marker.getExtraInfo()
-						.getString("info"), XbVehicle.class);
-				InfoWindow mInfoWindow;
-				OnInfoWindowClickListener onInfoWindowClickListener=new OnInfoWindowClickListener() {
-					
+				final XbVehicle xbVehicle = JSON.parseObject(marker
+						.getExtraInfo().getString("info"), XbVehicle.class);
+				OnInfoWindowClickListener onInfoWindowClickListener = new OnInfoWindowClickListener() {
+
 					@Override
 					public void onInfoWindowClick() {
 						// TODO Auto-generated method stub
-						Intent intent=new Intent(MainActivity.this, CarDetailsActivity.class);
-						intent.putExtra("vid", xbVehicle.getvId());
+						Intent intent = new Intent(MainActivity.this,
+								CarDetailsActivity.class);
+						intent.putExtra("vid", xbVehicle.getVid());
+
 						startActivity(intent);
 					}
 				};
@@ -123,7 +125,9 @@ public class MainActivity extends BaseActivity {
 						null);
 				// mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
 				// marker.getPosition(), -100);
-				mInfoWindow=new InfoWindow(BitmapDescriptorFactory.fromView(popupInfo(mMarkerLy, xbVehicle)), marker.getPosition(), -100, onInfoWindowClickListener);
+				mInfoWindow = new InfoWindow(BitmapDescriptorFactory
+						.fromView(popupInfo(mMarkerLy, xbVehicle)), marker
+						.getPosition(), -100, onInfoWindowClickListener);
 				// 显示InfoWindow
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
@@ -163,7 +167,7 @@ public class MainActivity extends BaseActivity {
 					cls = RoutesActivity.class;
 					break;
 				case R.id.main_myself:
-					cls = VehiclesActivity.class;
+					cls = MyselfActivity.class;
 					break;
 
 				}
@@ -187,23 +191,28 @@ public class MainActivity extends BaseActivity {
 		LatLng latLng = null;
 		OverlayOptions overlayOptions = null;
 		Marker marker = null;
+		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (XbVehicle info : infos) {
+
 			// 位置
-			LogUtils.DebugLog("经纬度" + Utils.getLng(info.getLocation())[0] + ","
-					+ Utils.getLng(info.getLocation())[1]);
 			latLng = new LatLng(Utils.getLng(info.getLocation())[1],
 					Utils.getLng(info.getLocation())[0]);
+			builder.include(latLng);
 			// 图标
 			overlayOptions = new MarkerOptions().position(latLng).icon(bdA)
-					.zIndex(5).animateType(MarkerAnimateType.drop);
+					.zIndex(5);
+			// .animateType(MarkerAnimateType.drop);下降动画
+
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 			Bundle bundle = new Bundle();
 			bundle.putString("info", JSON.toJSONString(info));
 			marker.setExtraInfo(bundle);
+
 		}
-		// 将地图移到到最后一个经纬度位置
-		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(latLng);
-		mBaiduMap.setMapStatus(u);
+		// 缩放地图，使所有Overlay都在合适的视野内
+		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
+				.build()));
+
 	}
 
 	/**
@@ -234,13 +243,7 @@ public class MainActivity extends BaseActivity {
 		super.onPause();
 	}
 
-	// 以apikey的方式绑定
-	private void initWithApiKey() {
-		// Push: 无账号初始化，用api key绑定
-		PushManager.startWork(getApplicationContext(),
-				PushConstants.LOGIN_TYPE_API_KEY,
-				PushUtils.getMetaValue(MainActivity.this, "api_key"));
-	}
+	
 
 	private void getVehicleLocation(String key) {
 

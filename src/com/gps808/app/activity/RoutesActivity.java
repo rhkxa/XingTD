@@ -13,7 +13,6 @@ import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.adapter.PoliceListViewAdapter;
 import com.gps808.app.adapter.RoutesListViewAdapter;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.HeaderFragment;
@@ -21,19 +20,17 @@ import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
-import com.gps808.app.utils.BaseActivity.jsonHttpResponseHandler;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
-public class RoutesActivity extends BaseActivity{
+public class RoutesActivity extends BaseActivity {
 
 	private PullToRefreshListView routes_list;
 	private HeaderFragment headerFragment;
 	private RoutesListViewAdapter rAdapter;
-	private int status = 0;
-	private String key = "";
+	private String place = "";
 	private int pagenum = 0;
 	private final int pageSize = 10;
 	private List<XbVehicle> xbVehicles = new ArrayList<XbVehicle>();
@@ -44,7 +41,7 @@ public class RoutesActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_routes);
 		init();
-//		getData(false);
+		getData(false);
 
 	}
 
@@ -62,24 +59,22 @@ public class RoutesActivity extends BaseActivity{
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
-                  getData(false);
+				getData(true);
 			}
 		});
-		
 
 	}
 
-	private void getData(final boolean isClear) {
-		if(isClear){
+	private void getData(final boolean isRefresh) {
+		if (!isRefresh) {
 			showProgressDialog(RoutesActivity.this, "正在加载,请稍等");
 		}
-		String url = UrlConfig.getVehicleVehicleByPage();
+		String url = UrlConfig.getVehicleRoutes();
+		// { "placeName":"北京","startPage":0,"pageNum":10 }
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
-			postData.put("plateNo", key);
-			postData.put("simNo", key);
-			postData.put("status", status);
+			postData.put("placeName", place);
 			postData.put("startPage", pagenum);
 			postData.put("pageNo", pageSize);
 			entity = new StringEntity(postData.toString());
@@ -94,21 +89,27 @@ public class RoutesActivity extends BaseActivity{
 							JSONArray response) {
 						// TODO Auto-generated method stub
 						LogUtils.DebugLog("result json", response.toString());
-						if (isClear) {
-							xbVehicles.clear();
-						}
-						xbVehicles.addAll(JSON.parseArray(response.toString(),
-								XbVehicle.class));
-						if (JSON.parseArray(response.toString(),
-								XbVehicle.class).size() < pageSize) {
-							routes_list.setMode(Mode.DISABLED);
+
+//						xbVehicles.addAll(JSON.parseArray(response.toString(),
+//								XbVehicle.class));
+//						if (JSON.parseArray(response.toString(),
+//								XbVehicle.class).size() < pageSize) {
+//							routes_list.setMode(Mode.DISABLED);
 							// Utils.ToastMessage(CommentActivity.this,
 							// "暂无更多评论");
-						} else {
-							pagenum++;
-						}
+//						} else {
+//							pagenum++;
+//						}
 						rAdapter.notifyDataSetChanged();
+
 						super.onSuccess(statusCode, headers, response);
+					}
+
+					@Override
+					public void onFinish() {
+						// TODO Auto-generated method stub
+						routes_list.onRefreshComplete();
+						super.onFinish();
 					}
 				});
 

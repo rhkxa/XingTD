@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="com.gps808.app.fragment.HeaderFragment" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_blue"
+        android:gravity="center"
+        android:padding="16dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <com.gps808.app.view.CircleImageView
+                android:id="@+id/my_headimage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/yz_icon_headimage"
+                app:border_color="@color/app_green"
+                app:border_width="2dp" />
+
+            <TextView
+                android:id="@+id/my_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/subhead" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="天 气：晴转多云，温度：56度"
+                android:textColor="@color/white"
+                android:textSize="@dimen/body" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <com.gps808.app.view.PengButton
+            android:id="@+id/my_wallet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="车辆"
+            android:textColor="@drawable/tab_text"
+            android:textSize="14sp"
+            app:peng_drawableTop="@drawable/ic_launcher"
+            app:peng_drawableTopHeight="20dp"
+            app:peng_drawableTopWith="20dp" />
+
+        <com.gps808.app.view.PengButton
+            android:id="@+id/my_collet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:gravity="center"
+            android:text="路线"
+            android:textColor="@drawable/tab_text"
+            android:textSize="14sp"
+            app:peng_drawableTop="@drawable/ic_launcher"
+            app:peng_drawableTopHeight="20dp"
+            app:peng_drawableTopWith="20dp" />
+
+        <com.gps808.app.view.PengButton
+            android:id="@+id/my_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:gravity="center"
+            android:text="报警"
+            android:textColor="@drawable/tab_text"
+            android:textSize="14sp"
+            app:peng_drawableTop="@drawable/ic_launcher"
+            app:peng_drawableTopHeight="20dp"
+            app:peng_drawableTopWith="20dp" />
+
+        <com.gps808.app.view.PengButton
+            android:id="@+id/my_join"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:gravity="center"
+            android:text="司机"
+            android:textColor="@drawable/tab_text"
+            android:textSize="14sp"
+            app:peng_drawableTop="@drawable/ic_launcher"
+            app:peng_drawableTopHeight="16dp"
+            app:peng_drawableTopWith="16dp" />
+    </LinearLayout>
+
+    <View style="@style/blackline" />
+
+    <View
+        style="@style/blackline"
+        android:layout_marginTop="8dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/my_center"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/yz_my_center" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="帮助与反馈"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/yz_next" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:id="@+id/my_order"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/yz_my_order" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="关于我们"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/yz_next" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <View
+                style="@style/blackline"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/my_voucher"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/yz_my_voucher" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="设置"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/yz_next" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
