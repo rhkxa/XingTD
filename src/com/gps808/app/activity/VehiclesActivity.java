@@ -18,6 +18,8 @@ import com.gps808.app.R;
 import com.gps808.app.adapter.VehicleListAdapter;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.fragment.SearchFragment;
+import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
@@ -50,7 +52,7 @@ public class VehiclesActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_vehicle);
 		init();
-		getData(false);
+		getData(true);
 
 	}
 
@@ -59,8 +61,17 @@ public class VehiclesActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("车辆列表");
+		SearchFragment searchFragment = (SearchFragment) this
+				.getSupportFragmentManager().findFragmentById(R.id.search_bar);
+		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
+
+			@Override
+			public void onSearch(String key) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		vehicle_list = (PullToRefreshListView) findViewById(R.id.vehicle_list);
-		vehicle_list.setMode(Mode.PULL_FROM_END);
 		vAdapter = new VehicleListAdapter(VehiclesActivity.this, xbVehicles);
 		vehicle_list.setAdapter(vAdapter);
 		vehicle_list.setOnRefreshListener(new OnRefreshListener<ListView>() {
@@ -68,7 +79,7 @@ public class VehiclesActivity extends BaseActivity {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
-                  getData(false);
+				getData(false);
 			}
 		});
 		vehicle_rg = (RadioGroup) findViewById(R.id.vehicle_rg);
@@ -97,7 +108,7 @@ public class VehiclesActivity extends BaseActivity {
 	}
 
 	private void getData(final boolean isClear) {
-		if(isClear){
+		if (isClear) {
 			showProgressDialog(VehiclesActivity.this, "正在加载,请稍等");
 		}
 		String url = UrlConfig.getVehicleVehicleByPage();
@@ -114,6 +125,7 @@ public class VehiclesActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		LogUtils.DebugLog("post json" + postData.toString());
 		HttpUtil.post(VehiclesActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
 					@Override
@@ -132,10 +144,17 @@ public class VehiclesActivity extends BaseActivity {
 							// Utils.ToastMessage(CommentActivity.this,
 							// "暂无更多评论");
 						} else {
+							vehicle_list.setMode(Mode.PULL_FROM_END);
 							pagenum++;
 						}
 						vAdapter.notifyDataSetChanged();
 						super.onSuccess(statusCode, headers, response);
+					}
+					@Override
+					public void onFinish() {
+						// TODO Auto-generated method stub
+						vehicle_list.onRefreshComplete();
+						super.onFinish();
 					}
 				});
 

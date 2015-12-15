@@ -17,6 +17,8 @@ import com.gps808.app.adapter.PoliceListViewAdapter;
 import com.gps808.app.bean.XbPolice;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.fragment.SearchFragment;
+import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
@@ -56,6 +58,15 @@ public class PolicesActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("报警列表");
+		 SearchFragment searchFragment= (SearchFragment) this.getSupportFragmentManager().findFragmentById(R.id.search_bar);
+		    searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
+				
+				@Override
+				public void onSearch(String key) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 		police_list = (PullToRefreshListView) findViewById(R.id.police_list);
 		police_list.setMode(Mode.PULL_FROM_END);
 		pAdapter = new PoliceListViewAdapter(PolicesActivity.this, xbPolices);
@@ -68,6 +79,7 @@ public class PolicesActivity extends BaseActivity {
 				getData(true);
 			}
 		});
+		
 
 	}
 

@@ -19,18 +19,42 @@
             android:layout_margin="8dp"
             android:src="@drawable/smyk_search" />
 
-        <EditText
-            android:id="@+id/layout_search_bar_edittext"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:background="@color/full_transparent"
-            android:gravity="left|center_vertical"
-            android:hint="请输入车牌号或手机号"
-            android:padding="4dp"
-            android:textSize="@dimen/body" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <EditText
+                android:id="@+id/layout_search_bar_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:background="@color/full_transparent"
+                android:gravity="left|center_vertical"
+                android:hint="请输入车牌号或手机号"
+                android:padding="4dp"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:id="@+id/layout_search_bar_close"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/smyk_close"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/layout_search_bar_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_backgroud_selector"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/body"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

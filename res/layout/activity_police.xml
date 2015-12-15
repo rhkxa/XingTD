@@ -11,11 +11,12 @@
         android:layout_height="wrap_content"
         class="com.gps808.app.fragment.HeaderFragment" />
 
-    <include
-        android:layout_width="match_parent"
+    <fragment
+        android:id="@+id/search_bar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        layout="@layout/widget_search_layout" />
+        class="com.gps808.app.fragment.SearchFragment" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/police_list"

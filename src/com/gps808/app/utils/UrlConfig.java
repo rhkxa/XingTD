@@ -251,7 +251,7 @@ public class UrlConfig {
 	 * @param pageNum
 	 * @return
 	 */
-	public static final String getDrivers(String startPage, String pageNum) {
+	public static final String getDrivers(int startPage, int pageNum) {
 		return SERVER + "user/drivers?startPage=" + startPage + "&pageNum="
 				+ pageNum;
 	}

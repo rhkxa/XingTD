@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.activity_login);
 		// UpdateManager.getUpdateManager().checkAppUpdate(LoginActivity.this,
 		// false);
-		initWithApiKey();
+//		initWithApiKey();
 		init();
 	}
 

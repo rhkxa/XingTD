@@ -15,8 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import com.alibaba.fastjson.JSON;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -26,8 +24,8 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
-import com.gps808.app.map.OverlayManager;
-import com.gps808.app.push.PushUtils;
+import com.gps808.app.fragment.SearchFragment;
+import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
@@ -99,6 +97,8 @@ public class MainActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		// 加载数据
+		getVehicleLocation("");
 		// 对Marker的点击弹出PopWindows
 		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			@Override
@@ -178,8 +178,16 @@ public class MainActivity extends BaseActivity {
 		main_police.setOnClickListener(bottomClick);
 		main_routes.setOnClickListener(bottomClick);
 		main_myself.setOnClickListener(bottomClick);
-		getVehicleLocation("");
+		SearchFragment searchFragment = (SearchFragment) this
+				.getSupportFragmentManager().findFragmentById(R.id.search_bar);
+		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
 
+			@Override
+			public void onSearch(String key) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	/**
@@ -238,8 +246,6 @@ public class MainActivity extends BaseActivity {
 		mMapView.onPause();
 		super.onPause();
 	}
-
-	
 
 	private void getVehicleLocation(String key) {
 		JSONObject postData = new JSONObject();

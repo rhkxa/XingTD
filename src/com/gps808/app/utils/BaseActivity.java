@@ -71,6 +71,7 @@ public class BaseActivity extends FragmentActivity {
 		public void onFailure(int statusCode, Header[] headers,
 				String responseString, Throwable throwable) {
 			// TODO Auto-generated method stub
+			Utils.ToastMessage(huaShiApplication, "加载失败，请重试");
 			super.onFailure(statusCode, headers, responseString, throwable);
 		}
 

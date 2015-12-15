@@ -11,13 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gps808.app.R;
+import com.gps808.app.bean.XbRoute;
 import com.gps808.app.bean.XbVehicle;
 
 public class RoutesListViewAdapter extends BaseAdapter {
 	private Context mContext;
-	private List<XbVehicle> datalist;
+	private List<XbRoute> datalist;
 
-	public RoutesListViewAdapter(Context mContext, List<XbVehicle> datalist) {
+	public RoutesListViewAdapter(Context mContext, List<XbRoute> datalist) {
 		this.mContext = mContext;
 		this.datalist = datalist;
 	}
@@ -25,8 +26,8 @@ public class RoutesListViewAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-//		return datalist.size();
-		return 5;
+		return datalist.size();
+
 	}
 
 	@Override
@@ -57,33 +58,32 @@ public class RoutesListViewAdapter extends BaseAdapter {
 
 		// ImageLoader.getInstance().displayImage(datalist.get(arg0).getFace(),
 		// vh.item_ranking_headimg);
-		// vh.item_vehicle_name.setText(datalist.get(arg0).getPlateNo());
-		// String status = "";
-		// if (datalist.get(arg0).isOnline()) {
-		// status = "在线";
-		//
-		// } else {
-		// status = "离线";
-		// }
-		// vh.item_vehicle_status.setText(status);
+		vh.item_routes_name.setText(datalist.get(arg0).getRouteName());
+		vh.item_routes_time.setText(datalist.get(arg0).getTime());
+		vh.item_routes_start.setText(datalist.get(arg0).getStartPlace());
+		vh.item_routes_end.setText(datalist.get(arg0).getEndPlace());
 
 		return arg1;
 	}
 
 	class ViewHolder {
-		// ImageView item_vehicle_image;
-		// TextView item_vehicle_name;
-		// TextView item_vehicle_status;
-		//
+		ImageView item_routes_image;
+		TextView item_routes_name;
+		TextView item_routes_time;
+		TextView item_routes_start;
+		TextView item_routes_end;
+
 		public ViewHolder(View arg1) {
-			// item_vehicle_image = (ImageView) arg1
-			// .findViewById(R.id.item_vehicle_image);
-			// // item_ranking_name = (TextView) arg1
-			// // .findViewById(R.id.item_ranking_name);
-			// item_vehicle_name = (TextView) arg1
-			// .findViewById(R.id.item_vehicle_name);
-			// item_vehicle_status = (TextView) arg1
-			// .findViewById(R.id.item_vehicle_status);
+			item_routes_image = (ImageView) arg1
+					.findViewById(R.id.item_routes_image);
+			item_routes_name = (TextView) arg1
+					.findViewById(R.id.item_routes_name);
+			item_routes_time = (TextView) arg1
+					.findViewById(R.id.item_routes_time);
+			item_routes_start = (TextView) arg1
+					.findViewById(R.id.item_routes_start);
+			item_routes_end = (TextView) arg1
+					.findViewById(R.id.item_routes_end);
 		}
 
 	}

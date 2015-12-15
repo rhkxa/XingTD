@@ -66,6 +66,7 @@ public class CarDetailsActivity extends BaseActivity {
 	}
 
 	private void getData() {
+		showProgressDialog(CarDetailsActivity.this, "正在加载，请稍等");
 		String url = UrlConfig.getVehicleVehInfo(getIntent().getStringExtra(
 				"vid"));
 		HttpUtil.get(url, new jsonHttpResponseHandler() {

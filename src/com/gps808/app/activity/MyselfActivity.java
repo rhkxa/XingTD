@@ -105,7 +105,7 @@ public class MyselfActivity extends BaseActivity {
 				cls = AboutActivity.class;
 				break;
 			case R.id.my_driver:
-				cls = VoucherActivity.class;
+				cls = DriverActivity.class;
 				break;
 			case R.id.my_police:
 				cls = PolicesActivity.class;
