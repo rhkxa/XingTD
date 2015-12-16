@@ -11,6 +11,9 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -20,7 +23,7 @@ import android.widget.ImageView;
 /**
  * 
  * @author JIA
- *
+ * 
  */
 public class BaseActivity extends FragmentActivity {
 	public XtdApplication huaShiApplication;
@@ -42,11 +45,19 @@ public class BaseActivity extends FragmentActivity {
 
 	}
 
-	public void showProgressDialog(Activity activity, CharSequence message) {
+	public void showProgressDialog(final Activity activity, CharSequence message) {
 		if (progressDialog == null) {
 			progressDialog = new ProgressDialog(activity);
 			progressDialog.setIndeterminate(true);
 		}
+		progressDialog.setOnCancelListener(new OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface arg0) {
+				// TODO Auto-generated method stub
+				HttpUtil.cancelRequest(activity);
+			}
+		});
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.setMessage(message);
 		progressDialog.show();
@@ -61,8 +72,9 @@ public class BaseActivity extends FragmentActivity {
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
+		// TODO Auto-generated method stub
 		dismissProgressDialog();
+		super.onDestroy();
 	}
 
 	public class jsonHttpResponseHandler extends JsonHttpResponseHandler {

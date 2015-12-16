@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -12,26 +14,25 @@ import com.gps808.app.R;
 import com.gps808.app.bean.BnUser;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.CircleImageView;
 import com.gps808.app.view.Switch.SwitchButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
 public class SetupActivity extends BaseActivity {
 
 	private HeaderFragment headerFragment;
-	private RelativeLayout setup_user, setup_push;
-	private LinearLayout setup_score, setup_agrement, setup_introduce,
-			setup_update;
-	private CircleImageView personal_headimage;
-	private SwitchButton push_switch;
+	private LinearLayout setup_message;
+	private SwitchButton push_switch, shock_switch, voice_switch;
+	private PreferenceUtils mPreferenceUtils;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup);
+		mPreferenceUtils = PreferenceUtils.getInstance(SetupActivity.this);
 		init();
 	}
 
@@ -41,54 +42,51 @@ public class SetupActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("设置");
-		setup_user = (RelativeLayout) findViewById(R.id.setup_user);
-		setup_push = (RelativeLayout) findViewById(R.id.setup_push);
-		setup_score = (LinearLayout) findViewById(R.id.setup_score);
-		setup_agrement = (LinearLayout) findViewById(R.id.setup_agrement);
-		setup_introduce = (LinearLayout) findViewById(R.id.setup_introduce);
-		setup_update = (LinearLayout) findViewById(R.id.setup_update);
-		personal_headimage = (CircleImageView) findViewById(R.id.personal_headimage);
 		push_switch = (SwitchButton) findViewById(R.id.push_switch);
+		voice_switch = (SwitchButton) findViewById(R.id.voice_switch);
+		shock_switch = (SwitchButton) findViewById(R.id.shock_switch);
+		push_switch.setChecked(mPreferenceUtils.getPush());
+		voice_switch.setChecked(mPreferenceUtils.getVoice());
+		shock_switch.setChecked(mPreferenceUtils.getShock());
+		push_switch.setOnCheckedChangeListener(check);
+		shock_switch.setOnCheckedChangeListener(check);
+		voice_switch.setOnCheckedChangeListener(check);
 
-		setup_agrement.setOnClickListener(click);
-		setup_score.setOnClickListener(click);
-		setup_introduce.setOnClickListener(click);
-		setup_user.setOnClickListener(new OnClickListener() {
+		setup_message = (LinearLayout) findViewById(R.id.setup_message);
+
+		setup_message.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
-					Intent intent = new Intent(SetupActivity.this,
-							UserManagerActivity.class);
-					startActivity(intent);
-				
+
+				Intent intent = new Intent(SetupActivity.this,
+						UserManagerActivity.class);
+				startActivity(intent);
+
 			}
 		});
 	}
 
-	private OnClickListener click = new OnClickListener() {
+	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
 
 		@Override
-		public void onClick(View arg0) {
+		public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 			// TODO Auto-generated method stub
-			Class cls = null;
 			switch (arg0.getId()) {
-			case R.id.setup_score:
-				cls = ScoreActivity.class;
+			case R.id.push_switch:
+				mPreferenceUtils.setPush(arg1);
 				break;
-			case R.id.setup_agrement:
-				cls = AgreementActivity.class;
+			case R.id.shock_switch:
+				mPreferenceUtils.setShock(arg1);
+
 				break;
-			case R.id.setup_introduce:
-				cls = AboutActivity.class;
-				break;
-			case R.id.setup_update:
+			case R.id.voice_switch:
+				mPreferenceUtils.setVoice(arg1);
+
 				break;
 
 			}
-			Intent intent = new Intent(SetupActivity.this, cls);
-			startActivity(intent);
 		}
 	};
 }

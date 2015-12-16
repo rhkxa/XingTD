@@ -141,6 +141,24 @@ public class PreferenceUtils {
 		editor.putBoolean("push", state);
 		editor.commit();
 	}
+	public boolean getVoice() {
+		return mSharedPreferences.getBoolean("voice", true);
+		
+	}
+	
+	public void setVoice(boolean voice) {
+		editor.putBoolean("voice", voice);
+		editor.commit();
+	}
+	public boolean getShock() {
+		return mSharedPreferences.getBoolean("shock", true);
+		
+	}
+	
+	public void setShock(boolean shock) {
+		editor.putBoolean("shock", shock);
+		editor.commit();
+	}
 
 	public String getCall() {
 		return mSharedPreferences.getString("phonenumber", "4000311449");

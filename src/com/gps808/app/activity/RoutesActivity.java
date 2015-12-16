@@ -56,6 +56,7 @@ public class RoutesActivity extends BaseActivity {
 		headerFragment.setTitleText("线路列表");
 		SearchFragment searchFragment = (SearchFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.search_bar);
+		searchFragment.setHint("请输入起始地点");
 		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
 
 			@Override
@@ -95,6 +96,7 @@ public class RoutesActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		LogUtils.DebugLog("post json",postData.toString());
 		HttpUtil.post(RoutesActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
 					@Override

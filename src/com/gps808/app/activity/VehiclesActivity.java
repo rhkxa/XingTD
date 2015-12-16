@@ -8,7 +8,11 @@ import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -82,6 +86,18 @@ public class VehiclesActivity extends BaseActivity {
 				getData(false);
 			}
 		});
+		vehicle_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(VehiclesActivity.this,
+						CarDetailsActivity.class);
+				intent.putExtra("vid", xbVehicles.get(arg2 - 1).getVid());
+				startActivity(intent);
+			}
+		});
 		vehicle_rg = (RadioGroup) findViewById(R.id.vehicle_rg);
 		vehicle_rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -115,8 +131,7 @@ public class VehiclesActivity extends BaseActivity {
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
-			postData.put("plateNo", key);
-			postData.put("simNo", key);
+			postData.put("search", key);
 			postData.put("status", status);
 			postData.put("startPage", pagenum);
 			postData.put("pageNo", pageSize);
@@ -150,6 +165,7 @@ public class VehiclesActivity extends BaseActivity {
 						vAdapter.notifyDataSetChanged();
 						super.onSuccess(statusCode, headers, response);
 					}
+
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub

@@ -122,6 +122,7 @@
         <activity android:name="com.gps808.app.activity.DriverActivity" />
         <activity android:name="com.gps808.app.activity.CarDetailsActivity" />
         <activity android:name="com.gps808.app.activity.MyselfActivity" />
+        <activity android:name="com.gps808.app.activity.WeatherActivity" />
         <activity
             android:name="com.gps808.app.activity.FinishPayActivity"
             android:exported="true"

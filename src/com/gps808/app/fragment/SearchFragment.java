@@ -113,4 +113,7 @@ public class SearchFragment extends BaseFragment {
 		public void onSearch(String key);
 	}
 
+	public void setHint(String hint) {
+		layout_search_bar_edittext.setHint(hint);
+	}
 }

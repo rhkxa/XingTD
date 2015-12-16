@@ -36,6 +36,13 @@ public class HttpUtil {
 		client.post(urlString, params, res);
 	}
 
+	// url里面带参数
+	public static void post(Context mContext, String urlString,
+			RequestParams params, AsyncHttpResponseHandler res) {
+		LogUtils.DebugLog("http post", urlString);
+		client.post(mContext, urlString, params, res);
+	}
+
 	// 下载数据使用，会返回byte数据
 	public static void get(String uString, BinaryHttpResponseHandler bHandler) {
 		client.get(uString, bHandler);
@@ -45,8 +52,7 @@ public class HttpUtil {
 	public static void get(Context context, String urlString,
 			JsonHttpResponseHandler res) {
 		LogUtils.DebugLog("http get", urlString);
-		client.get(urlString, res);
-		Utils.ToastMessage(context, "请检查网络状态，网络不可用");
+		client.get(context, urlString, res);
 
 	}
 
@@ -59,13 +65,19 @@ public class HttpUtil {
 
 	/**
 	 * post 上传
-	 * @param arg0 上下文
-	 * @param arg1 地址
-	 * @param arg2 数据
-	 * @param arg3 格式
-	 * @param arg4 
+	 * 
+	 * @param arg0
+	 *            上下文
+	 * @param arg1
+	 *            地址
+	 * @param arg2
+	 *            数据
+	 * @param arg3
+	 *            格式
+	 * @param arg4
 	 */
-	public static void post(Context arg0, String arg1, HttpEntity arg2, String arg3, AsyncHttpResponseHandler arg4) {
+	public static void post(Context arg0, String arg1, HttpEntity arg2,
+			String arg3, AsyncHttpResponseHandler arg4) {
 		LogUtils.DebugLog("http post", arg1);
 		client.post(arg0, arg1, arg2, arg3, arg4);
 	}
@@ -83,5 +95,13 @@ public class HttpUtil {
 
 	public static AsyncHttpClient getClient() {
 		return client;
+	}
+
+	public static void cancelAllRequest() {
+		client.cancelAllRequests(true);
+	}
+
+	public static void cancelRequest(Context mContext) {
+		client.cancelRequests(mContext, true);
 	}
 }

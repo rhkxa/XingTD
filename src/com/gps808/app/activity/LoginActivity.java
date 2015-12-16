@@ -3,6 +3,8 @@ package com.gps808.app.activity;
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -255,6 +257,7 @@ public class LoginActivity extends BaseActivity {
 				PushUtils.getMetaValue(LoginActivity.this, "api_key"));
 	}
 
+	
 	// 双击退出
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

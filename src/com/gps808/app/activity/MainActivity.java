@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity {
 			.fromResource(R.drawable.icon_marka);
 	BitmapDescriptor bdB = BitmapDescriptorFactory
 			.fromResource(R.drawable.icon_markb);
+	private String key = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 		// 加载数据
-		getVehicleLocation("");
+		getVehicleLocation();
 		// 对Marker的点击弹出PopWindows
 		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			@Override
@@ -111,22 +112,18 @@ public class MainActivity extends BaseActivity {
 					@Override
 					public void onInfoWindowClick() {
 						// TODO Auto-generated method stub
-						Intent intent = new Intent(MainActivity.this,
-								CarDetailsActivity.class);
-						intent.putExtra("vid", xbVehicle.getVid());
 
-						startActivity(intent);
 					}
 				};
 				LayoutInflater inflater = LayoutInflater
 						.from(MainActivity.this);
 				View mMarkerLy = inflater.inflate(R.layout.popwindows_show,
 						null);
-				// mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
-				// marker.getPosition(), -100);
-				mInfoWindow = new InfoWindow(BitmapDescriptorFactory
-						.fromView(popupInfo(mMarkerLy, xbVehicle)), marker
-						.getPosition(), -100, onInfoWindowClickListener);
+				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
+						marker.getPosition(), -100);
+				// mInfoWindow = new InfoWindow(BitmapDescriptorFactory
+				// .fromView(popupInfo(mMarkerLy, xbVehicle)), marker
+				// .getPosition(), -100, onInfoWindowClickListener);
 				// 显示InfoWindow
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
@@ -183,9 +180,9 @@ public class MainActivity extends BaseActivity {
 		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
 
 			@Override
-			public void onSearch(String key) {
+			public void onSearch(String k) {
 				// TODO Auto-generated method stub
-
+				key = k;
 			}
 		});
 	}
@@ -247,17 +244,17 @@ public class MainActivity extends BaseActivity {
 		super.onPause();
 	}
 
-	private void getVehicleLocation(String key) {
+	private void getVehicleLocation() {
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
-			postData.put("plateNo", key);
-			postData.put("simNo", key);
+			postData.put("search", key);
 			entity = new StringEntity(postData.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		LogUtils.DebugLog("post json", postData.toString());
 		String url = UrlConfig.getVehicleLocations();
 		HttpUtil.post(MainActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
@@ -280,7 +277,7 @@ public class MainActivity extends BaseActivity {
 	 * @param mMarkerInfo2
 	 * @param info
 	 */
-	private View popupInfo(View mMarkerLy, XbVehicle xbVehicle) {
+	private View popupInfo(View mMarkerLy, final XbVehicle xbVehicle) {
 		ViewHolder viewHolder = null;
 		if (mMarkerLy.getTag() == null) {
 			viewHolder = new ViewHolder();
@@ -307,13 +304,36 @@ public class MainActivity extends BaseActivity {
 			viewHolder.popwindows_state.setText("离线:");
 		}
 		viewHolder.popwindows_name.setText(xbVehicle.getPlateNo());
+		OnClickListener click = new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				switch (arg0.getId()) {
+				case R.id.popwindows_track:
+
+					break;
+				case R.id.popwindows_weather:
+
+					break;
+				case R.id.popwindows_trail:
+
+					break;
+				}
+				Intent intent = new Intent(MainActivity.this,
+						CarDetailsActivity.class);
+				intent.putExtra("vid", xbVehicle.getVid());
+				startActivity(intent);
+			}
+		};
+		viewHolder.popwindows_weather.setOnClickListener(click);
+		viewHolder.popwindows_trail.setOnClickListener(click);
+		viewHolder.popwindows_track.setOnClickListener(click);
 		return mMarkerLy;
 	}
 
 	/**
 	 * 复用弹出面板mMarkerLy的控件
-	 * 
-	 * @author zhy
 	 * 
 	 */
 	private class ViewHolder {

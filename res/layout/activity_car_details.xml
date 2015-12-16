@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_backgroud"
     android:orientation="vertical" >
 
     <fragment
@@ -20,8 +21,8 @@
 
         <com.gps808.app.view.CircleImageView
             android:id="@+id/car_detail_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_margin="8dp"
             android:src="@drawable/yz_icon_headimage"
             app:border_color="@color/app_green"
@@ -66,9 +67,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:background="@color/app_backgroud"
         android:orientation="vertical" >
+
+        <View style="@style/blackline" />
 
         <RelativeLayout
             android:id="@+id/car_phone"
@@ -236,16 +239,18 @@
         <View style="@style/blackline" />
     </LinearLayout>
 
+    <View style="@style/blackline" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="8dp"
         android:background="@drawable/corners_rect_white"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:padding="8dp" >
 
         <com.gps808.app.view.PengButton
-            android:id="@+id/main_vehicles"
+            android:id="@+id/car_button1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -253,7 +258,7 @@
             android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:text="车辆"
+            android:text="跟踪"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_home_selector"
@@ -261,14 +266,14 @@
             app:peng_drawableTopWith="8dp" />
 
         <com.gps808.app.view.PengButton
-            android:id="@+id/main_routes"
+            android:id="@+id/car_button2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
             android:gravity="center"
-            android:text="线路"
+            android:text="轨迹回放"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_menu_selector"
@@ -276,14 +281,14 @@
             app:peng_drawableTopWith="8dp" />
 
         <com.gps808.app.view.PengButton
-            android:id="@+id/main_police"
+            android:id="@+id/car_button3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
             android:gravity="center"
-            android:text="报警"
+            android:text="详细"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_sales_selector"

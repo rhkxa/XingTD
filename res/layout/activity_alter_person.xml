@@ -67,10 +67,8 @@
 
         <com.gps808.app.view.Switch.SwitchButton
             android:id="@+id/push_switch"
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content"   android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             app:onColor="@color/app_green" />
     </RelativeLayout>
 
