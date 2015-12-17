@@ -8,7 +8,11 @@ import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -35,8 +39,8 @@ public class RoutesActivity extends BaseActivity {
 	private HeaderFragment headerFragment;
 	private RoutesListViewAdapter rAdapter;
 	private String place = "";
-	private int pagenum = 0;
-	private final int pageSize = 10;
+	private int startPage = 0;
+	private final int pageNum = 10;
 	private List<XbRoute> xbRoutes = new ArrayList<XbRoute>();
 
 	@Override
@@ -76,6 +80,17 @@ public class RoutesActivity extends BaseActivity {
 				getData(true);
 			}
 		});
+		routes_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(RoutesActivity.this, DisplayLineActivity.class);
+				intent.putExtra("rid", xbRoutes.get(arg2).getRid());
+				startActivity(intent);
+			}
+		});
 
 	}
 
@@ -84,13 +99,13 @@ public class RoutesActivity extends BaseActivity {
 			showProgressDialog(RoutesActivity.this, "正在加载,请稍等");
 		}
 		String url = UrlConfig.getVehicleRoutes();
-		// { "placeName":"北京","startPage":0,"pageNum":10 }
+		// { "placeName":"北京","startPage":0,"startPage":10 }
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
 			postData.put("placeName", place);
-			postData.put("startPage", pagenum);
-			postData.put("pageNo", pageSize);
+			postData.put("startPage", startPage);
+			postData.put("pageNum", pageNum);
 			entity = new StringEntity(postData.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -108,13 +123,13 @@ public class RoutesActivity extends BaseActivity {
 						xbRoutes.addAll(JSON.parseArray(response.toString(),
 								XbRoute.class));
 						if (JSON.parseArray(response.toString(),
-								XbVehicle.class).size() < pageSize) {
+								XbVehicle.class).size() < pageNum) {
 							// routes_list.setMode(Mode.DISABLED);
 							// Utils.ToastMessage(CommentActivity.this,
 							// "暂无更多评论");
 						} else {
 							routes_list.setMode(Mode.PULL_FROM_END);
-							pagenum++;
+							startPage++;
 						}
 						rAdapter.notifyDataSetChanged();
 

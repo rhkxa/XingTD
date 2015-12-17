@@ -39,8 +39,8 @@ public class PolicesActivity extends BaseActivity {
 	private PullToRefreshListView police_list;
 	private HeaderFragment headerFragment;
 	private PoliceListViewAdapter pAdapter;
-	private int pagenum = 0;
-	private final int pageSize = 10;
+	private int startPage = 0;
+	private final int pageNum = 10;
 	private List<XbPolice> xbPolices = new ArrayList<XbPolice>();
 
 	@Override
@@ -87,7 +87,7 @@ public class PolicesActivity extends BaseActivity {
 		if (!isRefresh) {
 			showProgressDialog(PolicesActivity.this, "正在加载,请稍等");
 		}
-		String url = UrlConfig.getVehicleAlarms(pagenum, pageSize);
+		String url = UrlConfig.getVehicleAlarms(startPage, pageNum);
 		HttpUtil.get(url,
 
 		new jsonHttpResponseHandler() {
@@ -98,12 +98,12 @@ public class PolicesActivity extends BaseActivity {
 				LogUtils.DebugLog("result json", response.toString());
 				xbPolices.addAll(JSON.parseArray(response.toString(),
 						XbPolice.class));
-				if (JSON.parseArray(response.toString(), XbPolice.class).size() < pageSize) {
+				if (JSON.parseArray(response.toString(), XbPolice.class).size() < pageNum) {
 					police_list.setMode(Mode.DISABLED);
 					// Utils.ToastMessage(CommentActivity.this,
 					// "暂无更多评论");
 				} else {
-					pagenum++;
+					startPage++;
 				}
 				pAdapter.notifyDataSetChanged();
 			

@@ -24,6 +24,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
+import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.utils.BaseActivity;
@@ -32,6 +33,7 @@ import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
+import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.PengButton;
 
 import android.widget.Button;
@@ -73,6 +75,7 @@ public class MainActivity extends BaseActivity {
 	BitmapDescriptor bdB = BitmapDescriptorFactory
 			.fromResource(R.drawable.icon_markb);
 	private String key = "";
+	private FancyButton main_refresh;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +188,16 @@ public class MainActivity extends BaseActivity {
 				key = k;
 			}
 		});
+		main_refresh=(FancyButton) findViewById(R.id.main_refresh);
+		main_refresh.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				DateDialog dateDialog=new DateDialog(MainActivity.this);
+				dateDialog.show();
+			}
+		});
 	}
 
 	/**
@@ -195,11 +208,12 @@ public class MainActivity extends BaseActivity {
 		LatLng latLng = null;
 		OverlayOptions overlayOptions = null;
 		Marker marker = null;
+		double[] doubleLng;
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (XbVehicle info : infos) {
+			doubleLng=Utils.getLng(info.getLocation(),":");
 			// 位置
-			latLng = new LatLng(Utils.getLng(info.getLocation())[1],
-					Utils.getLng(info.getLocation())[0]);
+			latLng = new LatLng(doubleLng[1],doubleLng[0]);
 			builder.include(latLng);
 			// 图标
 			overlayOptions = new MarkerOptions().position(latLng).icon(bdA)

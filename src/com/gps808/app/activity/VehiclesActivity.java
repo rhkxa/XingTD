@@ -46,8 +46,8 @@ public class VehiclesActivity extends BaseActivity {
 	private VehicleListAdapter vAdapter;
 	private int status = 0;
 	private String key = "";
-	private int pagenum = 0;
-	private final int pageSize = 10;
+	private int startPage = 0;
+	private final int pageNum = 10;
 	private List<XbVehicle> xbVehicles = new ArrayList<XbVehicle>();
 
 	@Override
@@ -104,7 +104,7 @@ public class VehiclesActivity extends BaseActivity {
 			@Override
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
 				// TODO Auto-generated method stub
-				pagenum = 0;
+				startPage = 0;
 				switch (arg0.getCheckedRadioButtonId()) {
 				case R.id.vehicle_all:
 					status = 0;
@@ -133,8 +133,8 @@ public class VehiclesActivity extends BaseActivity {
 		try {
 			postData.put("search", key);
 			postData.put("status", status);
-			postData.put("startPage", pagenum);
-			postData.put("pageNo", pageSize);
+			postData.put("startPage", startPage);
+			postData.put("pageNum", pageNum);
 			entity = new StringEntity(postData.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -154,13 +154,13 @@ public class VehiclesActivity extends BaseActivity {
 						xbVehicles.addAll(JSON.parseArray(response.toString(),
 								XbVehicle.class));
 						if (JSON.parseArray(response.toString(),
-								XbVehicle.class).size() < pageSize) {
+								XbVehicle.class).size() < pageNum) {
 							vehicle_list.setMode(Mode.DISABLED);
 							// Utils.ToastMessage(CommentActivity.this,
 							// "暂无更多评论");
 						} else {
 							vehicle_list.setMode(Mode.PULL_FROM_END);
-							pagenum++;
+							startPage++;
 						}
 						vAdapter.notifyDataSetChanged();
 						super.onSuccess(statusCode, headers, response);

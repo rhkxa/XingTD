@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_margin="8dp"
-        android:background="@drawable/shape_fav_backgroud"
+        android:background="@drawable/shape_coners_backgroud"
         android:paddingLeft="4dp"
         android:paddingRight="4dp" >
 

@@ -241,16 +241,18 @@
 
     <View style="@style/blackline" />
 
-    <LinearLayout
+       <RadioGroup
+        android:id="@+id/main_linearlayout_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/corners_rect_white"
-        android:gravity="center_vertical"
-        android:padding="8dp" >
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp" >
 
-        <com.gps808.app.view.PengButton
-            android:id="@+id/car_button1"
+        <com.gps808.app.view.PengRadioButton
+            android:id="@+id/main_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -258,42 +260,58 @@
             android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:text="跟踪"
+            android:text="首页"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_home_selector"
             app:peng_drawableTopHeight="8dp"
             app:peng_drawableTopWith="8dp" />
 
-        <com.gps808.app.view.PengButton
-            android:id="@+id/car_button2"
+        <com.gps808.app.view.PengRadioButton
+            android:id="@+id/main_menu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
             android:gravity="center"
-            android:text="轨迹回放"
+            android:text="分类"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_menu_selector"
             app:peng_drawableTopHeight="8dp"
             app:peng_drawableTopWith="8dp" />
 
-        <com.gps808.app.view.PengButton
-            android:id="@+id/car_button3"
+        <com.gps808.app.view.PengRadioButton
+            android:id="@+id/main_gift"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
             android:gravity="center"
-            android:text="详细"
+            android:text="购物车"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_sales_selector"
             app:peng_drawableTopHeight="8dp"
             app:peng_drawableTopWith="8dp" />
-    </LinearLayout>
+
+        <com.gps808.app.view.PengRadioButton
+            android:id="@+id/main_myself"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:gravity="center"
+            android:text="我的"
+            android:textColor="@drawable/tab_text"
+            android:textSize="10sp"
+            app:peng_drawableTop="@drawable/main_my_selector"
+            app:peng_drawableTopHeight="8dp"
+            app:peng_drawableTopWith="8dp" />
+            
+    </RadioGroup>
 
 </LinearLayout>

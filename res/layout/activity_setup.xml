@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
@@ -14,146 +14,149 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/public_pic" />
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/setup_message"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="接收新消息通知"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
 
-        <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/push_switch"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/public_pic" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="监控自动刷新时间"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shape_coners_backgroud"
+                android:padding="2dp"
+                android:text="10s"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:onColor="@color/app_blue" />
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/public_pic" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="跟踪自动刷新时间"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shape_coners_backgroud"
+                android:padding="2dp"
+                android:text="10s"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
+
+        <View
+            style="@style/blackline"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_backgroud_selector"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/public_pic" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="重置密码"
+                android:textColor="@color/text"
+                android:textSize="@dimen/body" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/yz_next" />
+        </LinearLayout>
+
+        <View style="@style/blackline" />
     </LinearLayout>
 
-    <View style="@style/blackline" />
-
-    <LinearLayout
+    <com.gps808.app.view.FancyButton
+        android:id="@+id/exit_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/public_pic" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="声音"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
-
-        <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/voice_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:onColor="@color/app_blue" />
-    </LinearLayout>
-
-    <View style="@style/blackline" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/public_pic" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="震动"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
-
-        <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/shock_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:onColor="@color/app_blue" />
-    </LinearLayout>
-
-    <View style="@style/blackline" />
-
-    <View
-        style="@style/blackline"
-        android:layout_marginTop="8dp" />
-
-    <LinearLayout
-        android:id="@+id/setup_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/public_pic" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="设置接收消息类型"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
-
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/yz_next" />
-    </LinearLayout>
-
-    <View style="@style/blackline" />
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@color/app_pink"
+        fancy:fb_defaultColor="#ff5f69"
+        fancy:fb_focusColor="#ff838b"
+        fancy:fb_radius="2dp"
+        fancy:fb_text="退出登录"
+        fancy:fb_textColor="@color/white" />
 
 </LinearLayout>

@@ -57,7 +57,7 @@
         layout="@layout/main_footer" />
 
     <com.gps808.app.view.FancyButton
-        android:id="@+id/main_location"
+        android:id="@+id/main_refresh"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_above="@id/main_footer_layout"

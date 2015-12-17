@@ -119,7 +119,6 @@ public class MyselfActivity extends BaseActivity {
 			case R.id.my_car:
 				cls = VehiclesActivity.class;
 				break;
-
 			}
 			intent.setClass(MyselfActivity.this, cls);
 			startActivity(intent);

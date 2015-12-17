@@ -484,10 +484,14 @@ public class Utils {
 
 	}
 
-	public static double[] getLng(String lng){
-		String[] strLng=lng.split(":");
+	public static double[] getLng(String lng,String flag){
+		String[] strLng=lng.split(flag);
 		double[] douLng={Double.parseDouble(strLng[0]),Double.parseDouble(strLng[1])};
 		return douLng;
+	}
+	public static String[] getSplit(String str,String flag){
+		String[] strLng=str.split(flag);	
+		return strLng;
 	}
 
 }
