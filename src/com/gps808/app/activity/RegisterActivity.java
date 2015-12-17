@@ -1,6 +1,5 @@
 package com.gps808.app.activity;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -8,13 +7,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
-
 import com.gps808.app.R;
 import com.gps808.app.utils.BaseActivity;
-
 import com.gps808.app.utils.StringUtils;
-
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.TimeButton;
 
@@ -115,41 +110,42 @@ public class RegisterActivity extends BaseActivity {
 	}
 
 	private void sendCode(String mobi) {
-//		HttpUtil.get(UrlConfig.getCaptcha(mobi), new jsonHttpResponseHandler() {
-//			@Override
-//			public void onSuccess(JSONObject arg0) {
-//				// TODO Auto-generated method stub
-//				if (Utils.requestOk(arg0)) {
-//					BnCaptcha captcha = JSON.parseObject(Utils.getResult(arg0),
-//							BnCaptcha.class);
-//					code = captcha.getCaptcha();
-//					Utils.ToastMessage(context, "验证码发送成功");
-//					send_code.setTextAfter("秒后重新获取").setTextBefore("点击获取验证码")
-//							.setBackgroundResource(R.color.grayslate);
-//					send_code.start();
-//				} else {
-//					if (Utils.getKey(arg0, "code").equals("200104")) {
-//						Utils.ToastMessage(context, Utils.getKey(arg0, "msg"));
-//					}
-//				}
-//				super.onSuccess(arg0);
-//			}
-//		});
+		// HttpUtil.get(UrlConfig.getCaptcha(mobi), new
+		// jsonHttpResponseHandler() {
+		// @Override
+		// public void onSuccess(JSONObject arg0) {
+		// // TODO Auto-generated method stub
+		// if (Utils.requestOk(arg0)) {
+		// BnCaptcha captcha = JSON.parseObject(Utils.getResult(arg0),
+		// BnCaptcha.class);
+		// code = captcha.getCaptcha();
+		// Utils.ToastMessage(context, "验证码发送成功");
+		// send_code.setTextAfter("秒后重新获取").setTextBefore("点击获取验证码")
+		// .setBackgroundResource(R.color.grayslate);
+		// send_code.start();
+		// } else {
+		// if (Utils.getKey(arg0, "code").equals("200104")) {
+		// Utils.ToastMessage(context, Utils.getKey(arg0, "msg"));
+		// }
+		// }
+		// super.onSuccess(arg0);
+		// }
+		// });
 
 	}
 
 	private void toRegister(String name, String word, String code, String promo) {
-//		HttpUtil.get(UrlConfig.getRegister(name, word, code, promo),
-//				new jsonHttpResponseHandler() {
-//					@Override
-//					public void onSuccess(JSONObject arg0) {
-//						// TODO Auto-generated method stub
-//						if (Utils.requestOk(arg0)) {
-//							Utils.ToastMessage(context, "注册成功");
-//							finish();
-//						}
-//						super.onSuccess(arg0);
-//					}
-//				});
+		// HttpUtil.get(UrlConfig.getRegister(name, word, code, promo),
+		// new jsonHttpResponseHandler() {
+		// @Override
+		// public void onSuccess(JSONObject arg0) {
+		// // TODO Auto-generated method stub
+		// if (Utils.requestOk(arg0)) {
+		// Utils.ToastMessage(context, "注册成功");
+		// finish();
+		// }
+		// super.onSuccess(arg0);
+		// }
+		// });
 	}
 }
