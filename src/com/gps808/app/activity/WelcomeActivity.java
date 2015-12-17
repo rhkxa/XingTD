@@ -29,7 +29,7 @@ public class WelcomeActivity extends Activity {
 		final View view = View.inflate(this, R.layout.activity_welcome, null);
 		setContentView(view);
 		ImageView imageView = (ImageView) findViewById(R.id.welcome_image);
-		imageView.setImageResource(R.drawable.smyk_start);
+		imageView.setImageResource(R.drawable.xtd_icon_blue);
 		// 设置渐变启动
 		AlphaAnimation aa = new AlphaAnimation(0.5f, 1.0f);
 		aa.setDuration(1000);

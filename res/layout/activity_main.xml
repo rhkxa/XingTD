@@ -64,7 +64,8 @@
         android:layout_margin="8dp"
         fancy:fb_defaultColor="@color/app_blue"
         fancy:fb_focusColor="#8cc9f8"
-        fancy:fb_iconResource="@drawable/ic_green_ok"
+         fancy:fb_iconSize="10dp"
+        fancy:fb_iconResource="@drawable/xtd_action_refresh"
         fancy:fb_radius="2dp" />
 
 </RelativeLayout>

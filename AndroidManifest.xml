@@ -56,66 +56,17 @@
         </activity>
         <activity android:name="com.gps808.app.activity.AboutActivity" >
         </activity>
-        <activity android:name="com.gps808.app.activity.AddressActivity" >
-        </activity>
-        <activity
-            android:name="com.gps808.app.activity.GoodsDetailActivity"
-            android:exported="true"
-            android:launchMode="singleTask" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.OrderActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.PersonActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.ShoppingActivity" >
-        </activity>
         <activity android:name="com.gps808.app.activity.FeedbackActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.ActiveDetailActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.OrderDetailActivity" >
         </activity>
         <activity android:name="com.gps808.app.activity.SearchActivity" >
         </activity>
-        <activity android:name="com.gps808.app.activity.PreviewActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.CommentActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.WalletActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.OptionsListActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.PersonalActivity" >
-        </activity>
         <activity android:name="com.gps808.app.activity.AgreementActivity" >
         </activity>
-        <activity android:name="com.gps808.app.activity.ArticleActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.AreaActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.SearchResultActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.ArticleDetailActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.FinishOrderActivity" >
-        </activity>
-        <activity android:name="com.gps808.app.activity.GiftActivity" />
-        <activity android:name="com.gps808.app.activity.JoinActivity" />
         <activity android:name="com.gps808.app.activity.PoliceSetupActivity" />
         <activity android:name="com.gps808.app.activity.SetupActivity" />
         <activity android:name="com.gps808.app.activity.GoodsGridActivity" />
         <activity android:name="com.gps808.app.activity.HelpActivity" />
-        <activity android:name="com.gps808.app.activity.ScoreActivity" />
-        <activity android:name="com.gps808.app.activity.VoucherActivity" />
-        <activity android:name="com.gps808.app.activity.CollectActivity" />
-        <activity android:name="com.gps808.app.activity.BonusActivity" />
-        <activity android:name="com.gps808.app.activity.BillActivity" />
-        <activity android:name="com.gps808.app.activity.FranchiseeActivity" />
-        <activity android:name="com.gps808.app.activity.ProcessActivity" />
-        <activity android:name="com.gps808.app.activity.EditAddressActivity" />
-        <activity android:name="com.gps808.app.activity.GameActivity" />
         <activity android:name="com.gps808.app.activity.SubmitComActivity" />
-        <activity android:name="com.gps808.app.activity.UserManagerActivity" />
         <activity android:name="com.gps808.app.pay.pal.PayDemoActivity" />
         <activity android:name="com.gps808.app.activity.VehiclesActivity" />
         <activity android:name="com.gps808.app.activity.RoutesActivity" />
@@ -124,10 +75,6 @@
         <activity android:name="com.gps808.app.activity.CarDetailsActivity" />
         <activity android:name="com.gps808.app.activity.MyselfActivity" />
         <activity android:name="com.gps808.app.activity.DisplayLineActivity" />
-        <activity
-            android:name="com.gps808.app.activity.FinishPayActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
 
         <!-- 分享 -->
         <activity
@@ -233,17 +180,6 @@
                 </action>
             </intent-filter>
         </service>
-        <!-- alipay sdk begin -->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-
-        <!-- alipay sdk end -->
-
 
         <!-- 在百度开发者中心查询应用的API Key -->
         <meta-data
@@ -252,28 +188,7 @@
         <!-- 家XrnxWbyjML3T0b2Pb4ukY8OE 公司N8qQtsf1z2QZUtB6ViQegOWH -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="N8qQtsf1z2QZUtB6ViQegOWH"  />
-
-        <!-- wxpay -->
-        <activity
-            android:name="com.gps808.app.activity.PayActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="wx86df6720fef45c98" />
-            </intent-filter>
-        </activity>
-
-        <receiver android:name="com.gps808.app.pay.wx.AppRegister" >
-            <intent-filter>
-                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
-            </intent-filter>
-        </receiver>
+            android:value="XrnxWbyjML3T0b2Pb4ukY8OE" />
     </application>
 
 </manifest>

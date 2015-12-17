@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class HeaderFragment extends BaseFragment {
 
-	private ImageButton backBtn;
+	private ImageView backBtn;
 	private ImageView commentBtn;
 	private TextView titleText;
 	private TextView rightText;
@@ -26,7 +26,7 @@ public class HeaderFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.back_header, null);
-		backBtn = (ImageButton) view.findViewById(R.id.backBtn);
+		backBtn = (ImageView) view.findViewById(R.id.backBtn);
 		titleText = (TextView) view.findViewById(R.id.titleText);
 		commentBtn = (ImageView) view.findViewById(R.id.all_comments);
 		rightText = (TextView) view.findViewById(R.id.right_text);

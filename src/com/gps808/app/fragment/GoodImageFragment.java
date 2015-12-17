@@ -9,15 +9,15 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.gps808.app.R;
-import com.gps808.app.bean.BnGallery;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class GoodImageFragment extends Fragment {
 
 	private View view;
-	private BnGallery pager;
+	private String pager;
 
-	public static GoodImageFragment newInstance(BnGallery pager) {
+	public static GoodImageFragment newInstance(String pager) {
 		GoodImageFragment fragment = new GoodImageFragment();
 		fragment.pager = pager;
 		return fragment;
@@ -34,7 +34,7 @@ public class GoodImageFragment extends Fragment {
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.widget_image_org, null);
 		ImageView imageView = (ImageView) view.findViewById(R.id.good_image_view);
-		ImageLoader.getInstance().displayImage(pager.getImg_url(), imageView);
+	
 		imageView.setOnClickListener(new OnClickListener() {
 
 			@Override

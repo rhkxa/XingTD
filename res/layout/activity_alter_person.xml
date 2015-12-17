@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        class="com.yzss.fragment.HeaderFragment" />
+        class="com.gps808.app.fragment.HeaderFragment" />
 
     <RelativeLayout
         android:id="@+id/setup_user"
@@ -35,7 +35,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/smyk_logo"
+            android:src="@drawable/xtd_icon_blue"
             app:border_color="@color/white"
             app:border_width="1dp" />
     </RelativeLayout>

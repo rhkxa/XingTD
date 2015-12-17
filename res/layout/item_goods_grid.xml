@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="fitXY"
-            android:src="@drawable/smyk_logo" />
+            android:src="@drawable/xtd_icon_gray" />
 
         <View style="@style/grayline" />
 
@@ -60,7 +60,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/yz_icon_shop"
+                    android:src="@drawable/xtd_icon_gray"
                     android:textColor="@color/text"
                     android:textSize="@dimen/caption" />
             </RelativeLayout>

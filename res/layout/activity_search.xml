@@ -19,7 +19,7 @@
             android:layout_gravity="center_vertical"
             android:background="#00000000"
             android:clickable="false"
-            android:src="@drawable/smyk_back" />
+            android:src="@drawable/xtd_action_back" />
 
         <LinearLayout
             android:id="@+id/goods_search_box"
@@ -80,7 +80,7 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_weight="1.0"
-            android:background="@drawable/smyk_seachline"
+           
             android:gravity="center_vertical"
             android:hint="请输入要搜索的内容"
             android:paddingLeft="5.0dp"

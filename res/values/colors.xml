@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
       <color name="tag_blue">#39d8ff </color>
-      <color name="app_blue">#39d8ff </color>
+      <color name="app_blue">#0093f5 </color>
     
     <color name="footer_text">#6a6a6a </color>
     <color name="sign_backgroud">#febf10</color>
@@ -10,7 +10,7 @@
     <color name="backgroud_green">#a0d468</color>
     <color name="app_green">#3cd7d2 </color>
     <color name="app_focus_color">#9bd823</color>
-    <color name="app_pink">#f35a5a</color>
+    <color name="app_pink">#ff5959</color>
     <color name="app_yellow">#ffffbe26</color>
     <color name="app_text">#4e342e</color>
     <color name="app_textcolor">#6f9c3b</color>

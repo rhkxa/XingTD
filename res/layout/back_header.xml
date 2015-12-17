@@ -19,14 +19,15 @@
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants" >
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/backBtn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
                 android:layout_gravity="center_vertical"
                 android:background="@color/full_transparent"
                 android:clickable="false"
-                android:src="@drawable/smyk_back" />
+                android:src="@drawable/xtd_action_back" />
         </LinearLayout>
 
         <TextView

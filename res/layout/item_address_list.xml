@@ -54,7 +54,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:clickable="false"
-            android:src="@drawable/yz_icon_edit" />
+            android:src="@drawable/xtd_icon_gray" />
     </LinearLayout>
 
 </LinearLayout>

@@ -7,19 +7,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.activity.AreaActivity;
-import com.gps808.app.activity.GameActivity;
-import com.gps808.app.activity.GoodsDetailActivity;
-import com.gps808.app.activity.GoodsGridActivity;
-import com.gps808.app.activity.LoginActivity;
-import com.gps808.app.activity.OrderActivity;
-import com.gps808.app.activity.PayActivity;
-import com.gps808.app.activity.ShoppingActivity;
-import com.gps808.app.bean.BnAction;
-import com.gps808.app.bean.BnUser;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import android.app.Activity;
 import android.content.Context;
@@ -407,90 +395,15 @@ public class Utils {
 
 	}
 
-	public static void toGoodDetail(Context context, String goods_id) {
-		Intent intent = new Intent(context, GoodsDetailActivity.class);
-		intent.putExtra("goods_id", goods_id);
-		context.startActivity(intent);
-	}
-
-	public static void toGoodsList(Context context, String cate_id,
-			String cate_name) {
-		Intent intent = new Intent(context, GoodsGridActivity.class);
-		intent.putExtra("cate_name", cate_name);
-		intent.putExtra("cate_id", cate_id);
-		context.startActivity(intent);
-	}
-
-	public static void toArea(Context context, int area_id) {
-		Intent intent = new Intent(context, AreaActivity.class);
-		intent.putExtra("area_id", area_id);
-		context.startActivity(intent);
-	}
-
-	public static void toOrderDetail(Context context, String order_id) {
-		Intent intent = new Intent(context, OrderActivity.class);
-		intent.putExtra("order_id", order_id);
-		context.startActivity(intent);
-	}
-
-	public static void joinShop(final Context context, String product_id,
-			int quantity) {
-
-	}
-
-	public static void joinCollect(final Context context, String goods_id) {
-
-	}
-
-	public static void toLogin(Context context) {
-		Intent intent = new Intent(context, LoginActivity.class);
-		context.startActivity(intent);
-
-	}
-
-	public static void toShop(Context context) {
-		Class<?> cls = null;
-
-		cls = ShoppingActivity.class;
-
-		cls = LoginActivity.class;
-
-		Intent intent = new Intent(context, cls);
-		context.startActivity(intent);
-	}
-
-	public static void toWebView(Context context, String url) {
-		Intent intent = new Intent(context, GameActivity.class);
-		intent.putExtra("url", url);
-		context.startActivity(intent);
-	}
-
-	public static void toPay(Context context, String sn, String title,
-			String money) {
-		Intent intent = new Intent(context, PayActivity.class);
-		intent.putExtra("sn", sn);
-		intent.putExtra("title", title);
-		intent.putExtra("money", money);
-		context.startActivity(intent);
-	}
-
-	public static void toOrder(Context context, String state) {
-
-		Intent intent = new Intent(context, OrderActivity.class);
-		intent.putExtra("state", state);
-		context.startActivity(intent);
-
-		toLogin(context);
-
-	}
-
-	public static double[] getLng(String lng,String flag){
-		String[] strLng=lng.split(flag);
-		double[] douLng={Double.parseDouble(strLng[0]),Double.parseDouble(strLng[1])};
+	public static double[] getLng(String lng, String flag) {
+		String[] strLng = lng.split(flag);
+		double[] douLng = { Double.parseDouble(strLng[0]),
+				Double.parseDouble(strLng[1]) };
 		return douLng;
 	}
-	public static String[] getSplit(String str,String flag){
-		String[] strLng=str.split(flag);	
+
+	public static String[] getSplit(String str, String flag) {
+		String[] strLng = str.split(flag);
 		return strLng;
 	}
 

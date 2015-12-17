@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -11,16 +12,6 @@
         android:layout_height="56dip"
         android:background="@color/app_blue"
         android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:background="#00000000"
-            android:clickable="false"
-            android:src="@drawable/smyk_back"
-            android:visibility="gone" />
 
         <TextView
             android:id="@+id/titleText"
@@ -40,11 +31,14 @@
         android:orientation="vertical"
         android:padding="16dp" >
 
-        <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+        <com.gps808.app.view.CircleImageView
+            android:id="@+id/my_headimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:src="@drawable/icon_login" />
+            android:src="@drawable/xtd_icon_gray"
+            app:border_color="@color/app_green"
+            app:border_width="2dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,7 +54,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="8dp"
-                android:src="@drawable/yz_icon_user" />
+                android:src="@drawable/xtd_login_name" />
 
             <EditText
                 android:id="@+id/username"
@@ -83,7 +77,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="8dp"
-                android:src="@drawable/yz_icon_pass" />
+                android:src="@drawable/xtd_login_pass" />
 
             <EditText
                 android:id="@+id/password"
@@ -130,30 +124,6 @@
             android:text="立即登录"
             android:textColor="@color/white"
             android:textSize="@dimen/button" />
-
-        <RelativeLayout
-            android:id="@+id/call_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@color/backgroud_green"
-            android:visibility="gone" >
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="24dp"
-                android:src="@drawable/smyk_call" />
-
-            <TextView
-                android:id="@+id/phonenumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
-        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

@@ -2,7 +2,6 @@ package com.gps808.app.adapter;
 
 import java.util.List;
 
-import com.gps808.app.bean.BnSlider;
 import com.gps808.app.fragment.MainImageFragment;
 
 
@@ -13,9 +12,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class MainFragmentAdapter extends FragmentPagerAdapter {
 
-	private List<BnSlider> data;
+	private List<String> data;
 
-	public MainFragmentAdapter(FragmentManager fm, List<BnSlider> data) {
+	public MainFragmentAdapter(FragmentManager fm, List<String> data) {
 
 		super(fm);
 		this.data = data;

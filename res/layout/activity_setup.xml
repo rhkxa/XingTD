@@ -58,7 +58,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/yz_next" />
+                android:src="@drawable/xtd_action_next" />
         </LinearLayout>
 
         <View style="@style/blackline" />
@@ -102,7 +102,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/yz_next" />
+                android:src="@drawable/xtd_action_next" />
         </LinearLayout>
 
         <View style="@style/blackline" />
@@ -140,7 +140,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/yz_next" />
+                android:src="@drawable/xtd_action_next" />
         </LinearLayout>
 
         <View style="@style/blackline" />

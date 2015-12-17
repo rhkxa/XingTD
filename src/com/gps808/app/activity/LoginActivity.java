@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity {
 	// /private TextView login_serve;
 	private TextView login_to_register;
 	private TextView login_forget_pass;
-	private ImageButton backBtn;
+
 	private PreferenceUtils mPreferences;
 
 	@Override
@@ -73,15 +73,6 @@ public class LoginActivity extends BaseActivity {
 	private void init() {
 		// TODO Auto-generated method stub
 		mPreferences = PreferenceUtils.getInstance(LoginActivity.this);
-		backBtn = (ImageButton) findViewById(R.id.backBtn);
-		backBtn.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
 		userName = (EditText) findViewById(R.id.username);
 		passWord = (EditText) findViewById(R.id.password);
 		autoLoginBox = (CheckBox) findViewById(R.id.autoLoginBox);

@@ -71,11 +71,12 @@ public class MainActivity extends BaseActivity {
 	// private BadgeView badge;
 	// 初始化全局 bitmap 信息，不用时及时 recycle
 	BitmapDescriptor bdA = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_marka);
+			.fromResource(R.drawable.icon_gcoding);
 	BitmapDescriptor bdB = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markb);
+			.fromResource(R.drawable.icon_gcoding);
 	private String key = "";
 	private FancyButton main_refresh;
+	int flag=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -325,18 +326,19 @@ public class MainActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				switch (arg0.getId()) {
 				case R.id.popwindows_track:
-
+					flag=0;
 					break;
 				case R.id.popwindows_weather:
-
+					flag=3;
 					break;
 				case R.id.popwindows_trail:
-
+					flag=1;
 					break;
 				}
 				Intent intent = new Intent(MainActivity.this,
 						CarDetailsActivity.class);
 				intent.putExtra("vid", xbVehicle.getVid());
+				intent.putExtra("flag", flag);
 				startActivity(intent);
 			}
 		};

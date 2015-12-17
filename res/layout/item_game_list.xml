@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/yz_home_active" />
+            android:src="@drawable/xtd_icon_gray" />
 
         <ImageView
             android:id="@+id/item_game_img2"
@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/yz_home_active" />
+            android:src="@drawable/xtd_icon_gray" />
     </LinearLayout>
 
 </LinearLayout>

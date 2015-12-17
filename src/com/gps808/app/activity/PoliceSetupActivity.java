@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.bean.BnUser;
+
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.PreferenceUtils;
@@ -60,9 +60,7 @@ public class PoliceSetupActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 
-				Intent intent = new Intent(PoliceSetupActivity.this,
-						UserManagerActivity.class);
-				startActivity(intent);
+	
 
 			}
 		});

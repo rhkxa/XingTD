@@ -9,6 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:scaleType="fitXY"
-        android:src="@drawable/yz_home_active" />
+        android:src="@drawable/xtd_icon_gray" />
 
 </LinearLayout>

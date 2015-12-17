@@ -1,6 +1,5 @@
 package com.gps808.app.activity;
 
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,13 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.alibaba.fastjson.JSON;
+
 import com.gps808.app.R;
-import com.gps808.app.bean.BnCaptcha;
 import com.gps808.app.utils.BaseActivity;
-import com.gps808.app.utils.HttpUtil;
+
 import com.gps808.app.utils.StringUtils;
-import com.gps808.app.utils.UrlConfig;
+
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.TimeButton;
 

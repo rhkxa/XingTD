@@ -136,11 +136,7 @@ public class SearchActivity extends BaseActivity {
 				}
 				keylist.add(key);
 				
-				Intent intent = new Intent(SearchActivity.this,
-						SearchResultActivity.class);
-				intent.putExtra("searchtype", searchtype);
-				intent.putExtra("keyword", key);
-				startActivity(intent);
+			
 
 			}
 		});

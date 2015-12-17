@@ -342,16 +342,7 @@ public class PushDemoActivity extends Activity implements View.OnClickListener {
 			}
 		});
 
-		Button cancel = (Button) window.findViewById(R.id.btn_cancel);
-		cancel.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				alertDialog.cancel();
-			}
-
-		});
+	
 
 	}
 
