@@ -6,7 +6,19 @@
     <color name="footer_text">#6a6a6a </color>
     <color name="sign_backgroud">#febf10</color>
     <color name="footer_color">#eaeaea</color>
-    <color name="text">#b1babf</color>
+    <color name="text">#898989</color>
+    <color name="text2">#868686</color>
+    <color name="text3">#434343</color>
+    <color name="hint_text">#d9d9d9</color>
+    <color name="line">#d7d7d7</color>
+    <color name="border">#c0c0c0</color>
+    <color name="nati_line">#c9c9c9</color>
+    <color name="list_line">#dedede</color>
+    <color name="backgroud_text">#f3f3f3</color>
+    <color name="backgroud_border">#dcdcdc</color>
+    
+    
+    
     <color name="backgroud_green">#a0d468</color>
     <color name="app_green">#3cd7d2 </color>
     <color name="app_focus_color">#9bd823</color>

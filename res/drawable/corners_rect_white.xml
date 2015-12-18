@@ -8,6 +8,6 @@
     <stroke
         android:dashWidth="1dp"
         android:width="1dp"
-        android:color="@color/text" />
+        android:color="@color/border" />
 
 </shape>

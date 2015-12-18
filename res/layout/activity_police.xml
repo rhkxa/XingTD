@@ -22,7 +22,8 @@
         android:id="@+id/police_list"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:gravity="fill" >
+        
+        android:gravity="fill" android:divider="@color/list_line">
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>
