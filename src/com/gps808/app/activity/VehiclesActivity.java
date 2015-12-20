@@ -45,7 +45,7 @@ public class VehiclesActivity extends BaseActivity {
 	private HeaderFragment headerFragment;
 	private VehicleListAdapter vAdapter;
 	private int status = 0;
-	private String key = "";
+	private String search = "";
 	private int startPage = 0;
 	private final int pageNum = 10;
 	private List<XbVehicle> xbVehicles = new ArrayList<XbVehicle>();
@@ -72,6 +72,8 @@ public class VehiclesActivity extends BaseActivity {
 			@Override
 			public void onSearch(String key) {
 				// TODO Auto-generated method stub
+				search=key;
+				getData(true);
 
 			}
 		});
@@ -131,7 +133,7 @@ public class VehiclesActivity extends BaseActivity {
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
-			postData.put("search", key);
+			postData.put("search", search);
 			postData.put("status", status);
 			postData.put("startPage", startPage);
 			postData.put("pageNum", pageNum);

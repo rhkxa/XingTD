@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-      <color name="tag_blue">#39d8ff </color>
+      <color name="tag_blue">#35acff </color>
       <color name="app_blue">#0093f5 </color>
     
     <color name="footer_text">#6a6a6a </color>
     <color name="sign_backgroud">#febf10</color>
     <color name="footer_color">#eaeaea</color>
     <color name="text">#898989</color>
-    <color name="text2">#868686</color>
-    <color name="text3">#434343</color>
     <color name="hint_text">#d9d9d9</color>
     <color name="line">#d7d7d7</color>
     <color name="border">#c0c0c0</color>
@@ -20,13 +18,13 @@
     
     
     <color name="backgroud_green">#a0d468</color>
-    <color name="app_green">#3cd7d2 </color>
+    <color name="app_green">#7ed077 </color>
     <color name="app_focus_color">#9bd823</color>
-    <color name="app_pink">#ff5959</color>
-    <color name="app_yellow">#ffffbe26</color>
-    <color name="app_text">#4e342e</color>
-    <color name="app_textcolor">#6f9c3b</color>
-    <color name="app_textcolor3">#858581</color>
+    <color name="app_pink">#ff7272</color>
+    <color name="app_red">#ff5959</color>
+    <color name="app_yellow">#f9a540</color>
+    <color name="app_text">#868686</color>
+    <color name="app_textcolor">#434343</color>
     <color name="app_backgroud">#f7f7f7</color>
     <color name="actionbarcolor">#00b5c6</color>
     <color name="list_bottom">#f8f8f8</color>

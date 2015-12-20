@@ -27,12 +27,15 @@
             android:orientation="horizontal"
             android:padding="8dp" >
 
-            <ImageView
+            <com.gps808.app.view.FancyButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:src="@drawable/public_pic" />
+                fancy:fb_defaultColor="@color/tag_blue"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_iconResource="@drawable/xtd_icon_trail"
+                fancy:fb_iconSize="10dp" android:layout_marginLeft="8dp"
+                fancy:fb_radius="2dp"
+                fancy:fb_textColor="#FFFFFF" />
 
             <TextView
                 android:layout_width="0dp"
@@ -71,12 +74,15 @@
             android:orientation="horizontal"
             android:padding="8dp" >
 
-            <ImageView
+            <com.gps808.app.view.FancyButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:src="@drawable/public_pic" />
+                fancy:fb_defaultColor="@color/app_green"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_iconResource="@drawable/xtd_icon_track"
+                fancy:fb_iconSize="10dp" android:layout_marginLeft="8dp"
+                fancy:fb_radius="2dp"
+                fancy:fb_textColor="#FFFFFF" />
 
             <TextView
                 android:layout_width="0dp"
@@ -119,12 +125,17 @@
             android:orientation="horizontal"
             android:padding="8dp" >
 
-            <ImageView
+            <com.gps808.app.view.FancyButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:src="@drawable/public_pic" />
+                fancy:fb_defaultColor="@color/app_blue"
+                fancy:fb_focusColor="#8cc9f8"
+                fancy:fb_iconResource="@drawable/xtd_icon_pass"
+                fancy:fb_iconSize="10dp"
+                fancy:fb_radius="2dp"
+                fancy:fb_textColor="#FFFFFF" />
 
             <TextView
                 android:layout_width="0dp"
@@ -152,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:background="@color/app_pink"
+        android:background="@color/app_red"
         fancy:fb_defaultColor="#ff5f69"
         fancy:fb_focusColor="#ff838b"
         fancy:fb_radius="2dp"

@@ -70,10 +70,10 @@ public class MainActivity extends BaseActivity {
 	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
 	// private BadgeView badge;
 	// 初始化全局 bitmap 信息，不用时及时 recycle
-	BitmapDescriptor bdA = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_gcoding);
-	BitmapDescriptor bdB = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_gcoding);
+	BitmapDescriptor online = BitmapDescriptorFactory
+			.fromResource(R.drawable.xtd_carlogo_on);
+	BitmapDescriptor offline = BitmapDescriptorFactory
+			.fromResource(R.drawable.xtd_carlogo_off);
 	private String key = "";
 	private FancyButton main_refresh;
 	int flag=0;
@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
 		setContentView(R.layout.activity_main);
 		// UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,
 		// false);
-
+		
 		init();
 	}
 
@@ -210,17 +210,24 @@ public class MainActivity extends BaseActivity {
 		OverlayOptions overlayOptions = null;
 		Marker marker = null;
 		double[] doubleLng;
+		BitmapDescriptor car;
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (XbVehicle info : infos) {
 			doubleLng=Utils.getLng(info.getLocation(),":");
 			// 位置
 			latLng = new LatLng(doubleLng[1],doubleLng[0]);
 			builder.include(latLng);
+			  if(info.isOnline()){
+	            	car=online;
+	            }else{
+	            	car=offline;
+	            }
 			// 图标
-			overlayOptions = new MarkerOptions().position(latLng).icon(bdA)
-					.zIndex(5);
+			overlayOptions = new MarkerOptions().position(latLng).icon(car)
+					.zIndex(5).rotate(info.getDirection());
 			// .animateType(MarkerAnimateType.drop);下降动画
-
+          
+			
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 			Bundle bundle = new Bundle();
 			bundle.putString("info", JSON.toJSONString(info));
@@ -374,8 +381,9 @@ public class MainActivity extends BaseActivity {
 		mMapView.onDestroy();
 		super.onDestroy();
 		// 回收 bitmap 资源
-		bdA.recycle();
-		bdB.recycle();
+		online.recycle();
+		offline.recycle();
+		
 	}
 
 	// 双击退出

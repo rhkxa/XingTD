@@ -37,6 +37,7 @@ import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
+import com.gps808.app.view.FancyButton;
 
 /**
  * 登录界面
@@ -46,7 +47,7 @@ import com.gps808.app.utils.XtdApplication;
  */
 public class LoginActivity extends BaseActivity {
 	private long mExitTime = 0;
-	private Button login;
+	private FancyButton login;
 	private TextView phonenumber;
 	private EditText userName;
 	private EditText passWord;
@@ -77,7 +78,7 @@ public class LoginActivity extends BaseActivity {
 		passWord = (EditText) findViewById(R.id.password);
 		autoLoginBox = (CheckBox) findViewById(R.id.autoLoginBox);
 		savePwdBox = (CheckBox) findViewById(R.id.savePwdBox);
-		login = (Button) findViewById(R.id.login);
+		login = (FancyButton) findViewById(R.id.login);
 		phonenumber = (TextView) findViewById(R.id.phonenumber);
 		// call = (RelativeLayout) findViewById(R.id.call_phone);
 		// login_serve = (TextView) findViewById(R.id.login_serve);

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbPolice;
 import com.gps808.app.bean.XbVehicle;
+import com.gps808.app.view.FancyButton;
 
 public class PoliceListViewAdapter extends BaseAdapter {
 	private Context mContext;
@@ -66,13 +67,13 @@ public class PoliceListViewAdapter extends BaseAdapter {
 	}
 
 	class ViewHolder {
-		ImageView item_police_image;
+		FancyButton item_police_image;
 		TextView item_police_name;
 		TextView item_police_time;
 		TextView item_police_addr;
 
 		public ViewHolder(View arg1) {
-			item_police_image = (ImageView) arg1
+			item_police_image = (FancyButton) arg1
 					.findViewById(R.id.item_police_image);
 			item_police_name = (TextView) arg1
 					.findViewById(R.id.item_police_name);

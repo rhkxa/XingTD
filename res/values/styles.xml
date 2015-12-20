@@ -88,7 +88,7 @@
     <style name="blackline">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
-        <item name="android:background">@color/text</item>
+        <item name="android:background">@color/line</item>
     </style>
 <style name="grayline">
         <item name="android:layout_width">match_parent</item>

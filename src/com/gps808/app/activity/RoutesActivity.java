@@ -49,7 +49,7 @@ public class RoutesActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_routes);
 		init();
-		getData(false);
+		getData(true);
 
 	}
 
@@ -66,18 +66,20 @@ public class RoutesActivity extends BaseActivity {
 			@Override
 			public void onSearch(String key) {
 				// TODO Auto-generated method stub
-
+				place = key;
+				getData(true);
 			}
 		});
 		routes_list = (PullToRefreshListView) findViewById(R.id.routes_list);
 		rAdapter = new RoutesListViewAdapter(RoutesActivity.this, xbRoutes);
 		routes_list.setAdapter(rAdapter);
+		routes_list.setMode(Mode.DISABLED);
 		routes_list.setOnRefreshListener(new OnRefreshListener<ListView>() {
 
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
-				getData(true);
+				getData(false);
 			}
 		});
 		routes_list.setOnItemClickListener(new OnItemClickListener() {
@@ -86,7 +88,8 @@ public class RoutesActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(RoutesActivity.this, DisplayLineActivity.class);
+				Intent intent = new Intent(RoutesActivity.this,
+						DisplayLineActivity.class);
 				intent.putExtra("rid", xbRoutes.get(arg2).getRid());
 				startActivity(intent);
 			}
@@ -95,7 +98,7 @@ public class RoutesActivity extends BaseActivity {
 	}
 
 	private void getData(final boolean isRefresh) {
-		if (!isRefresh) {
+		if (isRefresh) {
 			showProgressDialog(RoutesActivity.this, "正在加载,请稍等");
 		}
 		String url = UrlConfig.getVehicleRoutes();
@@ -111,7 +114,7 @@ public class RoutesActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		LogUtils.DebugLog("post json",postData.toString());
+		LogUtils.DebugLog("post json", postData.toString());
 		HttpUtil.post(RoutesActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
 					@Override
@@ -120,11 +123,14 @@ public class RoutesActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						LogUtils.DebugLog("result json", response.toString());
 
+						if (isRefresh) {
+							xbRoutes.clear();
+						}
 						xbRoutes.addAll(JSON.parseArray(response.toString(),
 								XbRoute.class));
 						if (JSON.parseArray(response.toString(),
 								XbVehicle.class).size() < pageNum) {
-							// routes_list.setMode(Mode.DISABLED);
+							routes_list.setMode(Mode.DISABLED);
 							// Utils.ToastMessage(CommentActivity.this,
 							// "暂无更多评论");
 						} else {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbRoute;
 import com.gps808.app.bean.XbVehicle;
+import com.gps808.app.view.FancyButton;
 
 public class RoutesListViewAdapter extends BaseAdapter {
 	private Context mContext;
@@ -67,14 +68,14 @@ public class RoutesListViewAdapter extends BaseAdapter {
 	}
 
 	class ViewHolder {
-		ImageView item_routes_image;
+		FancyButton item_routes_image;
 		TextView item_routes_name;
 		TextView item_routes_time;
 		TextView item_routes_start;
 		TextView item_routes_end;
 
 		public ViewHolder(View arg1) {
-			item_routes_image = (ImageView) arg1
+			item_routes_image = (FancyButton) arg1
 					.findViewById(R.id.item_routes_image);
 			item_routes_name = (TextView) arg1
 					.findViewById(R.id.item_routes_name);
