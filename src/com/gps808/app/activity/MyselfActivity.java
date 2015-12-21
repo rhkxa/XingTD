@@ -13,7 +13,8 @@ import com.gps808.app.R;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.view.CircleImageView;
-import com.gps808.app.view.PengButton;
+import com.gps808.app.view.FancyButton;
+import com.gps808.app.view.FancyButton;
 
 public class MyselfActivity extends BaseActivity {
 	private HeaderFragment headerFragment;
@@ -21,9 +22,8 @@ public class MyselfActivity extends BaseActivity {
 	private TextView mynickname;
 	private CircleImageView my_headimage;
 	private LinearLayout my_setup, my_about, my_help;
-//	private PengButton my_driver, my_police, my_routes, my_car;
+	private FancyButton my_driver, my_police, my_routes, my_car;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -41,17 +41,17 @@ public class MyselfActivity extends BaseActivity {
 		// alter = (ImageView) findViewById(R.id.alter_person);
 		// alter.setOnClickListener(click);
 		//
-//		my_driver = (PengButton) findViewById(R.id.my_driver);
-//		my_driver.setOnClickListener(click);
-//
-//		my_police = (PengButton) findViewById(R.id.my_police);
-//		my_police.setOnClickListener(click);
-//
-//		my_routes = (PengButton) findViewById(R.id.my_routes);
-//		my_routes.setOnClickListener(click);
-//
-//		my_car = (PengButton) findViewById(R.id.my_car);
-//		my_car.setOnClickListener(click);
+		my_driver = (FancyButton) findViewById(R.id.my_driver);
+		my_driver.setOnClickListener(click);
+
+		my_police = (FancyButton) findViewById(R.id.my_police);
+		my_police.setOnClickListener(click);
+
+		my_routes = (FancyButton) findViewById(R.id.my_routes);
+		my_routes.setOnClickListener(click);
+
+		my_car = (FancyButton) findViewById(R.id.my_car);
+		my_car.setOnClickListener(click);
 
 		// linear
 
@@ -104,21 +104,21 @@ public class MyselfActivity extends BaseActivity {
 			case R.id.my_about:
 				cls = AboutActivity.class;
 				break;
-//			case R.id.my_driver:
-//				cls = DriverActivity.class;
-//				break;
-//			case R.id.my_police:
-//				cls = PolicesActivity.class;
-//				break;
-//			case R.id.my_help:
-//				cls = HelpActivity.class;
-//				break;
-//			case R.id.my_routes:
-//				cls = RoutesActivity.class;
-//				break;
-//			case R.id.my_car:
-//				cls = VehiclesActivity.class;
-//				break;
+			case R.id.my_driver:
+				cls = DriverActivity.class;
+				break;
+			case R.id.my_police:
+				cls = PolicesActivity.class;
+				break;
+			case R.id.my_help:
+				cls = HelpActivity.class;
+				break;
+			case R.id.my_routes:
+				cls = RoutesActivity.class;
+				break;
+			case R.id.my_car:
+				cls = VehiclesActivity.class;
+				break;
 			}
 			intent.setClass(MyselfActivity.this, cls);
 			startActivity(intent);

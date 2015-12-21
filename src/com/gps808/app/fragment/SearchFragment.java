@@ -98,6 +98,7 @@ public class SearchFragment extends BaseFragment {
 				// TODO Auto-generated method stub
 				searchClickListener.onSearch(layout_search_bar_edittext
 						.getText().toString());
+				layout_search_bar_edittext.clearFocus();
 			}
 		});
 

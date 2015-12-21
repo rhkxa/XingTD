@@ -1,21 +1,21 @@
 package com.gps808.app.activity;
 
-import org.apache.http.Header;
-import org.json.JSONObject;
-
 import android.os.Bundle;
-import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import com.baidu.mapapi.map.BaiduMapOptions;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.SupportMapFragment;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbCar;
-import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.fragment.CarFragment;
+import com.gps808.app.fragment.TrackFragment;
+import com.gps808.app.fragment.TrailFragment;
+import com.gps808.app.fragment.WeatherFragment;
 import com.gps808.app.utils.BaseActivity;
-import com.gps808.app.utils.HttpUtil;
-import com.gps808.app.utils.LogUtils;
-import com.gps808.app.utils.UrlConfig;
-import com.gps808.app.view.CircleImageView;
-import com.gps808.app.view.PengButton;
 
 /**
  * 车辆的详情
@@ -24,11 +24,13 @@ import com.gps808.app.view.PengButton;
  * 
  */
 public class CarDetailsActivity extends BaseActivity {
-	private HeaderFragment headerFragment;
-	private CircleImageView car_detail_image;
-	private TextView car_detail_name, car_detail_num, car_detail_position,
-			car_phone_text, car_number_text, car_type_text, car_start_text,
-			car_end_text;
+	private FragmentManager mFragmentMan;
+	private Fragment mContent;
+	private RadioGroup group;
+
+	private String vid;
+	private int flag;
+	private RadioButton car_trail, car_track, car_details, car_weather;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,50 +38,80 @@ public class CarDetailsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_car_details);
 		init();
-		getData();
+
 	}
 
 	private void init() {
 		// TODO Auto-generated method stub
-		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
-				.findFragmentById(R.id.title);
-		headerFragment.setTitleText("车辆详情");
-		car_detail_name = (TextView) findViewById(R.id.car_detail_name);
-		car_detail_num = (TextView) findViewById(R.id.car_detail_num);
-		car_detail_position = (TextView) findViewById(R.id.car_detail_position);
-		car_phone_text = (TextView) findViewById(R.id.car_phone_text);
-		car_number_text = (TextView) findViewById(R.id.car_number_text);
-		car_type_text = (TextView) findViewById(R.id.car_type_text);
-		car_start_text = (TextView) findViewById(R.id.car_start_text);
-		car_end_text = (TextView) findViewById(R.id.car_end_text);
+		vid = getIntent().getStringExtra("vid");
+		flag = getIntent().getIntExtra("flag", 0);
+		final Fragment car = CarFragment.newInstance(vid);
+		final WeatherFragment weather = WeatherFragment.newInstance(vid);
+		final TrailFragment trail = TrailFragment.newInstance(vid);
+		final TrackFragment track = TrackFragment.newInstance(vid);
+		car_trail = (RadioButton) findViewById(R.id.car_trail);
+		car_track = (RadioButton) findViewById(R.id.car_track);
+		car_details = (RadioButton) findViewById(R.id.car_details);
+		car_weather = (RadioButton) findViewById(R.id.car_weather);
+		switch (flag) {
+		case 0:
+			car_track.setChecked(true);
+			mContent = track;
+			break;
+		case 1:
+			car_trail.setChecked(true);
+			mContent = trail;
+			break;
+		case 2:
+			car_details.setChecked(true);
+			mContent = car;
+			break;
+		case 3:
+			car_weather.setChecked(true);
+			mContent = weather;
+			break;
 
-	}
+		}
+		mFragmentMan = getSupportFragmentManager();
 
-	private void setValue(XbCar car) {
-		car_detail_name.setText("设备名称：" + car.getTmnlName());
-		car_detail_num.setText("车牌号：：" + car.getPlateNo());
-		car_detail_position.setText(car.getAddr());
-		car_phone_text.setText(car.getSimNo());
-		car_number_text.setText(car.getTmnlNo());
-		car_type_text.setText(car.getTmnlType());
-		car_start_text.setText(car.getStart());
-		car_end_text.setText(car.getEnd());
-	}
+		mFragmentMan.beginTransaction().add(R.id.content, mContent).commit();
+		group = (RadioGroup) findViewById(R.id.main_linearlayout_footer);
+		group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-	private void getData() {
-		showProgressDialog(CarDetailsActivity.this, "正在加载，请稍等");
-		String url = UrlConfig.getVehicleVehInfo(getIntent().getStringExtra(
-				"vid"));
-		HttpUtil.get(url, new jsonHttpResponseHandler() {
 			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-					JSONObject response) {
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
 				// TODO Auto-generated method stub
-				XbCar car = JSON.parseObject(response.toString(), XbCar.class);
-				LogUtils.DebugLog("result json" + response.toString());
-				setValue(car);
-				super.onSuccess(statusCode, headers, response);
+
+				switch (arg1) {
+				case R.id.car_trail:
+					switchContent(mContent, trail);
+					break;
+				case R.id.car_track:
+					switchContent(mContent, track);
+					break;
+				case R.id.car_details:
+					switchContent(mContent, car);
+					break;
+				case R.id.car_weather:
+					switchContent(mContent, weather);
+					break;
+				}
 			}
 		});
 	}
+
+	public void switchContent(Fragment from, Fragment to) {
+		if (mContent != to) {
+			mContent = to;
+			FragmentTransaction transaction = mFragmentMan.beginTransaction();
+			// .setCustomAnimations(android.R.anim.fade_in,
+			// android.R.anim.fade_out);
+			if (!to.isAdded()) { // 先判断是否被add过
+				transaction.hide(from).add(R.id.content, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+			} else {
+				transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+			}
+		}
+	}
+
 }

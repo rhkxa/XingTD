@@ -42,7 +42,7 @@
             android:textColor="@drawable/tab_text" />
 
         <RadioButton
-            android:id="@+id/vehicle_offline"
+            android:id="@+id/vehicle_offlion"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -12,236 +12,16 @@
         android:layout_height="wrap_content"
         class="com.gps808.app.fragment.HeaderFragment" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/app_blue"
-        android:orientation="horizontal"
-        android:padding="8dp" >
-
-        <com.gps808.app.view.CircleImageView
-            android:id="@+id/car_detail_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/xtd_icon_gray"
-            app:border_color="@color/app_green"
-            app:border_width="2dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/car_detail_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="设备名称:冀J310UB"
-                android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
-
-            <TextView
-                android:id="@+id/car_detail_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="车牌号:冀J310UB"
-                android:textColor="@color/white"
-                android:textSize="@dimen/caption" />
-
-            <TextView
-                android:id="@+id/car_detail_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="位置:沧州市新华路189号(东路直行400米右转到达) "
-                android:textColor="@color/white"
-                android:textSize="@dimen/caption" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <View style="@style/blackline" />
-
-        <RelativeLayout
-            android:id="@+id/car_phone"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/white"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:text="手机号码"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <TextView
-                android:id="@+id/car_phone_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="32dp"
-                android:text="13831166925"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-        </RelativeLayout>
-
-        <View style="@style/blackline" />
-
-        <RelativeLayout
-            android:id="@+id/car_number"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/white"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:text="设备编号"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <TextView
-                android:id="@+id/car_number_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="32dp"
-                android:text="9988833"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-        </RelativeLayout>
-
-        <View style="@style/blackline" />
-
-        <RelativeLayout
-            android:id="@+id/car_type"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/white"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:text="设备类型"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <TextView
-                android:id="@+id/car_type_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="32dp"
-                android:text="冀J310UB"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-        </RelativeLayout>
-
-        <View style="@style/blackline" />
-
-        <RelativeLayout
-            android:id="@+id/car_start"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/white"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:text="服务开始时间"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <TextView
-                android:id="@+id/car_start_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="32dp"
-                android:text="2018-23-90"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-        </RelativeLayout>
-
-        <View style="@style/blackline" />
-
-        <RelativeLayout
-            android:id="@+id/car_end"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/white"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:text="服务结束时间"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <TextView
-                android:id="@+id/car_end_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="32dp"
-                android:text="12-09-08"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-        </RelativeLayout>
-
-        <View style="@style/blackline" />
-    </LinearLayout>
+        android:layout_weight="1" >
+    </FrameLayout>
 
     <View style="@style/blackline" />
 
-       <RadioGroup
+    <RadioGroup
         android:id="@+id/main_linearlayout_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -252,15 +32,14 @@
         android:paddingTop="8dp" >
 
         <com.gps808.app.view.PengRadioButton
-            android:id="@+id/main_home"
+            android:id="@+id/car_track"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:checked="true"
             android:gravity="center"
-            android:text="首页"
+            android:text="跟踪"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_vihecle_selector"
@@ -268,14 +47,14 @@
             app:peng_drawableTopWith="8dp" />
 
         <com.gps808.app.view.PengRadioButton
-            android:id="@+id/main_menu"
+            android:id="@+id/car_trail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
             android:gravity="center"
-            android:text="分类"
+            android:text="轨迹回放"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_routes_selector"
@@ -283,14 +62,14 @@
             app:peng_drawableTopWith="8dp" />
 
         <com.gps808.app.view.PengRadioButton
-            android:id="@+id/main_gift"
+            android:id="@+id/car_details"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
             android:gravity="center"
-            android:text="购物车"
+            android:text="详情"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_police_selector"
@@ -298,20 +77,19 @@
             app:peng_drawableTopWith="8dp" />
 
         <com.gps808.app.view.PengRadioButton
-            android:id="@+id/main_myself"
+            android:id="@+id/car_weather"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
             android:gravity="center"
-            android:text="我的"
+            android:text="天气"
             android:textColor="@drawable/tab_text"
             android:textSize="10sp"
             app:peng_drawableTop="@drawable/main_my_selector"
             app:peng_drawableTopHeight="8dp"
             app:peng_drawableTopWith="8dp" />
-            
     </RadioGroup>
 
 </LinearLayout>

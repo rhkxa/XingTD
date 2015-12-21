@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
@@ -76,7 +78,7 @@ public class MainActivity extends BaseActivity {
 			.fromResource(R.drawable.xtd_carlogo_off);
 	private String key = "";
 	private FancyButton main_refresh;
-	int flag=0;
+	int flag = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,7 @@ public class MainActivity extends BaseActivity {
 		setContentView(R.layout.activity_main);
 		// UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,
 		// false);
-		
+
 		init();
 	}
 
@@ -172,7 +174,7 @@ public class MainActivity extends BaseActivity {
 
 				}
 				Intent intent = new Intent(MainActivity.this, cls);
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}
 		};
 		main_vehicles.setOnClickListener(bottomClick);
@@ -187,15 +189,16 @@ public class MainActivity extends BaseActivity {
 			public void onSearch(String k) {
 				// TODO Auto-generated method stub
 				key = k;
+				getVehicleLocation();
 			}
 		});
-		main_refresh=(FancyButton) findViewById(R.id.main_refresh);
+		main_refresh = (FancyButton) findViewById(R.id.main_refresh);
 		main_refresh.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				DateDialog dateDialog=new DateDialog(MainActivity.this);
+				DateDialog dateDialog = new DateDialog(MainActivity.this);
 				dateDialog.show();
 			}
 		});
@@ -213,21 +216,20 @@ public class MainActivity extends BaseActivity {
 		BitmapDescriptor car;
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (XbVehicle info : infos) {
-			doubleLng=Utils.getLng(info.getLocation(),":");
+			doubleLng = Utils.getLng(info.getLocation(), ":");
 			// 位置
-			latLng = new LatLng(doubleLng[1],doubleLng[0]);
+			latLng = new LatLng(doubleLng[1], doubleLng[0]);
 			builder.include(latLng);
-			  if(info.isOnline()){
-	            	car=online;
-	            }else{
-	            	car=offline;
-	            }
+			if (info.isOnline()) {
+				car = online;
+			} else {
+				car = offline;
+			}
 			// 图标
 			overlayOptions = new MarkerOptions().position(latLng).icon(car)
 					.zIndex(5).rotate(info.getDirection());
 			// .animateType(MarkerAnimateType.drop);下降动画
-          
-			
+
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 			Bundle bundle = new Bundle();
 			bundle.putString("info", JSON.toJSONString(info));
@@ -259,12 +261,7 @@ public class MainActivity extends BaseActivity {
 
 	}
 
-	@Override
-	protected void onPause() {
-		// MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()
-		mMapView.onPause();
-		super.onPause();
-	}
+	
 
 	private void getVehicleLocation() {
 		JSONObject postData = new JSONObject();
@@ -333,13 +330,13 @@ public class MainActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				switch (arg0.getId()) {
 				case R.id.popwindows_track:
-					flag=0;
+					flag = 0;
 					break;
 				case R.id.popwindows_weather:
-					flag=3;
+					flag = 3;
 					break;
 				case R.id.popwindows_trail:
-					flag=1;
+					flag = 1;
 					break;
 				}
 				Intent intent = new Intent(MainActivity.this,
@@ -368,6 +365,28 @@ public class MainActivity extends BaseActivity {
 		TextView popwindows_time;
 	}
 
+	/**
+	 * 定时任务
+	 */
+	// handler.postDelayed(runnable,
+	// Common.HANDLER_RUNNABLE_TIME);//每两秒执行一次runnable.
+	Handler handler = new Handler();
+	Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			// 要做的事情
+			getVehicleLocation();
+			handler.postDelayed(this, Common.HANDLER_RUNNABLE_TIME);
+		}
+	};
+
+	@Override
+	protected void onPause() {
+		// MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()
+		mMapView.onPause();
+		super.onPause();
+	}
 	@Override
 	protected void onResume() {
 		// MapView的生命周期与Activity同步，当activity恢复时需调用MapView.onResume()
@@ -383,7 +402,8 @@ public class MainActivity extends BaseActivity {
 		// 回收 bitmap 资源
 		online.recycle();
 		offline.recycle();
-		
+		handler.removeCallbacks(runnable);
+
 	}
 
 	// 双击退出

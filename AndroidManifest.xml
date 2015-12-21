@@ -188,7 +188,7 @@
         <!-- 家XrnxWbyjML3T0b2Pb4ukY8OE 公司N8qQtsf1z2QZUtB6ViQegOWH -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="XrnxWbyjML3T0b2Pb4ukY8OE" />
+            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
     </application>
 
 </manifest>

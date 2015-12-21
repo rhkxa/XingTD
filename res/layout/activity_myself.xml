@@ -67,7 +67,7 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
-                android:id="@+id/btn_ic_launcher_followers"
+                android:id="@+id/my_car"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 fancy:fb_defaultColor="@color/app_blue"
@@ -92,6 +92,7 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
+                   android:id="@+id/my_routes"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 fancy:fb_defaultColor="@color/app_green"
@@ -117,6 +118,7 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
+                     android:id="@+id/my_police"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 fancy:fb_defaultColor="@color/app_pink"
@@ -141,6 +143,7 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
+                     android:id="@+id/my_driver"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 fancy:fb_defaultColor="@color/app_yellow"
