@@ -7,16 +7,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+
+import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.SupportMapFragment;
+import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
+import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.CarFragment;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.fragment.TrackFragment;
 import com.gps808.app.fragment.MonitorFragment;
 import com.gps808.app.fragment.WeatherFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.Utils;
 
 /**
  * 车辆的详情
@@ -44,13 +49,17 @@ public class CarDetailsActivity extends BaseActivity {
 
 	private void init() {
 		// TODO Auto-generated method stub
-		HeaderFragment	headerFragment = (HeaderFragment) this.getSupportFragmentManager()
-				.findFragmentById(R.id.title);
+		HeaderFragment headerFragment = (HeaderFragment) this
+				.getSupportFragmentManager().findFragmentById(R.id.title);
 		headerFragment.setTitleText("车辆详情");
-		vid = getIntent().getStringExtra("vid");
+		XbVehicle xbVehicle = JSON.parseObject(getIntent()
+				.getStringExtra("car"), XbVehicle.class);
+		vid = xbVehicle.getVid();
 		flag = getIntent().getIntExtra("flag", 0);
+		double[] doubleLng = Utils.getLng(xbVehicle.getLocation(), ":");
 		final Fragment car = CarFragment.newInstance(vid);
-		final WeatherFragment weather = WeatherFragment.newInstance(vid);
+		final WeatherFragment weather = WeatherFragment.newInstance(
+				doubleLng[1], doubleLng[0]);
 		final MonitorFragment monitor = MonitorFragment.newInstance(vid);
 		final TrackFragment track = TrackFragment.newInstance(vid);
 		car_monitor = (RadioButton) findViewById(R.id.car_monitor);

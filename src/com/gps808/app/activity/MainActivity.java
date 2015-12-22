@@ -347,7 +347,7 @@ public class MainActivity extends BaseActivity {
 				}
 				Intent intent = new Intent(MainActivity.this,
 						CarDetailsActivity.class);
-				intent.putExtra("vid", xbVehicle.getVid());
+				intent.putExtra("car",JSON.toJSONString(xbVehicle));
 				intent.putExtra("flag", flag);
 				startActivity(intent);
 			}

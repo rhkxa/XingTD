@@ -290,7 +290,8 @@ public class StringUtils {
 	}
 
 	/**
-	 *  判断是否为手机号
+	 * 判断是否为手机号
+	 * 
 	 * @param inputText
 	 * @return
 	 */
@@ -300,14 +301,46 @@ public class StringUtils {
 		Matcher m = p.matcher(inputText);
 		return m.matches();
 	}
+
 	/**
 	 * 将毫秒数转化成年-月-日的格式
+	 * 
 	 * @param time
 	 * @return
 	 */
-	public static String toDate(long time){
+	public static String toDate(long time) {
 		Date d = new Date(time);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(d);
+	}
+
+	public static String getWeek(int w) {
+		String week = "星期";
+		switch (w) {
+		
+		case 1:
+			week = week + "一";
+			break;
+		case 2:
+			week = week + "二";
+			break;
+		case 3:
+			week = week + "三";
+			break;
+		case 4:
+			week = week + "四";
+			break;
+		case 5:
+			week = week + "五";
+			break;
+		case 6:
+			week = week + "六";
+			break;
+		case 7:
+			week = week + "日";
+			break;
+
+		}
+		return week;
 	}
 }

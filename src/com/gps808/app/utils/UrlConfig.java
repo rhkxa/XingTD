@@ -278,6 +278,16 @@ public class UrlConfig {
 		return SERVER + "user/addDriver";
 	}
 
+	/**
+	 * 天气
+	 * @param lng
+	 * @param lat
+	 * @return
+	 */
+	public static final String getWeather(double lng, double lat) {
+		return SERVER + " info/ weather ?lng=" + lng + "&lat=" + lat;
+	}
+
 	// 获取验证码
 	public static final String getCaptcha(String mobi) {
 		return SERVER + "register/captcha?mobi=" + mobi;
