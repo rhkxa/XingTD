@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gps808.app.R;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.view.CircleImageView;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.FancyButton;
@@ -38,6 +39,16 @@ public class MyselfActivity extends BaseActivity {
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("个人中心");
 		headerFragment.setImageButtonResource(R.drawable.xtd_action_talk);
+		headerFragment.setCommentBtnListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MyselfActivity.this,
+						MessageActivity.class);
+				startActivity(intent);
+			}
+		});
 		// alter = (ImageView) findViewById(R.id.alter_person);
 		// alter.setOnClickListener(click);
 		//
@@ -61,7 +72,9 @@ public class MyselfActivity extends BaseActivity {
 		my_about.setOnClickListener(click);
 		my_help = (LinearLayout) findViewById(R.id.my_help);
 		my_help.setOnClickListener(click);
-		// mynickname = (TextView) findViewById(R.id.my_nickname);
+		mynickname = (TextView) findViewById(R.id.my_nickname);
+		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
+				.getUserName());
 		//
 		// my_headimage = (CircleImageView) findViewById(R.id.my_headimage);
 

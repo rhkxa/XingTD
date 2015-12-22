@@ -47,7 +47,7 @@
             app:peng_drawableTopWith="8dp" />
 
         <com.gps808.app.view.PengRadioButton
-            android:id="@+id/car_trail"
+            android:id="@+id/car_monitor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

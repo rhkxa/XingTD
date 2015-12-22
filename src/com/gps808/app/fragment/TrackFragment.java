@@ -34,7 +34,7 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 
 import com.gps808.app.R;
-import com.gps808.app.bean.XbTrail;
+import com.gps808.app.bean.XbTrack;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.Common;
@@ -99,10 +99,10 @@ public class TrackFragment extends BaseFragment {
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
 				// TODO Auto-generated method stub
-				XbTrail xbTrail = JSON.parseObject(response.toString(),
-						XbTrail.class);
+				XbTrack xbTrack = JSON.parseObject(response.toString(),
+						XbTrack.class);
 				LogUtils.DebugLog("result json" + response.toString());
-				addInfosOverlay(xbTrail);
+				addInfosOverlay(xbTrack);
 				super.onSuccess(statusCode, headers, response);
 			}
 		});
@@ -111,18 +111,18 @@ public class TrackFragment extends BaseFragment {
 	/**
 	 * 初始化图层
 	 */
-	private void addInfosOverlay(XbTrail xbTrail) {
+	private void addInfosOverlay(XbTrack xbTrack) {
 		mBaiduMap.clear();
 		LatLng latLng = null;
 		OverlayOptions overlayOptions = null;
 		Marker marker = null;
 		double[] doubleLng;
-		doubleLng = Utils.getLng(xbTrail.getLocation(), ":");
+		doubleLng = Utils.getLng(xbTrack.getLocation(), ":");
 		// 位置
 		latLng = new LatLng(doubleLng[1], doubleLng[0]);
 		// 图标
 		overlayOptions = new MarkerOptions().position(latLng)
-				.icon(locationIcon).zIndex(5).rotate(xbTrail.getDirection());
+				.icon(locationIcon).zIndex(5).rotate(xbTrack.getDirection());
 		// .animateType(MarkerAnimateType.drop);下降动画
 		marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 		// 缩放地图，使所有Overlay都在合适的视野内

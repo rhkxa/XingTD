@@ -30,10 +30,11 @@
             <com.gps808.app.view.FancyButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="8dp"
                 fancy:fb_defaultColor="@color/tag_blue"
                 fancy:fb_focusColor="#8cc9f8"
-                fancy:fb_iconResource="@drawable/xtd_icon_trail"
-                fancy:fb_iconSize="10dp" android:layout_marginLeft="8dp"
+                fancy:fb_iconResource="@drawable/xtd_icon_monitor"
+                fancy:fb_iconSize="10dp"
                 fancy:fb_radius="2dp"
                 fancy:fb_textColor="#FFFFFF" />
 
@@ -48,6 +49,7 @@
                 android:textSize="@dimen/body" />
 
             <TextView
+                android:id="@+id/setup_monitor_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -77,10 +79,11 @@
             <com.gps808.app.view.FancyButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="8dp"
                 fancy:fb_defaultColor="@color/app_green"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_track"
-                fancy:fb_iconSize="10dp" android:layout_marginLeft="8dp"
+                fancy:fb_iconSize="10dp"
                 fancy:fb_radius="2dp"
                 fancy:fb_textColor="#FFFFFF" />
 
@@ -95,6 +98,7 @@
                 android:textSize="@dimen/body" />
 
             <TextView
+                android:id="@+id/setup_track_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -160,7 +164,7 @@
     <com.gps808.app.view.FancyButton
         android:id="@+id/exit_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_margin="16dp"
         android:background="@color/app_red"

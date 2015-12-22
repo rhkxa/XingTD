@@ -301,8 +301,8 @@ public class MainActivity extends BaseActivity {
 			viewHolder = new ViewHolder();
 			viewHolder.popwindows_track = (Button) mMarkerLy
 					.findViewById(R.id.popwindows_track);
-			viewHolder.popwindows_trail = (Button) mMarkerLy
-					.findViewById(R.id.popwindows_trail);
+			viewHolder.popwindows_monitor = (Button) mMarkerLy
+					.findViewById(R.id.popwindows_monitor);
 			viewHolder.popwindows_weather = (Button) mMarkerLy
 					.findViewById(R.id.popwindows_weather);
 			viewHolder.popwindows_name = (TextView) mMarkerLy
@@ -335,7 +335,7 @@ public class MainActivity extends BaseActivity {
 				case R.id.popwindows_track:
 					flag = 0;
 					break;
-				case R.id.popwindows_trail:
+				case R.id.popwindows_monitor:
 					flag = 1;
 					break;
 				case R.id.popwindows_details:
@@ -353,7 +353,7 @@ public class MainActivity extends BaseActivity {
 			}
 		};
 		viewHolder.popwindows_weather.setOnClickListener(click);
-		viewHolder.popwindows_trail.setOnClickListener(click);
+		viewHolder.popwindows_monitor.setOnClickListener(click);
 		viewHolder.popwindows_track.setOnClickListener(click);
 		viewHolder.popwindows_details.setOnClickListener(click);
 		viewHolder.popwindows_close.setOnClickListener(new OnClickListener() {
@@ -373,7 +373,7 @@ public class MainActivity extends BaseActivity {
 	 */
 	private class ViewHolder {
 		Button popwindows_track;
-		Button popwindows_trail;
+		Button popwindows_monitor;
 		Button popwindows_weather;
 		TextView popwindows_name;
 		TextView popwindows_state;
@@ -437,8 +437,8 @@ public class MainActivity extends BaseActivity {
 					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
 							latLng, -100);
 					mBaiduMap.showInfoWindow(mInfoWindow);
-					MapStatusUpdate msu = MapStatusUpdateFactory
-							.newLatLng(latLng);
+					MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(
+							latLng, 14.0f);
 					mBaiduMap.setMapStatus(msu);
 				}
 			}

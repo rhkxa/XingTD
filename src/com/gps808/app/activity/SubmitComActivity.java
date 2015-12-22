@@ -1,5 +1,8 @@
 package com.gps808.app.activity;
 
+import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -72,20 +75,24 @@ public class SubmitComActivity extends BaseActivity {
 	}
 
 	private void submit(String content) {
-//		String uid = PreferenceUtils.getInstance(SubmitComActivity.this)
-//				.getStringValue("uid");
-//		HttpUtil.get(UrlConfig.getCommentAdd(uid, goods_id, content),
-//				new jsonHttpResponseHandler() {
-//					@Override
-//					public void onSuccess(JSONObject arg0) {
-//						// TODO Auto-generated method stub
-//						if (Utils.requestOk(arg0)) {
-//							Utils.ToastMessage(SubmitComActivity.this, "评价成功");
-//							finish();
-//						}
-//
-//						super.onSuccess(arg0);
-//					}
-//				});
+		String url = UrlConfig.getUserQuestion();
+		JSONObject params = new JSONObject();
+		StringEntity entity = null;
+		try {
+			params.put("content", content);
+			entity = new StringEntity(params.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpUtil.post(SubmitComActivity.this, url, entity, "application/json",
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
 	}
 }

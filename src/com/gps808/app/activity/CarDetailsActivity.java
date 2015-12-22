@@ -12,8 +12,9 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.SupportMapFragment;
 import com.gps808.app.R;
 import com.gps808.app.fragment.CarFragment;
+import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.fragment.TrackFragment;
-import com.gps808.app.fragment.TrailFragment;
+import com.gps808.app.fragment.MonitorFragment;
 import com.gps808.app.fragment.WeatherFragment;
 import com.gps808.app.utils.BaseActivity;
 
@@ -30,7 +31,7 @@ public class CarDetailsActivity extends BaseActivity {
 
 	private String vid;
 	private int flag;
-	private RadioButton car_trail, car_track, car_details, car_weather;
+	private RadioButton car_monitor, car_track, car_details, car_weather;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +44,16 @@ public class CarDetailsActivity extends BaseActivity {
 
 	private void init() {
 		// TODO Auto-generated method stub
+		HeaderFragment	headerFragment = (HeaderFragment) this.getSupportFragmentManager()
+				.findFragmentById(R.id.title);
+		headerFragment.setTitleText("车辆详情");
 		vid = getIntent().getStringExtra("vid");
 		flag = getIntent().getIntExtra("flag", 0);
 		final Fragment car = CarFragment.newInstance(vid);
 		final WeatherFragment weather = WeatherFragment.newInstance(vid);
-		final TrailFragment trail = TrailFragment.newInstance(vid);
+		final MonitorFragment monitor = MonitorFragment.newInstance(vid);
 		final TrackFragment track = TrackFragment.newInstance(vid);
-		car_trail = (RadioButton) findViewById(R.id.car_trail);
+		car_monitor = (RadioButton) findViewById(R.id.car_monitor);
 		car_track = (RadioButton) findViewById(R.id.car_track);
 		car_details = (RadioButton) findViewById(R.id.car_details);
 		car_weather = (RadioButton) findViewById(R.id.car_weather);
@@ -59,8 +63,8 @@ public class CarDetailsActivity extends BaseActivity {
 			mContent = track;
 			break;
 		case 1:
-			car_trail.setChecked(true);
-			mContent = trail;
+			car_monitor.setChecked(true);
+			mContent = monitor;
 			break;
 		case 2:
 			car_details.setChecked(true);
@@ -83,8 +87,8 @@ public class CarDetailsActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 
 				switch (arg1) {
-				case R.id.car_trail:
-					switchContent(mContent, trail);
+				case R.id.car_monitor:
+					switchContent(mContent, monitor);
 					break;
 				case R.id.car_track:
 					switchContent(mContent, track);
@@ -106,11 +110,12 @@ public class CarDetailsActivity extends BaseActivity {
 			FragmentTransaction transaction = mFragmentMan.beginTransaction();
 			// .setCustomAnimations(android.R.anim.fade_in,
 			// android.R.anim.fade_out);
-//			if (!to.isAdded()) { // 先判断是否被add过
-//				transaction.hide(from).add(R.id.content, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-//			} else {
-//				transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-//			}
+			// if (!to.isAdded()) { // 先判断是否被add过
+			// transaction.hide(from).add(R.id.content, to).commit(); //
+			// 隐藏当前的fragment，add下一个到Activity中
+			// } else {
+			// transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+			// }
 			transaction.replace(R.id.content, to).commit();
 		}
 	}

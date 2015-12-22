@@ -181,7 +181,7 @@ public class UrlConfig {
 	}
 
 	/**
-	 * 查询用户的系统设置信息post json
+	 * 查询用户的系统设置信息
 	 * 
 	 * 
 	 * @return

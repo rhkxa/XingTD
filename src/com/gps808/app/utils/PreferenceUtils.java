@@ -23,6 +23,9 @@ public class PreferenceUtils {
 	 */
 
 	public static final String PREFERENCE_NAME = "saveInfo";
+	public static final String AUTO_REFRESH_TRACK = "";
+	public static final String AUTO_REFRESH_MONITOR = "";
+
 	private static SharedPreferences mSharedPreferences;
 	private static PreferenceUtils mPreferenceUtils;
 	private static SharedPreferences.Editor editor;
@@ -67,7 +70,7 @@ public class PreferenceUtils {
 	}
 
 	public String getUserNick() {
-		return mSharedPreferences.getString("nick", "数码衣库 ");
+		return mSharedPreferences.getString("nick", "星通达 ");
 	}
 
 	public String getUserName() {
@@ -87,10 +90,11 @@ public class PreferenceUtils {
 		editor.putString("userimg", userimg);
 		editor.commit();
 	}
+
 	public String getUserId() {
 		return mSharedPreferences.getString("userid", null);
 	}
-	
+
 	public void setUserId(String userid) {
 		editor.putString("userid", userid);
 		editor.commit();
@@ -141,20 +145,22 @@ public class PreferenceUtils {
 		editor.putBoolean("push", state);
 		editor.commit();
 	}
+
 	public boolean getVoice() {
 		return mSharedPreferences.getBoolean("voice", true);
-		
+
 	}
-	
+
 	public void setVoice(boolean voice) {
 		editor.putBoolean("voice", voice);
 		editor.commit();
 	}
+
 	public boolean getShock() {
 		return mSharedPreferences.getBoolean("shock", true);
-		
+
 	}
-	
+
 	public void setShock(boolean shock) {
 		editor.putBoolean("shock", shock);
 		editor.commit();

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.Header;
 import org.json.JSONArray;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,11 +50,13 @@ public class DriverActivity extends BaseActivity {
 		headerFragment.setTitleText("司机列表");
 		headerFragment.setImageButtonResource(R.drawable.xtd_action_add);
 		headerFragment.setCommentBtnListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
+				Intent intent = new Intent(DriverActivity.this,
+						EditDrvierActivity.class				);
+				startActivity(intent);
 			}
 		});
 		driver_list = (PullToRefreshListView) findViewById(R.id.driver_list);
@@ -73,7 +77,7 @@ public class DriverActivity extends BaseActivity {
 		if (isFeresh) {
 			showProgressDialog(DriverActivity.this, "正在加载,请稍等");
 		}
-		String url = UrlConfig.getDrivers(pageSize, pagenum);
+		String url = UrlConfig.getDrivers(pagenum,pageSize);
 		HttpUtil.get(url, new jsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
