@@ -97,10 +97,10 @@ public class VehiclesActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(VehiclesActivity.this,
-						CarDetailsActivity.class);
+				Intent intent = new Intent();
 				intent.putExtra("vid", xbVehicles.get(arg2 - 1).getVid());
-				startActivity(intent);
+				setResult(RESULT_OK, intent);
+				finish();
 			}
 		});
 		vehicle_all = (RadioButton) findViewById(R.id.vehicle_all);
@@ -162,9 +162,12 @@ public class VehiclesActivity extends BaseActivity {
 						}
 						XbVobject xbVobject = JSON.parseObject(
 								response.toString(), XbVobject.class);
-						vehicle_all.setText("全部("+xbVobject.getTotalNum()+")");
-						vehicle_onlion.setText("在线("+xbVobject.getOnlineNum()+")");
-						vehicle_offlion.setText("离线("+xbVobject.getOfflineNum()+")");
+						vehicle_all.setText("全部(" + xbVobject.getTotalNum()
+								+ ")");
+						vehicle_onlion.setText("在线(" + xbVobject.getOnlineNum()
+								+ ")");
+						vehicle_offlion.setText("离线("
+								+ xbVobject.getOfflineNum() + ")");
 						xbVehicles.addAll(xbVobject.getRows());
 						if (xbVobject.getRows().size() < pageNum) {
 							vehicle_list.setMode(Mode.DISABLED);

@@ -43,14 +43,19 @@ import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 
+/**
+ * 跟踪
+ * 
+ * @author JIA
+ * 
+ */
 public class TrackFragment extends BaseFragment {
 
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 	private String vid;
-	BitmapDescriptor locationIcon = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_gcoding);
+	BitmapDescriptor locationIcon = null;
 
 	public static TrackFragment newInstance(String id) {
 		TrackFragment fragment = new TrackFragment();
@@ -70,6 +75,8 @@ public class TrackFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
+		locationIcon = BitmapDescriptorFactory
+				.fromResource(R.drawable.icon_gcoding);
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
@@ -141,7 +148,7 @@ public class TrackFragment extends BaseFragment {
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		mMapView.onPause();
 		super.onPause();
 	}
@@ -157,7 +164,7 @@ public class TrackFragment extends BaseFragment {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		mMapView.onDestroy();
-		locationIcon.recycle();
+		locationIcon = null;
 		super.onDestroy();
 	}
 

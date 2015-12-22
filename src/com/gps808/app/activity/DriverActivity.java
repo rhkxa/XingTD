@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
@@ -44,6 +46,15 @@ public class DriverActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("司机列表");
+		headerFragment.setImageButtonResource(R.drawable.xtd_action_add);
+		headerFragment.setCommentBtnListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		driver_list = (PullToRefreshListView) findViewById(R.id.driver_list);
 		dAdapter = new DriverListAdapter(DriverActivity.this, xbDrivers);
 		driver_list.setAdapter(dAdapter);

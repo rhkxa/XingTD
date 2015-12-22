@@ -8,7 +8,10 @@ import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -58,15 +61,27 @@ public class PolicesActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("报警列表");
-		 SearchFragment searchFragment= (SearchFragment) this.getSupportFragmentManager().findFragmentById(R.id.search_bar);
-		    searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
-				
-				@Override
-				public void onSearch(String key) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+		headerFragment.setImageButtonResource(R.drawable.xtd_action_setup);
+		headerFragment.setCommentBtnListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(PolicesActivity.this,
+						PoliceSetupActivity.class);
+				startActivity(intent);
+			}
+		});
+		SearchFragment searchFragment = (SearchFragment) this
+				.getSupportFragmentManager().findFragmentById(R.id.search_bar);
+		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
+
+			@Override
+			public void onSearch(String key) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		police_list = (PullToRefreshListView) findViewById(R.id.police_list);
 		police_list.setMode(Mode.PULL_FROM_END);
 		pAdapter = new PoliceListViewAdapter(PolicesActivity.this, xbPolices);
@@ -79,7 +94,6 @@ public class PolicesActivity extends BaseActivity {
 				getData(true);
 			}
 		});
-		
 
 	}
 
@@ -106,9 +120,10 @@ public class PolicesActivity extends BaseActivity {
 					startPage++;
 				}
 				pAdapter.notifyDataSetChanged();
-			
+
 				super.onSuccess(statusCode, headers, response);
 			}
+
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub

@@ -19,20 +19,18 @@ import android.widget.ZoomControls;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbTrail;
+import com.gps808.app.activity.DisplayLineActivity;
+import com.gps808.app.bean.XbDisplayLine;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.Common;
@@ -40,11 +38,19 @@ import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
+import com.gps808.app.utils.BaseActivity.jsonHttpResponseHandler;
 
+/**
+ * 轨迹回放
+ * 
+ * @author JIA
+ * 
+ */
 public class TrailFragment extends BaseFragment {
 
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
+	Polyline mPolyline;
 	private InfoWindow mInfoWindow;
 	private String vid;
 
@@ -88,8 +94,8 @@ public class TrailFragment extends BaseFragment {
 		StringEntity entity = null;
 		try {
 			params.put("vId", vid);
-			params.put("start", "2015-11-26 16:14:10");
-			params.put("end", "2015-11-26 16:14:10");
+			params.put("start", "2015-10-10 08:59:34");
+			params.put("end", "2015-10-11 08:59:34");
 			entity = new StringEntity(params.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -124,10 +130,11 @@ public class TrailFragment extends BaseFragment {
 			points.add(latLng);
 
 		}
+		mBaiduMap.clear();
 		// 添加普通折线绘制
 		OverlayOptions ooPolyline = new PolylineOptions().width(10)
 				.color(0xAAFF0000).points(points);
-		Polyline mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
+		mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
 	}
 
 	/**
@@ -164,8 +171,11 @@ public class TrailFragment extends BaseFragment {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		mMapView.onDestroy();
-
 		super.onDestroy();
 	}
+
+	
+
+
 
 }

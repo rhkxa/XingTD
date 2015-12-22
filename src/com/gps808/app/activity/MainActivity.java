@@ -40,6 +40,7 @@ import com.gps808.app.view.PengButton;
 
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ZoomControls;
 import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
@@ -79,6 +80,7 @@ public class MainActivity extends BaseActivity {
 	private String key = "";
 	private FancyButton main_refresh;
 	int flag = 0;
+	private View mMarkerLy;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,8 @@ public class MainActivity extends BaseActivity {
 		// 加载数据
 		getVehicleLocation();
 		// 对Marker的点击弹出PopWindows
+		LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+		mMarkerLy = inflater.inflate(R.layout.popwindows_show, null);
 		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			@Override
 			public boolean onMarkerClick(final Marker marker) {
@@ -121,10 +125,7 @@ public class MainActivity extends BaseActivity {
 
 					}
 				};
-				LayoutInflater inflater = LayoutInflater
-						.from(MainActivity.this);
-				View mMarkerLy = inflater.inflate(R.layout.popwindows_show,
-						null);
+
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
 						marker.getPosition(), -100);
 				// mInfoWindow = new InfoWindow(BitmapDescriptorFactory
@@ -261,8 +262,6 @@ public class MainActivity extends BaseActivity {
 
 	}
 
-	
-
 	private void getVehicleLocation() {
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
@@ -312,6 +311,10 @@ public class MainActivity extends BaseActivity {
 					.findViewById(R.id.popwindows_state);
 			viewHolder.popwindows_time = (TextView) mMarkerLy
 					.findViewById(R.id.popwindows_time);
+			viewHolder.popwindows_close = (ImageView) mMarkerLy
+					.findViewById(R.id.popwindows_close);
+			viewHolder.popwindows_details = (RelativeLayout) mMarkerLy
+					.findViewById(R.id.popwindows_details);
 
 			mMarkerLy.setTag(viewHolder);
 		}
@@ -332,11 +335,14 @@ public class MainActivity extends BaseActivity {
 				case R.id.popwindows_track:
 					flag = 0;
 					break;
-				case R.id.popwindows_weather:
-					flag = 3;
-					break;
 				case R.id.popwindows_trail:
 					flag = 1;
+					break;
+				case R.id.popwindows_details:
+					flag = 2;
+					break;
+				case R.id.popwindows_weather:
+					flag = 3;
 					break;
 				}
 				Intent intent = new Intent(MainActivity.this,
@@ -349,6 +355,15 @@ public class MainActivity extends BaseActivity {
 		viewHolder.popwindows_weather.setOnClickListener(click);
 		viewHolder.popwindows_trail.setOnClickListener(click);
 		viewHolder.popwindows_track.setOnClickListener(click);
+		viewHolder.popwindows_details.setOnClickListener(click);
+		viewHolder.popwindows_close.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mBaiduMap.hideInfoWindow();
+			}
+		});
 		return mMarkerLy;
 	}
 
@@ -363,6 +378,8 @@ public class MainActivity extends BaseActivity {
 		TextView popwindows_name;
 		TextView popwindows_state;
 		TextView popwindows_time;
+		ImageView popwindows_close;
+		RelativeLayout popwindows_details;
 	}
 
 	/**
@@ -387,6 +404,7 @@ public class MainActivity extends BaseActivity {
 		mMapView.onPause();
 		super.onPause();
 	}
+
 	@Override
 	protected void onResume() {
 		// MapView的生命周期与Activity同步，当activity恢复时需调用MapView.onResume()
@@ -404,6 +422,28 @@ public class MainActivity extends BaseActivity {
 		offline.recycle();
 		handler.removeCallbacks(runnable);
 
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+		if (arg1 == RESULT_OK) {
+			String vid = arg2.getStringExtra("vid");
+			LogUtils.DebugLog("activity resutl", vid);
+			for (XbVehicle info : vehicle) {
+				if (info.getVid().equals(vid)) {
+					double[] doubleLng = Utils.getLng(info.getLocation(), ":");
+					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
+					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
+							latLng, -100);
+					mBaiduMap.showInfoWindow(mInfoWindow);
+					MapStatusUpdate msu = MapStatusUpdateFactory
+							.newLatLng(latLng);
+					mBaiduMap.setMapStatus(msu);
+				}
+			}
+		}
+		super.onActivityResult(arg0, arg1, arg2);
 	}
 
 	// 双击退出

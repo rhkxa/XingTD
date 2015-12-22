@@ -75,6 +75,8 @@
         <activity android:name="com.gps808.app.activity.CarDetailsActivity" />
         <activity android:name="com.gps808.app.activity.MyselfActivity" />
         <activity android:name="com.gps808.app.activity.DisplayLineActivity" />
+        <activity android:name="com.gps808.app.activity.PoliceTypeActivity" />
+        <activity android:name="com.gps808.app.activity.EditDrvierActivity" />
 
         <!-- 分享 -->
         <activity

@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
       <item android:state_pressed="true" android:color="@color/app_blue" />
       <item android:state_checked="true" android:color="@color/app_blue"/>
-     <item android:color="@color/footer_text" />
+     <item android:color="@color/tag_blue" />
 
 </selector>

@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="终点:"
-                    android:textColor="@color/app_green"
+                    android:textColor="@color/app_red"
                     android:textSize="@dimen/caption" />
 
                 <TextView

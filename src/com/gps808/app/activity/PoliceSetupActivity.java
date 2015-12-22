@@ -32,7 +32,8 @@ public class PoliceSetupActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_police_setup);
-		mPreferenceUtils = PreferenceUtils.getInstance(PoliceSetupActivity.this);
+		mPreferenceUtils = PreferenceUtils
+				.getInstance(PoliceSetupActivity.this);
 		init();
 	}
 
@@ -59,8 +60,9 @@ public class PoliceSetupActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
-	
+				Intent intent = new Intent(PoliceSetupActivity.this,
+						PoliceTypeActivity.class);
+				startActivity(intent);
 
 			}
 		});

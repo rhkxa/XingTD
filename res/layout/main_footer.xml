@@ -3,68 +3,78 @@
     xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="match_parent"
     android:layout_height="56dp"
+    android:background="@color/white"
     android:gravity="center_vertical"
-    android:background="@drawable/corners_rect_white" >
+    android:orientation="vertical" >
 
-    <com.gps808.app.view.PengButton
-        android:id="@+id/main_vehicles"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@null"
-        android:button="@null"
-        android:checked="true"
-        android:gravity="center"
-        android:text="车辆"
-        android:textColor="@drawable/tab_text"
-        android:textSize="10sp"
-        app:peng_drawableTop="@drawable/main_vihecle_selector"
-        app:peng_drawableTopHeight="8dp"
-        app:peng_drawableTopWith="8dp" />
+    <View style="@style/blackline" />
 
-    <com.gps808.app.view.PengButton
-        android:id="@+id/main_routes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@null"
-        android:button="@null"
-        android:gravity="center"
-        android:text="线路"
-        android:textColor="@drawable/tab_text"
-        android:textSize="10sp"
-        app:peng_drawableTop="@drawable/main_routes_selector"
-        app:peng_drawableTopHeight="8dp"
-        app:peng_drawableTopWith="8dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-    <com.gps808.app.view.PengButton
-        android:id="@+id/main_police"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@null"
-        android:button="@null"
-        android:gravity="center"
-        android:text="报警"
-        android:textColor="@drawable/tab_text"
-        android:textSize="10sp"
-        app:peng_drawableTop="@drawable/main_police_selector"
-        app:peng_drawableTopHeight="8dp"
-        app:peng_drawableTopWith="8dp" />
+        <com.gps808.app.view.PengButton
+            android:id="@+id/main_vehicles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="车辆"
+            android:textColor="@drawable/tab_text"
+            android:textSize="10sp"
+            app:peng_drawableTop="@drawable/main_vihecle_selector"
+            app:peng_drawableTopHeight="8dp"
+            app:peng_drawableTopWith="8dp" />
 
-    <com.gps808.app.view.PengButton
-        android:id="@+id/main_myself"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@null"
-        android:button="@null"
-        android:gravity="center"
-        android:text="我的"
-        android:textColor="@drawable/tab_text"
-        android:textSize="10sp"
-        app:peng_drawableTop="@drawable/main_my_selector"
-        app:peng_drawableTopHeight="8dp"
-        app:peng_drawableTopWith="8dp" />
+        <com.gps808.app.view.PengButton
+            android:id="@+id/main_routes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:gravity="center"
+            android:text="线路"
+            android:textColor="@drawable/tab_text"
+            android:textSize="10sp"
+            app:peng_drawableTop="@drawable/main_routes_selector"
+            app:peng_drawableTopHeight="8dp"
+            app:peng_drawableTopWith="8dp" />
+
+        <com.gps808.app.view.PengButton
+            android:id="@+id/main_police"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:gravity="center"
+            android:text="报警"
+            android:textColor="@drawable/tab_text"
+            android:textSize="10sp"
+            app:peng_drawableTop="@drawable/main_police_selector"
+            app:peng_drawableTopHeight="8dp"
+            app:peng_drawableTopWith="8dp" />
+
+        <com.gps808.app.view.PengButton
+            android:id="@+id/main_myself"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:gravity="center"
+            android:text="我的"
+            android:textColor="@drawable/tab_text"
+            android:textSize="10sp"
+            app:peng_drawableTop="@drawable/main_my_selector"
+            app:peng_drawableTopHeight="8dp"
+            app:peng_drawableTopWith="8dp" />
+    </LinearLayout>
 
 </LinearLayout>

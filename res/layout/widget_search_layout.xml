@@ -41,7 +41,7 @@
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/smyk_close"
+                android:src="@drawable/xtd_close_gray"
                 android:visibility="gone" />
         </RelativeLayout>
 

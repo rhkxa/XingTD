@@ -10,6 +10,8 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,11 +29,19 @@ public class BaseFragment extends Fragment {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
-	public void showProgressDialog(Context context, CharSequence message) {
+	public void showProgressDialog(final Context context, CharSequence message) {
 		// if (progressDialog == null) {
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setIndeterminate(true);
 		// }
+		progressDialog.setOnCancelListener(new OnCancelListener() {
+			
+			@Override
+			public void onCancel(DialogInterface arg0) {
+				// TODO Auto-generated method stub
+				HttpUtil.cancelRequest(context);
+			}
+		});
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.setMessage(message);
 		progressDialog.show();
