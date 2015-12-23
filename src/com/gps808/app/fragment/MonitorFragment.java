@@ -19,10 +19,13 @@ import android.widget.ZoomControls;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
@@ -48,6 +51,8 @@ import com.gps808.app.utils.BaseActivity.jsonHttpResponseHandler;
  */
 public class MonitorFragment extends BaseFragment {
 
+	BitmapDescriptor endIcon = null;
+	BitmapDescriptor startIcon = null;
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	Polyline mPolyline;
@@ -72,6 +77,9 @@ public class MonitorFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
+		startIcon = BitmapDescriptorFactory
+				.fromResource(R.drawable.xtd_map_start);
+		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.xtd_map_end);
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
@@ -96,7 +104,7 @@ public class MonitorFragment extends BaseFragment {
 			params.put("vId", vid);
 			params.put("start", "2015-12-22 08:00:00");
 			params.put("end", "2015-12-23 20:59:34");
-			entity = new StringEntity(params.toString());
+			entity = new StringEntity(params.toString(), "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,8 +143,13 @@ public class MonitorFragment extends BaseFragment {
 		if (points.size() >= 2) {
 
 			OverlayOptions ooPolyline = new PolylineOptions().width(10)
-					.color(0xAAFF0000).points(points);
+					.color(getResources().getColor(R.color.app_green)).points(points);
 			mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
+			mBaiduMap.addOverlay(new MarkerOptions().position(points.get(0))
+					.icon(startIcon));
+			mBaiduMap.addOverlay(new MarkerOptions().position(
+					points.get(points.size() - 1)).icon(endIcon));
+
 		}
 		// 缩放地图，使所有Overlay都在合适的视野内
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
@@ -176,7 +189,10 @@ public class MonitorFragment extends BaseFragment {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
+
 		mMapView.onDestroy();
+		endIcon = null;
+		startIcon = null;
 		super.onDestroy();
 	}
 

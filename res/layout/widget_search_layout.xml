@@ -33,6 +33,7 @@
                 android:gravity="left|center_vertical"
                 android:hint="请输入车牌号或手机号"
                 android:padding="4dp"
+                android:singleLine="true"
                 android:textSize="@dimen/body" />
 
             <ImageView

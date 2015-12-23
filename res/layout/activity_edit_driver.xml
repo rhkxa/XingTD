@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
@@ -14,11 +15,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingLeft="16dp" >
+        android:padding="8dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,18 +32,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系人"
+                android:layout_margin="8dp"
+                android:text="司机名称:"
                 android:textColor="@color/text"
                 android:textSize="@dimen/body" />
 
             <EditText
-                android:id="@+id/address_name"
+                android:id="@+id/driver_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
                 android:background="@drawable/corners_rect_gray"
-                android:hint="收货人姓名"
-                android:paddingLeft="4dp"
+                android:hint="请输入名称"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -55,17 +57,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系人"
+                android:text="手机号码:"   android:layout_margin="8dp"
                 android:textColor="@color/text"
                 android:textSize="@dimen/body" />
 
             <EditText
+                android:id="@+id/driver_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
                 android:background="@drawable/corners_rect_gray"
-                android:hint="收货人姓名"
-                android:paddingLeft="4dp"
+                android:hint="请输入号码"
+                android:inputType="phone"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -79,17 +82,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系人"
+                android:text="登录帐号:"   android:layout_margin="8dp"
                 android:textColor="@color/text"
                 android:textSize="@dimen/body" />
 
             <EditText
+                android:id="@+id/driver_user"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
+                android:layout_weight="1"
                 android:background="@drawable/corners_rect_gray"
-                android:hint="收货人姓名"
-                android:paddingLeft="4dp"
+                android:hint="请输入账号"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -103,17 +107,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系人"
+                android:text="登录密码:"   android:layout_margin="8dp"
                 android:textColor="@color/text"
                 android:textSize="@dimen/body" />
 
             <EditText
+                android:id="@+id/driver_pass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
                 android:background="@drawable/corners_rect_gray"
-                android:hint="收货人姓名"
-                android:paddingLeft="4dp"
+                android:hint="请输入密码"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -127,17 +131,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系人"
+                android:text="确认密码:"   android:layout_margin="8dp"
                 android:textColor="@color/text"
                 android:textSize="@dimen/body" />
 
             <EditText
+                android:id="@+id/driver_pass_again"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
                 android:background="@drawable/corners_rect_gray"
-                android:hint="收货人姓名"
-                android:paddingLeft="4dp"
+                android:hint="确定密码"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -154,16 +158,29 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="出围栏报警"
+                android:text="状态:"   android:layout_margin="8dp"
                 android:textColor="@color/text"
                 android:textSize="@dimen/body" />
 
             <com.gps808.app.view.Switch.SwitchButton
+                android:id="@+id/driver_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 app:onColor="@color/app_blue" />
         </LinearLayout>
     </LinearLayout>
+
+    <com.gps808.app.view.FancyButton
+        android:id="@+id/save_ok"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        fancy:fb_defaultColor="@color/app_blue"
+        fancy:fb_focusColor="#8cc9f8"
+        fancy:fb_radius="2dp"
+        fancy:fb_text="保存"
+        fancy:fb_textColor="@color/white" />
 
 </LinearLayout>

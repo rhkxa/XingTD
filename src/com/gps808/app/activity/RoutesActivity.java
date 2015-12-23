@@ -90,7 +90,7 @@ public class RoutesActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(RoutesActivity.this,
 						DisplayLineActivity.class);
-				intent.putExtra("rid", xbRoutes.get(arg2).getRid());
+				intent.putExtra("rid", xbRoutes.get(arg2-1).getRid());
 				startActivity(intent);
 			}
 		});
@@ -109,7 +109,7 @@ public class RoutesActivity extends BaseActivity {
 			postData.put("placeName", place);
 			postData.put("startPage", startPage);
 			postData.put("pageNum", pageNum);
-			entity = new StringEntity(postData.toString());
+			entity = new StringEntity(postData.toString(),"UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -80,7 +80,7 @@ public class SubmitComActivity extends BaseActivity {
 		StringEntity entity = null;
 		try {
 			params.put("content", content);
-			entity = new StringEntity(params.toString());
+			entity = new StringEntity(params.toString(),"UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

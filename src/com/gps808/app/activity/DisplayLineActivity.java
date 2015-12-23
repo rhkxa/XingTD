@@ -14,9 +14,12 @@ import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
@@ -24,6 +27,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbDisplayLine;
+import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
@@ -38,6 +42,8 @@ public class DisplayLineActivity extends BaseActivity {
 	Polyline mPolyline;
 	Polyline mColorfulPolyline;
 	Polyline mTexturePolyline;
+	BitmapDescriptor endIcon = null;
+	BitmapDescriptor startIcon = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,12 @@ public class DisplayLineActivity extends BaseActivity {
 
 	private void init() {
 		// TODO Auto-generated method stub
+		HeaderFragment headerFragment = (HeaderFragment) this
+				.getSupportFragmentManager().findFragmentById(R.id.title);
+		headerFragment.setTitleText("路线详情");
+		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.xtd_map_end);
+		startIcon = BitmapDescriptorFactory
+				.fromResource(R.drawable.xtd_map_start);
 		// 初始化地图
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
@@ -69,11 +81,16 @@ public class DisplayLineActivity extends BaseActivity {
 	 * 添加点、线、多边形、圆、文字
 	 */
 	public void addCustomElementsDemo(List<LatLng> points) {
+		if(points.size()>=2){
 		// 添加普通折线绘制
 		OverlayOptions ooPolyline = new PolylineOptions().width(10)
-				.color(0xAAFF0000).points(points);
+				.color(getResources().getColor(R.color.app_green)).points(points);
 		mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
-
+		mBaiduMap.addOverlay(new MarkerOptions().position(points.get(0)).icon(
+				startIcon));
+		mBaiduMap.addOverlay(new MarkerOptions().position(
+				points.get(points.size() - 1)).icon(endIcon));
+		}
 		// 添加多颜色分段的折线绘制
 		// LatLng p11 = new LatLng(39.965, 116.444);
 		// LatLng p21 = new LatLng(39.925, 116.494);
@@ -217,6 +234,8 @@ public class DisplayLineActivity extends BaseActivity {
 		// mRedTexture.recycle();
 		// mBlueTexture.recycle();
 		// mGreenTexture.recycle();
+		endIcon.recycle();
+		startIcon.recycle();
 		super.onDestroy();
 	}
 

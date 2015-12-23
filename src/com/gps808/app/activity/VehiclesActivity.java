@@ -143,7 +143,7 @@ public class VehiclesActivity extends BaseActivity {
 			postData.put("status", status);
 			postData.put("startPage", startPage);
 			postData.put("pageNum", pageNum);
-			entity = new StringEntity(postData.toString());
+			entity = new StringEntity(postData.toString(),"UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

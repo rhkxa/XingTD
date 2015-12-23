@@ -20,6 +20,7 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
@@ -96,7 +97,8 @@ public class MainActivity extends BaseActivity {
 	private void init() {
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
-		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
+		MapStatus mapStatus=new MapStatus.Builder().target(new LatLng(38.31056,116.844697)).zoom(10.0f).build();
+		MapStatusUpdate msu =MapStatusUpdateFactory.newMapStatus(mapStatus);
 		mBaiduMap.setMapStatus(msu);
 		// 隐藏百度logo和 ZoomControl
 		int count = mMapView.getChildCount();
@@ -238,8 +240,8 @@ public class MainActivity extends BaseActivity {
 
 		}
 		// 缩放地图，使所有Overlay都在合适的视野内
-		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
-				.build()));
+//		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
+//				.build()));
 
 	}
 
@@ -267,7 +269,7 @@ public class MainActivity extends BaseActivity {
 		StringEntity entity = null;
 		try {
 			postData.put("search", key);
-			entity = new StringEntity(postData.toString());
+			entity = new StringEntity(postData.toString(),"UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -313,6 +315,8 @@ public class MainActivity extends BaseActivity {
 					.findViewById(R.id.popwindows_time);
 			viewHolder.popwindows_close = (ImageView) mMarkerLy
 					.findViewById(R.id.popwindows_close);
+			viewHolder.popwindows_position = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_position);
 			viewHolder.popwindows_details = (RelativeLayout) mMarkerLy
 					.findViewById(R.id.popwindows_details);
 
@@ -322,10 +326,14 @@ public class MainActivity extends BaseActivity {
 		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
 		if (xbVehicle.isOnline()) {
 			viewHolder.popwindows_state.setText("在线:" + xbVehicle.getSpeed());
+			viewHolder.popwindows_state.setTextColor(getResources().getColor(R.color.app_green));
 		} else {
 			viewHolder.popwindows_state.setText("离线:");
+			viewHolder.popwindows_state.setTextColor(getResources().getColor(R.color.text));
 		}
 		viewHolder.popwindows_name.setText(xbVehicle.getPlateNo());
+		viewHolder.popwindows_position.setText(xbVehicle.getAddr());
+		
 		OnClickListener click = new OnClickListener() {
 
 			@Override
@@ -378,7 +386,9 @@ public class MainActivity extends BaseActivity {
 		TextView popwindows_name;
 		TextView popwindows_state;
 		TextView popwindows_time;
+		TextView popwindows_position;
 		ImageView popwindows_close;
+		
 		RelativeLayout popwindows_details;
 	}
 
@@ -402,6 +412,7 @@ public class MainActivity extends BaseActivity {
 	protected void onPause() {
 		// MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()
 		mMapView.onPause();
+		//handler.removeCallbacks(runnable);
 		super.onPause();
 	}
 
@@ -420,7 +431,7 @@ public class MainActivity extends BaseActivity {
 		// 回收 bitmap 资源
 		online.recycle();
 		offline.recycle();
-		handler.removeCallbacks(runnable);
+		
 
 	}
 

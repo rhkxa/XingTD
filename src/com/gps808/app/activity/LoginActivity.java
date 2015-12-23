@@ -188,7 +188,7 @@ public class LoginActivity extends BaseActivity {
 				params.put("username", userName.getText().toString());
 				params.put("password",
 						CyptoUtils.MD5(passWord.getText().toString()));
-				entity = new StringEntity(JSON.toJSONString(pUser));
+				entity = new StringEntity(JSON.toJSONString(pUser),"UTF-8");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

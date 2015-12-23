@@ -11,7 +11,9 @@ import com.gps808.app.R;
 import com.gps808.app.bean.XbOption;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
 
 public class SetupActivity extends BaseActivity {
@@ -48,14 +50,17 @@ public class SetupActivity extends BaseActivity {
 				option = JSON.parseObject(response.toString(), XbOption.class);
 				setup_monitor_time.setText(option.getMonitorInterval() + "s");
 				setup_track_time.setText(option.getTrackInterval() + "s");
+				PreferenceUtils.getInstance(SetupActivity.this).setMonitorTime(
+						option.getMonitorInterval());
+				PreferenceUtils.getInstance(SetupActivity.this).setTrackTime(
+						option.getTrackInterval());
 				super.onSuccess(statusCode, headers, response);
 			}
 		});
 	}
 
 	private void setData() {
-		option.setMonitorInterval("");
-		option.setTrackInterval("");
+
 		String url = UrlConfig.getUserSetOptions();
 	}
 

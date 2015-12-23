@@ -44,7 +44,7 @@ public class CarFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
-
+        
 		car_detail_name = (TextView) root.findViewById(R.id.car_detail_name);
 		car_detail_num = (TextView) root.findViewById(R.id.car_detail_num);
 		car_detail_position = (TextView) root
