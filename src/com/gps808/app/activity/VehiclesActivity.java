@@ -49,7 +49,7 @@ public class VehiclesActivity extends BaseActivity {
 	private int status = 0;
 	private String search = "";
 	private int startPage = 0;
-	private final int pageNum = 10;
+	private final int pageNum = 100;
 	private List<XbVehicle> xbVehicles = new ArrayList<XbVehicle>();
 	private RadioButton vehicle_all, vehicle_onlion, vehicle_offlion;
 

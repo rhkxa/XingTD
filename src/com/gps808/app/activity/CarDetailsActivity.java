@@ -51,9 +51,9 @@ public class CarDetailsActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
-		headerFragment.setTitleText("车辆详情");
 		XbVehicle xbVehicle = JSON.parseObject(getIntent()
 				.getStringExtra("car"), XbVehicle.class);
+		headerFragment.setTitleText(xbVehicle.getPlateNo());
 		vid = xbVehicle.getVid();
 		flag = getIntent().getIntExtra("flag", 0);
 		double[] doubleLng = Utils.getLng(xbVehicle.getLocation(), ":");

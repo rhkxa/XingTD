@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.Header;
-import org.apache.http.entity.StringEntity;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -36,9 +33,7 @@ import com.baidu.mapapi.model.LatLng;
 
 import com.gps808.app.R;
 import com.gps808.app.bean.XbTrack;
-import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.utils.BaseFragment;
-import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
@@ -87,7 +82,7 @@ public class TrackFragment extends BaseFragment {
 		locationIcon = BitmapDescriptorFactory
 				.fromResource(R.drawable.xtd_carlogo_on);
 		startIcon = BitmapDescriptorFactory
-				.fromResource(R.drawable.xtd_map_start);
+				.fromResource(R.drawable.map_start_icon);
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);

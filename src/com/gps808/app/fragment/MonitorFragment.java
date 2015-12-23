@@ -32,8 +32,6 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
-import com.gps808.app.activity.DisplayLineActivity;
-import com.gps808.app.bean.XbDisplayLine;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.Common;
@@ -41,7 +39,6 @@ import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
-import com.gps808.app.utils.BaseActivity.jsonHttpResponseHandler;
 
 /**
  * 轨迹回放
@@ -79,7 +76,7 @@ public class MonitorFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		startIcon = BitmapDescriptorFactory
 				.fromResource(R.drawable.xtd_map_start);
-		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.xtd_map_end);
+		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.map_end_icon);
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);

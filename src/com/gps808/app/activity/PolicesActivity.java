@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -92,6 +94,17 @@ public class PolicesActivity extends BaseActivity {
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
 				getData(true);
+			}
+		});
+		police_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(PolicesActivity.this, DisplayPoliceActivity.class);
+				intent.putExtra("aid", xbPolices.get(arg2-1).getAid());
+				startActivity(intent);
 			}
 		});
 

@@ -201,8 +201,9 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				DateDialog dateDialog = new DateDialog(MainActivity.this);
-				dateDialog.show();
+//				DateDialog dateDialog = new DateDialog(MainActivity.this);
+//				dateDialog.show();
+				getVehicleLocation();
 			}
 		});
 	}

@@ -9,7 +9,24 @@ public class XbPolice {
 
 	private String time;
 
+	private String location;
+	private String addr;
 
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getAddr() {
+		return addr;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
 
 	public String getAid() {
 		return aid;
@@ -42,5 +59,5 @@ public class XbPolice {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	
+
 }

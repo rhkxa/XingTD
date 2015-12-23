@@ -63,6 +63,7 @@
                 android:layout_height="48dp"
                 android:background="@null"
                 android:hint="请输入用户名"
+                android:singleLine="true"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -85,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
-                android:hint="请输入密码"
+                android:hint="请输入密码" android:singleLine="true"
                 android:inputType="textPassword"
                 android:textSize="@dimen/body" />
         </LinearLayout>

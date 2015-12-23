@@ -157,7 +157,7 @@ public class UrlConfig {
 	 * @return
 	 */
 	public static final String getVehicleAlarms(String aId) {
-		return SERVER + "vehicle/alarmInfo? aId=" + aId;
+		return SERVER + "vehicle/alarmInfo?aId=" + aId;
 	}
 
 	/**

@@ -59,9 +59,9 @@ public class DisplayLineActivity extends BaseActivity {
 		HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
 		headerFragment.setTitleText("路线详情");
-		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.xtd_map_end);
+		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.map_end_icon);
 		startIcon = BitmapDescriptorFactory
-				.fromResource(R.drawable.xtd_map_start);
+				.fromResource(R.drawable.map_start_icon);
 		// 初始化地图
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
