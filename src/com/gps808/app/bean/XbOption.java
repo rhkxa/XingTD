@@ -2,23 +2,21 @@ package com.gps808.app.bean;
 
 public class XbOption {
 
-	private String monitorInterval;
-	private String trackInterval;
-
-	public String getMonitorInterval() {
+	private int monitorInterval;
+	private int trackInterval;
+	public int getMonitorInterval() {
 		return monitorInterval;
 	}
-
-	public void setMonitorInterval(String monitorInterval) {
+	public void setMonitorInterval(int monitorInterval) {
 		this.monitorInterval = monitorInterval;
 	}
-
-	public String getTrackInterval() {
+	public int getTrackInterval() {
 		return trackInterval;
 	}
-
-	public void setTrackInterval(String trackInterval) {
+	public void setTrackInterval(int trackInterval) {
 		this.trackInterval = trackInterval;
 	}
+
+	
 
 }

@@ -32,7 +32,7 @@
             android:textSize="@dimen/body" />
 
         <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/push_switch"
+            android:id="@+id/police_type1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -60,7 +60,7 @@
             android:textSize="@dimen/body" />
 
         <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/voice_switch"
+            android:id="@+id/police_type2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -88,7 +88,7 @@
             android:textSize="@dimen/body" />
 
         <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/shock_switch"
+            android:id="@+id/police_type3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -116,6 +116,7 @@
             android:textSize="@dimen/body" />
 
         <com.gps808.app.view.Switch.SwitchButton
+            android:id="@+id/police_type4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

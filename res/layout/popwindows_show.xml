@@ -17,7 +17,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/app_backgroud"
+                android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="8dp" >
 
@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="状态:"
-                        android:textColor="@color/red"
+                        android:textColor="@color/text"
                         android:textSize="@dimen/caption" />
 
                     <TextView
@@ -68,15 +68,30 @@
                         android:textColor="@color/text"
                         android:textSize="@dimen/caption" />
 
-                    <TextView
-                        android:id="@+id/popwindows_position"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/popwindows_time"
-                        android:singleLine="true"
-                        android:text="位置:沧州市新华路189号 "
-                        android:textColor="@color/text"
-                        android:textSize="@dimen/caption" />
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="位置:"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/caption" />
+
+                        <TextView
+                            android:id="@+id/popwindows_position"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="沧州市新华路1890987668889号 "
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/caption" />
+                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="16dp"

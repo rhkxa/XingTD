@@ -23,8 +23,8 @@ public class PreferenceUtils {
 	 */
 
 	public static final String PREFERENCE_NAME = "saveInfo";
-	public static final String AUTO_REFRESH_TRACK = "";
-	public static final String AUTO_REFRESH_MONITOR = "";
+	public static final String AUTO_REFRESH_TRACK = "auto_refresh_track";
+	public static final String AUTO_REFRESH_MONITOR = "auto_refresh_monitor";
 
 	private static SharedPreferences mSharedPreferences;
 	private static PreferenceUtils mPreferenceUtils;
@@ -213,6 +213,22 @@ public class PreferenceUtils {
 
 	public void setCurrentAddress(String address) {
 		editor.putString("currentaddress", address);
+		editor.commit();
+	}
+	public int getMonitorTime(){
+		return mSharedPreferences.getInt(AUTO_REFRESH_MONITOR, 10);
+		
+	}
+	public void setMonitorTime(int time){
+		editor.putInt(AUTO_REFRESH_MONITOR, time);
+		editor.commit();
+	}
+	public int getTrackTime(){
+		return mSharedPreferences.getInt(AUTO_REFRESH_TRACK, 10);
+		
+	}
+	public void setTrackTime(int time){
+		editor.putInt(AUTO_REFRESH_TRACK, time);
 		editor.commit();
 	}
 

@@ -262,8 +262,8 @@ public class UrlConfig {
 	 * @param driverId
 	 * @return
 	 */
-	public static final String getDriverInfo(String driverId) {
-		return SERVER + "user/driverInfo? driverId=" + driverId;
+	public static final String getDriverInfo(int driverId) {
+		return SERVER + "user/driverInfo?driverId=" + driverId;
 	}
 
 	/**

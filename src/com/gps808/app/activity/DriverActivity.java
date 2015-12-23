@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
@@ -39,7 +41,6 @@ public class DriverActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_driver);
 		init();
-		getData(true);
 
 	}
 
@@ -55,7 +56,7 @@ public class DriverActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(DriverActivity.this,
-						EditDrvierActivity.class				);
+						EditDrvierActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -70,6 +71,19 @@ public class DriverActivity extends BaseActivity {
 				getData(false);
 			}
 		});
+		driver_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(DriverActivity.this,
+						EditDrvierActivity.class);
+				intent.putExtra("driverId", xbDrivers.get(arg2 - 1)
+						.getDriverId());
+				startActivity(intent);
+			}
+		});
 
 	}
 
@@ -77,12 +91,15 @@ public class DriverActivity extends BaseActivity {
 		if (isFeresh) {
 			showProgressDialog(DriverActivity.this, "正在加载,请稍等");
 		}
-		String url = UrlConfig.getDrivers(pagenum,pageSize);
+		String url = UrlConfig.getDrivers(pagenum, pageSize);
 		HttpUtil.get(url, new jsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONArray response) {
 				// TODO Auto-generated method stub
+				if (isFeresh) {
+					xbDrivers.clear();
+				}
 				LogUtils.DebugLog("result json", response.toString());
 				xbDrivers.addAll(JSON.parseArray(response.toString(),
 						XbDriver.class));
@@ -100,5 +117,12 @@ public class DriverActivity extends BaseActivity {
 			}
 		});
 
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		getData(true);
+		super.onResume();
 	}
 }

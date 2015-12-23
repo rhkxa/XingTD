@@ -63,10 +63,12 @@ public class VehicleListAdapter extends BaseAdapter {
 			status = "在线";
 			vh.item_vehicle_image.setBackgroundColor(mContext.getResources().getColor(R.color.app_blue));
 			vh.item_vehicle_image.setIconResource(R.drawable.xtd_icon_blue);
+			vh.item_vehicle_status.setTextColor(mContext.getResources().getColor(R.color.app_green) );
 		} else {
 			status = "离线";
 			vh.item_vehicle_image.setBackgroundColor(mContext.getResources().getColor(R.color.border));
 			vh.item_vehicle_image.setIconResource(R.drawable.xtd_icon_gray);
+			vh.item_vehicle_status.setTextColor(mContext.getResources().getColor(R.color.text) );
 		}
 		vh.item_vehicle_status.setText(status);
 

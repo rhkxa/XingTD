@@ -167,9 +167,8 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:background="@color/app_red"
-        fancy:fb_defaultColor="#ff5f69"
-        fancy:fb_focusColor="#ff838b"
+        fancy:fb_defaultColor="@color/app_blue"
+        fancy:fb_focusColor="#8cc9f8"
         fancy:fb_radius="2dp"
         fancy:fb_text="退出登录"
         fancy:fb_textColor="@color/white" />

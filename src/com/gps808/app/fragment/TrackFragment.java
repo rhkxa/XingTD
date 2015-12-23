@@ -28,6 +28,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
@@ -56,6 +57,14 @@ public class TrackFragment extends BaseFragment {
 	private InfoWindow mInfoWindow;
 	private String vid;
 	BitmapDescriptor locationIcon = null;
+	BitmapDescriptor startIcon = null;
+
+	LatLng latLng = null;
+	OverlayOptions overlayOptions = null;
+	Marker marker = null;
+	double[] doubleLng;
+	List<LatLng> points = new ArrayList<LatLng>();
+	Polyline mPolyline;
 
 	public static TrackFragment newInstance(String id) {
 		TrackFragment fragment = new TrackFragment();
@@ -76,7 +85,9 @@ public class TrackFragment extends BaseFragment {
 	private void init(View root) {
 		// TODO Auto-generated method stub
 		locationIcon = BitmapDescriptorFactory
-				.fromResource(R.drawable.icon_gcoding);
+				.fromResource(R.drawable.xtd_carlogo_on);
+		startIcon = BitmapDescriptorFactory
+				.fromResource(R.drawable.xtd_map_start);
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
@@ -112,20 +123,31 @@ public class TrackFragment extends BaseFragment {
 	 * 初始化图层
 	 */
 	private void addInfosOverlay(XbTrack xbTrack) {
-		mBaiduMap.clear();
-		LatLng latLng = null;
-		OverlayOptions overlayOptions = null;
-		Marker marker = null;
-		double[] doubleLng;
 		doubleLng = Utils.getLng(xbTrack.getLocation(), ":");
 		// 位置
 		latLng = new LatLng(doubleLng[1], doubleLng[0]);
-		// 图标
-		overlayOptions = new MarkerOptions().position(latLng)
-				.icon(locationIcon).zIndex(5).rotate(xbTrack.getDirection());
-		// .animateType(MarkerAnimateType.drop);下降动画
-		marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
-		// 缩放地图，使所有Overlay都在合适的视野内
+		points.add(latLng);
+		if (marker == null) {
+			// 图标
+			overlayOptions = new MarkerOptions().position(latLng)
+					.icon(locationIcon).zIndex(5)
+					.rotate(xbTrack.getDirection())
+					.animateType(MarkerAnimateType.grow);// 生长动画
+			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+
+		} else {
+			marker.setPosition(latLng);
+			marker.setRotate(xbTrack.getDirection());
+			if (mPolyline == null) {
+				OverlayOptions ooPolyline = new PolylineOptions().width(10)
+						.color(getResources().getColor(R.color.app_green)).points(points);
+				mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
+				mBaiduMap.addOverlay(new MarkerOptions()
+						.position(points.get(0)).icon(startIcon));
+			} else {
+				mPolyline.setPoints(points);
+			}
+		}
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(latLng));
 
 	}
@@ -133,23 +155,23 @@ public class TrackFragment extends BaseFragment {
 	/**
 	 * 定时任务
 	 */
-	// handler.postDelayed(runnable,
-	// Common.HANDLER_RUNNABLE_TIME);//每两秒执行一次runnable.
+
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
 			// 要做的事情
-
-			handler.postDelayed(this, Common.HANDLER_RUNNABLE_TIME);
+			getData();
+			handler.postDelayed(this, 6000);
 		}
 	};
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 		mMapView.onPause();
+		handler.removeCallbacks(runnable);
 		super.onPause();
 	}
 
@@ -157,6 +179,7 @@ public class TrackFragment extends BaseFragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		mMapView.onResume();
+		handler.postDelayed(runnable, 6000);// 每两秒执行一次runnable.
 		super.onResume();
 	}
 
@@ -165,6 +188,7 @@ public class TrackFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		mMapView.onDestroy();
 		locationIcon = null;
+		startIcon = null;
 		super.onDestroy();
 	}
 

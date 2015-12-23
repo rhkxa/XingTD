@@ -1,5 +1,8 @@
 package com.gps808.app.activity;
 
+import org.apache.http.Header;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +15,12 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 
+import com.gps808.app.bean.XbAlarmOption;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.PreferenceUtils;
+import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.CircleImageView;
 import com.gps808.app.view.Switch.SwitchButton;
@@ -26,6 +32,7 @@ public class PoliceSetupActivity extends BaseActivity {
 	private LinearLayout setup_message;
 	private SwitchButton push_switch, shock_switch, voice_switch;
 	private PreferenceUtils mPreferenceUtils;
+	private XbAlarmOption alarmOption;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +69,12 @@ public class PoliceSetupActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(PoliceSetupActivity.this,
 						PoliceTypeActivity.class);
+				intent.putExtra("options", JSON.toJSONString(alarmOption));
 				startActivity(intent);
 
 			}
 		});
+		getData();
 	}
 
 	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
@@ -76,17 +85,43 @@ public class PoliceSetupActivity extends BaseActivity {
 			switch (arg0.getId()) {
 			case R.id.push_switch:
 				mPreferenceUtils.setPush(arg1);
+				alarmOption.setAcceptAlarm(arg1);
 				break;
 			case R.id.shock_switch:
 				mPreferenceUtils.setShock(arg1);
-
+				alarmOption.setVibration(arg1);
 				break;
 			case R.id.voice_switch:
 				mPreferenceUtils.setVoice(arg1);
-
+				alarmOption.setSound(arg1);
 				break;
 
 			}
+
 		}
 	};
+
+	private void getData() {
+		showProgressDialog(PoliceSetupActivity.this, "正在加载您的个人设置");
+		String url = UrlConfig.getVehicleAlarmsOtions();
+		HttpUtil.get(PoliceSetupActivity.this, url,
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						alarmOption = JSON.parseObject(response.toString(),
+								XbAlarmOption.class);
+						setValue();
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+	}
+
+	protected void setValue() {
+		// TODO Auto-generated method stub
+		push_switch.setChecked(alarmOption.isAcceptAlarm());
+		shock_switch.setChecked(alarmOption.isVibration());
+		voice_switch.setChecked(alarmOption.isSound());
+	}
 }
