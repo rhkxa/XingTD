@@ -1,11 +1,11 @@
 package com.gps808.app.bean;
 
 public class XbAlarmOption {
-	private boolean isAcceptAlarm;
+	private boolean acceptAlarm;
 
-	private boolean isSound;
+	private boolean sound;
 
-	private boolean isVibration;
+	private boolean vibration;
 
 	private boolean emergency;
 
@@ -16,27 +16,27 @@ public class XbAlarmOption {
 	private boolean outArea;
 
 	public boolean isAcceptAlarm() {
-		return isAcceptAlarm;
+		return acceptAlarm;
 	}
 
-	public void setAcceptAlarm(boolean isAcceptAlarm) {
-		this.isAcceptAlarm = isAcceptAlarm;
+	public void setAcceptAlarm(boolean acceptAlarm) {
+		this.acceptAlarm = acceptAlarm;
 	}
 
 	public boolean isSound() {
-		return isSound;
+		return sound;
 	}
 
-	public void setSound(boolean isSound) {
-		this.isSound = isSound;
+	public void setSound(boolean sound) {
+		this.sound = sound;
 	}
 
 	public boolean isVibration() {
-		return isVibration;
+		return vibration;
 	}
 
-	public void setVibration(boolean isVibration) {
-		this.isVibration = isVibration;
+	public void setVibration(boolean vibration) {
+		this.vibration = vibration;
 	}
 
 	public boolean isEmergency() {
@@ -71,4 +71,5 @@ public class XbAlarmOption {
 		this.outArea = outArea;
 	}
 
+	
 }

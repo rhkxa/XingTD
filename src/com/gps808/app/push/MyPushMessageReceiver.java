@@ -351,8 +351,8 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 			postData.put("appId", appId);
 			postData.put("userId", userId);
 			postData.put("deviceType", 3);
-			LogUtils.DebugLog("post json" + postData.toString(),"UTF-8");
-			entity = new StringEntity(postData.toString());
+			LogUtils.DebugLog("post json" + postData.toString());
+			entity = new StringEntity(postData.toString(),"UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -97,6 +97,16 @@ public class EditDrvierActivity extends BaseActivity {
 		if (driverId > 0) {
 			getDriver();
 			headerFragment.setTitleText("编辑司机");
+			driver_phone.setText(xbDriver.getPhone());
+			driver_name.setText(xbDriver.getDriverName());
+			driver_user.setText(xbDriver.getLoginName());
+			driver_pass.setText(xbDriver.getPassword());
+			driver_pass_again.setText(xbDriver.getPassword());
+			if (xbDriver.getStatus() == 0) {
+				driver_state.setChecked(true);
+			} else {
+				driver_state.setChecked(false);
+			}
 		} else {
 			headerFragment.setTitleText("添加司机");
 		}
@@ -110,6 +120,7 @@ public class EditDrvierActivity extends BaseActivity {
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {
 						// TODO Auto-generated method stub
+						LogUtils.DebugLog("result json", response.toString());
 						xbDriver = JSON.parseObject(response.toString(),
 								XbDriver.class);
 						setValue();

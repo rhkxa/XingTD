@@ -44,7 +44,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="16dp"
                 android:layout_weight="1"
-                android:text="接收新消息通知"
+                android:text="接收报警消息通知"
                 android:textColor="@color/text"
                 android:textSize="@dimen/body" />
 

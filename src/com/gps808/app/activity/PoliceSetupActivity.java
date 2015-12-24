@@ -1,6 +1,9 @@
 package com.gps808.app.activity;
 
+import java.io.UnsupportedEncodingException;
+
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -10,8 +13,6 @@ import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 
@@ -19,12 +20,12 @@ import com.gps808.app.bean.XbAlarmOption;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
+import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
-import com.gps808.app.view.CircleImageView;
+import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.Switch.SwitchButton;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class PoliceSetupActivity extends BaseActivity {
 
@@ -33,6 +34,7 @@ public class PoliceSetupActivity extends BaseActivity {
 	private SwitchButton push_switch, shock_switch, voice_switch;
 	private PreferenceUtils mPreferenceUtils;
 	private XbAlarmOption alarmOption;
+	private FancyButton save_ok;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +72,16 @@ public class PoliceSetupActivity extends BaseActivity {
 				Intent intent = new Intent(PoliceSetupActivity.this,
 						PoliceTypeActivity.class);
 				intent.putExtra("options", JSON.toJSONString(alarmOption));
-				startActivity(intent);
+				startActivityForResult(intent, RESULT_OK);
+			}
+		});
+		save_ok = (FancyButton) findViewById(R.id.save_ok);
+		save_ok.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				setData();
 			}
 		});
 		getData();
@@ -110,6 +120,7 @@ public class PoliceSetupActivity extends BaseActivity {
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {
 						// TODO Auto-generated method stub
+						LogUtils.DebugLog("result json", response.toString());
 						alarmOption = JSON.parseObject(response.toString(),
 								XbAlarmOption.class);
 						setValue();
@@ -118,10 +129,56 @@ public class PoliceSetupActivity extends BaseActivity {
 				});
 	}
 
-	protected void setValue() {
+	private void setValue() {
 		// TODO Auto-generated method stub
 		push_switch.setChecked(alarmOption.isAcceptAlarm());
 		shock_switch.setChecked(alarmOption.isVibration());
 		voice_switch.setChecked(alarmOption.isSound());
+	}
+
+	private void setData() {
+		showProgressDialog(PoliceSetupActivity.this, "正在配置您的个人设置");
+		String url = UrlConfig.getVehicleSetAlarms();
+		StringEntity entity = null;
+		
+		try {
+			
+			entity = new StringEntity(JSON.toJSONString(alarmOption));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		LogUtils.DebugLog("post json", JSON.toJSONString(alarmOption));
+		HttpUtil.post(PoliceSetupActivity.this, url, entity,
+				"application/json", new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						if (Utils.requestOk(response)) {
+							Utils.ToastMessage(PoliceSetupActivity.this,
+									"您的配置已经成功");
+							mPreferenceUtils.setPush(alarmOption
+									.isAcceptAlarm());
+							mPreferenceUtils.setVoice(alarmOption.isSound());
+							mPreferenceUtils.setShock(alarmOption.isVibration());
+						}
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+		if (arg1 == RESULT_OK) {
+			XbAlarmOption type = JSON.parseObject(arg2.getStringExtra("type"),
+					XbAlarmOption.class);
+			alarmOption.setEmergency(type.isEmergency());
+			alarmOption.setInArea(type.isInArea());
+			alarmOption.setOutArea(type.isOutArea());
+			alarmOption.setOverSpeed(type.isOverSpeed());
+		}
+		super.onActivityResult(arg0, arg1, arg2);
 	}
 }

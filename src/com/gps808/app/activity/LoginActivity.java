@@ -5,8 +5,13 @@ import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,11 +29,14 @@ import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.gps808.app.R;
 import com.gps808.app.bean.PUser;
+import com.gps808.app.bean.Update;
 import com.gps808.app.bean.XbUser;
+import com.gps808.app.dialog.CustomChoseDialog;
 import com.gps808.app.dialog.CustomOkDialog;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.CyptoUtils;
+import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
@@ -38,6 +46,8 @@ import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
 import com.gps808.app.view.FancyButton;
+import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 /**
  * 登录界面
@@ -65,14 +75,14 @@ public class LoginActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		// UpdateManager.getUpdateManager().checkAppUpdate(LoginActivity.this,
-		// false);
-//		initWithApiKey();
-		init();
+		checkUpdate();
 	}
 
 	private void init() {
 		// TODO Auto-generated method stub
+		initWithApiKey();
+		// 启动线程,延迟2秒
+		handler.postDelayed(runnable, 2000);
 		mPreferences = PreferenceUtils.getInstance(LoginActivity.this);
 		userName = (EditText) findViewById(R.id.username);
 		passWord = (EditText) findViewById(R.id.password);
@@ -131,11 +141,6 @@ public class LoginActivity extends BaseActivity {
 				getLogin();
 			}
 		});
-		if (mPreferences.getAutoLogin()) {
-			if (!StringUtils.isEmpty(mPreferences.getUserState())) {
-				login.performClick();
-			}
-		}
 
 		// call.setOnClickListener(new OnClickListener() {
 		//
@@ -171,6 +176,28 @@ public class LoginActivity extends BaseActivity {
 				register.show();
 			}
 		});
+		userName.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				// TODO Auto-generated method stub
+				handler.removeCallbacks(runnable);
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1,
+					int arg2, int arg3) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 	}
 
@@ -188,7 +215,7 @@ public class LoginActivity extends BaseActivity {
 				params.put("username", userName.getText().toString());
 				params.put("password",
 						CyptoUtils.MD5(passWord.getText().toString()));
-				entity = new StringEntity(JSON.toJSONString(pUser),"UTF-8");
+				entity = new StringEntity(JSON.toJSONString(pUser), "UTF-8");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -244,12 +271,119 @@ public class LoginActivity extends BaseActivity {
 	// 以apikey的方式绑定
 	private void initWithApiKey() {
 		// Push: 无账号初始化，用api key绑定
-		PushManager.startWork(getApplicationContext(),
-				PushConstants.LOGIN_TYPE_API_KEY,
-				PushUtils.getMetaValue(LoginActivity.this, "api_key"));
+		if (PreferenceUtils.getInstance(LoginActivity.this).getPush()) {
+			PushManager.startWork(getApplicationContext(),
+					PushConstants.LOGIN_TYPE_API_KEY,
+					PushUtils.getMetaValue(LoginActivity.this, "api_key"));
+		} else {
+			PushManager.stopWork(getApplicationContext());
+		}
 	}
 
-	
+	// 自动登录线程,2秒后自动登陆
+	Handler handler = new Handler();
+	Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			// 要做的事情
+			if (mPreferences.getAutoLogin()) {
+				if (!StringUtils.isEmpty(mPreferences.getUserState())) {
+					login.performClick();
+				}
+			}
+		}
+	};
+
+	// app检查更新
+	private void checkUpdate() {
+		String url = UrlConfig.getAppVersion();
+		HttpUtil.get(url, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+					JSONObject response) {
+				// TODO Auto-generated method stub
+				LogUtils.DebugLog("result", response.toString());
+
+				Update update = JSON.parseObject(response.toString(),
+						Update.class);
+				int currentVersion = Utils
+						.getCurrentVersion(LoginActivity.this);
+				if (update.getAppVer() > currentVersion) {
+					if (update.isForceUpdate()) {
+						showDownloadDialog(update);
+					} else {
+						showNoticeDialog(update);
+					}
+				} else {
+					init();
+				}
+				super.onSuccess(statusCode, headers, response);
+
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					String responseString, Throwable throwable) {
+				// TODO Auto-generated method stub
+				init();
+				super.onFailure(statusCode, headers, responseString, throwable);
+			}
+
+		});
+	}
+
+	private void showNoticeDialog(final Update update) {
+
+		CustomChoseDialog.Builder builder = new CustomChoseDialog.Builder(
+				LoginActivity.this);
+		builder.setMessage(update.getVersionDesc());
+		builder.setTitle("版本更新");
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				// 设置你的操作事项
+				showDownloadDialog(update);
+			}
+		});
+
+		builder.setNegativeButton("取消",
+				new android.content.DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						init();
+					}
+				});
+		builder.create().show();
+	}
+
+	private void showDownloadDialog(Update update) {
+		// TODO Auto-generated method stub
+		String apkFile = FileUtils.getSDRoot() + "XingTD" + "XtdApp_"
+				+ update.getReleaseTime() + ".apk";
+		HttpUtil.get(update.getUpdateUrl(), new BinaryHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+					Throwable arg3) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onProgress(long bytesWritten, long totalSize) {
+				// TODO Auto-generated method stub
+				super.onProgress(bytesWritten, totalSize);
+			}
+		});
+	}
+
 	// 双击退出
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

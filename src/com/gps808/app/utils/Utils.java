@@ -12,6 +12,8 @@ import com.gps808.app.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -395,8 +397,8 @@ public class Utils {
 
 	}
 
-	public static double[] getLng(String lng, String flag) {
-		String[] strLng = lng.split(flag);
+	public static double[] getLng(String lng) {
+		String[] strLng = lng.split(",");
 		double[] douLng = { Double.parseDouble(strLng[0]),
 				Double.parseDouble(strLng[1]) };
 		return douLng;
@@ -407,4 +409,19 @@ public class Utils {
 		return strLng;
 	}
 
+	/**
+	 * 获取当前客户端版本信息
+	 */
+	public static int getCurrentVersion(Context mContext) {
+		int curVersionCode = 0;
+		try {
+			PackageInfo info = mContext.getPackageManager().getPackageInfo(
+					mContext.getPackageName(), 0);
+			curVersionCode = info.versionCode;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace(System.err);
+		}
+		return curVersionCode;
+
+	}
 }

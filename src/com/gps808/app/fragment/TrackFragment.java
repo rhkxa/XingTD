@@ -32,10 +32,12 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 
 import com.gps808.app.R;
+import com.gps808.app.activity.MainActivity;
 import com.gps808.app.bean.XbTrack;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 
@@ -60,6 +62,7 @@ public class TrackFragment extends BaseFragment {
 	double[] doubleLng;
 	List<LatLng> points = new ArrayList<LatLng>();
 	Polyline mPolyline;
+	private int handler_runnable_time;
 
 	public static TrackFragment newInstance(String id) {
 		TrackFragment fragment = new TrackFragment();
@@ -118,7 +121,7 @@ public class TrackFragment extends BaseFragment {
 	 * 初始化图层
 	 */
 	private void addInfosOverlay(XbTrack xbTrack) {
-		doubleLng = Utils.getLng(xbTrack.getLocation(), ":");
+		doubleLng = Utils.getLng(xbTrack.getLocation());
 		// 位置
 		latLng = new LatLng(doubleLng[1], doubleLng[0]);
 		points.add(latLng);
@@ -135,7 +138,8 @@ public class TrackFragment extends BaseFragment {
 			marker.setRotate(xbTrack.getDirection());
 			if (mPolyline == null) {
 				OverlayOptions ooPolyline = new PolylineOptions().width(10)
-						.color(getResources().getColor(R.color.app_green)).points(points);
+						.color(getResources().getColor(R.color.app_green))
+						.points(points);
 				mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
 				mBaiduMap.addOverlay(new MarkerOptions()
 						.position(points.get(0)).icon(startIcon));
@@ -158,7 +162,7 @@ public class TrackFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			getData();
-			handler.postDelayed(this, 6000);
+			handler.postDelayed(this, handler_runnable_time);
 		}
 	};
 
@@ -174,7 +178,9 @@ public class TrackFragment extends BaseFragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		mMapView.onResume();
-		handler.postDelayed(runnable, 6000);// 每两秒执行一次runnable.
+		handler_runnable_time = PreferenceUtils.getInstance(getActivity())
+				.getTrackTime()*1000;
+		handler.postDelayed(runnable, handler_runnable_time);
 		super.onResume();
 	}
 

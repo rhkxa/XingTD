@@ -56,7 +56,7 @@ public class CarDetailsActivity extends BaseActivity {
 		headerFragment.setTitleText(xbVehicle.getPlateNo());
 		vid = xbVehicle.getVid();
 		flag = getIntent().getIntExtra("flag", 0);
-		double[] doubleLng = Utils.getLng(xbVehicle.getLocation(), ":");
+		double[] doubleLng = Utils.getLng(xbVehicle.getLocation());
 		final Fragment car = CarFragment.newInstance(vid);
 		final WeatherFragment weather = WeatherFragment.newInstance(
 				doubleLng[1], doubleLng[0]);

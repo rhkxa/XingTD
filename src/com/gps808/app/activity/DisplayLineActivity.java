@@ -200,7 +200,7 @@ public class DisplayLineActivity extends BaseActivity {
 		double[] doubleLng;
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (int i = 0; i < size; i++) {
-			doubleLng = Utils.getLng(strLng[i], ",");
+			doubleLng = Utils.getLng(strLng[i]);
 			latLng = new LatLng(doubleLng[1], doubleLng[0]);
 			points.add(latLng);
 			builder.include(latLng);

@@ -49,7 +49,7 @@ public class UrlConfig {
 	 * @return
 	 */
 	public static final String getAppVersion() {
-		return SERVER + "info/appVersion?mobileType=1";
+		return SERVER + "info/appVersion?mobileType=3";
 	}
 
 	/**

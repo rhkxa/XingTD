@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMap.OnMapLoadedCallback;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
@@ -33,6 +35,8 @@ import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.PreferenceUtils;
+import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
@@ -82,23 +86,22 @@ public class MainActivity extends BaseActivity {
 	private FancyButton main_refresh;
 	int flag = 0;
 	private View mMarkerLy;
+	private int handler_runnable_time;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,
-		// false);
-
 		init();
 	}
 
 	private void init() {
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
-		MapStatus mapStatus=new MapStatus.Builder().target(new LatLng(38.31056,116.844697)).zoom(10.0f).build();
-		MapStatusUpdate msu =MapStatusUpdateFactory.newMapStatus(mapStatus);
+		MapStatus mapStatus = new MapStatus.Builder()
+				.target(new LatLng(38.31056, 116.844697)).zoom(10.0f).build();
+		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(mapStatus);
 		mBaiduMap.setMapStatus(msu);
 		// 隐藏百度logo和 ZoomControl
 		int count = mMapView.getChildCount();
@@ -108,6 +111,18 @@ public class MainActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		// 设置比例尺位置
+		mBaiduMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
+
+			@Override
+			public void onMapLoaded() {
+				// TODO Auto-generated method stub
+				int x = Utils.getScreenWidth(MainActivity.this) / 10 * 8;
+				int y = Utils.getScreenHight(MainActivity.this) / 10 * 8;
+				Point point = new Point(x, y);
+				mMapView.setScaleControlPosition(point);
+			}
+		});
 		// 加载数据
 		getVehicleLocation();
 		// 对Marker的点击弹出PopWindows
@@ -201,8 +216,8 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-//				DateDialog dateDialog = new DateDialog(MainActivity.this);
-//				dateDialog.show();
+				// DateDialog dateDialog = new DateDialog(MainActivity.this);
+				// dateDialog.show();
 				getVehicleLocation();
 			}
 		});
@@ -220,7 +235,7 @@ public class MainActivity extends BaseActivity {
 		BitmapDescriptor car;
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (XbVehicle info : infos) {
-			doubleLng = Utils.getLng(info.getLocation(), ":");
+			doubleLng = Utils.getLng(info.getLocation());
 			// 位置
 			latLng = new LatLng(doubleLng[1], doubleLng[0]);
 			builder.include(latLng);
@@ -241,8 +256,8 @@ public class MainActivity extends BaseActivity {
 
 		}
 		// 缩放地图，使所有Overlay都在合适的视野内
-//		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
-//				.build()));
+		// mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
+		// .build()));
 
 	}
 
@@ -270,7 +285,7 @@ public class MainActivity extends BaseActivity {
 		StringEntity entity = null;
 		try {
 			postData.put("search", key);
-			entity = new StringEntity(postData.toString(),"UTF-8");
+			entity = new StringEntity(postData.toString(), "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -327,14 +342,16 @@ public class MainActivity extends BaseActivity {
 		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
 		if (xbVehicle.isOnline()) {
 			viewHolder.popwindows_state.setText("在线:" + xbVehicle.getSpeed());
-			viewHolder.popwindows_state.setTextColor(getResources().getColor(R.color.app_green));
+			viewHolder.popwindows_state.setTextColor(getResources().getColor(
+					R.color.app_green));
 		} else {
 			viewHolder.popwindows_state.setText("离线:");
-			viewHolder.popwindows_state.setTextColor(getResources().getColor(R.color.text));
+			viewHolder.popwindows_state.setTextColor(getResources().getColor(
+					R.color.text));
 		}
 		viewHolder.popwindows_name.setText(xbVehicle.getPlateNo());
 		viewHolder.popwindows_position.setText(xbVehicle.getAddr());
-		
+
 		OnClickListener click = new OnClickListener() {
 
 			@Override
@@ -356,7 +373,7 @@ public class MainActivity extends BaseActivity {
 				}
 				Intent intent = new Intent(MainActivity.this,
 						CarDetailsActivity.class);
-				intent.putExtra("car",JSON.toJSONString(xbVehicle));
+				intent.putExtra("car", JSON.toJSONString(xbVehicle));
 				intent.putExtra("flag", flag);
 				startActivity(intent);
 			}
@@ -389,15 +406,14 @@ public class MainActivity extends BaseActivity {
 		TextView popwindows_time;
 		TextView popwindows_position;
 		ImageView popwindows_close;
-		
+
 		RelativeLayout popwindows_details;
 	}
 
 	/**
 	 * 定时任务
 	 */
-	// handler.postDelayed(runnable,
-	// Common.HANDLER_RUNNABLE_TIME);//每两秒执行一次runnable.
+
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
 		@Override
@@ -405,7 +421,7 @@ public class MainActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			getVehicleLocation();
-			handler.postDelayed(this, Common.HANDLER_RUNNABLE_TIME);
+			handler.postDelayed(this, handler_runnable_time);
 		}
 	};
 
@@ -413,13 +429,16 @@ public class MainActivity extends BaseActivity {
 	protected void onPause() {
 		// MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()
 		mMapView.onPause();
-		//handler.removeCallbacks(runnable);
+		handler.removeCallbacks(runnable);
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
 		// MapView的生命周期与Activity同步，当activity恢复时需调用MapView.onResume()
+		handler_runnable_time = PreferenceUtils.getInstance(MainActivity.this)
+				.getMonitorTime() * 1000;
+		handler.postDelayed(runnable, handler_runnable_time);
 		mMapView.onResume();
 		super.onResume();
 	}
@@ -432,7 +451,6 @@ public class MainActivity extends BaseActivity {
 		// 回收 bitmap 资源
 		online.recycle();
 		offline.recycle();
-		
 
 	}
 
@@ -444,7 +462,7 @@ public class MainActivity extends BaseActivity {
 			LogUtils.DebugLog("activity resutl", vid);
 			for (XbVehicle info : vehicle) {
 				if (info.getVid().equals(vid)) {
-					double[] doubleLng = Utils.getLng(info.getLocation(), ":");
+					double[] doubleLng = Utils.getLng(info.getLocation());
 					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
 					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
 							latLng, -100);

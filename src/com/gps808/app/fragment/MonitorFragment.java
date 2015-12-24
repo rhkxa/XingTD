@@ -129,7 +129,7 @@ public class MonitorFragment extends BaseFragment {
 		double[] doubleLng;
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (XbVehicle info : infos) {
-			doubleLng = Utils.getLng(info.getLocation(), ":");
+			doubleLng = Utils.getLng(info.getLocation());
 			// 位置
 			latLng = new LatLng(doubleLng[1], doubleLng[0]);
 			points.add(latLng);

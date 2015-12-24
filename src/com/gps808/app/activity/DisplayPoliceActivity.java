@@ -17,6 +17,7 @@ import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
@@ -48,6 +49,8 @@ public class DisplayPoliceActivity extends BaseActivity {
 	private View mMarkerLy;
 	private HeaderFragment headerFragment;
 
+	private XbPolice xbPolice;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -77,6 +80,17 @@ public class DisplayPoliceActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+
+			@Override
+			public boolean onMarkerClick(Marker arg0) {
+				// TODO Auto-generated method stub
+				InfoWindow mInfoWindow = new InfoWindow(popupInfo(mMarkerLy,
+						xbPolice), arg0.getPosition(), -100);
+				mBaiduMap.showInfoWindow(mInfoWindow);
+				return true;
+			}
+		});
 	}
 
 	private void getData() {
@@ -90,27 +104,29 @@ public class DisplayPoliceActivity extends BaseActivity {
 							JSONObject response) {
 						// TODO Auto-generated method stub
 						LogUtils.DebugLog("result json", response.toString());
-						XbPolice xbPolice = JSON.parseObject(
-								response.toString(), XbPolice.class);
-						headerFragment.setTitleText(xbPolice.getPlateNo());
-						double[] doubleLng = Utils.getLng(
-								xbPolice.getLocation(), ":");
-						LatLng latLng = new LatLng(doubleLng[0], doubleLng[1]);
-						// 图标
-						OverlayOptions overlayOptions = new MarkerOptions()
-								.position(latLng).icon(locationLogo).zIndex(5);
-
-						Marker marker = (Marker) (mBaiduMap
-								.addOverlay(overlayOptions));
-						InfoWindow mInfoWindow = new InfoWindow(popupInfo(
-								mMarkerLy, xbPolice), latLng, -100);
-						mBaiduMap.showInfoWindow(mInfoWindow);
-						MapStatusUpdate msu = MapStatusUpdateFactory
-								.newLatLngZoom(latLng, 14.0f);
-						mBaiduMap.setMapStatus(msu);
+						xbPolice = JSON.parseObject(response.toString(),
+								XbPolice.class);
+						addOverlay();
 						super.onSuccess(statusCode, headers, response);
 					}
 				});
+	}
+
+	private void addOverlay() {
+		headerFragment.setTitleText(xbPolice.getPlateNo());
+		double[] doubleLng = Utils.getLng(xbPolice.getLocation());
+		LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
+		// 图标
+		OverlayOptions overlayOptions = new MarkerOptions().position(latLng)
+				.icon(locationLogo).zIndex(5);
+
+		Marker marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+		InfoWindow mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbPolice),
+				latLng, -100);
+		mBaiduMap.showInfoWindow(mInfoWindow);
+		MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(latLng,
+				14.0f);
+		mBaiduMap.setMapStatus(msu);
 	}
 
 	/**
