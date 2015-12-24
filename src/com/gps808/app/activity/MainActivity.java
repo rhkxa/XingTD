@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import com.alibaba.fastjson.JSON;
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMap.OnMapLoadedCallback;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -31,6 +33,7 @@ import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
+import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
@@ -93,6 +96,7 @@ public class MainActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		initWithApiKey();
 		init();
 	}
 
@@ -474,6 +478,14 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 		super.onActivityResult(arg0, arg1, arg2);
+	}
+
+	// 以apikey的方式绑定
+	private void initWithApiKey() {
+		// Push: 无账号初始化，用api key绑定
+		PushManager.startWork(getApplicationContext(),
+				PushConstants.LOGIN_TYPE_API_KEY,
+				PushUtils.getMetaValue(MainActivity.this, "api_key"));
 	}
 
 	// 双击退出

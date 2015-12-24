@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity {
 
 	private void init() {
 		// TODO Auto-generated method stub
-		initWithApiKey();
+		
 		// 启动线程,延迟2秒
 		handler.postDelayed(runnable, 2000);
 		mPreferences = PreferenceUtils.getInstance(LoginActivity.this);
@@ -268,17 +268,7 @@ public class LoginActivity extends BaseActivity {
 		}
 	}
 
-	// 以apikey的方式绑定
-	private void initWithApiKey() {
-		// Push: 无账号初始化，用api key绑定
-		if (PreferenceUtils.getInstance(LoginActivity.this).getPush()) {
-			PushManager.startWork(getApplicationContext(),
-					PushConstants.LOGIN_TYPE_API_KEY,
-					PushUtils.getMetaValue(LoginActivity.this, "api_key"));
-		} else {
-			PushManager.stopWork(getApplicationContext());
-		}
-	}
+	
 
 	// 自动登录线程,2秒后自动登陆
 	Handler handler = new Handler();
