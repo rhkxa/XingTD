@@ -17,6 +17,7 @@ public class VehicleListAdapter extends BaseAdapter {
 	private Context mContext;
 	private List<XbVehicle> datalist;
 
+
 	public VehicleListAdapter(Context mContext, List<XbVehicle> datalist) {
 		this.mContext = mContext;
 		this.datalist = datalist;

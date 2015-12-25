@@ -86,11 +86,11 @@ public class EditDrvierActivity extends BaseActivity {
 				xbDriver.setPassword(CyptoUtils.MD5(driver_pass.getText()
 						.toString()));
 				xbDriver.setPhone(driver_phone.getText().toString());
-				if (driver_state.isChecked()) {
-					xbDriver.setStatus(0);
-				} else {
-					xbDriver.setStatus(1);
-				}
+//				if (driver_state.isChecked()) {
+//					xbDriver.setStatus(0);
+//				} else {
+//					xbDriver.setStatus(1);
+//				}
 				setDriver(xbDriver);
 			}
 		});
@@ -102,11 +102,11 @@ public class EditDrvierActivity extends BaseActivity {
 			driver_user.setText(xbDriver.getLoginName());
 			driver_pass.setText(xbDriver.getPassword());
 			driver_pass_again.setText(xbDriver.getPassword());
-			if (xbDriver.getStatus() == 0) {
-				driver_state.setChecked(true);
-			} else {
-				driver_state.setChecked(false);
-			}
+//			if (xbDriver.getStatus() == 0) {
+//				driver_state.setChecked(true);
+//			} else {
+//				driver_state.setChecked(false);
+//			}
 		} else {
 			headerFragment.setTitleText("添加司机");
 		}
@@ -136,11 +136,11 @@ public class EditDrvierActivity extends BaseActivity {
 		driver_user.setText(xbDriver.getLoginName());
 		driver_pass.setText(xbDriver.getPassword());
 		driver_pass_again.setText(xbDriver.getPassword());
-		if (xbDriver.getStatus() == 0) {
-			driver_state.setChecked(true);
-		} else {
-			driver_state.setChecked(false);
-		}
+//		if (xbDriver.getStatus() == 0) {
+//			driver_state.setChecked(true);
+//		} else {
+//			driver_state.setChecked(false);
+//		}
 
 	}
 

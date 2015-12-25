@@ -219,9 +219,7 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				// DateDialog dateDialog = new DateDialog(MainActivity.this);
-				// dateDialog.show();
+				// TODO Auto-generated method stub				
 				getVehicleLocation();
 			}
 		});
@@ -285,6 +283,7 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void getVehicleLocation() {
+		showProgressDialog(MainActivity.this, "正在加载车辆信息");
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {

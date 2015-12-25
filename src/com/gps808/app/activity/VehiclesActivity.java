@@ -51,6 +51,9 @@ public class VehiclesActivity extends BaseActivity {
 	private int startPage = 0;
 	private final int pageNum = 100;
 	private List<XbVehicle> xbVehicles = new ArrayList<XbVehicle>();
+	private List<XbVehicle> allVehicles = new ArrayList<XbVehicle>();
+	private List<XbVehicle> onVehicles = new ArrayList<XbVehicle>();
+	private List<XbVehicle> offVehicles = new ArrayList<XbVehicle>();
 	private RadioButton vehicle_all, vehicle_onlion, vehicle_offlion;
 
 	@Override
@@ -113,18 +116,19 @@ public class VehiclesActivity extends BaseActivity {
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
 				// TODO Auto-generated method stub
 				startPage = 0;
+				xbVehicles.clear();
 				switch (arg0.getCheckedRadioButtonId()) {
 				case R.id.vehicle_all:
-					status = 0;
+					xbVehicles.addAll(allVehicles);
 					break;
 				case R.id.vehicle_onlion:
-					status = 1;
+					xbVehicles.addAll(onVehicles);
 					break;
 				case R.id.vehicle_offlion:
-					status = 2;
+					xbVehicles.addAll(offVehicles);
 					break;
 				}
-				getData(true);
+				vAdapter.notifyDataSetChanged();
 			}
 
 		});
@@ -143,7 +147,7 @@ public class VehiclesActivity extends BaseActivity {
 			postData.put("status", status);
 			postData.put("startPage", startPage);
 			postData.put("pageNum", pageNum);
-			entity = new StringEntity(postData.toString(),"UTF-8");
+			entity = new StringEntity(postData.toString(), "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -169,6 +173,7 @@ public class VehiclesActivity extends BaseActivity {
 						vehicle_offlion.setText("离线("
 								+ xbVobject.getOfflineNum() + ")");
 						xbVehicles.addAll(xbVobject.getRows());
+						parseData();
 						if (xbVobject.getRows().size() < pageNum) {
 							vehicle_list.setMode(Mode.DISABLED);
 							// Utils.ToastMessage(CommentActivity.this,
@@ -189,6 +194,17 @@ public class VehiclesActivity extends BaseActivity {
 					}
 				});
 
+	}
+
+	private void parseData() {
+		allVehicles.addAll(xbVehicles);
+		for (XbVehicle info : xbVehicles) {
+			if (info.isOnline()) {
+				onVehicles.add(info);
+			} else {
+				offVehicles.add(info);
+			}
+		}
 	}
 
 }

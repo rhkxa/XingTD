@@ -5,6 +5,7 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -26,7 +27,7 @@
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/title" />
 
-            <View style="@style/blackline" />
+            <View style="@style/textline" />
         </LinearLayout>
 
         <LinearLayout
@@ -36,7 +37,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp" >
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -46,7 +47,7 @@
                     android:layout_centerVertical="true"
                     android:padding="8dp"
                     android:text="今天"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
 
                 <CheckBox
@@ -57,9 +58,7 @@
                     android:layout_centerVertical="true"
                     android:button="@drawable/selector_chose"
                     android:padding="8dp" />
-            </RelativeLayout>
-
-  
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -72,7 +71,7 @@
                     android:layout_centerVertical="true"
                     android:padding="8dp"
                     android:text="昨天"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
 
                 <CheckBox
@@ -85,8 +84,6 @@
                     android:padding="8dp" />
             </RelativeLayout>
 
-      
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,7 +95,7 @@
                     android:layout_centerVertical="true"
                     android:padding="8dp"
                     android:text="前天"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
 
                 <CheckBox
@@ -111,8 +108,6 @@
                     android:padding="8dp" />
             </RelativeLayout>
 
-         
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,7 +119,7 @@
                     android:layout_centerVertical="true"
                     android:padding="8dp"
                     android:text="前一小时"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
 
                 <CheckBox
@@ -137,8 +132,6 @@
                     android:padding="8dp" />
             </RelativeLayout>
 
-       
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,7 +143,7 @@
                     android:layout_centerVertical="true"
                     android:padding="8dp"
                     android:text="自定义"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
 
                 <CheckBox
@@ -163,7 +156,7 @@
                     android:padding="8dp" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" >
@@ -176,9 +169,19 @@
                     android:text="开始时间"
                     android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
-            </RelativeLayout>
 
-            <RelativeLayout
+                <TextView
+                    android:id="@+id/custom_start_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corners_rect_gray"
+                    android:inputType="phone"
+                    android:padding="4dp"
+                    android:text="点击输入开始时间"
+                    android:textSize="@dimen/body" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" >
@@ -191,9 +194,18 @@
                     android:text="结束时间"
                     android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
-            </RelativeLayout>
 
-            <View style="@style/blackline" />
+                <TextView
+                    android:id="@+id/custom_end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corners_rect_gray"
+                    android:padding="4dp"
+                    android:text="点击输入开始时间"
+                    android:textSize="@dimen/body" />
+            </LinearLayout>
+
+            <View style="@style/textline" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,21 +213,6 @@
                 android:layout_margin="8dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
-
-                <com.gps808.app.view.FancyButton
-                    android:id="@+id/dialog_no"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    fancy:fb_borderColor="@color/graywhite"
-                    fancy:fb_borderWidth="1dp"
-                    fancy:fb_defaultColor="@color/white"
-                    fancy:fb_focusColor="#8cc9f8"
-                    fancy:fb_text="取消"
-                    fancy:fb_textColor="@color/black" />
 
                 <com.gps808.app.view.FancyButton
                     android:id="@+id/dialog_ok"
@@ -231,6 +228,23 @@
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_text="确认"
                     fancy:fb_textColor="@color/app_blue" />
+
+                <com.gps808.app.view.FancyButton
+                    android:id="@+id/dialog_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/linearLayout1"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="8dp"
+                    android:layout_marginBottom="21dp"
+                    android:layout_weight="1"
+                    fancy:fb_borderColor="@color/graywhite"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/white"
+                    fancy:fb_focusColor="#8cc9f8"
+                    fancy:fb_text="取消"
+                    fancy:fb_textColor="@color/text" >
+                </com.gps808.app.view.FancyButton>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="leftmenu_list">
+    <string-array name="WheelArrayDefault">
         <item>服务类型</item>
         <item>当前订单</item>
         <item>消息通知</item>
         <item>我的收藏</item>
         <item>历史订单</item>
         <item>设置</item>
+    </string-array>
+    <string-array name="refresh_time">        <item>10秒</item>
+        <item>30秒</item>
+        <item>1分钟</item>
+        <item>5分钟</item>
+        <item>不刷新</item>
     </string-array>
     <string-array name="showGuidelinesArray">
         <item>Off</item>

@@ -84,35 +84,30 @@
         <attr name="peng_drawableRight" format="reference" />
         <attr name="peng_drawableLeft" format="reference" />
     </declare-styleable>
-     <declare-styleable name="FancyButtonsAttrs">
-        <attr name="fb_defaultColor" format="color"  />
-        <attr name="fb_text" format="string"  />
-
-        <attr name="fb_textColor" format="color"  />
-        <attr name="fb_iconColor" format="color"  />
-
-        <attr name="fb_textFont" format="string"  />
-        <attr name="fb_iconFont" format="string"  />
-
-        <attr name="fb_textSize" format="dimension"  />
-        <attr name="fb_iconResource" format="integer"  />
-        <attr name="fb_fontIconResource" format="string"  />
-        <attr name="fb_fontIconSize" format="dimension"  />
-        <attr name="fb_iconSize" format="dimension"  />
+    <declare-styleable name="FancyButtonsAttrs">
+        <attr name="fb_defaultColor" format="color" />
+        <attr name="fb_text" format="string" />
+        <attr name="fb_textColor" format="color" />
+        <attr name="fb_iconColor" format="color" />
+        <attr name="fb_textFont" format="string" />
+        <attr name="fb_iconFont" format="string" />
+        <attr name="fb_textSize" format="dimension" />
+        <attr name="fb_iconResource" format="integer" />
+        <attr name="fb_fontIconResource" format="string" />
+        <attr name="fb_fontIconSize" format="dimension" />
+        <attr name="fb_iconSize" format="dimension" />
         <attr name="fb_iconPosition" format="enum">
             <enum name="left" value="1" />
             <enum name="right" value="2" />
             <enum name="top" value="3" />
             <enum name="bottom" value="4" />
         </attr>
-
         <attr name="fb_textPosition" format="enum">
             <enum name="left" value="1" />
             <enum name="right" value="2" />
             <enum name="top" value="3" />
             <enum name="bottom" value="4" />
         </attr>
-
         <attr name="fb_textGravity" format="enum">
             <enum name="top" value="0x30" />
             <enum name="bottom" value="0x50" />
@@ -129,18 +124,46 @@
             <enum name="start" value="0x00800003" />
             <enum name="end" value="0x00800005" />
         </attr>
-
         <attr name="fb_iconPaddingLeft" format="dimension" />
         <attr name="fb_iconPaddingRight" format="dimension" />
         <attr name="fb_iconPaddingTop" format="dimension" />
         <attr name="fb_iconPaddingBottom" format="dimension" />
-
         <attr name="fb_borderColor" format="color" />
-        <attr name="fb_borderWidth" format="dimension"/>
+        <attr name="fb_borderWidth" format="dimension" />
         <attr name="fb_focusColor" format="color" />
         <attr name="fb_radius" format="dimension" />
-
         <attr name="fb_ghost" format="boolean"></attr>
     </declare-styleable>
-   
+    <declare-styleable name="AbstractWheelPicker">
+        <attr name="wheel_data" format="reference" />
+        <attr name="wheel_style" format="enum">
+            <enum name="straight" value="0" />
+            <enum name="curved" value="1" />
+        </attr>
+        <attr name="wheel_direction" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="wheel_item_index" format="integer" />
+        <attr name="wheel_item_same_size" format="boolean" />
+        <attr name="wheel_item_count" format="integer" />
+        <attr name="wheel_item_space" format="dimension" />
+        <attr name="wheel_text_size" format="dimension" />
+        <attr name="wheel_text_color" format="color" />
+        <attr name="wheel_text_color_current" format="color" />
+    </declare-styleable>
+    <declare-styleable name="WheelView">
+        <attr name="unitHight" format="dimension" />
+        <attr name="selectedTextSize" format="dimension" />
+        <attr name="normalTextSize" format="dimension" />
+        <attr name="lineHeight" format="dimension" />
+        <attr name="maskHight" format="dimension" />
+        <attr name="itemNumber" format="integer" />
+        <attr name="normalTextColor" format="color" />
+        <attr name="selectedTextColor" format="color" />
+        <attr name="lineColor" format="color" />
+        <attr name="noEmpty" format="boolean" />
+        <attr name="isEnable" format="boolean" />
+    </declare-styleable>
+
 </resources>

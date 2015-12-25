@@ -9,7 +9,7 @@ public class XbDriver {
 
 	private String loginName;
 
-	private int status;
+//	private int status;
 	private String password;
 
 	
@@ -46,13 +46,13 @@ public class XbDriver {
 		this.loginName = loginName;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
+//	public int getStatus() {
+//		return status;
+//	}
+//
+//	public void setStatus(int status) {
+//		this.status = status;
+//	}
 
 	public String getPassword() {
 		return password;

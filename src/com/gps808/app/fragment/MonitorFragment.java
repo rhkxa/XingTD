@@ -33,6 +33,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
+import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
@@ -89,7 +90,9 @@ public class MonitorFragment extends BaseFragment {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
-		getData();
+		DateDialog dateDialog = new DateDialog(getActivity());
+		dateDialog.show();
+		// getData();
 	}
 
 	private void getData() {
@@ -140,7 +143,8 @@ public class MonitorFragment extends BaseFragment {
 		if (points.size() >= 2) {
 
 			OverlayOptions ooPolyline = new PolylineOptions().width(10)
-					.color(getResources().getColor(R.color.app_green)).points(points);
+					.color(getResources().getColor(R.color.app_green))
+					.points(points);
 			mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
 			mBaiduMap.addOverlay(new MarkerOptions().position(points.get(0))
 					.icon(startIcon));
