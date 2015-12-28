@@ -56,12 +56,7 @@ public class CarDetailsActivity extends BaseActivity {
 		headerFragment.setTitleText(xbVehicle.getPlateNo());
 		vid = xbVehicle.getVid();
 		flag = getIntent().getIntExtra("flag", 0);
-		double[] doubleLng = Utils.getLng(xbVehicle.getLocation());
-		final Fragment car = CarFragment.newInstance(vid);
-		final WeatherFragment weather = WeatherFragment.newInstance(
-				doubleLng[1], doubleLng[0]);
-		final MonitorFragment monitor = MonitorFragment.newInstance(vid);
-		final TrackFragment track = TrackFragment.newInstance(vid);
+		final double[] doubleLng = Utils.getLng(xbVehicle.getLocation());
 		car_monitor = (RadioButton) findViewById(R.id.car_monitor);
 		car_track = (RadioButton) findViewById(R.id.car_track);
 		car_details = (RadioButton) findViewById(R.id.car_details);
@@ -69,19 +64,19 @@ public class CarDetailsActivity extends BaseActivity {
 		switch (flag) {
 		case 0:
 			car_track.setChecked(true);
-			mContent = track;
+			mContent = TrackFragment.newInstance(vid);
 			break;
 		case 1:
 			car_monitor.setChecked(true);
-			mContent = monitor;
+			mContent = MonitorFragment.newInstance(vid);
 			break;
 		case 2:
 			car_details.setChecked(true);
-			mContent = car;
+			mContent = CarFragment.newInstance(vid);
 			break;
 		case 3:
 			car_weather.setChecked(true);
-			mContent = weather;
+			mContent = WeatherFragment.newInstance(doubleLng[1], doubleLng[0]);
 			break;
 
 		}
@@ -97,16 +92,17 @@ public class CarDetailsActivity extends BaseActivity {
 
 				switch (arg1) {
 				case R.id.car_monitor:
-					switchContent(mContent, monitor);
+					switchContent(mContent, MonitorFragment.newInstance(vid));
 					break;
 				case R.id.car_track:
-					switchContent(mContent, track);
+					switchContent(mContent, TrackFragment.newInstance(vid));
 					break;
 				case R.id.car_details:
-					switchContent(mContent, car);
+					switchContent(mContent, CarFragment.newInstance(vid));
 					break;
 				case R.id.car_weather:
-					switchContent(mContent, weather);
+					switchContent(mContent, WeatherFragment.newInstance(
+							doubleLng[1], doubleLng[0]));
 					break;
 				}
 			}

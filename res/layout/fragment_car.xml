@@ -29,15 +29,27 @@
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/car_detail_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="设备名称:冀J310UB"
-                android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/car_detail_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="设备名称:冀J310UB"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/subhead" />
+
+                <ImageView
+                    android:id="@+id/car_detail_edits"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@drawable/xtd_action_edit" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/car_detail_num"
@@ -48,13 +60,23 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/caption" />
 
-            <TextView
-                android:id="@+id/car_detail_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="位置:沧州市新华路189号(东路直行400米右转到达) "
-                android:textColor="@color/white"
-                android:textSize="@dimen/caption" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/xtd_icon_location" />
+
+                <TextView
+                    android:id="@+id/car_detail_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="沧州市新华路189号(东路直行400米右转到达) "
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/caption" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

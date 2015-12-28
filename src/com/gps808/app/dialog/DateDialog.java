@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gps808.app.R;
+import com.gps808.app.dialog.DateTimeDialog.OnWheelClickListener;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.wheelview.WheelDatePicker;
 
@@ -15,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 
 public class DateDialog extends Dialog {
 
@@ -79,19 +79,26 @@ public class DateDialog extends Dialog {
 	private android.view.View.OnClickListener choseDate = new View.OnClickListener() {
 
 		@Override
-		public void onClick(View arg0) {
+		public void onClick(final View arg0) {
 			// TODO Auto-generated method stub
-			WheelDialog wheelDialog = new WheelDialog(context);
-			WheelDatePicker wheelDatePicker = new WheelDatePicker(context);
-			wheelDatePicker.setPadding(0, 0, 0, 0);
-			wheelDatePicker.setTextColor(0xFF7787C5);
-			wheelDatePicker.setCurrentTextColor(0xFF7774B7);
-			wheelDatePicker.setLabelColor(0xFF7774B7);
-			// wheelDatePicker.setTextSize(textSize);
-			// wheelDatePicker.setItemSpace(itemSpace);
-			wheelDatePicker.setCurrentDate(2015, 12, 20);
-			wheelDialog.setContentView(wheelDatePicker);
-			wheelDialog.show();
+			DateTimeDialog datatime = new DateTimeDialog(getContext());
+			datatime.setOnWheelClickListener(new OnWheelClickListener() {
+
+				@Override
+				public void onWheelOk(int index, String key) {
+					// TODO Auto-generated method stub
+					switch (arg0.getId()) {
+					case R.id.custom_start_time:
+						custom_start_time.setText(key);
+						break;
+					case R.id.custom_end_time:
+						custom_end_time.setText(key);
+						break;
+
+					}
+				}
+			});
+			datatime.show();
 		}
 	};
 	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
@@ -106,6 +113,13 @@ public class DateDialog extends Dialog {
 				break;
 			case R.id.chose_custom:
 				chose_custom.setChecked(arg1);
+				if (arg1) {
+					custom_end_time.setEnabled(true);
+					custom_start_time.setEnabled(true);
+				} else {
+					custom_end_time.setEnabled(true);
+					custom_start_time.setEnabled(true);
+				}
 				break;
 			case R.id.chose_onehour:
 				chose_onehour.setChecked(arg1);

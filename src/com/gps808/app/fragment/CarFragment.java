@@ -1,21 +1,28 @@
 package com.gps808.app.fragment;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbCar;
+import com.gps808.app.dialog.AlterNameDialog;
+import com.gps808.app.dialog.AlterNameDialog.OnAlterClickListener;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
+import com.gps808.app.utils.Utils;
 import com.gps808.app.view.CircleImageView;
 
 public class CarFragment extends BaseFragment {
@@ -25,6 +32,7 @@ public class CarFragment extends BaseFragment {
 			car_phone_text, car_number_text, car_type_text, car_start_text,
 			car_end_text;
 	private String vid;
+	private ImageView car_detail_edits;
 
 	public static CarFragment newInstance(String id) {
 		CarFragment fragment = new CarFragment();
@@ -44,7 +52,7 @@ public class CarFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
-        
+
 		car_detail_name = (TextView) root.findViewById(R.id.car_detail_name);
 		car_detail_num = (TextView) root.findViewById(R.id.car_detail_num);
 		car_detail_position = (TextView) root
@@ -54,6 +62,24 @@ public class CarFragment extends BaseFragment {
 		car_type_text = (TextView) root.findViewById(R.id.car_type_text);
 		car_start_text = (TextView) root.findViewById(R.id.car_start_text);
 		car_end_text = (TextView) root.findViewById(R.id.car_end_text);
+		car_detail_edits = (ImageView) root.findViewById(R.id.car_detail_edits);
+		car_detail_edits.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				AlterNameDialog alter = new AlterNameDialog(getActivity());
+				alter.setOnAlterClickListener(new OnAlterClickListener() {
+
+					@Override
+					public void onAlterOk(String key) {
+						// TODO Auto-generated method stub
+						setNick(key);
+					}
+				});
+				alter.show();
+			}
+		});
 
 	}
 
@@ -82,5 +108,34 @@ public class CarFragment extends BaseFragment {
 				super.onSuccess(statusCode, headers, response);
 			}
 		});
+	}
+
+	private void setNick(final String name) {
+		// {"vId":1109,"tmnlName":"张三" }
+
+		String url = UrlConfig.getSetTmnlName();
+		JSONObject params = new JSONObject();
+		StringEntity entity = null;
+		try {
+			params.put("vId", vid);
+			params.put("tmnlName", name);
+			entity = new StringEntity(params.toString(), "UTF-8");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		LogUtils.DebugLog("post json", params.toString());
+		HttpUtil.post(getActivity(), url, entity, "application/json",
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						Utils.ToastMessage(getActivity(), "修改成功");
+						car_detail_name.setText("设备名称："+name);
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+
 	}
 }

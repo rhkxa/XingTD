@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity {
 			}
 		});
 		// 加载数据
-		getVehicleLocation();
+		getVehicleLocation(false);
 		// 对Marker的点击弹出PopWindows
 		LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
 		mMarkerLy = inflater.inflate(R.layout.popwindows_show, null);
@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity {
 			public void onSearch(String k) {
 				// TODO Auto-generated method stub
 				key = k;
-				getVehicleLocation();
+				getVehicleLocation(true);
 			}
 		});
 		main_refresh = (FancyButton) findViewById(R.id.main_refresh);
@@ -219,8 +219,8 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub				
-				getVehicleLocation();
+				// TODO Auto-generated method stub
+				getVehicleLocation(true);
 			}
 		});
 	}
@@ -282,8 +282,10 @@ public class MainActivity extends BaseActivity {
 
 	}
 
-	private void getVehicleLocation() {
-		showProgressDialog(MainActivity.this, "正在加载车辆信息");
+	private void getVehicleLocation(boolean isRefresh) {
+		if (isRefresh) {
+			showProgressDialog(MainActivity.this, "正在加载车辆信息");
+		}
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
@@ -423,7 +425,7 @@ public class MainActivity extends BaseActivity {
 		public void run() {
 			// TODO Auto-generated method stub
 			// 要做的事情
-			getVehicleLocation();
+			getVehicleLocation(false);
 			handler.postDelayed(this, handler_runnable_time);
 		}
 	};

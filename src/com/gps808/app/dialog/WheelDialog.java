@@ -27,6 +27,7 @@ public class WheelDialog extends Dialog implements View.OnClickListener {
 	private Button btnOK, btnCancel;
 	private IWheelPicker picker;
 	private String data;
+	private int index;
 	private android.view.View.OnClickListener onclick;
 
 	public WheelDialog(Context context) {
@@ -71,6 +72,7 @@ public class WheelDialog extends Dialog implements View.OnClickListener {
 				@Override
 				public void onWheelSelected(int index, String data) {
 					WheelDialog.this.data = data;
+					WheelDialog.this.index=index;
 				}
 			});
 		}
@@ -82,7 +84,7 @@ public class WheelDialog extends Dialog implements View.OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_ok:
-			wheelClickListener.onWheelOk(data);
+			wheelClickListener.onWheelOk(index,data);
 
 			break;
 		case R.id.btn_cancel:
@@ -99,6 +101,6 @@ public class WheelDialog extends Dialog implements View.OnClickListener {
 	}
 
 	public interface OnWheelClickListener {
-		public void onWheelOk(String key);
+		public void onWheelOk(int index,String key);
 	}
 }

@@ -1,7 +1,5 @@
 package com.gps808.app.activity;
 
-import java.io.UnsupportedEncodingException;
-
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;

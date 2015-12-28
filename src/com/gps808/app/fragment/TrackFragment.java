@@ -53,9 +53,10 @@ public class TrackFragment extends BaseFragment {
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 	private String vid;
-	BitmapDescriptor locationIcon = null;
-	BitmapDescriptor startIcon = null;
-
+	BitmapDescriptor locationIcon = BitmapDescriptorFactory
+			.fromResource(R.drawable.xtd_carlogo_on);
+	BitmapDescriptor startIcon = BitmapDescriptorFactory
+			.fromResource(R.drawable.map_start_icon);
 	LatLng latLng = null;
 	OverlayOptions overlayOptions = null;
 	Marker marker = null;
@@ -82,10 +83,7 @@ public class TrackFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
-		locationIcon = BitmapDescriptorFactory
-				.fromResource(R.drawable.xtd_carlogo_on);
-		startIcon = BitmapDescriptorFactory
-				.fromResource(R.drawable.map_start_icon);
+
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
@@ -170,7 +168,7 @@ public class TrackFragment extends BaseFragment {
 	public void onPause() {
 		// TODO Auto-generated method stub
 		mMapView.onPause();
-		handler.removeCallbacks(runnable);
+	
 		super.onPause();
 	}
 
@@ -179,7 +177,7 @@ public class TrackFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		mMapView.onResume();
 		handler_runnable_time = PreferenceUtils.getInstance(getActivity())
-				.getTrackTime()*1000;
+				.getTrackTime() * 1000;
 		handler.postDelayed(runnable, handler_runnable_time);
 		super.onResume();
 	}
@@ -188,8 +186,9 @@ public class TrackFragment extends BaseFragment {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		mMapView.onDestroy();
-		locationIcon = null;
-		startIcon = null;
+		handler.removeCallbacks(runnable);
+		locationIcon.recycle();
+		startIcon.recycle();
 		super.onDestroy();
 	}
 

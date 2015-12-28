@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -23,7 +25,6 @@ import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
-import com.gps808.app.view.wheelview.AbstractWheelPicker.OnWheelChangeListener;
 import com.gps808.app.view.wheelview.WheelCurvedPicker;
 
 public class SetupActivity extends BaseActivity {
@@ -34,6 +35,8 @@ public class SetupActivity extends BaseActivity {
 	private LinearLayout setup_monitor, setup_track;
 	private WheelDialog wheelDialog;
 	private List<String> data;
+	private List<Integer> timeList;
+	private int mTime, tTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,12 @@ public class SetupActivity extends BaseActivity {
 		wheelDialog = new WheelDialog(this);
 		data = Arrays.asList(getResources()
 				.getStringArray(R.array.refresh_time));
+		timeList = new ArrayList<Integer>();
+		timeList.add(10);
+		timeList.add(30);
+		timeList.add(60);
+		timeList.add(300);
+		timeList.add(0);
 		setup_monitor_time = (TextView) findViewById(R.id.setup_monitor_time);
 		setup_track_time = (TextView) findViewById(R.id.setup_track_time);
 		setup_monitor = (LinearLayout) findViewById(R.id.setup_monitor);
@@ -68,11 +77,12 @@ public class SetupActivity extends BaseActivity {
 			WheelCurvedPicker curvedPicker = new WheelCurvedPicker(
 					SetupActivity.this);
 			curvedPicker.setData(data);
-			curvedPicker.setCurrentTextColor(getResources().getColor(R.color.app_blue));
+			curvedPicker.setCurrentTextColor(getResources().getColor(
+					R.color.app_blue));
 			wheelDialog.setOnWheelClickListener(new OnWheelClickListener() {
 
 				@Override
-				public void onWheelOk(String key) {
+				public void onWheelOk(int index, String key) {
 					// TODO Auto-generated method stub
 					switch (arg0.getId()) {
 					case R.id.setup_monitor:
@@ -110,8 +120,28 @@ public class SetupActivity extends BaseActivity {
 	}
 
 	private void setData() {
-
+		// {"monitorInterval":10,"trackInterval":10}
 		String url = UrlConfig.getUserSetOptions();
+		JSONObject params = new JSONObject();
+		StringEntity entity = null;
+		try {
+			params.put("monitorInterval", mTime);
+			params.put("trackInterval", tTime);
+			entity = new StringEntity(params.toString(), "UTF-8");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpUtil.post(SetupActivity.this, url, entity, "application/json",
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+
 	}
 
 }

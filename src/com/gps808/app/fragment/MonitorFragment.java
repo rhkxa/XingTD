@@ -49,8 +49,10 @@ import com.gps808.app.utils.Utils;
  */
 public class MonitorFragment extends BaseFragment {
 
-	BitmapDescriptor endIcon = null;
-	BitmapDescriptor startIcon = null;
+	BitmapDescriptor endIcon = BitmapDescriptorFactory
+			.fromResource(R.drawable.map_end_icon);
+	BitmapDescriptor startIcon = BitmapDescriptorFactory
+			.fromResource(R.drawable.xtd_map_start);
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	Polyline mPolyline;
@@ -75,9 +77,7 @@ public class MonitorFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
-		startIcon = BitmapDescriptorFactory
-				.fromResource(R.drawable.xtd_map_start);
-		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.map_end_icon);
+
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
@@ -190,10 +190,9 @@ public class MonitorFragment extends BaseFragment {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-
 		mMapView.onDestroy();
-		endIcon = null;
-		startIcon = null;
+		endIcon.recycle();
+		startIcon.recycle();
 		super.onDestroy();
 	}
 
