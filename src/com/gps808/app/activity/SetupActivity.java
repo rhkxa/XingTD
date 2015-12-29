@@ -9,6 +9,7 @@ import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbOption;
+import com.gps808.app.dialog.AlterPassWordDialog;
+import com.gps808.app.dialog.AlterPassWordDialog.OnAlterClickListener;
 import com.gps808.app.dialog.WheelDialog;
 import com.gps808.app.dialog.WheelDialog.OnWheelClickListener;
 import com.gps808.app.fragment.HeaderFragment;
@@ -25,6 +28,8 @@ import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
+import com.gps808.app.utils.Utils;
+import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.wheelview.WheelCurvedPicker;
 
 public class SetupActivity extends BaseActivity {
@@ -37,6 +42,8 @@ public class SetupActivity extends BaseActivity {
 	private List<String> data;
 	private List<Integer> timeList;
 	private int mTime, tTime;
+	private LinearLayout reset_pass;
+	private FancyButton exit_login;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,35 @@ public class SetupActivity extends BaseActivity {
 		setup_track = (LinearLayout) findViewById(R.id.setup_track);
 		setup_monitor.setOnClickListener(click);
 		setup_track.setOnClickListener(click);
+		reset_pass=(LinearLayout) findViewById(R.id.reset_pass);
+		reset_pass.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				AlterPassWordDialog alter = new AlterPassWordDialog(
+						SetupActivity.this);
+				alter.setOnAlterClickListener(new OnAlterClickListener() {
+
+					@Override
+					public void onAlterOk(String oldPw, String newPw) {
+						// TODO Auto-generated method stub
+						setResetPw(oldPw, newPw);
+					}
+				});
+				alter.show();
+			}
+		});
+		exit_login=(FancyButton) findViewById(R.id.exit_login);
+		exit_login.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Utils.exitLogin(SetupActivity.this);
+				finish();
+			}
+		});
 	}
 
 	private OnClickListener click = new OnClickListener() {
@@ -119,7 +155,45 @@ public class SetupActivity extends BaseActivity {
 		});
 	}
 
-	private void setData() {
+	private void setResetPw(String oldPw, final String newPw) {
+		String url = UrlConfig.getUserResetPassword();
+		JSONObject params = new JSONObject();
+		StringEntity entity = null;
+		try {
+			params.put("oldPassword", oldPw);
+			params.put("newPassword", newPw);
+			entity = new StringEntity(params.toString(), "UTF-8");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpUtil.post(SetupActivity.this, url, entity, "application/json",
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						if (Utils.requestOk(response)) {
+							Utils.ToastMessage(SetupActivity.this,
+									"密码修改成功,将为您重新登陆");
+							PreferenceUtils.getInstance(SetupActivity.this)
+									.setUserPW(newPw);
+							Intent intent = new Intent(SetupActivity.this,
+									LoginActivity.class);
+							startActivity(intent);
+							finish();
+						} else {
+							Utils.ToastMessage(SetupActivity.this,
+									Utils.getKey(response, "errorMsg"));
+						}
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+
+	}
+	
+
+	private void setIntervalTime() {
 		// {"monitorInterval":10,"trackInterval":10}
 		String url = UrlConfig.getUserSetOptions();
 		JSONObject params = new JSONObject();

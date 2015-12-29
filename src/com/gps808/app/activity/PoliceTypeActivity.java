@@ -1,9 +1,9 @@
 package com.gps808.app.activity;
 
-import android.content.Intent;
+import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONObject;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
@@ -12,7 +12,10 @@ import com.gps808.app.R;
 import com.gps808.app.bean.XbAlarmOption;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
-import com.gps808.app.view.FancyButton;
+import com.gps808.app.utils.HttpUtil;
+import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.UrlConfig;
+import com.gps808.app.utils.Utils;
 import com.gps808.app.view.Switch.SwitchButton;
 
 public class PoliceTypeActivity extends BaseActivity {
@@ -20,9 +23,6 @@ public class PoliceTypeActivity extends BaseActivity {
 	private SwitchButton police_type1, police_type2, police_type3,
 			police_type4;
 	private XbAlarmOption alarmOption;
-
-	private FancyButton
-	 save_ok;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +51,6 @@ public class PoliceTypeActivity extends BaseActivity {
 		police_type2.setOnCheckedChangeListener(check);
 		police_type3.setOnCheckedChangeListener(check);
 		police_type4.setOnCheckedChangeListener(check);
-		save_ok=(FancyButton) findViewById(R.id.save_ok);
-		save_ok.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				 Intent intent = new Intent();
-					intent.putExtra("type", JSON.toJSONString(alarmOption));
-					setResult(RESULT_OK, intent);
-					finish();
-			}
-		});
 
 	}
 
@@ -85,9 +73,38 @@ public class PoliceTypeActivity extends BaseActivity {
 				alarmOption.setOutArea(arg1);
 				break;
 			}
-		
+
+			setData();
 		}
 
 	};
+
+	private void setData() {
+		String url = UrlConfig.getVehicleSetAlarms();
+		StringEntity entity = null;
+
+		try {
+
+			entity = new StringEntity(JSON.toJSONString(alarmOption));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		LogUtils.DebugLog("post json", JSON.toJSONString(alarmOption));
+		HttpUtil.post(PoliceTypeActivity.this, url, entity, "application/json",
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						if (Utils.requestOk(response)) {
+							Utils.ToastMessage(PoliceTypeActivity.this,
+									"您的配置已经成功");
+
+						}
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+	}
 
 }

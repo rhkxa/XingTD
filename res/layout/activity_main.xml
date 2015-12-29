@@ -42,7 +42,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
-     <fragment
+    <fragment
         android:id="@+id/search_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -64,8 +64,16 @@
         android:layout_margin="8dp"
         fancy:fb_defaultColor="@color/app_blue"
         fancy:fb_focusColor="#8cc9f8"
-         fancy:fb_iconSize="10dp"
         fancy:fb_iconResource="@drawable/xtd_action_refresh"
+        fancy:fb_iconSize="10dp"
         fancy:fb_radius="2dp" />
+
+    <com.gps808.app.map.ZoomControlView
+        android:id="@+id/ZoomControlView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/main_footer_layout"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp" />
 
 </RelativeLayout>

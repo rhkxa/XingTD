@@ -174,7 +174,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			if (Environment.getExternalStorageState().equals(
 					Environment.MEDIA_MOUNTED)) {
 				String path = Environment.getExternalStorageDirectory()
-						.getAbsolutePath() + "/YIZHONG/crash/";
+						.getAbsolutePath() + "/XingTD/crash/";
 				File dir = new File(path);
 				if (!dir.exists()) {
 					dir.mkdirs();

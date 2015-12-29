@@ -317,7 +317,7 @@ public class StringUtils {
 	public static String getWeek(int w) {
 		String week = "星期";
 		switch (w) {
-		
+
 		case 1:
 			week = week + "一";
 			break;
@@ -342,5 +342,42 @@ public class StringUtils {
 
 		}
 		return week;
+	}
+
+	/**
+	 * 得到昨天的日期
+	 * 
+	 * @return
+	 */
+	public static String getYestoryDate() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -1);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String yestoday = sdf.format(calendar.getTime());
+		return yestoday;
+	}
+
+	/**
+	 * 得到今天的日期
+	 * 
+	 * @return
+	 */
+	public static String getTodayDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(new Date());
+		return date;
+	}
+
+	/**
+	 * 得到前天的日期
+	 * 
+	 * @return
+	 */
+	public static String getbeforeDate() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -1);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(new Date());
+		return date;
 	}
 }

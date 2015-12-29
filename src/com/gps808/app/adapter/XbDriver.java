@@ -2,17 +2,19 @@ package com.gps808.app.adapter;
 
 public class XbDriver {
 	private int driverId;
-
 	private String driverName;
-
 	private String phone;
-
 	private String loginName;
-
-//	private int status;
+	private int status;
 	private String password;
 
-	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public int getDriverId() {
 		return driverId;
@@ -46,13 +48,13 @@ public class XbDriver {
 		this.loginName = loginName;
 	}
 
-//	public int getStatus() {
-//		return status;
-//	}
-//
-//	public void setStatus(int status) {
-//		this.status = status;
-//	}
+	// public int getStatus() {
+	// return status;
+	// }
+	//
+	// public void setStatus(int status) {
+	// this.status = status;
+	// }
 
 	public String getPassword() {
 		return password;

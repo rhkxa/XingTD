@@ -22,7 +22,6 @@ import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
-import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.Switch.SwitchButton;
 
 public class PoliceSetupActivity extends BaseActivity {
@@ -32,7 +31,6 @@ public class PoliceSetupActivity extends BaseActivity {
 	private SwitchButton push_switch, shock_switch, voice_switch;
 	private PreferenceUtils mPreferenceUtils;
 	private XbAlarmOption alarmOption;
-	private FancyButton save_ok;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +68,9 @@ public class PoliceSetupActivity extends BaseActivity {
 				Intent intent = new Intent(PoliceSetupActivity.this,
 						PoliceTypeActivity.class);
 				intent.putExtra("options", JSON.toJSONString(alarmOption));
-				startActivityForResult(intent, RESULT_OK);
+				startActivity(intent);
 			}
 		});
-		save_ok = (FancyButton) findViewById(R.id.save_ok);
-		save_ok.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				setData();
-			}
-		});
-		getData();
 	}
 
 	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
@@ -105,7 +93,7 @@ public class PoliceSetupActivity extends BaseActivity {
 				break;
 
 			}
-
+			setData();
 		}
 	};
 
@@ -138,9 +126,9 @@ public class PoliceSetupActivity extends BaseActivity {
 		showProgressDialog(PoliceSetupActivity.this, "正在配置您的个人设置");
 		String url = UrlConfig.getVehicleSetAlarms();
 		StringEntity entity = null;
-		
+
 		try {
-			
+
 			entity = new StringEntity(JSON.toJSONString(alarmOption));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -156,10 +144,7 @@ public class PoliceSetupActivity extends BaseActivity {
 						if (Utils.requestOk(response)) {
 							Utils.ToastMessage(PoliceSetupActivity.this,
 									"您的配置已经成功");
-							mPreferenceUtils.setPush(alarmOption
-									.isAcceptAlarm());
-							mPreferenceUtils.setVoice(alarmOption.isSound());
-							mPreferenceUtils.setShock(alarmOption.isVibration());
+
 						}
 						super.onSuccess(statusCode, headers, response);
 					}
@@ -167,16 +152,18 @@ public class PoliceSetupActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+	protected void onPause() {
 		// TODO Auto-generated method stub
-		if (arg1 == RESULT_OK) {
-			XbAlarmOption type = JSON.parseObject(arg2.getStringExtra("type"),
-					XbAlarmOption.class);
-			alarmOption.setEmergency(type.isEmergency());
-			alarmOption.setInArea(type.isInArea());
-			alarmOption.setOutArea(type.isOutArea());
-			alarmOption.setOverSpeed(type.isOverSpeed());
-		}
-		super.onActivityResult(arg0, arg1, arg2);
+		mPreferenceUtils.setPush(alarmOption.isAcceptAlarm());
+		mPreferenceUtils.setVoice(alarmOption.isSound());
+		mPreferenceUtils.setShock(alarmOption.isVibration());
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		getData();
+		super.onResume();
 	}
 }

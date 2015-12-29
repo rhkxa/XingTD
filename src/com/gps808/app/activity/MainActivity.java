@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.Header;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +34,7 @@ import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
+import com.gps808.app.map.ZoomControlView;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.Common;
@@ -77,6 +79,7 @@ public class MainActivity extends BaseActivity {
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
+
 	private long mExitTime = 0;
 	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
 	// private BadgeView badge;
@@ -115,18 +118,6 @@ public class MainActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
-		// 设置比例尺位置
-		mBaiduMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
-
-			@Override
-			public void onMapLoaded() {
-				// TODO Auto-generated method stub
-				int x = Utils.getScreenWidth(MainActivity.this) / 10 * 8;
-				int y = Utils.getScreenHight(MainActivity.this) / 10 * 8;
-				Point point = new Point(x, y);
-				mMapView.setScaleControlPosition(point);
-			}
-		});
 		// 加载数据
 		getVehicleLocation(false);
 		// 对Marker的点击弹出PopWindows
@@ -146,7 +137,8 @@ public class MainActivity extends BaseActivity {
 
 					}
 				};
-
+				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
+						.getPosition()));
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
 						marker.getPosition(), -100);
 				// mInfoWindow = new InfoWindow(BitmapDescriptorFactory
@@ -221,6 +213,20 @@ public class MainActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				getVehicleLocation(true);
+			}
+		});
+		// 设置比例尺位置与缩小放大的按钮
+		ZoomControlView mZoomControlView = (ZoomControlView) findViewById(R.id.ZoomControlView);
+		mZoomControlView.setMapView(mMapView);
+		mBaiduMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
+
+			@Override
+			public void onMapLoaded() {
+				// TODO Auto-generated method stub
+				int x = main_refresh.getRight() + 20;
+				int y = main_refresh.getBottom() - 50;
+				Point point = new Point(x, y);
+				mMapView.setScaleControlPosition(point);
 			}
 		});
 	}
@@ -299,6 +305,7 @@ public class MainActivity extends BaseActivity {
 		String url = UrlConfig.getVehicleLocations();
 		HttpUtil.post(MainActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
+
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONArray response) {
@@ -350,7 +357,7 @@ public class MainActivity extends BaseActivity {
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
 		} else {
-			viewHolder.popwindows_state.setText("离线:");
+			viewHolder.popwindows_state.setText("离线");
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.text));
 		}

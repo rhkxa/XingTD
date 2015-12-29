@@ -1,12 +1,18 @@
 package com.gps808.app.dialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.gps808.app.R;
+import com.gps808.app.dialog.AlterNameDialog.OnAlterClickListener;
 import com.gps808.app.dialog.DateTimeDialog.OnWheelClickListener;
+import com.gps808.app.utils.LogUtils;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.wheelview.WheelDatePicker;
+import com.mob.tools.utils.Data;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -25,6 +31,8 @@ public class DateDialog extends Dialog {
 	private FancyButton dialog_no, dialog_ok;
 	private TextView custom_end_time, custom_start_time;
 	private Context context;
+	private String start, end;
+	private SimpleDateFormat sdf;
 
 	public DateDialog(Context context) {
 		super(context, R.style.Dialog);
@@ -90,9 +98,11 @@ public class DateDialog extends Dialog {
 					switch (arg0.getId()) {
 					case R.id.custom_start_time:
 						custom_start_time.setText(key);
+						start = key;
 						break;
 					case R.id.custom_end_time:
 						custom_end_time.setText(key);
+						end = key;
 						break;
 
 					}
@@ -110,6 +120,19 @@ public class DateDialog extends Dialog {
 			switch (arg0.getId()) {
 			case R.id.chose_beforeday:
 				chose_beforeday.setChecked(arg1);
+				getDate(3);
+				break;
+			case R.id.chose_today:
+				chose_today.setChecked(arg1);
+				getDate(1);
+				break;
+			case R.id.chose_yesterday:
+				chose_yesterday.setChecked(arg1);
+				getDate(1);
+				break;
+			case R.id.chose_onehour:
+				chose_onehour.setChecked(arg1);
+				getOneHour();
 				break;
 			case R.id.chose_custom:
 				chose_custom.setChecked(arg1);
@@ -121,17 +144,9 @@ public class DateDialog extends Dialog {
 					custom_start_time.setEnabled(true);
 				}
 				break;
-			case R.id.chose_onehour:
-				chose_onehour.setChecked(arg1);
-				break;
-			case R.id.chose_today:
-				chose_today.setChecked(arg1);
-				break;
-			case R.id.chose_yesterday:
-				chose_yesterday.setChecked(arg1);
-				break;
 
 			}
+			LogUtils.DebugLog("开始:"+start+"结束"+end);
 		}
 	};
 
@@ -151,5 +166,45 @@ public class DateDialog extends Dialog {
 			dismiss();
 		}
 	};
+	private OnTimeClickListener timeClickListener;
+
+	public void setOnTimeClickListener(OnTimeClickListener l) {
+		timeClickListener = l;
+	}
+
+	public interface OnTimeClickListener {
+		public void onTimeOk(String start, String end);
+	}
+
+	private void getDate(int flag) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		switch (flag) {
+		case 1:
+			break;
+		case 2:
+			calendar.add(Calendar.DATE, -1);
+			break;
+		case 3:
+			calendar.add(Calendar.DATE, -2);
+			break;
+		}
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		start = sdf.format(calendar.getTime());
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		end = sdf.format(calendar.getTime());
+		
+	}
+
+	private void getOneHour() {
+		Calendar calendar = Calendar.getInstance();
+		end = sdf.format(calendar.getTime());
+		calendar.set(Calendar.HOUR_OF_DAY, -1);
+		start = sdf.format(calendar.getTime());
+	}
 
 }

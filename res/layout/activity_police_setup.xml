@@ -180,16 +180,4 @@
         <View style="@style/blackline" />
     </LinearLayout>
 
-    <com.gps808.app.view.FancyButton
-        android:id="@+id/save_ok"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        fancy:fb_defaultColor="@color/app_blue"
-        fancy:fb_focusColor="#ff838b"
-        fancy:fb_radius="2dp"
-        fancy:fb_text="保存"
-        fancy:fb_textColor="@color/white" />
-
 </LinearLayout>

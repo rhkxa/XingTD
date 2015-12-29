@@ -34,6 +34,7 @@ import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.dialog.DateDialog;
+import com.gps808.app.dialog.DateDialog.OnTimeClickListener;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
@@ -91,19 +92,28 @@ public class MonitorFragment extends BaseFragment {
 			}
 		}
 		DateDialog dateDialog = new DateDialog(getActivity());
+		dateDialog.setOnTimeClickListener(new OnTimeClickListener() {
+
+			@Override
+			public void onTimeOk(String start, String end) {
+				// TODO Auto-generated method stub
+//				getData(start, end);
+				
+			}
+		});
 		dateDialog.show();
 		// getData();
 	}
 
-	private void getData() {
+	private void getData(String start, String end) {
 		String url = UrlConfig.getVehicleGPSHistory();
 
 		JSONObject params = new JSONObject();
 		StringEntity entity = null;
 		try {
 			params.put("vId", vid);
-			params.put("start", "2015-12-22 08:00:00");
-			params.put("end", "2015-12-23 20:59:34");
+			params.put("start", "start");
+			params.put("end", "end");
 			entity = new StringEntity(params.toString(), "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

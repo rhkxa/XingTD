@@ -6,12 +6,13 @@ import java.util.List;
 
 import org.apache.http.Header;
 
+import com.gps808.app.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Bitmap;
@@ -30,7 +31,7 @@ public class BaseActivity extends FragmentActivity {
 
 	private ProgressDialog progressDialog = null;
 
-	@Override
+	 @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		huaShiApplication = (XtdApplication) getApplication();
@@ -113,5 +114,7 @@ public class BaseActivity extends FragmentActivity {
 			}
 		}
 	}
+
+	
 
 }

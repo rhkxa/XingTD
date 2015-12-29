@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.gps808.app.R;
+import com.gps808.app.activity.LoginActivity;
+import com.gps808.app.utils.BaseActivity.jsonHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 import android.app.Activity;
 import android.content.Context;
@@ -423,5 +427,25 @@ public class Utils {
 		}
 		return curVersionCode;
 
+	}
+
+	/**
+	 * 用户退出
+	 */
+	public static void exitLogin(final Context context) {
+		String url = UrlConfig.getLoginOut();
+		HttpUtil.get(context, url, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+					JSONObject response) {
+				// TODO Auto-generated method stub
+				PreferenceUtils.getInstance(context).setUserPW("");
+				PreferenceUtils.getInstance(context).setUserPW("");
+				Intent intent = new Intent(context, LoginActivity.class);
+				context.startActivity(intent);
+				
+				super.onSuccess(statusCode, headers, response);
+			}
+		});
 	}
 }
