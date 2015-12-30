@@ -1,6 +1,7 @@
 package com.gps808.app.view;
 
 import com.gps808.app.R;
+import com.gps808.app.utils.LogUtils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,7 +13,8 @@ public class PengButton extends TextView {
 	// 申明上下左右对应的图片
 	private Drawable drawableTop, drawableBottom, drawableLeft, drawableRight;
 	// 上下左右图片对应长和宽
-	private int mTopWith, mTopHeight, mBottomWith, mBottomHeight, mRightWith, mRightHeight, mLeftWith, mLeftHeight;
+	private int mTopWith, mTopHeight, mBottomWith, mBottomHeight, mRightWith,
+			mRightHeight, mLeftWith, mLeftHeight;
 
 	public PengButton(Context context) {
 		super(context);
@@ -34,7 +36,10 @@ public class PengButton extends TextView {
 		setClickable(true);
 		if (attrs != null) {
 			float scale = context.getResources().getDisplayMetrics().density;
-			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PengRadioButton);
+			scale = 3;
+			LogUtils.DebugLog("屏幕比例" + scale);
+			TypedArray a = context.obtainStyledAttributes(attrs,
+					R.styleable.PengRadioButton);
 			int count = a.getIndexCount();
 			for (int i = 0; i < count; i++) {
 				int attr = a.getIndex(i);
@@ -80,28 +85,37 @@ public class PengButton extends TextView {
 				}
 			}
 			a.recycle();
-			setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
+			setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop,
+					drawableRight, drawableBottom);
 		}
 
 	}
 
 	@Override
-	public void setCompoundDrawablesWithIntrinsicBounds(Drawable left, Drawable top, Drawable right, Drawable bottom) {
+	public void setCompoundDrawablesWithIntrinsicBounds(Drawable left,
+			Drawable top, Drawable right, Drawable bottom) {
 		if (left != null) {
-			left.setBounds(0, 0, mLeftWith <= 0 ? left.getIntrinsicWidth() : mLeftWith,
-					mLeftHeight <= 0 ? left.getMinimumHeight() : mLeftHeight);
+			left.setBounds(0, 0, mLeftWith <= 0 ? left.getIntrinsicWidth()
+					: mLeftWith, mLeftHeight <= 0 ? left.getMinimumHeight()
+					: mLeftHeight);
 		}
 		if (right != null) {
-			right.setBounds(0, 0, mRightWith <= 0 ? right.getIntrinsicWidth() : mRightWith,
-					mRightHeight <= 0 ? right.getMinimumHeight() : mRightHeight);
+			right.setBounds(0, 0, mRightWith <= 0 ? right.getIntrinsicWidth()
+					: mRightWith, mRightHeight <= 0 ? right.getMinimumHeight()
+					: mRightHeight);
 		}
 		if (top != null) {
-			top.setBounds(0, 0, mTopWith <= 0 ? top.getIntrinsicWidth() : mTopWith,
-					mTopHeight <= 0 ? top.getMinimumHeight() : mTopHeight);
+			top.setBounds(0, 0, mTopWith <= 0 ? top.getIntrinsicWidth()
+					: mTopWith, mTopHeight <= 0 ? top.getMinimumHeight()
+					: mTopHeight);
 		}
 		if (bottom != null) {
-			bottom.setBounds(0, 0, mBottomWith <= 0 ? bottom.getIntrinsicWidth() : mBottomWith,
-					mBottomHeight <= 0 ? bottom.getMinimumHeight() : mBottomHeight);
+			bottom.setBounds(
+					0,
+					0,
+					mBottomWith <= 0 ? bottom.getIntrinsicWidth() : mBottomWith,
+					mBottomHeight <= 0 ? bottom.getMinimumHeight()
+							: mBottomHeight);
 		}
 		setCompoundDrawables(left, top, right, bottom);
 

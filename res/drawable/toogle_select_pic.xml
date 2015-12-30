@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle" >
-
-    <solid android:color="@color/trans_blue" />
-    <stroke android:width="3dp" android:color="@color/app_blue" />
-
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:state_checked="true"  
+    android:drawable="@drawable/xtd_action_add" /> <!-- pressed -->  
+<item android:drawable="@drawable/xtd_action_delete" /> <!-- default/unchecked -->  
+</selector>  

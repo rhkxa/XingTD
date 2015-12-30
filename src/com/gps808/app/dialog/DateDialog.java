@@ -10,6 +10,8 @@ import com.gps808.app.R;
 import com.gps808.app.dialog.AlterNameDialog.OnAlterClickListener;
 import com.gps808.app.dialog.DateTimeDialog.OnWheelClickListener;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.StringUtils;
+import com.gps808.app.utils.Utils;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.wheelview.WheelDatePicker;
 import com.mob.tools.utils.Data;
@@ -54,6 +56,7 @@ public class DateDialog extends Dialog {
 
 	private void init() {
 		// TODO Auto-generated method stub
+		sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		custom_end_time = (TextView) findViewById(R.id.custom_end_time);
 		custom_start_time = (TextView) findViewById(R.id.custom_start_time);
 		chose_today = (CheckBox) findViewById(R.id.chose_today);
@@ -71,14 +74,30 @@ public class DateDialog extends Dialog {
 		checkboxList.add(chose_today);
 		checkboxList.add(chose_yesterday);
 		for (CheckBox item : checkboxList) {
-			item.setOnCheckedChangeListener(check);
+			item.setOnClickListener(checkClick);
 		}
 		custom_end_time.setOnClickListener(choseDate);
 		custom_start_time.setOnClickListener(choseDate);
+		chose_custom.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				// TODO Auto-generated method stub
+				if (arg1) {
+					custom_end_time.setEnabled(true);
+					custom_start_time.setEnabled(true);
+				} else {
+					custom_end_time.setEnabled(true);
+					custom_start_time.setEnabled(true);
+				}
+			}
+		});
 
 	}
 
 	private void setCheckable() {
+		start = "";
+		end = "";
 		for (CheckBox item : checkboxList) {
 			item.setChecked(false);
 		}
@@ -111,42 +130,34 @@ public class DateDialog extends Dialog {
 			datatime.show();
 		}
 	};
-	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
+	private android.view.View.OnClickListener checkClick = new View.OnClickListener() {
 
 		@Override
-		public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			setCheckable();
 			switch (arg0.getId()) {
 			case R.id.chose_beforeday:
-				chose_beforeday.setChecked(arg1);
-				getDate(3);
+				chose_beforeday.setChecked(true);
+				getDate(2);
 				break;
 			case R.id.chose_today:
-				chose_today.setChecked(arg1);
-				getDate(1);
+				chose_today.setChecked(true);
+				getDate(0);
 				break;
 			case R.id.chose_yesterday:
-				chose_yesterday.setChecked(arg1);
+				chose_yesterday.setChecked(true);
 				getDate(1);
 				break;
 			case R.id.chose_onehour:
-				chose_onehour.setChecked(arg1);
+				chose_onehour.setChecked(true);
 				getOneHour();
 				break;
 			case R.id.chose_custom:
-				chose_custom.setChecked(arg1);
-				if (arg1) {
-					custom_end_time.setEnabled(true);
-					custom_start_time.setEnabled(true);
-				} else {
-					custom_end_time.setEnabled(true);
-					custom_start_time.setEnabled(true);
-				}
+				chose_custom.setChecked(true);
 				break;
 
 			}
-			LogUtils.DebugLog("开始:"+start+"结束"+end);
 		}
 	};
 
@@ -161,6 +172,11 @@ public class DateDialog extends Dialog {
 				break;
 
 			case R.id.dialog_ok:
+				if (StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) {
+					Utils.ToastMessage(context, "请选择时间段");
+					return;
+				}
+				timeClickListener.onTimeOk(start, end);
 				break;
 			}
 			dismiss();
@@ -178,17 +194,7 @@ public class DateDialog extends Dialog {
 
 	private void getDate(int flag) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		switch (flag) {
-		case 1:
-			break;
-		case 2:
-			calendar.add(Calendar.DATE, -1);
-			break;
-		case 3:
-			calendar.add(Calendar.DATE, -2);
-			break;
-		}
+		calendar.add(Calendar.DATE, -flag);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
@@ -197,14 +203,16 @@ public class DateDialog extends Dialog {
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 59);
 		end = sdf.format(calendar.getTime());
-		
+
 	}
 
 	private void getOneHour() {
 		Calendar calendar = Calendar.getInstance();
 		end = sdf.format(calendar.getTime());
-		calendar.set(Calendar.HOUR_OF_DAY, -1);
+		calendar.set(Calendar.HOUR_OF_DAY,
+				calendar.get(Calendar.HOUR_OF_DAY) - 1);
 		start = sdf.format(calendar.getTime());
+
 	}
 
 }

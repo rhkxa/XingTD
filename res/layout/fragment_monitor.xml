@@ -14,32 +14,42 @@
             android:layout_height="fill_parent" />
 
         <LinearLayout
+            android:id="@+id/play_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/half_transparent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+           >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" >
 
-                <ImageView
+                <ToggleButton
+                    android:id="@+id/play_toogle"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_margin="8dp"
-                    android:src="@drawable/xtd_icon_location" />
+                    android:background="@drawable/toogle_select_pic"
+                    android:textOff=""
+                    android:textOn="" />
 
                 <ProgressBar
+                    android:id="@+id/play_progress"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="6dp"
                     android:layout_margin="8dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="80"
+                    android:progressDrawable="@drawable/progress_compare_style" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:text="09:00"
                     android:textColor="@color/white" />
             </LinearLayout>
@@ -51,6 +61,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/play_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="速度:100km/h"

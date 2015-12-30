@@ -2,6 +2,7 @@ package com.gps808.app.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,6 +12,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +23,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.gps808.app.R;
-
-
-
 
 @SuppressWarnings("unused")
 public class FancyButton extends LinearLayout {
@@ -47,7 +46,7 @@ public class FancyButton extends LinearLayout {
 	private int mFontIconSize = 15;
 	private String mFontIcon = null;
 	private int mIconPosition = 1;
-	private int mIconSize=48;
+	private int mIconSize = 48;
 
 	private int mIconPaddingLeft = 8;
 	private int mIconPaddingRight = 8;
@@ -247,8 +246,8 @@ public class FancyButton extends LinearLayout {
 			iconView.setPadding(mIconPaddingLeft, mIconPaddingTop,
 					mIconPaddingRight, mIconPaddingBottom);
 
-			LayoutParams iconViewParams = new LayoutParams(
-					dip2px(mIconSize),dip2px(mIconSize));
+			LayoutParams iconViewParams = new LayoutParams(dip2px(mIconSize),
+					dip2px(mIconSize));
 			if (mTextView != null) {
 				if (mIconPosition == POSITION_TOP
 						|| mIconPosition == POSITION_BOTTOM)
@@ -701,10 +700,12 @@ public class FancyButton extends LinearLayout {
 	}
 
 	/**
-	 * �����ֻ��ķֱ��ʴ� dp �ĵ�λ ת��Ϊ px(����)
+	 * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
 	 */
-	private int dip2px( float dpValue) {
-		final float scale = mContext.getResources().getDisplayMetrics().density;
+	private int dip2px(float dpValue) {
+		float scale = mContext.getResources().getDisplayMetrics().density;
+		scale = 3;
 		return (int) (dpValue * scale + 0.5f);
 	}
+
 }

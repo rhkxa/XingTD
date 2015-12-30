@@ -13,7 +13,13 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.ToggleButton;
 import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
@@ -25,13 +31,16 @@ import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
+import com.gps808.app.bean.XbTrack;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.dialog.DateDialog.OnTimeClickListener;
@@ -54,11 +63,21 @@ public class MonitorFragment extends BaseFragment {
 			.fromResource(R.drawable.map_end_icon);
 	BitmapDescriptor startIcon = BitmapDescriptorFactory
 			.fromResource(R.drawable.xtd_map_start);
+	BitmapDescriptor locationIcon = BitmapDescriptorFactory
+			.fromResource(R.drawable.xtd_carlogo_on);
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
-	Polyline mPolyline;
+	Polyline mPolyline; 
 	private InfoWindow mInfoWindow;
 	private String vid;
+	private ToggleButton play_toogle;
+	private TextView play_text;
+	private ProgressBar play_progress;
+	private LinearLayout play_layout;
+	private Marker marker = null;
+	private LatLng latLng = null;
+	private double[] doubleLng;
+	private List<XbVehicle> xbVehicles;
 
 	public static MonitorFragment newInstance(String id) {
 		MonitorFragment fragment = new MonitorFragment();
@@ -91,30 +110,51 @@ public class MonitorFragment extends BaseFragment {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		play_toogle = (ToggleButton) root.findViewById(R.id.play_toogle);
+		play_text = (TextView) root.findViewById(R.id.play_text);
+		play_progress = (ProgressBar) root.findViewById(R.id.play_progress);
+		play_layout = (LinearLayout) root.findViewById(R.id.play_layout);
 		DateDialog dateDialog = new DateDialog(getActivity());
 		dateDialog.setOnTimeClickListener(new OnTimeClickListener() {
 
 			@Override
 			public void onTimeOk(String start, String end) {
 				// TODO Auto-generated method stub
-//				getData(start, end);
-				
+				getData(start, end);
 			}
 		});
 		dateDialog.show();
-		// getData();
+		play_toogle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				// TODO Auto-generated method stub
+
+				if (arg1) {
+					handler.post(runnable);
+					Utils.ToastMessage(getActivity(), "开始回放");
+				} else {
+					handler.removeCallbacks(runnable);
+					Utils.ToastMessage(getActivity(), "暂停回放");
+				}
+			}
+		});
+
 	}
 
+	// 获取服务器数据
 	private void getData(String start, String end) {
 		String url = UrlConfig.getVehicleGPSHistory();
-
+		String testParams="{\"vId\":\"1010001\",\"start\":\"2015-12-22 08:00:00\",\"end\":\"2015-12-23 20:59:34\"}";
+		
 		JSONObject params = new JSONObject();
 		StringEntity entity = null;
 		try {
 			params.put("vId", vid);
-			params.put("start", "start");
-			params.put("end", "end");
+			params.put("start", start);
+			params.put("end", end);
 			entity = new StringEntity(params.toString(), "UTF-8");
+//			entity = new StringEntity(testParams, "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,21 +167,30 @@ public class MonitorFragment extends BaseFragment {
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONArray response) {
 						// TODO Auto-generated method stub
-						List<XbVehicle> xbVehicles = JSON.parseArray(
-								response.toString(), XbVehicle.class);
+						xbVehicles = JSON.parseArray(response.toString(),
+								XbVehicle.class);
 						LogUtils.DebugLog("result json", response.toString());
-						parseData(xbVehicles);
+						if (xbVehicles.size() > 0) {
+							play_progress.setMax(xbVehicles.size());
+							parseData();
+							play_layout.setVisibility(View.VISIBLE);
+						} else {
+							play_layout.setVisibility(View.GONE);
+							Utils.ToastMessage(getActivity(), "对不起,暂无数据");
+
+						}
+
 						super.onSuccess(statusCode, headers, response);
 					}
 				});
 	}
 
-	private void parseData(List<XbVehicle> infos) {
+	// 解析数据,画出轨迹
+	private void parseData() {
 		List<LatLng> points = new ArrayList<LatLng>();
-		LatLng latLng = null;
-		double[] doubleLng;
+
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
-		for (XbVehicle info : infos) {
+		for (XbVehicle info : xbVehicles) {
 			doubleLng = Utils.getLng(info.getLocation());
 			// 位置
 			latLng = new LatLng(doubleLng[1], doubleLng[0]);
@@ -167,19 +216,46 @@ public class MonitorFragment extends BaseFragment {
 				.build()));
 	}
 
+	// 设置汽车的位置
+	private void playMonitor(XbVehicle car) {
+		doubleLng = Utils.getLng(car.getLocation());
+		// 位置
+		latLng = new LatLng(doubleLng[1], doubleLng[0]);
+		if (marker == null) {
+			// 图标
+			OverlayOptions overlayOptions = new MarkerOptions()
+					.position(latLng).icon(locationIcon).zIndex(5)
+					.rotate(car.getDirection())
+					.animateType(MarkerAnimateType.drop);
+			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+
+		} else {
+			marker.setPosition(latLng);
+			marker.setRotate(car.getDirection());
+		}
+		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(latLng));
+
+	}
+
 	/**
 	 * 定时任务
 	 */
-	// handler.postDelayed(runnable,
-	// Common.HANDLER_RUNNABLE_TIME);//每两秒执行一次runnable.
+	int i = 0;
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
 			// 要做的事情
-
-			handler.postDelayed(this, Common.HANDLER_RUNNABLE_TIME);
+			playMonitor(xbVehicles.get(i));
+			i++;
+			play_text.setText(xbVehicles.get(i).getTime());
+			play_progress.setProgress(i);
+			if (i < xbVehicles.size()) {
+				handler.postDelayed(this, 1000);
+			} else {
+				handler.removeCallbacks(runnable);
+			}
 		}
 	};
 
@@ -200,9 +276,11 @@ public class MonitorFragment extends BaseFragment {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
+		handler.removeCallbacks(runnable);
 		mMapView.onDestroy();
 		endIcon.recycle();
 		startIcon.recycle();
+		locationIcon.recycle();
 		super.onDestroy();
 	}
 

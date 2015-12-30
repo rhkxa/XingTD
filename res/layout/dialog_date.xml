@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/corners_rect_gray"
                     android:inputType="phone"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:text="点击输入开始时间"
                     android:textSize="@dimen/body" />
             </LinearLayout>
@@ -200,8 +200,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/corners_rect_gray"
-                    android:padding="4dp"
-                    android:text="点击输入开始时间"
+                    android:padding="8dp"
+                    android:text="点击输入结束时间"
                     android:textSize="@dimen/body" />
             </LinearLayout>
 
