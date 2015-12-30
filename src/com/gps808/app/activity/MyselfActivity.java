@@ -1,5 +1,8 @@
 package com.gps808.app.activity;
 
+import org.apache.http.Header;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,10 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
+import com.gps808.app.bean.XbWeather;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.HttpUtil;
+import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
+import com.gps808.app.utils.UrlConfig;
+import com.gps808.app.utils.BaseFragment.jsonHttpResponseHandler;
 import com.gps808.app.view.CircleImageView;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.FancyButton;
@@ -24,6 +33,7 @@ public class MyselfActivity extends BaseActivity {
 	private CircleImageView my_headimage;
 	private LinearLayout my_setup, my_about, my_help;
 	private FancyButton my_driver, my_police, my_routes, my_car;
+	private TextView my_weather;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,7 @@ public class MyselfActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_myself);
 		init();
+		getData();
 	}
 
 	private void init() {
@@ -75,7 +86,7 @@ public class MyselfActivity extends BaseActivity {
 		mynickname = (TextView) findViewById(R.id.my_nickname);
 		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
 				.getUserName());
-		//
+		my_weather=(TextView) findViewById(R.id.my_weather);
 		// my_headimage = (CircleImageView) findViewById(R.id.my_headimage);
 
 		// alter.setOnClickListener(new OnClickListener() {
@@ -137,4 +148,20 @@ public class MyselfActivity extends BaseActivity {
 			startActivity(intent);
 		}
 	};
+	private void getData() {
+		String url = UrlConfig.getWeather(0, 0);
+		HttpUtil.get(MyselfActivity.this, url, new jsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+					JSONObject response) {
+				// TODO Auto-generated method stub
+
+				LogUtils.DebugLog("result json", response.toString());
+				XbWeather xbWeather = JSON.parseObject(response.toString(),
+						XbWeather.class);
+				my_weather.setText(xbWeather.getNow().getDesc());
+				super.onSuccess(statusCode, headers, response);
+			}
+		});
+	}
 }

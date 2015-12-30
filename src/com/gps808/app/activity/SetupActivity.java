@@ -26,6 +26,7 @@ import com.gps808.app.dialog.WheelDialog.OnWheelClickListener;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
+import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
@@ -74,7 +75,7 @@ public class SetupActivity extends BaseActivity {
 		setup_track = (LinearLayout) findViewById(R.id.setup_track);
 		setup_monitor.setOnClickListener(click);
 		setup_track.setOnClickListener(click);
-		reset_pass=(LinearLayout) findViewById(R.id.reset_pass);
+		reset_pass = (LinearLayout) findViewById(R.id.reset_pass);
 		reset_pass.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -93,9 +94,9 @@ public class SetupActivity extends BaseActivity {
 				alter.show();
 			}
 		});
-		exit_login=(FancyButton) findViewById(R.id.exit_login);
+		exit_login = (FancyButton) findViewById(R.id.exit_login);
 		exit_login.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -123,11 +124,14 @@ public class SetupActivity extends BaseActivity {
 					switch (arg0.getId()) {
 					case R.id.setup_monitor:
 						setup_monitor_time.setText(key);
+						mTime=timeList.get(index);
 						break;
 					case R.id.setup_track:
 						setup_track_time.setText(key);
+						tTime=timeList.get(index);
 						break;
 					}
+					setIntervalTime();
 				}
 			});
 			wheelDialog.setContentView(curvedPicker);
@@ -136,6 +140,17 @@ public class SetupActivity extends BaseActivity {
 		}
 	};
 
+	private int getPosition(int time) {
+		int position = 0;
+		for (int i = 0; i < timeList.size(); i++) {
+			if (timeList.get(i) == time) {
+				position = i;
+				break;
+			}
+		}
+		return position;
+	}
+
 	private void getData() {
 		String url = UrlConfig.getUserOptions();
 		HttpUtil.get(SetupActivity.this, url, new jsonHttpResponseHandler() {
@@ -143,9 +158,14 @@ public class SetupActivity extends BaseActivity {
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
 				// TODO Auto-generated method stub
+				LogUtils.DebugLog("result json", response.toString());
 				option = JSON.parseObject(response.toString(), XbOption.class);
-				setup_monitor_time.setText(option.getMonitorInterval() + "s");
-				setup_track_time.setText(option.getTrackInterval() + "s");
+				setup_monitor_time.setText(data.get(getPosition(option
+						.getMonitorInterval())));
+				setup_track_time.setText(data.get(getPosition(option
+						.getTrackInterval())));
+				mTime=option.getMonitorInterval();
+				tTime=option.getTrackInterval();
 				PreferenceUtils.getInstance(SetupActivity.this).setMonitorTime(
 						option.getMonitorInterval());
 				PreferenceUtils.getInstance(SetupActivity.this).setTrackTime(
@@ -191,7 +211,6 @@ public class SetupActivity extends BaseActivity {
 				});
 
 	}
-	
 
 	private void setIntervalTime() {
 		// {"monitorInterval":10,"trackInterval":10}
@@ -206,6 +225,7 @@ public class SetupActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		LogUtils.DebugLog("post json",params.toString());
 		HttpUtil.post(SetupActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
 					@Override

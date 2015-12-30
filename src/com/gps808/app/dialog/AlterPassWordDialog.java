@@ -60,26 +60,26 @@ public class AlterPassWordDialog extends Dialog {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 
-				if (!StringUtils.isEmpty(dialog_old_password.getText()
+				if (StringUtils.isEmpty(dialog_old_password.getText()
 						.toString())) {
 					Utils.ToastMessage(context, "输入旧密码不能为空");
 					return;
 				}
-				if (!StringUtils.isEmpty(dialog_new_password.getText()
+				if (StringUtils.isEmpty(dialog_new_password.getText()
 						.toString())) {
 					Utils.ToastMessage(context, "输入新密码不能为空");
 					return;
 				}
-				if (!StringUtils.isEmpty(dialog_again_password.getText()
-						.toString())) {
-					Utils.ToastMessage(context, "再次输入密码不能为空");
-					return;
-				}
-				if ((dialog_again_password.getText().toString())
-						.equals(dialog_again_password.getText().toString())) {
-					Utils.ToastMessage(context, "两次密码输入不一致");
-					return;
-				}
+//				if (StringUtils.isEmpty(dialog_again_password.getText()
+//						.toString())) {
+//					Utils.ToastMessage(context, "再次输入密码不能为空");
+//					return;
+//				}
+//				if ((dialog_again_password.getText().toString())
+//						.equals(dialog_again_password.getText().toString())) {
+//					Utils.ToastMessage(context, "两次密码输入不一致");
+//					return;
+//				}
 				alterClickListener.onAlterOk(dialog_old_password.getText()
 						.toString(), dialog_new_password.getText().toString());
 			}

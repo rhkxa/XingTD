@@ -44,6 +44,7 @@
                 android:textSize="@dimen/subhead" />
 
             <TextView
+                android:id="@+id/my_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="天 气：晴转多云，温度：56度"
