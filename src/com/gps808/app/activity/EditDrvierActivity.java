@@ -62,23 +62,23 @@ public class EditDrvierActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if (StringUtils.isEmpty(driver_phone.getText().toString())) {
-					Utils.ToastMessage(EditDrvierActivity.this, "不能为空");
+					Utils.ToastMessage(EditDrvierActivity.this, "电话不能为空");
 					return;
 				}
 				if (StringUtils.isEmpty(driver_name.getText().toString())) {
-					Utils.ToastMessage(EditDrvierActivity.this, "不能为空");
+					Utils.ToastMessage(EditDrvierActivity.this, "名称不能为空");
 					return;
 				}
 				if (StringUtils.isEmpty(driver_user.getText().toString())) {
-					Utils.ToastMessage(EditDrvierActivity.this, "不能为空");
+					Utils.ToastMessage(EditDrvierActivity.this, "登录名称不能为空");
 					return;
 				}
 				if (StringUtils.isEmpty(driver_pass.getText().toString())) {
-					Utils.ToastMessage(EditDrvierActivity.this, "不能为空");
+					Utils.ToastMessage(EditDrvierActivity.this, "密码不能为空");
 					return;
 				}
 				if (StringUtils.isEmpty(driver_pass_again.getText().toString())) {
-					Utils.ToastMessage(EditDrvierActivity.this, "不能为空");
+					Utils.ToastMessage(EditDrvierActivity.this, "再次输入密码不能为空");
 					return;
 				}
 				xbDriver.setLoginName(driver_user.getText().toString());
@@ -88,9 +88,9 @@ public class EditDrvierActivity extends BaseActivity {
 						.toString()));
 				xbDriver.setPhone(driver_phone.getText().toString());
 				if (driver_state.isChecked()) {
-					xbDriver.setStatus(0);
-				} else {
 					xbDriver.setStatus(1);
+				} else {
+					xbDriver.setStatus(0);
 				}
 				setDriver(xbDriver);
 			}
@@ -105,7 +105,7 @@ public class EditDrvierActivity extends BaseActivity {
 			driver_user.setText(xbDriver.getLoginName());
 			driver_pass.setText(xbDriver.getPassword());
 			driver_pass_again.setText(xbDriver.getPassword());
-			if (xbDriver.getStatus() == 0) {
+			if (xbDriver.getStatus() == 1) {
 				driver_state.setChecked(true);
 			} else {
 				driver_state.setChecked(false);
@@ -140,7 +140,7 @@ public class EditDrvierActivity extends BaseActivity {
 		driver_user.setText(xbDriver.getLoginName());
 		driver_pass.setText(xbDriver.getPassword());
 		driver_pass_again.setText(xbDriver.getPassword());
-		if (xbDriver.getStatus() == 0) {
+		if (xbDriver.getStatus() == 1) {
 			driver_state.setChecked(true);
 		} else {
 			driver_state.setChecked(false);
@@ -165,7 +165,8 @@ public class EditDrvierActivity extends BaseActivity {
 							JSONObject response) {
 						// TODO Auto-generated method stub
 						if (Utils.requestOk(response)) {
-							Utils.ToastMessage(EditDrvierActivity.this, "添加成功");
+							Utils.ToastMessage(EditDrvierActivity.this, "操作成功");
+							finish();
 						}
 						super.onSuccess(statusCode, headers, response);
 					}

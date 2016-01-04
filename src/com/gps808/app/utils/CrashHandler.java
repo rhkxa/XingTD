@@ -97,7 +97,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			@Override
 			public void run() {
 				Looper.prepare();
-				Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.(用来调试jia)", Toast.LENGTH_LONG)
+				Toast.makeText(mContext, "很抱歉,您的手机出现问题.重新启动应用", Toast.LENGTH_LONG)
 						.show();
 				Looper.loop();
 			}

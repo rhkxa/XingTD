@@ -1,24 +1,36 @@
 package com.gps808.app.activity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -46,7 +58,9 @@ import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
 import com.gps808.app.view.FancyButton;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 /**
@@ -75,14 +89,13 @@ public class LoginActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		init();
 		checkUpdate();
 	}
 
 	private void init() {
 		// TODO Auto-generated method stub
-		
-		// 启动线程,延迟2秒
-		handler.postDelayed(runnable, 2000);
+
 		mPreferences = PreferenceUtils.getInstance(LoginActivity.this);
 		userName = (EditText) findViewById(R.id.username);
 		passWord = (EditText) findViewById(R.id.password);
@@ -138,6 +151,7 @@ public class LoginActivity extends BaseActivity {
 							.getString(R.string.msg_login_pwd_null));
 					return;
 				}
+				HttpUtil.cancelAllRequest();
 				getLogin();
 			}
 		});
@@ -168,11 +182,18 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				// Intent intent = new Intent(LoginActivity.this,
-				// RegisterActivity.class);
-				// startActivity(intent);
 				CustomOkDialog register = new CustomOkDialog(
 						LoginActivity.this, "新用户", "请电话联系", null);
+				register.show();
+			}
+		});
+		login_forget_pass.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				CustomOkDialog register = new CustomOkDialog(
+						LoginActivity.this, "忘记密码", "请电话联系", null);
 				register.show();
 			}
 		});
@@ -268,8 +289,6 @@ public class LoginActivity extends BaseActivity {
 		}
 	}
 
-	
-
 	// 自动登录线程,2秒后自动登陆
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
@@ -306,7 +325,8 @@ public class LoginActivity extends BaseActivity {
 						showNoticeDialog(update);
 					}
 				} else {
-					init();
+					// 启动线程,延迟2秒
+					handler.postDelayed(runnable, 2000);
 				}
 				super.onSuccess(statusCode, headers, response);
 
@@ -316,7 +336,8 @@ public class LoginActivity extends BaseActivity {
 			public void onFailure(int statusCode, Header[] headers,
 					String responseString, Throwable throwable) {
 				// TODO Auto-generated method stub
-				init();
+				// 启动线程,延迟2秒
+				handler.postDelayed(runnable, 2000);
 				super.onFailure(statusCode, headers, responseString, throwable);
 			}
 
@@ -341,37 +362,112 @@ public class LoginActivity extends BaseActivity {
 				new android.content.DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
-						init();
+						// 启动线程,延迟2秒
+						handler.postDelayed(runnable, 2000);
 					}
 				});
 		builder.create().show();
 	}
 
+	/**
+	 * 显示下载对话框
+	 */
+	private ProgressBar mProgress;
+	private TextView mProgressText;
+
 	private void showDownloadDialog(Update update) {
-		// TODO Auto-generated method stub
-		String apkFile = FileUtils.getSDRoot() + "XingTD" + "XtdApp_"
-				+ update.getReleaseTime() + ".apk";
-		HttpUtil.get(update.getUpdateUrl(), new BinaryHttpResponseHandler() {
+		AlertDialog.Builder builder = new Builder(this);
 
+		final LayoutInflater inflater = LayoutInflater.from(this);
+		View v = inflater.inflate(R.layout.widget_update_progress, null);
+		mProgress = (ProgressBar) v.findViewById(R.id.update_progress);
+		mProgressText = (TextView) v.findViewById(R.id.update_progress_text);
+		builder.setTitle("更新应用");
+		builder.setView(v);
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			@Override
-			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-				// TODO Auto-generated method stub
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
 
-			}
-
-			@Override
-			public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-					Throwable arg3) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onProgress(long bytesWritten, long totalSize) {
-				// TODO Auto-generated method stub
-				super.onProgress(bytesWritten, totalSize);
 			}
 		});
+		builder.setOnCancelListener(new OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				HttpUtil.cancelRequest(LoginActivity.this);
+			}
+		});
+		Dialog downloadDialog = builder.create();
+		downloadDialog.setCanceledOnTouchOutside(false);
+		downloadDialog.show();
+		downloadApk(update);
+	}
+
+	private void downloadApk(final Update update) {
+		// TODO Auto-generated method stub
+		final String apkFile = FileUtils.getSDRoot() + "/XingTD" + "/XtdApp_"
+				+ update.getReleaseTime() + ".apk";
+		HttpUtil.get(update.getUpdateUrl(), new FileAsyncHttpResponseHandler(
+				LoginActivity.this) {
+
+			@Override
+			public void onFailure(int arg0, Header[] arg1, Throwable arg2,
+					File arg3) {
+				// TODO Auto-generated method stub
+				LogUtils.DebugLog("下载失败" + arg3.toString());
+			}
+
+			public void onProgress(long bytesWritten, long totalSize) {
+				int progressPercentage = (int) (100 * bytesWritten / totalSize);
+				mProgress.setProgress(progressPercentage);
+				mProgressText.setText(progressPercentage + "%");
+			}
+
+			@Override
+			protected byte[] getResponseData(HttpEntity entity)
+					throws IOException {
+				// TODO Auto-generated method stub
+				if (entity != null) {
+					InputStream instream = entity.getContent();
+					long contentLength = entity.getContentLength();
+					FileOutputStream buffer = new FileOutputStream(
+							getTargetFile(), this.append);
+					if (instream != null) {
+						try {
+							byte[] tmp = new byte[BUFFER_SIZE];
+							int l, count = 0;
+							// do not send messages if request has been
+							// cancelled
+							while ((l = instream.read(tmp)) != -1
+									&& !Thread.currentThread().isInterrupted()) {
+								count += l;
+								buffer.write(tmp, 0, l);
+								sendProgressMessage(count, (int) contentLength);
+							}
+							Utils.installApk(LoginActivity.this, apkFile);
+						} finally {
+							AsyncHttpClient.silentCloseInputStream(instream);
+							buffer.flush();
+							AsyncHttpClient.silentCloseOutputStream(buffer);
+						}
+					}
+				}
+				return null;
+			}
+
+			@Override
+			public File getTargetFile() {
+				// TODO Auto-generated method stub
+				return new File(apkFile);
+			}
+
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, File arg2) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 	}
 
 	// 双击退出

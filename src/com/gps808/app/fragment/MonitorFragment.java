@@ -67,7 +67,7 @@ public class MonitorFragment extends BaseFragment {
 			.fromResource(R.drawable.xtd_carlogo_on);
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
-	Polyline mPolyline; 
+	Polyline mPolyline;
 	private InfoWindow mInfoWindow;
 	private String vid;
 	private ToggleButton play_toogle;
@@ -145,8 +145,8 @@ public class MonitorFragment extends BaseFragment {
 	// 获取服务器数据
 	private void getData(String start, String end) {
 		String url = UrlConfig.getVehicleGPSHistory();
-		String testParams="{\"vId\":\"1010001\",\"start\":\"2015-12-22 08:00:00\",\"end\":\"2015-12-23 20:59:34\"}";
-		
+		String testParams = "{\"vId\":\"1010001\",\"start\":\"2015-12-22 08:00:00\",\"end\":\"2015-12-23 20:59:34\"}";
+
 		JSONObject params = new JSONObject();
 		StringEntity entity = null;
 		try {
@@ -154,7 +154,7 @@ public class MonitorFragment extends BaseFragment {
 			params.put("start", start);
 			params.put("end", end);
 			entity = new StringEntity(params.toString(), "UTF-8");
-//			entity = new StringEntity(testParams, "UTF-8");
+			// entity = new StringEntity(testParams, "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -225,8 +225,7 @@ public class MonitorFragment extends BaseFragment {
 			// 图标
 			OverlayOptions overlayOptions = new MarkerOptions()
 					.position(latLng).icon(locationIcon).zIndex(5)
-					.rotate(car.getDirection())
-					.animateType(MarkerAnimateType.drop);
+					.rotate(car.getDirection());
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 
 		} else {
@@ -248,13 +247,17 @@ public class MonitorFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			playMonitor(xbVehicles.get(i));
+
+			play_text.setText("位置:" + xbVehicles.get(i).getAddr() + "时间:"
+					+ xbVehicles.get(i).getTime() + "速度:"
+					+ xbVehicles.get(i).getSpeed());
 			i++;
-			play_text.setText(xbVehicles.get(i).getTime());
 			play_progress.setProgress(i);
 			if (i < xbVehicles.size()) {
-				handler.postDelayed(this, 1000);
+				handler.postDelayed(this, 500);
 			} else {
-				handler.removeCallbacks(runnable);
+				play_toogle.setChecked(false);
+				play_toogle.setEnabled(false);
 			}
 		}
 	};

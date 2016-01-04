@@ -20,6 +20,10 @@ import android.view.View.OnClickListener;
 import com.alibaba.fastjson.JSON;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMap.OnMapLoadedCallback;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -29,12 +33,14 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MyLocationData;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.map.ZoomControlView;
+import com.gps808.app.map.LocationDemo.MyLocationListenner;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.Common;
@@ -56,6 +62,7 @@ import android.widget.ZoomControls;
 import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
+import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MarkerOptions;
@@ -80,6 +87,13 @@ public class MainActivity extends BaseActivity {
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 
+	// 定位相关
+	LocationClient mLocClient;
+	public MyLocationListenner myListener = new MyLocationListenner();
+	private LocationMode mCurrentMode;
+	BitmapDescriptor mCurrentMarker;
+	boolean isFirstLoc = true;// 是否首次定位
+
 	private long mExitTime = 0;
 	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
 	// private BadgeView badge;
@@ -93,6 +107,7 @@ public class MainActivity extends BaseActivity {
 	int flag = 0;
 	private View mMarkerLy;
 	private int handler_runnable_time;
+	private FancyButton main_person;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -229,6 +244,26 @@ public class MainActivity extends BaseActivity {
 				mMapView.setScaleControlPosition(point);
 			}
 		});
+		// 用户位置
+		main_person = (FancyButton) findViewById(R.id.main_person);
+		main_person.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				// 开启定位图层
+				mBaiduMap.setMyLocationEnabled(true);
+				// 定位初始化
+				mLocClient = new LocationClient(MainActivity.this);
+				mLocClient.registerLocationListener(myListener);
+				LocationClientOption option = new LocationClientOption();
+				option.setOpenGps(true);// 打开gps
+				option.setCoorType("bd09ll"); // 设置坐标类型
+				option.setScanSpan(1000);
+				mLocClient.setLocOption(option);
+				mLocClient.start();
+			}
+		});
 	}
 
 	/**
@@ -362,7 +397,7 @@ public class MainActivity extends BaseActivity {
 					R.color.text));
 		}
 		viewHolder.popwindows_name.setText(xbVehicle.getPlateNo());
-		viewHolder.popwindows_position.setText(xbVehicle.getAddr());
+		viewHolder.popwindows_position.setText("位置:  "+xbVehicle.getAddr());
 
 		OnClickListener click = new OnClickListener() {
 
@@ -463,6 +498,12 @@ public class MainActivity extends BaseActivity {
 		// 回收 bitmap 资源
 		online.recycle();
 		offline.recycle();
+		if (mLocClient != null) {
+			// 退出时销毁定位
+			mLocClient.stop();
+			// 关闭定位图层
+			mBaiduMap.setMyLocationEnabled(false);
+		}
 
 	}
 
@@ -494,6 +535,36 @@ public class MainActivity extends BaseActivity {
 		PushManager.startWork(getApplicationContext(),
 				PushConstants.LOGIN_TYPE_API_KEY,
 				PushUtils.getMetaValue(MainActivity.this, "api_key"));
+	}
+
+	/**
+	 * 定位SDK监听函数
+	 */
+	public class MyLocationListenner implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			// map view 销毁后不在处理新接收的位置
+			if (location == null || mMapView == null) {
+				return;
+			}
+			MyLocationData locData = new MyLocationData.Builder()
+					.accuracy(location.getRadius())
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(100).latitude(location.getLatitude())
+					.longitude(location.getLongitude()).build();
+			mBaiduMap.setMyLocationData(locData);
+			if (isFirstLoc) {
+				isFirstLoc = false;
+				LatLng ll = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				mBaiduMap.animateMapStatus(u);
+			}
+		}
+
+		public void onReceivePoi(BDLocation poiLocation) {
+		}
 	}
 
 	// 双击退出

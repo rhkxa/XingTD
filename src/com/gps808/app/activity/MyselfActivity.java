@@ -41,7 +41,7 @@ public class MyselfActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_myself);
 		init();
-		getData();
+		// getData();
 	}
 
 	private void init() {
@@ -86,7 +86,7 @@ public class MyselfActivity extends BaseActivity {
 		mynickname = (TextView) findViewById(R.id.my_nickname);
 		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
 				.getUserName());
-		my_weather=(TextView) findViewById(R.id.my_weather);
+		my_weather = (TextView) findViewById(R.id.my_weather);
 		// my_headimage = (CircleImageView) findViewById(R.id.my_headimage);
 
 		// alter.setOnClickListener(new OnClickListener() {
@@ -110,6 +110,10 @@ public class MyselfActivity extends BaseActivity {
 		// });
 		// myself_edit = (LinearLayout) findViewById(R.id.myself_edit);
 		// my_headimage.setOnClickListener(click);
+		if(PreferenceUtils.getInstance(MyselfActivity.this).getUserState().equals("2")){
+			my_driver.setBackgroundColor(getResources().getColor(R.color.gray));
+			my_driver.setEnabled(false);
+		}
 
 	}
 
@@ -148,6 +152,7 @@ public class MyselfActivity extends BaseActivity {
 			startActivity(intent);
 		}
 	};
+
 	private void getData() {
 		String url = UrlConfig.getWeather(0, 0);
 		HttpUtil.get(MyselfActivity.this, url, new jsonHttpResponseHandler() {

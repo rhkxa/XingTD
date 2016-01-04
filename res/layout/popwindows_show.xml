@@ -93,6 +93,7 @@
                             android:layout_height="wrap_content"
                             android:text="位置:"
                             android:textColor="@color/text"
+                            android:visibility="gone"
                             android:textSize="@dimen/caption" />
 
                         <TextView

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/half_transparent"
             android:orientation="vertical"
-           >
+            android:visibility="gone" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,7 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="09:00"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout

@@ -215,6 +215,20 @@
                 android:orientation="horizontal" >
 
                 <com.gps808.app.view.FancyButton
+                    android:id="@+id/dialog_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginBottom="21dp"
+                    android:layout_weight="1"
+                    fancy:fb_borderColor="@color/graywhite"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/white"
+                    fancy:fb_focusColor="#8cc9f8"
+                    fancy:fb_text="取消"
+                    fancy:fb_textColor="@color/text" />
+
+                <com.gps808.app.view.FancyButton
                     android:id="@+id/dialog_ok"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -228,23 +242,6 @@
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_text="确认"
                     fancy:fb_textColor="@color/app_blue" />
-
-                <com.gps808.app.view.FancyButton
-                    android:id="@+id/dialog_no"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/linearLayout1"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="8dp"
-                    android:layout_marginBottom="21dp"
-                    android:layout_weight="1"
-                    fancy:fb_borderColor="@color/graywhite"
-                    fancy:fb_borderWidth="1dp"
-                    fancy:fb_defaultColor="@color/white"
-                    fancy:fb_focusColor="#8cc9f8"
-                    fancy:fb_text="取消"
-                    fancy:fb_textColor="@color/text" >
-                </com.gps808.app.view.FancyButton>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

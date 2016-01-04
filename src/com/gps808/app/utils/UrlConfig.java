@@ -285,7 +285,7 @@ public class UrlConfig {
 	 * @return
 	 */
 	public static final String getWeather(double lng, double lat) {
-		return SERVER + " info/ weather ?lng=" + lng + "&lat=" + lat;
+		return SERVER + "info/weather?lng=" + lng + "&lat=" + lat;
 	}
 
 	// 获取验证码

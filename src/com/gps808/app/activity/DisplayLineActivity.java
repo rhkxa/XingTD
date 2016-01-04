@@ -9,10 +9,15 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -20,19 +25,25 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
+import com.gps808.app.activity.MainActivity.MyLocationListenner;
 import com.gps808.app.bean.XbDisplayLine;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
+import com.gps808.app.view.FancyButton;
 
 public class DisplayLineActivity extends BaseActivity {
 
@@ -44,6 +55,14 @@ public class DisplayLineActivity extends BaseActivity {
 	Polyline mTexturePolyline;
 	BitmapDescriptor endIcon = null;
 	BitmapDescriptor startIcon = null;
+	// 定位相关
+	LocationClient mLocClient;
+	public MyLocationListenner myListener = new MyLocationListenner();
+	private LocationMode mCurrentMode;
+	BitmapDescriptor mCurrentMarker;
+	boolean isFirstLoc = true;// 是否首次定位
+	String rid;
+	private final String saveFile = "Routes";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +70,12 @@ public class DisplayLineActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_line);
 		init();
-		getData();
+
 	}
 
 	private void init() {
 		// TODO Auto-generated method stub
+		rid = getIntent().getStringExtra("rid");
 		HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
 		headerFragment.setTitleText("路线详情");
@@ -75,21 +95,54 @@ public class DisplayLineActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		// 用户位置
+		FancyButton main_person = (FancyButton) findViewById(R.id.main_person);
+		main_person.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				// 开启定位图层
+				mBaiduMap.setMyLocationEnabled(true);
+				// 定位初始化
+				mLocClient = new LocationClient(DisplayLineActivity.this);
+				mLocClient.registerLocationListener(myListener);
+				LocationClientOption option = new LocationClientOption();
+				option.setOpenGps(true);// 打开gps
+				option.setCoorType("bd09ll"); // 设置坐标类型
+				option.setScanSpan(1000);
+				mLocClient.setLocOption(option);
+				mLocClient.start();
+			}
+		});
+
+		// 从本地获取
+		String content = FileUtils.read(DisplayLineActivity.this, saveFile
+				+ rid);
+		LogUtils.DebugLog("read content ",saveFile+rid+content);
+		if (StringUtils.isEmpty(content)) {
+			getData();
+		} else {
+			XbDisplayLine xbDisplayLine = JSON.parseObject(content,
+					XbDisplayLine.class);
+			parseData(xbDisplayLine);
+		}
 	}
 
 	/**
 	 * 添加点、线、多边形、圆、文字
 	 */
 	public void addCustomElementsDemo(List<LatLng> points) {
-		if(points.size()>=2){
-		// 添加普通折线绘制
-		OverlayOptions ooPolyline = new PolylineOptions().width(10)
-				.color(getResources().getColor(R.color.app_green)).points(points);
-		mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
-		mBaiduMap.addOverlay(new MarkerOptions().position(points.get(0)).icon(
-				startIcon));
-		mBaiduMap.addOverlay(new MarkerOptions().position(
-				points.get(points.size() - 1)).icon(endIcon));
+		if (points.size() >= 2) {
+			// 添加普通折线绘制
+			OverlayOptions ooPolyline = new PolylineOptions().width(10)
+					.color(getResources().getColor(R.color.app_green))
+					.points(points);
+			mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
+			mBaiduMap.addOverlay(new MarkerOptions().position(points.get(0))
+					.icon(startIcon));
+			mBaiduMap.addOverlay(new MarkerOptions().position(
+					points.get(points.size() - 1)).icon(endIcon));
 		}
 		// 添加多颜色分段的折线绘制
 		// LatLng p11 = new LatLng(39.965, 116.444);
@@ -175,8 +228,7 @@ public class DisplayLineActivity extends BaseActivity {
 
 	private void getData() {
 		showProgressDialog(DisplayLineActivity.this, "正在加载路线信息");
-		String url = UrlConfig.getVehicleRoutesInfo(getIntent().getStringExtra(
-				"rid"));
+		String url = UrlConfig.getVehicleRoutesInfo(rid);
 		HttpUtil.get(DisplayLineActivity.this, url,
 				new jsonHttpResponseHandler() {
 					@Override
@@ -186,6 +238,8 @@ public class DisplayLineActivity extends BaseActivity {
 						LogUtils.DebugLog("result json", response.toString());
 						XbDisplayLine xbDisplayLine = JSON.parseObject(
 								response.toString(), XbDisplayLine.class);
+						FileUtils.write(DisplayLineActivity.this, saveFile
+								+ rid,  response.toString());
 						parseData(xbDisplayLine);
 						super.onSuccess(statusCode, headers, response);
 					}
@@ -216,6 +270,36 @@ public class DisplayLineActivity extends BaseActivity {
 		mMapView.getMap().clear();
 	}
 
+	/**
+	 * 定位SDK监听函数
+	 */
+	public class MyLocationListenner implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			// map view 销毁后不在处理新接收的位置
+			if (location == null || mMapView == null) {
+				return;
+			}
+			MyLocationData locData = new MyLocationData.Builder()
+					.accuracy(location.getRadius())
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(100).latitude(location.getLatitude())
+					.longitude(location.getLongitude()).build();
+			mBaiduMap.setMyLocationData(locData);
+			if (isFirstLoc) {
+				isFirstLoc = false;
+				LatLng ll = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				mBaiduMap.animateMapStatus(u);
+			}
+		}
+
+		public void onReceivePoi(BDLocation poiLocation) {
+		}
+	}
+
 	@Override
 	protected void onPause() {
 		mMapView.onPause();
@@ -236,6 +320,12 @@ public class DisplayLineActivity extends BaseActivity {
 		// mGreenTexture.recycle();
 		endIcon.recycle();
 		startIcon.recycle();
+		if (mLocClient != null) {
+			// 退出时销毁定位
+			mLocClient.stop();
+			// 关闭定位图层
+			mBaiduMap.setMyLocationEnabled(false);
+		}
 		super.onDestroy();
 	}
 

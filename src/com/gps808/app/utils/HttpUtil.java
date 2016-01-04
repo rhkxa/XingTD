@@ -7,6 +7,7 @@ import android.content.Context;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -43,9 +44,18 @@ public class HttpUtil {
 		client.post(mContext, urlString, params, res);
 	}
 
-	// 下载数据使用，会返回byte数据
+	// 下载数据(图片)使用，会返回byte数据
 	public static void get(String uString, BinaryHttpResponseHandler bHandler) {
+		LogUtils.DebugLog("下载图片" + uString);
 		client.get(uString, bHandler);
+
+	}
+
+	// 下载文件使用
+	public static void get(String uString, FileAsyncHttpResponseHandler bHandler) {
+		LogUtils.DebugLog("下载文件" + uString);
+		client.get(uString, bHandler);
+
 	}
 
 	// 不带参数，获取json对象或者数组

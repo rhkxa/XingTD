@@ -28,6 +28,7 @@ import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
+import com.gps808.app.utils.Utils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -127,8 +128,8 @@ public class PolicesActivity extends BaseActivity {
 						XbPolice.class));
 				if (JSON.parseArray(response.toString(), XbPolice.class).size() < pageNum) {
 					police_list.setMode(Mode.DISABLED);
-					// Utils.ToastMessage(CommentActivity.this,
-					// "暂无更多评论");
+					 Utils.ToastMessage(PolicesActivity.this,
+					 "暂无更多");
 				} else {
 					startPage++;
 				}

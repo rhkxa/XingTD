@@ -6,12 +6,17 @@ import java.util.List;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
@@ -30,9 +35,7 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
-
 import com.gps808.app.R;
-import com.gps808.app.activity.MainActivity;
 import com.gps808.app.bean.XbTrack;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.HttpUtil;
@@ -64,6 +67,7 @@ public class TrackFragment extends BaseFragment {
 	List<LatLng> points = new ArrayList<LatLng>();
 	Polyline mPolyline;
 	private int handler_runnable_time;
+	private View mMarkerLy;
 
 	public static TrackFragment newInstance(String id) {
 		TrackFragment fragment = new TrackFragment();
@@ -96,6 +100,9 @@ public class TrackFragment extends BaseFragment {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		// 对Marker的点击弹出PopWindows
+		LayoutInflater inflater = LayoutInflater.from(getActivity());
+		mMarkerLy = inflater.inflate(R.layout.popwindows_trace, null);
 		getData();
 	}
 
@@ -134,6 +141,7 @@ public class TrackFragment extends BaseFragment {
 		} else {
 			marker.setPosition(latLng);
 			marker.setRotate(xbTrack.getDirection());
+
 			if (mPolyline == null) {
 				OverlayOptions ooPolyline = new PolylineOptions().width(10)
 						.color(getResources().getColor(R.color.app_green))
@@ -145,7 +153,62 @@ public class TrackFragment extends BaseFragment {
 				mPolyline.setPoints(points);
 			}
 		}
+		mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbTrack),
+				marker.getPosition(), -100);
+		mBaiduMap.showInfoWindow(mInfoWindow);
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(latLng));
+
+	}
+
+	/**
+	 * 根据info为布局上的控件设置信息
+	 * 
+	 * @param mMarkerInfo2
+	 * @param info
+	 */
+	private View popupInfo(View mMarkerLy, final XbTrack xbTrack) {
+		ViewHolder viewHolder = null;
+		if (mMarkerLy.getTag() == null) {
+			viewHolder = new ViewHolder();
+			viewHolder.popwindows_name = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_name);
+			viewHolder.popwindows_state = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_state);
+			viewHolder.popwindows_time = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_time);
+			viewHolder.popwindows_close = (ImageView) mMarkerLy
+					.findViewById(R.id.popwindows_close);
+			viewHolder.popwindows_position = (TextView) mMarkerLy
+					.findViewById(R.id.popwindows_position);
+			mMarkerLy.setTag(viewHolder);
+		}
+		viewHolder = (ViewHolder) mMarkerLy.getTag();
+		viewHolder.popwindows_time.setText("时间:" + xbTrack.getTime());
+		if (xbTrack.isOnline()) {
+			viewHolder.popwindows_state.setText("在线:" + xbTrack.getSpeed());
+			viewHolder.popwindows_state.setTextColor(getResources().getColor(
+					R.color.app_green));
+		} else {
+			viewHolder.popwindows_state.setText("离线");
+			viewHolder.popwindows_state.setTextColor(getResources().getColor(
+					R.color.text));
+		}
+		viewHolder.popwindows_name.setText(xbTrack.getPlateNo());
+		viewHolder.popwindows_position.setText(xbTrack.getAddr());
+		return mMarkerLy;
+	}
+
+	/**
+	 * 复用弹出面板mMarkerLy的控件
+	 * 
+	 */
+	private class ViewHolder {
+
+		TextView popwindows_name;
+		TextView popwindows_state;
+		TextView popwindows_time;
+		TextView popwindows_position;
+		ImageView popwindows_close;
 
 	}
 
@@ -168,7 +231,7 @@ public class TrackFragment extends BaseFragment {
 	public void onPause() {
 		// TODO Auto-generated method stub
 		mMapView.onPause();
-	
+
 		super.onPause();
 	}
 

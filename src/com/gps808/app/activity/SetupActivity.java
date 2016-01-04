@@ -25,6 +25,7 @@ import com.gps808.app.dialog.WheelDialog;
 import com.gps808.app.dialog.WheelDialog.OnWheelClickListener;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.CyptoUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
@@ -88,6 +89,11 @@ public class SetupActivity extends BaseActivity {
 					@Override
 					public void onAlterOk(String oldPw, String newPw) {
 						// TODO Auto-generated method stub
+						if (newPw.length() < 6) {
+							Utils.ToastMessage(SetupActivity.this, "密码不能小于6位");
+							return;
+						}
+
 						setResetPw(oldPw, newPw);
 					}
 				});
@@ -124,11 +130,11 @@ public class SetupActivity extends BaseActivity {
 					switch (arg0.getId()) {
 					case R.id.setup_monitor:
 						setup_monitor_time.setText(key);
-						mTime=timeList.get(index);
+						mTime = timeList.get(index);
 						break;
 					case R.id.setup_track:
 						setup_track_time.setText(key);
-						tTime=timeList.get(index);
+						tTime = timeList.get(index);
 						break;
 					}
 					setIntervalTime();
@@ -164,8 +170,8 @@ public class SetupActivity extends BaseActivity {
 						.getMonitorInterval())));
 				setup_track_time.setText(data.get(getPosition(option
 						.getTrackInterval())));
-				mTime=option.getMonitorInterval();
-				tTime=option.getTrackInterval();
+				mTime = option.getMonitorInterval();
+				tTime = option.getTrackInterval();
 				PreferenceUtils.getInstance(SetupActivity.this).setMonitorTime(
 						option.getMonitorInterval());
 				PreferenceUtils.getInstance(SetupActivity.this).setTrackTime(
@@ -180,8 +186,8 @@ public class SetupActivity extends BaseActivity {
 		JSONObject params = new JSONObject();
 		StringEntity entity = null;
 		try {
-			params.put("oldPassword", oldPw);
-			params.put("newPassword", newPw);
+			params.put("oldPassword", CyptoUtils.MD5(oldPw));
+			params.put("newPassword", CyptoUtils.MD5(newPw));
 			entity = new StringEntity(params.toString(), "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -225,7 +231,7 @@ public class SetupActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		LogUtils.DebugLog("post json",params.toString());
+		LogUtils.DebugLog("post json", params.toString());
 		HttpUtil.post(SetupActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
 					@Override

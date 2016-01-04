@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+  
+
     <ProgressBar
         android:id="@+id/update_progress"
         style="?android:attr/progressBarStyleHorizontal"
@@ -17,6 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:textColor="@color/white" />
+        android:textColor="@color/black" />
 
 </LinearLayout>

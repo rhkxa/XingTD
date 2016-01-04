@@ -92,6 +92,8 @@ public class DateDialog extends Dialog {
 				}
 			}
 		});
+		chose_today.setChecked(true);
+		getDate(0);
 
 	}
 

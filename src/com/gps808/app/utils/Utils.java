@@ -1,5 +1,6 @@
 package com.gps808.app.utils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -448,4 +449,20 @@ public class Utils {
 			}
 		});
 	}
+	/**
+	 * 安装apk
+	 * 
+	 * @param url
+	 */
+	public static void installApk(Context context,String apkFilePath) {
+		File apkfile = new File(apkFilePath);
+		if (!apkfile.exists()) {
+			return;
+		}
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
+				"application/vnd.android.package-archive");
+		context.startActivity(i);
+	}
+
 }
