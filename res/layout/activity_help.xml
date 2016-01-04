@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
@@ -13,151 +14,43 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp" >
+        android:orientation="vertical" >
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <LinearLayout
-            android:id="@+id/my_order"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/layout_backgroud_selector"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:layout_weight="1"
-                android:text="如何查询订单"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical" >
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/xtd_action_next" />
-        </LinearLayout>
-
-        <View style="@style/blackline" />
-
-        <LinearLayout
-            android:id="@+id/my_shopping"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/layout_backgroud_selector"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/xtd_action_qq" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:layout_weight="1"
-                android:text="如何修改订单"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/xtd_action_next" />
+                android:text="QQ交流群:7777777" />
         </LinearLayout>
 
-        <View style="@style/blackline" />
-
-        <LinearLayout
-            android:id="@+id/my_points"
+        <com.gps808.app.view.FancyButton
+            android:id="@+id/feedback"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/layout_backgroud_selector"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:layout_weight="1"
-                android:text="已审核订单是否能取消"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/xtd_action_next" />
-        </LinearLayout>
-
-        <View style="@style/blackline" />
-
-        <LinearLayout
-            android:id="@+id/my_address"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/layout_backgroud_selector"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:layout_weight="1"
-                android:text="如何退货"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/xtd_action_next" />
-        </LinearLayout>
-
-        <View style="@style/blackline" />
-
-        <LinearLayout
-            android:id="@+id/my_help"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/layout_backgroud_selector"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:layout_weight="1"
-                android:text="优惠券使用规则"
-                android:textColor="@color/text"
-                android:textSize="@dimen/body" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/xtd_action_next" />
-        </LinearLayout>
-
-        <View style="@style/blackline" />
+            android:layout_margin="16dp"
+            fancy:fb_defaultColor="@color/tag_blue"
+            fancy:fb_focusColor="@color/app_blue"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="意见反馈"
+            fancy:fb_textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

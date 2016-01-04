@@ -85,6 +85,7 @@ public class BaseActivity extends FragmentActivity {
 				String responseString, Throwable throwable) {
 			// TODO Auto-generated method stub
 			Utils.ToastMessage(huaShiApplication, "加载失败，请重试");
+			LogUtils.DebugLog("failure throwable",throwable.toString());
 			super.onFailure(statusCode, headers, responseString, throwable);
 		}
 

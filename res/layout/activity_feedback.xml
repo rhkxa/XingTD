@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
@@ -23,13 +24,15 @@
         android:textColor="@color/text"
         android:textSize="@dimen/body" />
 
-    <Button
+    <com.gps808.app.view.FancyButton
         android:id="@+id/feedback_ok"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_button_blue"
-        android:text="确定"
-        android:textColor="@color/white" />
+        android:layout_margin="16dp"
+        fancy:fb_defaultColor="@color/tag_blue"
+        fancy:fb_focusColor="@color/app_blue"
+        fancy:fb_radius="2dp"
+        fancy:fb_text="确定"
+        fancy:fb_textColor="@color/white" />
 
 </LinearLayout>

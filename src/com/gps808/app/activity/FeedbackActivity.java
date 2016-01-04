@@ -1,26 +1,28 @@
 package com.gps808.app.activity;
 
+import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 
-import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
+import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
+import com.gps808.app.view.FancyButton;
 
 public class FeedbackActivity extends BaseActivity {
 	private HeaderFragment headerFragment;
 	private EditText feedback_edit;
-	private Button feedback_ok;
+	private FancyButton feedback_ok;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class FeedbackActivity extends BaseActivity {
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("意见反馈");
 		feedback_edit = (EditText) findViewById(R.id.feedback_edit);
-		feedback_ok = (Button) findViewById(R.id.feedback_ok);
+		feedback_ok = (FancyButton) findViewById(R.id.feedback_ok);
 		feedback_ok.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -52,27 +54,32 @@ public class FeedbackActivity extends BaseActivity {
 	}
 
 	private void loadOrder() {
-//		if (Utils.isNetWorkConnected(FeedbackActivity.this)) {
-//			showProgressDialog(FeedbackActivity.this, "加载中，请稍等");
-//			String url = UrlConfig.submitSuggest(feedback_edit.getText()
-//					.toString());
-//			HttpUtil.get(url, new jsonHttpResponseHandler() {
-//				@Override
-//				public void onSuccess(JSONObject arg0) {
-//					// TODO Auto-generated method stub
-//					
-//					// if (base.getStatusCode().equals("200")) {
-//					// Utils.ToastMessage(FeedbackActivity.this,
-//					// "意见提交成功，平台会尽快处理,感谢您的支持");
-//					// }
-//
-//					super.onSuccess(arg0);
-//				}
-//			});
-//		} else {
-//			Utils.showSuperCardToast(FeedbackActivity.this, getResources()
-//					.getString(R.string.network_not_connected));
-//		}
-//
-	};
+
+		showProgressDialog(FeedbackActivity.this, "提交中，请稍等");
+		String url = UrlConfig.getUserQuestion();
+		JSONObject params = new JSONObject();
+		StringEntity entity = null;
+		try {
+			params.put("content", feedback_edit.getText().toString());
+			entity = new StringEntity(params.toString(), "UTF-8");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		LogUtils.DebugLog("post json",params.toString());
+		HttpUtil.post(FeedbackActivity.this, url, entity, "application/json",
+				new jsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						if (Utils.requestOk(response)) {
+							Utils.ToastMessage(FeedbackActivity.this,
+									"意见提交成功，平台会尽快处理,感谢您的支持");
+						}
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
+
+	}
 }
