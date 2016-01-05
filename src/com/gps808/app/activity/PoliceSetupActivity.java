@@ -54,9 +54,9 @@ public class PoliceSetupActivity extends BaseActivity {
 		push_switch.setChecked(mPreferenceUtils.getPush());
 		voice_switch.setChecked(mPreferenceUtils.getVoice());
 		shock_switch.setChecked(mPreferenceUtils.getShock());
-		push_switch.setOnCheckedChangeListener(check);
-		shock_switch.setOnCheckedChangeListener(check);
-		voice_switch.setOnCheckedChangeListener(check);
+		push_switch.setOnClickListener(check);
+		shock_switch.setOnClickListener(check);
+		voice_switch.setOnClickListener(check);
 
 		setup_message = (LinearLayout) findViewById(R.id.setup_message);
 
@@ -73,25 +73,23 @@ public class PoliceSetupActivity extends BaseActivity {
 		});
 	}
 
-	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
-
+	private OnClickListener check = new OnClickListener() {
 		@Override
-		public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			switch (arg0.getId()) {
 			case R.id.push_switch:
-				mPreferenceUtils.setPush(arg1);
-				alarmOption.setAcceptAlarm(arg1);
+				mPreferenceUtils.setPush(push_switch.isChecked());
+				alarmOption.setAcceptAlarm(push_switch.isChecked());
 				break;
 			case R.id.shock_switch:
-				mPreferenceUtils.setShock(arg1);
-				alarmOption.setVibration(arg1);
+				mPreferenceUtils.setShock(shock_switch.isChecked());
+				alarmOption.setVibration(shock_switch.isChecked());
 				break;
 			case R.id.voice_switch:
-				mPreferenceUtils.setVoice(arg1);
-				alarmOption.setSound(arg1);
+				mPreferenceUtils.setVoice(voice_switch.isChecked());
+				alarmOption.setSound(voice_switch.isChecked());
 				break;
-
 			}
 			setData();
 		}

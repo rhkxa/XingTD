@@ -1,19 +1,102 @@
 package com.gps808.app.bean;
 
 public class XbAlarmOption {
-	private boolean acceptAlarm;
+	private boolean inArea;
 
-	private boolean sound;
+	private boolean rolloverAlarm;
 
-	private boolean vibration;
+	private boolean tmnlPowerDown;
 
 	private boolean emergency;
 
+	private boolean dangerAlarm;
+
+	private boolean gnssModeFault;
+
+	private boolean vssFault;
+
+	private boolean gnssDisconnect;
+
 	private boolean overSpeed;
 
-	private boolean inArea;
-
 	private boolean outArea;
+
+	private boolean sound;
+
+	private boolean acceptAlarm;
+
+	private boolean vibration;
+
+	private boolean gnssShortCircuit;
+
+	private boolean crashAlarm;
+	
+	
+	
+
+	public boolean isRolloverAlarm() {
+		return rolloverAlarm;
+	}
+
+	public void setRolloverAlarm(boolean rolloverAlarm) {
+		this.rolloverAlarm = rolloverAlarm;
+	}
+
+	public boolean isTmnlPowerDown() {
+		return tmnlPowerDown;
+	}
+
+	public void setTmnlPowerDown(boolean tmnlPowerDown) {
+		this.tmnlPowerDown = tmnlPowerDown;
+	}
+
+	public boolean isDangerAlarm() {
+		return dangerAlarm;
+	}
+
+	public void setDangerAlarm(boolean dangerAlarm) {
+		this.dangerAlarm = dangerAlarm;
+	}
+
+	public boolean isGnssModeFault() {
+		return gnssModeFault;
+	}
+
+	public void setGnssModeFault(boolean gnssModeFault) {
+		this.gnssModeFault = gnssModeFault;
+	}
+
+	public boolean isVssFault() {
+		return vssFault;
+	}
+
+	public void setVssFault(boolean vssFault) {
+		this.vssFault = vssFault;
+	}
+
+	public boolean isGnssDisconnect() {
+		return gnssDisconnect;
+	}
+
+	public void setGnssDisconnect(boolean gnssDisconnect) {
+		this.gnssDisconnect = gnssDisconnect;
+	}
+
+	public boolean isGnssShortCircuit() {
+		return gnssShortCircuit;
+	}
+
+	public void setGnssShortCircuit(boolean gnssShortCircuit) {
+		this.gnssShortCircuit = gnssShortCircuit;
+	}
+
+	public boolean isCrashAlarm() {
+		return crashAlarm;
+	}
+
+	public void setCrashAlarm(boolean crashAlarm) {
+		this.crashAlarm = crashAlarm;
+	}
 
 	public boolean isAcceptAlarm() {
 		return acceptAlarm;

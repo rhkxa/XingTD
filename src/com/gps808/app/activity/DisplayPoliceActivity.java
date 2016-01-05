@@ -156,7 +156,7 @@ public class DisplayPoliceActivity extends BaseActivity {
 		viewHolder.popwindows_time.setText("时间:" + xbPolice.getTime());
 		viewHolder.popwindows_state.setText(xbPolice.getAlarmName());
 		viewHolder.popwindows_name.setText(xbPolice.getPlateNo());
-		viewHolder.popwindows_position.setText(xbPolice.getAddr());
+		viewHolder.popwindows_position.setText("位置:"+xbPolice.getAddr());
 		viewHolder.popwindows_close.setOnClickListener(new OnClickListener() {
 
 			@Override

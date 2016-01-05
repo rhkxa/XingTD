@@ -38,7 +38,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="QQ交流群:7777777" />
+                android:text="QQ交流群:514677696" />
         </LinearLayout>
 
         <com.gps808.app.view.FancyButton

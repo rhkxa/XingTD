@@ -1,6 +1,7 @@
 package com.gps808.app.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,6 +60,19 @@ public class HelpActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				view.loadUrl(url);
 				return super.shouldOverrideUrlLoading(view, url);
+			}
+			
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				// TODO Auto-generated method stub
+				dismissProgressDialog();
+				super.onPageFinished(view, url);
+			}
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				// TODO Auto-generated method stub
+				showProgressDialog(HelpActivity.this, "正在加载中");
+				super.onPageStarted(view, url, favicon);
 			}
 		});
 		webview.loadUrl("http://app.gps808.com/FAQ.html");

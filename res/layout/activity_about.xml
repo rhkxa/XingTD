@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
@@ -11,50 +12,215 @@
         android:layout_height="wrap_content"
         class="com.gps808.app.fragment.HeaderFragment" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="80dp" >
+        android:layout_height="wrap_content" >
 
-        <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="@string/app_name"
-            android:textSize="@dimen/subhead" />
+            android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="版本1.1.0"
-            android:textSize="@dimen/subhead" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/introduce"
-            android:textSize="@dimen/body"
-            android:visibility="gone" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/app_code" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:gravity="bottom|center_horizontal"
-        android:text="石家庄全速电子商务有限公司"
-        android:textSize="@dimen/subhead" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="扫瞄二维码下载本软件"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/title" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="16dp" >
+
+                <TextView
+                    android:id="@+id/item_bill_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="软件版本:"
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/about_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="1.1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/body" />
+            </RelativeLayout>
+
+            <View style="@style/blackline" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="发布时间:"
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/about_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="2016-1-1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/body" />
+            </RelativeLayout>
+
+            <View style="@style/blackline" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="官方网站:"
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/about_brower"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="www.gps808.com"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/body" />
+            </RelativeLayout>
+
+            <View style="@style/blackline" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="官方微信:"
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/about_wechat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="czxt0317"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/body" />
+            </RelativeLayout>
+
+            <View style="@style/blackline" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="QQ交流群:"
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/about_qq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="514677696"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/body" />
+            </RelativeLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.gps808.app.view.FancyButton
+                    android:id="@+id/about_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    fancy:fb_borderColor="@color/graywhite"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/white"
+                    fancy:fb_focusColor="#8cc9f8"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_iconResource="@drawable/xtd_icon_comment"
+                    fancy:fb_iconSize="10dp"
+                    fancy:fb_text="评论"
+                    fancy:fb_textColor="@color/app_blue" />
+
+                <com.gps808.app.view.FancyButton
+                    android:id="@+id/about_share"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    fancy:fb_borderColor="@color/graywhite"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/white"
+                    fancy:fb_focusColor="#8cc9f8"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_iconResource="@drawable/xtd_action_share"
+                    fancy:fb_iconSize="10dp"
+                    fancy:fb_text="分享"
+                    fancy:fb_textColor="@color/app_blue" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

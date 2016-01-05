@@ -49,17 +49,17 @@ public class MyselfActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("个人中心");
-		headerFragment.setImageButtonResource(R.drawable.xtd_action_talk);
-		headerFragment.setCommentBtnListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(MyselfActivity.this,
-						MessageActivity.class);
-				startActivity(intent);
-			}
-		});
+//		headerFragment.setImageButtonResource(R.drawable.xtd_action_talk);
+//		headerFragment.setCommentBtnListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View arg0) {
+//				// TODO Auto-generated method stub
+//				Intent intent = new Intent(MyselfActivity.this,
+//						MessageActivity.class);
+//				startActivity(intent);
+//			}
+//		});
 		// alter = (ImageView) findViewById(R.id.alter_person);
 		// alter.setOnClickListener(click);
 		//

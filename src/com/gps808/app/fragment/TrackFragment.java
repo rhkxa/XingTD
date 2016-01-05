@@ -194,7 +194,7 @@ public class TrackFragment extends BaseFragment {
 					R.color.text));
 		}
 		viewHolder.popwindows_name.setText(xbTrack.getPlateNo());
-		viewHolder.popwindows_position.setText(xbTrack.getAddr());
+		viewHolder.popwindows_position.setText("位置:"+xbTrack.getAddr());
 		return mMarkerLy;
 	}
 

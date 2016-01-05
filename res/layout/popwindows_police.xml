@@ -46,7 +46,7 @@
                         android:id="@+id/popwindows_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                     
                         android:padding="2dp"
                         android:text="在线79KM/H"
                         android:textColor="@color/app_pink"
@@ -76,6 +76,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="位置:"
+                            android:visibility="gone"
                             android:textColor="@color/text"
                             android:textSize="@dimen/caption" />
 

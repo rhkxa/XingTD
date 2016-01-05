@@ -136,26 +136,6 @@ public class LoginActivity extends BaseActivity {
 			}
 		});
 
-		login.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if (StringUtils.isEmpty(userName.getText().toString())) {
-					Utils.ToastMessage(LoginActivity.this, getResources()
-							.getString(R.string.msg_login_name_null));
-					return;
-				}
-				if (StringUtils.isEmpty(passWord.getText().toString())) {
-					Utils.ToastMessage(LoginActivity.this, getResources()
-							.getString(R.string.msg_login_pwd_null));
-					return;
-				}
-				HttpUtil.cancelAllRequest();
-				getLogin();
-			}
-		});
-
 		// call.setOnClickListener(new OnClickListener() {
 		//
 		// @Override
@@ -217,6 +197,25 @@ public class LoginActivity extends BaseActivity {
 			public void afterTextChanged(Editable arg0) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		login.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if (StringUtils.isEmpty(userName.getText().toString())) {
+					Utils.ToastMessage(LoginActivity.this, getResources()
+							.getString(R.string.msg_login_name_null));
+					return;
+				}
+				if (StringUtils.isEmpty(passWord.getText().toString())) {
+					Utils.ToastMessage(LoginActivity.this, getResources()
+							.getString(R.string.msg_login_pwd_null));
+					return;
+				}
+				HttpUtil.cancelAllRequest();
+				getLogin();
 			}
 		});
 

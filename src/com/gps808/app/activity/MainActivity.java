@@ -47,6 +47,7 @@ import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
+import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
@@ -152,6 +153,7 @@ public class MainActivity extends BaseActivity {
 
 					}
 				};
+			
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
 						.getPosition()));
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
@@ -388,7 +390,7 @@ public class MainActivity extends BaseActivity {
 		viewHolder = (ViewHolder) mMarkerLy.getTag();
 		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
 		if (xbVehicle.isOnline()) {
-			viewHolder.popwindows_state.setText("在线:" + xbVehicle.getSpeed());
+			viewHolder.popwindows_state.setText("在线" + xbVehicle.getSpeed());
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
 		} else {
@@ -397,7 +399,7 @@ public class MainActivity extends BaseActivity {
 					R.color.text));
 		}
 		viewHolder.popwindows_name.setText(xbVehicle.getPlateNo());
-		viewHolder.popwindows_position.setText("位置:  "+xbVehicle.getAddr());
+		viewHolder.popwindows_position.setText("位置:"+xbVehicle.getAddr());
 
 		OnClickListener click = new OnClickListener() {
 

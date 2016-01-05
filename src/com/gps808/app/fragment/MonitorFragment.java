@@ -177,9 +177,7 @@ public class MonitorFragment extends BaseFragment {
 						} else {
 							play_layout.setVisibility(View.GONE);
 							Utils.ToastMessage(getActivity(), "对不起,暂无数据");
-
 						}
-
 						super.onSuccess(statusCode, headers, response);
 					}
 				});

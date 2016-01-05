@@ -1,5 +1,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:state_checked="true"  
-    android:drawable="@drawable/xtd_action_add" /> <!-- pressed -->  
-<item android:drawable="@drawable/xtd_action_delete" /> <!-- default/unchecked -->  
-</selector>  
+
+    <item android:drawable="@drawable/xtd_icon_play" android:state_checked="true"/>
+ <!-- pressed -->
+    <item android:drawable="@drawable/xtd_icon_pause"/>
+ <!-- default/unchecked -->
+
+</selector>

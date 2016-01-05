@@ -13,116 +13,351 @@
         android:layout_height="wrap_content"
         class="com.gps808.app.fragment.HeaderFragment" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
+        android:layout_height="wrap_content" >
 
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="紧急报警"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
+            android:orientation="vertical" >
 
-        <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/police_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:onColor="@color/app_blue" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
-    <View style="@style/blackline" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="紧急报警"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="超速报警"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
+            <View style="@style/blackline" />
 
-        <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/police_type2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:onColor="@color/app_blue" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
-    <View style="@style/blackline" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="超速报警"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="进围栏报警"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
+            <View style="@style/blackline" />
 
-        <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/police_type3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:onColor="@color/app_blue" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
-    <View style="@style/blackline" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="进围栏报警"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_backgroud_selector"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        android:padding="8dp" >
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="出围栏报警"
-            android:textColor="@color/text"
-            android:textSize="@dimen/body" />
+            <View style="@style/blackline" />
 
-        <com.gps808.app.view.Switch.SwitchButton
-            android:id="@+id/police_type4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:onColor="@color/app_blue" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
-    <View style="@style/blackline" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="出围栏报警"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="GNSS模块故障"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="GNSS天线断开"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="GNSS短路"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="终端掉电"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="车辆VSS故障"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="车辆碰撞报警"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="车辆侧翻预警"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_backgroud_selector"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="危险预警"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/body" />
+
+                <com.gps808.app.view.Switch.SwitchButton
+                    android:id="@+id/police_type12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:onColor="@color/app_blue" />
+            </LinearLayout>
+
+            <View style="@style/blackline" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
