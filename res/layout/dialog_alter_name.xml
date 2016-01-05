@@ -46,10 +46,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/corners_rect_gray"
-                   
-                    android:hint="请输入您要修改的名称"
-                    android:padding="8dp"
                     android:gravity="left"
+                    android:hint="请输入设备名称,最多6位"
+                    android:maxLength="6"
+                    android:padding="8dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/subhead" />
 

@@ -84,8 +84,8 @@ public class CarFragment extends BaseFragment {
 	}
 
 	private void setValue(XbCar car) {
-		car_detail_name.setText("设备名称：" + car.getTmnlName());
-		car_detail_num.setText("车牌号：：" + car.getPlateNo());
+		car_detail_name.setText("设备名称:" + car.getTmnlName());
+		car_detail_num.setText("车牌号:" + car.getPlateNo());
 		car_detail_position.setText(car.getAddr());
 		car_phone_text.setText(car.getSimNo());
 		car_number_text.setText(car.getTmnlNo());

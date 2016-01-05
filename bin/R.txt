@@ -1096,7 +1096,6 @@ int layout zoom_controls_layout 0x7f030057
 int string SERVER 0x7f07006f
 int string SignPoint 0x7f070070
 int string action_settings 0x7f070073
-int string agreement 0x7f0700bc
 int string alipay 0x7f070067
 int string alipay_client_inavailable 0x7f070037
 int string app_error 0x7f07008a
@@ -1150,7 +1149,6 @@ int string instapaper_email 0x7f07005e
 int string instapaper_login 0x7f070060
 int string instapaper_logining 0x7f070061
 int string instapaper_pwd 0x7f07005f
-int string introduce 0x7f0700bd
 int string io_exception_error 0x7f070082
 int string kaixin 0x7f070041
 int string kakaostory 0x7f070058
@@ -1169,6 +1167,7 @@ int string load_error 0x7f070091
 int string load_full 0x7f07008f
 int string load_ing 0x7f07008e
 int string load_more 0x7f07008d
+int string login_only_can_input 0x7f0700b3
 int string mingdao 0x7f070056
 int string mingdao_share_content 0x7f07006b
 int string msg_camera_framework_bug 0x7f07007e
@@ -1215,7 +1214,6 @@ int string rotate 0x7f0700b1
 int string select 0x7f070094
 int string select_a_friend 0x7f070016
 int string select_one_plat_at_least 0x7f07000f
-int string server_call 0x7f0700bb
 int string setting_head_title 0x7f07007c
 int string shake2share 0x7f070015
 int string share 0x7f07000b
@@ -1252,19 +1250,10 @@ int string ssdk_recomm_share_to 0x7f070020
 int string ssdk_recomm_today_news 0x7f070022
 int string ssdk_recomm_view_count 0x7f07001a
 int string ssdk_recomm_webpage_def_title 0x7f070025
-int string string_collect 0x7f0700b9
-int string string_help 0x7f0700b7
-int string string_joinincome 0x7f0700b6
-int string string_joinrank 0x7f0700b3
-int string string_myaddress 0x7f0700ba
-int string string_neworder 0x7f0700b4
-int string string_oldorder 0x7f0700b5
-int string string_wallet 0x7f0700b8
 int string submit_report 0x7f07008c
 int string sure 0x7f070088
 int string tencentweibo 0x7f070039
 int string title 0x7f0700a9
-int string title_activity_fragment_gift 0x7f0700be
 int string tumblr 0x7f070050
 int string twitter 0x7f07003f
 int string ui_insert_image 0x7f07007b

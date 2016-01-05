@@ -6,6 +6,8 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -56,13 +58,16 @@ public class EditDrvierActivity extends BaseActivity {
 		driver_pass_again = (EditText) findViewById(R.id.driver_pass_again);
 		driver_state = (SwitchButton) findViewById(R.id.driver_state);
 		save_ok = (FancyButton) findViewById(R.id.save_ok);
+		driver_pass.setKeyListener(inputType);
+		driver_user.setKeyListener(inputType);
+		driver_pass_again.setKeyListener(inputType);
 		save_ok.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if (StringUtils.isEmpty(driver_phone.getText().toString())) {
-					Utils.ToastMessage(EditDrvierActivity.this, "电话不能为空");
+					Utils.ToastMessage(EditDrvierActivity.this, "手机号不能为空");
 					return;
 				}
 				if (StringUtils.isEmpty(driver_name.getText().toString())) {
@@ -79,6 +84,14 @@ public class EditDrvierActivity extends BaseActivity {
 				}
 				if (StringUtils.isEmpty(driver_pass_again.getText().toString())) {
 					Utils.ToastMessage(EditDrvierActivity.this, "再次输入密码不能为空");
+					return;
+				}
+				if (StringUtils.isPhone(driver_phone.getText().toString())) {
+					Utils.ToastMessage(EditDrvierActivity.this, "手机号码不正确,请重新输入");
+					return;
+				}
+				if (driver_pass.length() < 6) {
+					Utils.ToastMessage(EditDrvierActivity.this, "密码长度最少6位");
 					return;
 				}
 				xbDriver.setLoginName(driver_user.getText().toString());
@@ -148,6 +161,21 @@ public class EditDrvierActivity extends BaseActivity {
 
 	}
 
+	private DigitsKeyListener inputType = new DigitsKeyListener() {
+		@Override
+		public int getInputType() {
+			return InputType.TYPE_TEXT_VARIATION_PASSWORD;
+		}
+
+		@Override
+		protected char[] getAcceptedChars() {
+			char[] data = getResources().getString(
+					R.string.login_only_can_input).toCharArray();
+			return data;
+		}
+
+	};
+
 	private void setDriver(XbDriver xbDriver) {
 		String url = UrlConfig.getAddDriver();
 		StringEntity entity = null;
@@ -166,6 +194,7 @@ public class EditDrvierActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						if (Utils.requestOk(response)) {
 							Utils.ToastMessage(EditDrvierActivity.this, "操作成功");
+							setResult(RESULT_OK);
 							finish();
 						}
 						super.onSuccess(statusCode, headers, response);

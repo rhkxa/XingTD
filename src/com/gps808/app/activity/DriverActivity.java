@@ -41,6 +41,7 @@ public class DriverActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_driver);
 		init();
+		getData(true);
 
 	}
 
@@ -57,7 +58,7 @@ public class DriverActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(DriverActivity.this,
 						EditDrvierActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, RESULT_OK);
 			}
 		});
 		driver_list = (PullToRefreshListView) findViewById(R.id.driver_list);
@@ -81,7 +82,7 @@ public class DriverActivity extends BaseActivity {
 						EditDrvierActivity.class);
 				intent.putExtra("driverId", xbDrivers.get(arg2 - 1)
 						.getDriverId());
-				startActivity(intent);
+				startActivityForResult(intent, RESULT_OK);
 			}
 		});
 
@@ -120,9 +121,12 @@ public class DriverActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onResume() {
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		// TODO Auto-generated method stub
-		getData(true);
-		super.onResume();
+		if (arg1 == RESULT_OK) {
+			getData(true);
+		}
+		super.onActivityResult(arg0, arg1, arg2);
 	}
+
 }

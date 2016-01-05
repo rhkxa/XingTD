@@ -89,6 +89,7 @@ public class SearchFragment extends BaseFragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				layout_search_bar_edittext.clearFocus();
+				layout_search_bar_edittext.setText("");
 			}
 		});
 		layout_search_bar_button.setOnClickListener(new OnClickListener() {
