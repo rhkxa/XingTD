@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
@@ -86,7 +88,7 @@ public class EditDrvierActivity extends BaseActivity {
 					Utils.ToastMessage(EditDrvierActivity.this, "再次输入密码不能为空");
 					return;
 				}
-				if (StringUtils.isPhone(driver_phone.getText().toString())) {
+				if (!StringUtils.isPhone(driver_phone.getText().toString())) {
 					Utils.ToastMessage(EditDrvierActivity.this, "手机号码不正确,请重新输入");
 					return;
 				}
@@ -130,6 +132,7 @@ public class EditDrvierActivity extends BaseActivity {
 	}
 
 	private void getDriver() {
+		showProgressDialog(EditDrvierActivity.this, "正在加载司机信息");
 		String url = UrlConfig.getDriverInfo(driverId);
 		HttpUtil.get(EditDrvierActivity.this, url,
 				new jsonHttpResponseHandler() {
@@ -194,7 +197,8 @@ public class EditDrvierActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						if (Utils.requestOk(response)) {
 							Utils.ToastMessage(EditDrvierActivity.this, "操作成功");
-							setResult(RESULT_OK);
+							Intent intent = new Intent();
+							setResult(RESULT_OK, intent);
 							finish();
 						}
 						super.onSuccess(statusCode, headers, response);

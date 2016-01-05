@@ -58,7 +58,7 @@ public class DriverActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(DriverActivity.this,
 						EditDrvierActivity.class);
-				startActivityForResult(intent, RESULT_OK);
+				startActivityForResult(intent, 0);
 			}
 		});
 		driver_list = (PullToRefreshListView) findViewById(R.id.driver_list);
@@ -82,7 +82,7 @@ public class DriverActivity extends BaseActivity {
 						EditDrvierActivity.class);
 				intent.putExtra("driverId", xbDrivers.get(arg2 - 1)
 						.getDriverId());
-				startActivityForResult(intent, RESULT_OK);
+				startActivityForResult(intent, 1);
 			}
 		});
 
@@ -123,6 +123,7 @@ public class DriverActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		// TODO Auto-generated method stub
+		LogUtils.DebugLog("返回"+arg1);
 		if (arg1 == RESULT_OK) {
 			getData(true);
 		}

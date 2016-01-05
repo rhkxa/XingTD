@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.Header;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,19 +35,14 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MyLocationData;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
-import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.map.ZoomControlView;
-import com.gps808.app.map.LocationDemo.MyLocationListenner;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
-import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
-import com.gps808.app.utils.StringUtils;
-import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
@@ -153,7 +147,7 @@ public class MainActivity extends BaseActivity {
 
 					}
 				};
-			
+
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
 						.getPosition()));
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
@@ -162,6 +156,7 @@ public class MainActivity extends BaseActivity {
 				// .fromView(popupInfo(mMarkerLy, xbVehicle)), marker
 				// .getPosition(), -100, onInfoWindowClickListener);
 				// 显示InfoWindow
+			
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
@@ -399,7 +394,7 @@ public class MainActivity extends BaseActivity {
 					R.color.text));
 		}
 		viewHolder.popwindows_name.setText(xbVehicle.getPlateNo());
-		viewHolder.popwindows_position.setText("位置:"+xbVehicle.getAddr());
+		viewHolder.popwindows_position.setText("位置:" + xbVehicle.getAddr());
 
 		OnClickListener click = new OnClickListener() {
 

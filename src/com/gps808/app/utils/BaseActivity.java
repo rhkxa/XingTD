@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.http.Header;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -33,8 +34,8 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  */
 public class BaseActivity extends FragmentActivity {
 	public XtdApplication xtdApplication;
-	private ScreenObserver mScreenObserver;
 	private ProgressDialog progressDialog = null;
+	private ScreenObserver mScreenObserver;
 	private boolean activityIsActive;
 
 	@Override
@@ -42,25 +43,25 @@ public class BaseActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		xtdApplication = (XtdApplication) getApplication();
 		XtdApplication.getInstance().addActivity(this);
-		mScreenObserver = new ScreenObserver(this);
-		mScreenObserver.requestScreenStateUpdate(new ScreenStateListener() {
-			@Override
-			public void onScreenOn() {
-				if (!ScreenObserver
-						.isApplicationBroughtToBackground(BaseActivity.this)) {
-					cancelAlarmManager();
-				}
-			}
-
-			@Override
-			public void onScreenOff() {
-				if (!ScreenObserver
-						.isApplicationBroughtToBackground(BaseActivity.this)) {
-					cancelAlarmManager();
-					setAlarmManager();
-				}
-			}
-		});
+		// mScreenObserver = new ScreenObserver(this);
+		// mScreenObserver.requestScreenStateUpdate(new ScreenStateListener() {
+		// @Override
+		// public void onScreenOn() {
+		// if (!ScreenObserver
+		// .isApplicationBroughtToBackground(BaseActivity.this)) {
+		// cancelAlarmManager();
+		// }
+		// }
+		//
+		// @Override
+		// public void onScreenOff() {
+		// if (!ScreenObserver
+		// .isApplicationBroughtToBackground(BaseActivity.this)) {
+		// cancelAlarmManager();
+		// setAlarmManager();
+		// }
+		// }
+		// });
 	}
 
 	public XtdApplication getAppContext() {
@@ -96,6 +97,7 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
+		// mScreenObserver.stopScreenStateUpdate();
 		dismissProgressDialog();
 		super.onDestroy();
 	}
@@ -104,10 +106,18 @@ public class BaseActivity extends FragmentActivity {
 
 		@Override
 		public void onFailure(int statusCode, Header[] headers,
+				Throwable throwable, JSONObject errorResponse) {
+			// TODO Auto-generated method stub
+			LogUtils.DebugLog("failure throwable code=",
+					statusCode + throwable.toString());
+			super.onFailure(statusCode, headers, throwable, errorResponse);
+		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers,
 				String responseString, Throwable throwable) {
 			// TODO Auto-generated method stub
-			Utils.ToastMessage(xtdApplication, "加载失败，请重试");
-			LogUtils.DebugLog("failure throwable", throwable.toString());
+
 			super.onFailure(statusCode, headers, responseString, throwable);
 		}
 
@@ -171,19 +181,20 @@ public class BaseActivity extends FragmentActivity {
 	protected void onResume() {
 		LogUtils.DebugLog("MainActivity-onResume");
 		super.onResume();
-		cancelAlarmManager();
-		activityIsActive = true;
-		LogUtils.DebugLog("activityIsActive=" + activityIsActive);
+		// cancelAlarmManager();
+		// activityIsActive = true;
+		// LogUtils.DebugLog("activityIsActive=" + activityIsActive);
 	}
 
 	@Override
 	protected void onStop() {
 		LogUtils.DebugLog("onStop");
+
 		super.onStop();
-		if (ScreenObserver.isApplicationBroughtToBackground(this)) {
-			cancelAlarmManager();
-			setAlarmManager();
-		}
+		// if (ScreenObserver.isApplicationBroughtToBackground(this)) {
+		// cancelAlarmManager();
+		// setAlarmManager();
+		// }
 	}
 
 }
