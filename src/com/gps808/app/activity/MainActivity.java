@@ -509,7 +509,7 @@ public class MainActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		if (arg1 == RESULT_OK) {
 			String vid = arg2.getStringExtra("vid");
-			LogUtils.DebugLog("activity resutl", vid);
+			LogUtils.DebugLog("activity result", vid);
 			for (XbVehicle info : vehicle) {
 				if (info.getVid().equals(vid)) {
 					double[] doubleLng = Utils.getLng(info.getLocation());

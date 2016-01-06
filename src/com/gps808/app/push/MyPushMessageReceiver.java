@@ -17,8 +17,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
+import com.gps808.app.activity.DisplayPoliceActivity;
+import com.gps808.app.activity.PolicesActivity;
+import com.gps808.app.activity.WelcomeActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -148,8 +152,8 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 			try {
 				customJson = new JSONObject(customContentString);
 
-				if (!customJson.isNull("id")) {
-					myvalue = customJson.getString("id");
+				if (!customJson.isNull("aId")) {
+					myvalue = customJson.getString("aId");
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -319,25 +323,11 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 		// WelcomeActivity.class);
 		// intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		// context.getApplicationContext().startActivity(intent);
+		Intent intent = new Intent();
+		intent.setClass(context.getApplicationContext(), PolicesActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.getApplicationContext().startActivity(intent);
 
-		// if (!StringUtils.isEmpty(content)) {
-		// //Log.d(TAG, "updateContent跳转到商品详情");
-		// Intent intent = new Intent();
-		// intent.putExtra("goods_id", content);
-		// // intent.putExtra("cityid", content);
-		// intent.setClass(context.getApplicationContext(),
-		// GoodsDetailActivity.class);
-		// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		// context.getApplicationContext().startActivity(intent);
-		//
-		// } else {
-		// //Log.d(TAG, "updateContent打开应用");
-		// Intent intent = new Intent();
-		// intent.setClass(context.getApplicationContext(),
-		// WelcomeActivity.class);
-		// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		// context.getApplicationContext().startActivity(intent);
-		// }
 	}
 
 	private void toUploadPush(Context context, String channelId, String appId,
@@ -352,7 +342,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 			postData.put("userId", userId);
 			postData.put("deviceType", 3);
 			LogUtils.DebugLog("post json" + postData.toString());
-			entity = new StringEntity(postData.toString(),"UTF-8");
+			entity = new StringEntity(postData.toString(), "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

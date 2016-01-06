@@ -49,17 +49,17 @@ public class MyselfActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("个人中心");
-//		headerFragment.setImageButtonResource(R.drawable.xtd_action_talk);
-//		headerFragment.setCommentBtnListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View arg0) {
-//				// TODO Auto-generated method stub
-//				Intent intent = new Intent(MyselfActivity.this,
-//						MessageActivity.class);
-//				startActivity(intent);
-//			}
-//		});
+		// headerFragment.setImageButtonResource(R.drawable.xtd_action_talk);
+		// headerFragment.setCommentBtnListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// // TODO Auto-generated method stub
+		// Intent intent = new Intent(MyselfActivity.this,
+		// MessageActivity.class);
+		// startActivity(intent);
+		// }
+		// });
 		// alter = (ImageView) findViewById(R.id.alter_person);
 		// alter.setOnClickListener(click);
 		//
@@ -110,7 +110,8 @@ public class MyselfActivity extends BaseActivity {
 		// });
 		// myself_edit = (LinearLayout) findViewById(R.id.myself_edit);
 		// my_headimage.setOnClickListener(click);
-		if(PreferenceUtils.getInstance(MyselfActivity.this).getUserState().equals("2")){
+		if (PreferenceUtils.getInstance(MyselfActivity.this).getUserState()
+				.equals("2")) {
 			my_driver.setBackgroundColor(getResources().getColor(R.color.gray));
 			my_driver.setEnabled(false);
 		}
@@ -149,8 +150,18 @@ public class MyselfActivity extends BaseActivity {
 				break;
 			}
 			intent.setClass(MyselfActivity.this, cls);
-			startActivity(intent);
+			startActivityForResult(intent, 1);
 		}
+	};
+
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		if (arg1 == RESULT_OK) {
+			Intent intent = new Intent();
+			intent.putExtra("vid", arg2.getStringExtra("vid"));
+			setResult(RESULT_OK, intent);
+			finish();
+		}
+
 	};
 
 	private void getData() {

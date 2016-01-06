@@ -38,10 +38,10 @@ public class WelcomeActivity extends Activity {
 			@Override
 			public void onAnimationEnd(Animation arg0) {
 
-//				 Intent intent = new Intent(WelcomeActivity.this,
-//				 LoginActivity.class);
 				Intent intent = new Intent(WelcomeActivity.this,
-						MainActivity.class);
+						LoginActivity.class);
+//				Intent intent = new Intent(WelcomeActivity.this,
+//						MainActivity.class);
 				startActivity(intent);
 				finish();
 			}

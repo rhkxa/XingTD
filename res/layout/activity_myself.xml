@@ -26,13 +26,16 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <com.gps808.app.view.CircleImageView
-                android:id="@+id/my_headimage"
+            <com.gps808.app.view.FancyButton
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/xtd_icon_gray"
-                app:border_color="@color/app_green"
-                app:border_width="2dp" />
+                android:layout_gravity="center"
+                fancy:fb_borderColor="@color/tag_blue"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="@color/white"
+                fancy:fb_iconResource="@drawable/xtd_icon_gray"
+                fancy:fb_iconSize="20dp"
+                fancy:fb_radius="50dp" />
 
             <TextView
                 android:id="@+id/my_nickname"
@@ -93,7 +96,7 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
-                   android:id="@+id/my_routes"
+                android:id="@+id/my_routes"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 fancy:fb_defaultColor="@color/app_green"
@@ -119,7 +122,7 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
-                     android:id="@+id/my_police"
+                android:id="@+id/my_police"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 fancy:fb_defaultColor="@color/app_pink"
@@ -144,7 +147,7 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
-                     android:id="@+id/my_driver"
+                android:id="@+id/my_driver"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 fancy:fb_defaultColor="@color/app_yellow"

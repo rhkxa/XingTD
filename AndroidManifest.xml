@@ -72,7 +72,10 @@
         <activity android:name="com.gps808.app.pay.pal.PayDemoActivity" />
         <activity android:name="com.gps808.app.activity.VehiclesActivity" />
         <activity android:name="com.gps808.app.activity.RoutesActivity" />
-        <activity android:name="com.gps808.app.activity.PolicesActivity" />
+        <activity
+            android:name="com.gps808.app.activity.PolicesActivity"
+            android:exported="true"
+            android:launchMode="singleTask" />
         <activity android:name="com.gps808.app.activity.DriverActivity" />
         <activity android:name="com.gps808.app.activity.CarDetailsActivity" />
         <activity android:name="com.gps808.app.activity.MyselfActivity" />

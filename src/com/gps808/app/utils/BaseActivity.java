@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.gps808.app.activity.LoginActivity;
 import com.gps808.app.timeout.ScreenObserver;
 import com.gps808.app.timeout.TimeoutService;
 import com.gps808.app.timeout.ScreenObserver.ScreenStateListener;
@@ -105,11 +107,19 @@ public class BaseActivity extends FragmentActivity {
 	public class jsonHttpResponseHandler extends JsonHttpResponseHandler {
 
 		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				String responseString) {
+			// TODO Auto-generated method stub
+			LogUtils.DebugLog("result string", responseString);
+			super.onSuccess(statusCode, headers, responseString);
+		}
+
+		@Override
 		public void onFailure(int statusCode, Header[] headers,
 				Throwable throwable, JSONObject errorResponse) {
 			// TODO Auto-generated method stub
-			LogUtils.DebugLog("failure throwable code=",
-					statusCode + throwable.toString());
+			LogUtils.DebugLog("failure json code=", statusCode + "throwable="
+					+ throwable.toString());
 			super.onFailure(statusCode, headers, throwable, errorResponse);
 		}
 
@@ -117,8 +127,20 @@ public class BaseActivity extends FragmentActivity {
 		public void onFailure(int statusCode, Header[] headers,
 				String responseString, Throwable throwable) {
 			// TODO Auto-generated method stub
-
+			LogUtils.DebugLog("failure string code=", statusCode + "  result="
+					+ responseString + " throwable=" + throwable.toString());
+			if (("302").equals(responseString)) {
+				reLogin();
+			}
 			super.onFailure(statusCode, headers, responseString, throwable);
+		}
+
+		@Override
+		public void onRetry(int retryNo) {
+			// TODO Auto-generated method stub
+			LogUtils.DebugLog("http请求错误正在重试");
+			retryNo = 3;
+			super.onRetry(retryNo);
 		}
 
 		@Override
@@ -179,7 +201,7 @@ public class BaseActivity extends FragmentActivity {
 
 	@Override
 	protected void onResume() {
-		LogUtils.DebugLog("MainActivity-onResume");
+
 		super.onResume();
 		// cancelAlarmManager();
 		// activityIsActive = true;
@@ -188,13 +210,18 @@ public class BaseActivity extends FragmentActivity {
 
 	@Override
 	protected void onStop() {
-		LogUtils.DebugLog("onStop");
 
 		super.onStop();
 		// if (ScreenObserver.isApplicationBroughtToBackground(this)) {
 		// cancelAlarmManager();
 		// setAlarmManager();
 		// }
+	}
+
+	private void reLogin() {
+		Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+		intent.putExtra("reset", true);
+		startActivity(intent);
 	}
 
 }

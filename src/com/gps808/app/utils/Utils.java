@@ -2,15 +2,17 @@ package com.gps808.app.utils;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.activity.LoginActivity;
+import com.gps808.app.activity.MainActivity;
+import com.gps808.app.bean.XbUser;
 import com.gps808.app.utils.BaseActivity.jsonHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -444,17 +446,18 @@ public class Utils {
 				PreferenceUtils.getInstance(context).setUserPW("");
 				Intent intent = new Intent(context, LoginActivity.class);
 				context.startActivity(intent);
-				
+
 				super.onSuccess(statusCode, headers, response);
 			}
 		});
 	}
+
 	/**
 	 * 安装apk
 	 * 
 	 * @param url
 	 */
-	public static void installApk(Context context,String apkFilePath) {
+	public static void installApk(Context context, String apkFilePath) {
 		File apkfile = new File(apkFilePath);
 		if (!apkfile.exists()) {
 			return;

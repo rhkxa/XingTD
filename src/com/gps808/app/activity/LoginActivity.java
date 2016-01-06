@@ -37,15 +37,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 import com.gps808.app.R;
-import com.gps808.app.bean.PUser;
 import com.gps808.app.bean.Update;
 import com.gps808.app.bean.XbUser;
 import com.gps808.app.dialog.CustomChoseDialog;
 import com.gps808.app.dialog.CustomOkDialog;
-import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.CyptoUtils;
 import com.gps808.app.utils.FileUtils;
@@ -53,13 +49,11 @@ import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
-import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
 import com.gps808.app.view.FancyButton;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -81,7 +75,7 @@ public class LoginActivity extends BaseActivity {
 	// /private TextView login_serve;
 	private TextView login_to_register;
 	private TextView login_forget_pass;
-
+	private boolean isReLogin;
 	private PreferenceUtils mPreferences;
 
 	@Override
@@ -95,7 +89,7 @@ public class LoginActivity extends BaseActivity {
 
 	private void init() {
 		// TODO Auto-generated method stub
-
+		isReLogin = getIntent().getBooleanExtra("reset", false);
 		mPreferences = PreferenceUtils.getInstance(LoginActivity.this);
 		userName = (EditText) findViewById(R.id.username);
 		passWord = (EditText) findViewById(R.id.password);
@@ -227,15 +221,13 @@ public class LoginActivity extends BaseActivity {
 			showProgressDialog(LoginActivity.this, "登录中，请稍等");
 			String url = UrlConfig.getLogin();
 			JSONObject params = new JSONObject();
-			PUser pUser = new PUser();
-			pUser.setUsername(userName.getText().toString());
-			pUser.setPassword(CyptoUtils.MD5(passWord.getText().toString()));
+
 			StringEntity entity = null;
 			try {
 				params.put("username", userName.getText().toString());
 				params.put("password",
 						CyptoUtils.MD5(passWord.getText().toString()));
-				entity = new StringEntity(JSON.toJSONString(pUser), "UTF-8");
+				entity = new StringEntity(params.toString(), "UTF-8");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -259,9 +251,12 @@ public class LoginActivity extends BaseActivity {
 										.toString());
 								mPreferences.setUserName(userName.getText()
 										.toString());
-								Intent intent = new Intent(LoginActivity.this,
-										MainActivity.class);
-								startActivity(intent);
+								if (!isReLogin) {
+									Intent intent = new Intent(
+											LoginActivity.this,
+											MainActivity.class);
+									startActivity(intent);
+								}
 								finish();
 
 							} else {
@@ -306,7 +301,7 @@ public class LoginActivity extends BaseActivity {
 	// app检查更新
 	private void checkUpdate() {
 		String url = UrlConfig.getAppVersion();
-		HttpUtil.get(url, new JsonHttpResponseHandler() {
+		HttpUtil.get(url, new jsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
