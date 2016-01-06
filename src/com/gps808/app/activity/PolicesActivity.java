@@ -55,7 +55,7 @@ public class PolicesActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_police);
 		init();
-		getData(false);
+	
 
 	}
 
@@ -146,5 +146,11 @@ public class PolicesActivity extends BaseActivity {
 			}
 		});
 
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		getData(false);
+		super.onResume();
 	}
 }

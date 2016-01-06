@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity {
 				// .fromView(popupInfo(mMarkerLy, xbVehicle)), marker
 				// .getPosition(), -100, onInfoWindowClickListener);
 				// 显示InfoWindow
-			
+
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
@@ -298,25 +298,6 @@ public class MainActivity extends BaseActivity {
 		// 缩放地图，使所有Overlay都在合适的视野内
 		// mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
 		// .build()));
-
-	}
-
-	/**
-	 * 清除所有Overlay
-	 * 
-	 * @param view
-	 */
-	public void clearOverlay(View view) {
-		mBaiduMap.clear();
-	}
-
-	/**
-	 * 重新添加Overlay
-	 * 
-	 * @param view
-	 */
-	public void resetOverlay(View view) {
-		clearOverlay(null);
 
 	}
 
