@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gps808.app.R;
+import com.gps808.app.view.FancyButton;
 
 
 public class DriverListAdapter extends BaseAdapter {
@@ -63,12 +64,12 @@ public class DriverListAdapter extends BaseAdapter {
 	}
 
 	class ViewHolder {
-		ImageView item_driver_image;
+		FancyButton item_driver_image;
 		TextView item_driver_name;
 		TextView item_driver_phone;
 
 		public ViewHolder(View arg1) {
-			item_driver_image = (ImageView) arg1
+			item_driver_image = (FancyButton) arg1
 					.findViewById(R.id.item_driver_image);
 			// item_ranking_name = (TextView) arg1
 			// .findViewById(R.id.item_ranking_name);

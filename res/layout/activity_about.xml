@@ -14,7 +14,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +43,7 @@
                     android:layout_marginTop="8dp"
                     android:text="扫瞄二维码下载本软件"
                     android:textColor="@color/text"
-                    android:textSize="@dimen/title" />
+                    android:textSize="@dimen/subhead" />
             </LinearLayout>
 
             <RelativeLayout

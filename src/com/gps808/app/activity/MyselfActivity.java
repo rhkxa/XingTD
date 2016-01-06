@@ -13,7 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
+import com.gps808.app.activity.DisplayLineActivity.MyLocationListenner;
 import com.gps808.app.bean.XbWeather;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
@@ -22,6 +31,7 @@ import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.BaseFragment.jsonHttpResponseHandler;
+import com.gps808.app.utils.Utils;
 import com.gps808.app.view.CircleImageView;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.FancyButton;
@@ -34,6 +44,9 @@ public class MyselfActivity extends BaseActivity {
 	private LinearLayout my_setup, my_about, my_help;
 	private FancyButton my_driver, my_police, my_routes, my_car;
 	private TextView my_weather;
+	// 定位
+	LocationClient mLocClient;
+	public MyLocationListenner myListener = new MyLocationListenner();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +76,7 @@ public class MyselfActivity extends BaseActivity {
 		// alter = (ImageView) findViewById(R.id.alter_person);
 		// alter.setOnClickListener(click);
 		//
+
 		my_driver = (FancyButton) findViewById(R.id.my_driver);
 		my_driver.setOnClickListener(click);
 
@@ -115,7 +129,14 @@ public class MyselfActivity extends BaseActivity {
 			my_driver.setBackgroundColor(getResources().getColor(R.color.gray));
 			my_driver.setEnabled(false);
 		}
-
+		mLocClient = new LocationClient(MyselfActivity.this);
+		mLocClient.registerLocationListener(myListener);
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);// 打开gps
+		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(1000);
+		mLocClient.setLocOption(option);
+		mLocClient.start();
 	}
 
 	private OnClickListener click = new OnClickListener() {
@@ -164,20 +185,37 @@ public class MyselfActivity extends BaseActivity {
 
 	};
 
-	private void getData() {
-		String url = UrlConfig.getWeather(0, 0);
+	private void getData(double lng, double lat) {
+		String url = UrlConfig.getNowWeather(lng, lat);
 		HttpUtil.get(MyselfActivity.this, url, new jsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
 				// TODO Auto-generated method stub
-
 				LogUtils.DebugLog("result json", response.toString());
-				XbWeather xbWeather = JSON.parseObject(response.toString(),
-						XbWeather.class);
-				my_weather.setText(xbWeather.getNow().getDesc());
+				my_weather.setText(Utils.getKey(response, "desc"));
+				if (mLocClient != null) {
+					// 退出时销毁定位
+					mLocClient.stop();
+				}
 				super.onSuccess(statusCode, headers, response);
 			}
 		});
 	}
+
+	/**
+	 * 定位SDK监听函数
+	 */
+	public class MyLocationListenner implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			getData(location.getLongitude(), location.getLatitude());
+		}
+
+		public void onReceivePoi(BDLocation poiLocation) {
+		}
+	}
+
+	
 }

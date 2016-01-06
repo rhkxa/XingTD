@@ -2,7 +2,6 @@ package com.gps808.app.activity;
 
 import com.gps808.app.R;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,12 +23,11 @@ public class WelcomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-	
 
 		final View view = View.inflate(this, R.layout.activity_welcome, null);
 		setContentView(view);
 		ImageView imageView = (ImageView) findViewById(R.id.welcome_image);
-		imageView.setImageResource(R.drawable.xtd_icon_blue);
+		imageView.setImageResource(R.drawable.app_start);
 		// 设置渐变启动
 		AlphaAnimation aa = new AlphaAnimation(0.5f, 1.0f);
 		aa.setDuration(1000);
@@ -40,8 +38,8 @@ public class WelcomeActivity extends Activity {
 
 				Intent intent = new Intent(WelcomeActivity.this,
 						LoginActivity.class);
-//				Intent intent = new Intent(WelcomeActivity.this,
-//						MainActivity.class);
+				// Intent intent = new Intent(WelcomeActivity.this,
+				// MainActivity.class);
 				startActivity(intent);
 				finish();
 			}

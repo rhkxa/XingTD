@@ -41,8 +41,8 @@
                 android:layout_height="48dp"
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入名称,最多6位"
-                android:padding="8dp"
                 android:maxLength="6"
+                android:padding="8dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -67,8 +67,8 @@
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入号码"
                 android:inputType="phone"
-                android:padding="8dp"
                 android:maxLength="11"
+                android:padding="8dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -92,8 +92,8 @@
                 android:layout_height="48dp"
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入账号,最多11位"
-                android:padding="8dp"
                 android:maxLength="11"
+                android:padding="8dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -117,9 +117,8 @@
                 android:layout_height="48dp"
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入密码,6-10位"
-                android:padding="8dp"
                 android:maxLength="10"
-                
+                android:padding="8dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -142,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/corners_rect_gray"
-                android:hint="确定密码"
+                android:hint="请再次输入密码确认"
                 android:padding="8dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>

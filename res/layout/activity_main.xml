@@ -77,7 +77,7 @@
         android:layout_margin="8dp"
         fancy:fb_defaultColor="@color/white"
         fancy:fb_focusColor="#8cc9f8"
-        fancy:fb_iconResource="@drawable/xtd_login_name"
+        fancy:fb_iconResource="@drawable/xtd_icon_position"
         fancy:fb_iconSize="8dp"
         fancy:fb_radius="2dp" />
 

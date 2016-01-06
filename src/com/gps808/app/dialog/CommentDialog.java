@@ -1,12 +1,9 @@
 package com.gps808.app.dialog;
 
-
-
 import com.gps808.app.R;
 
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
-
 
 import android.app.Dialog;
 import android.content.Context;
@@ -50,9 +47,6 @@ public class CommentDialog extends Dialog {
 				// TODO Auto-generated method stub
 				if (!StringUtils.isEmpty(comment.getText().toString())) {
 
-					String url = UrlConfig.submitComment(id, comment.getText()
-							.toString());
-				
 				}
 			}
 		});

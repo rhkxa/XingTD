@@ -222,6 +222,7 @@ public class LoginActivity extends BaseActivity {
 			String url = UrlConfig.getLogin();
 			JSONObject params = new JSONObject();
 
+			
 			StringEntity entity = null;
 			try {
 				params.put("username", userName.getText().toString());
@@ -298,7 +299,7 @@ public class LoginActivity extends BaseActivity {
 		}
 	};
 
-	// app检查更新
+	// APP检查更新
 	private void checkUpdate() {
 		String url = UrlConfig.getAppVersion();
 		HttpUtil.get(url, new jsonHttpResponseHandler() {
@@ -376,7 +377,6 @@ public class LoginActivity extends BaseActivity {
 		View v = inflater.inflate(R.layout.widget_update_progress, null);
 		mProgress = (ProgressBar) v.findViewById(R.id.update_progress);
 		mProgressText = (TextView) v.findViewById(R.id.update_progress_text);
-		builder.setTitle("更新应用");
 		builder.setView(v);
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			@Override
@@ -438,7 +438,7 @@ public class LoginActivity extends BaseActivity {
 								buffer.write(tmp, 0, l);
 								sendProgressMessage(count, (int) contentLength);
 							}
-							Utils.installApk(LoginActivity.this, apkFile);
+							
 						} finally {
 							AsyncHttpClient.silentCloseInputStream(instream);
 							buffer.flush();
@@ -458,7 +458,8 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, File arg2) {
 				// TODO Auto-generated method stub
-
+				Utils.installApk(LoginActivity.this, apkFile);
+				getAppContext().exit();
 			}
 		});
 

@@ -200,6 +200,7 @@
                     fancy:fb_iconResource="@drawable/xtd_icon_question"
                     fancy:fb_iconSize="10dp"
                     fancy:fb_radius="2dp"
+                    android:clickable="false"
                     fancy:fb_textColor="#FFFFFF" />
 
                 <TextView
@@ -238,7 +239,7 @@
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_iconResource="@drawable/xtd_icon_about"
                     fancy:fb_iconSize="10dp"
-                    fancy:fb_radius="2dp"
+                    fancy:fb_radius="2dp"  android:clickable="false"
                     fancy:fb_textColor="#FFFFFF" />
 
                 <TextView
@@ -281,7 +282,7 @@
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_iconResource="@drawable/xtd_action_setup"
                     fancy:fb_iconSize="10dp"
-                    fancy:fb_radius="2dp"
+                    fancy:fb_radius="2dp"  android:clickable="false"
                     fancy:fb_textColor="#FFFFFF" />
 
                 <TextView
