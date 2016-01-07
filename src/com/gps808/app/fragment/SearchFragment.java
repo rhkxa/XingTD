@@ -64,7 +64,7 @@ public class SearchFragment extends BaseFragment {
 							layout_search_bar_button
 									.setVisibility(View.VISIBLE);
 						} else {
-							layout_search_bar_close.setVisibility(View.GONE);
+							
 							layout_search_bar_button.setVisibility(View.GONE);
 							InputMethodManager imm = (InputMethodManager) getActivity()
 									.getSystemService(
@@ -90,6 +90,8 @@ public class SearchFragment extends BaseFragment {
 				// TODO Auto-generated method stub
 				layout_search_bar_edittext.clearFocus();
 				layout_search_bar_edittext.setText("");
+				layout_search_bar_close.setVisibility(View.GONE);
+				searchClickListener.onSearchClose();
 			}
 		});
 		layout_search_bar_button.setOnClickListener(new OnClickListener() {
@@ -113,6 +115,7 @@ public class SearchFragment extends BaseFragment {
 
 	public interface OnSearchClickListener {
 		public void onSearch(String key);
+		public void onSearchClose();
 	}
 
 	public void setHint(String hint) {

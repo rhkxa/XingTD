@@ -4,8 +4,9 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbAlarmOption;
@@ -67,62 +68,62 @@ public class PoliceTypeActivity extends BaseActivity {
 			police_type12.setChecked(alarmOption.isDangerAlarm());
 
 		}
-		police_type1.setOnClickListener(check);
-		police_type2.setOnClickListener(check);
-		police_type3.setOnClickListener(check);
-		police_type4.setOnClickListener(check);
-		police_type5.setOnClickListener(check);
-		police_type6.setOnClickListener(check);
-		police_type7.setOnClickListener(check);
-		police_type8.setOnClickListener(check);
-		police_type9.setOnClickListener(check);
-		police_type10.setOnClickListener(check);
-		police_type11.setOnClickListener(check);
-		police_type12.setOnClickListener(check);
+		police_type1.setOnCheckedChangeListener(check);
+		police_type2.setOnCheckedChangeListener(check);
+		police_type3.setOnCheckedChangeListener(check);
+		police_type4.setOnCheckedChangeListener(check);
+		police_type5.setOnCheckedChangeListener(check);
+		police_type6.setOnCheckedChangeListener(check);
+		police_type7.setOnCheckedChangeListener(check);
+		police_type8.setOnCheckedChangeListener(check);
+		police_type9.setOnCheckedChangeListener(check);
+		police_type10.setOnCheckedChangeListener(check);
+		police_type11.setOnCheckedChangeListener(check);
+		police_type12.setOnCheckedChangeListener(check);
 
 	}
 
-	private OnClickListener check = new OnClickListener() {
+	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
 
 		@Override
-		public void onClick(View arg0) {
+		public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 			// TODO Auto-generated method stub
 			switch (arg0.getId()) {
 			case R.id.police_type1:
-				alarmOption.setEmergency(police_type1.isChecked());
+				alarmOption.setEmergency(arg1);
 				break;
 			case R.id.police_type2:
-				alarmOption.setOverSpeed(police_type2.isChecked());
+				alarmOption.setOverSpeed(arg1);
 				break;
 			case R.id.police_type3:
-				alarmOption.setInArea(police_type3.isChecked());
+				alarmOption.setInArea(arg1);
 				break;
 			case R.id.police_type4:
-				alarmOption.setOutArea(police_type4.isChecked());
+				alarmOption.setOutArea(arg1);
 				break;
 			case R.id.police_type5:
-				alarmOption.setGnssModeFault(police_type5.isChecked());
+				alarmOption.setGnssModeFault(arg1);
 				break;
 			case R.id.police_type6:
-				alarmOption.setGnssDisconnect(police_type6.isChecked());
+				alarmOption.setGnssDisconnect(arg1);
 				break;
 			case R.id.police_type7:
-				alarmOption.setGnssShortCircuit(police_type7.isChecked());
+				alarmOption.setGnssShortCircuit(arg1);
 				break;
 			case R.id.police_type8:
-				alarmOption.setTmnlPowerDown(police_type8.isChecked());
+				alarmOption.setTmnlPowerDown(arg1);
 				break;
 			case R.id.police_type9:
-				alarmOption.setVssFault(police_type9.isChecked());
+				alarmOption.setVssFault(arg1);
 				break;
 			case R.id.police_type10:
-				alarmOption.setCrashAlarm(police_type10.isChecked());
+				alarmOption.setCrashAlarm(arg1);
 				break;
 			case R.id.police_type11:
-				alarmOption.setRolloverAlarm(police_type11.isChecked());
+				alarmOption.setRolloverAlarm(arg1);
 				break;
 			case R.id.police_type12:
-				alarmOption.setDangerAlarm(police_type12.isChecked());
+				alarmOption.setDangerAlarm(arg1);
 				break;
 
 			}

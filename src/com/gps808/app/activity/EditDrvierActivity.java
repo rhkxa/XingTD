@@ -96,6 +96,12 @@ public class EditDrvierActivity extends BaseActivity {
 					Utils.ToastMessage(EditDrvierActivity.this, "密码长度最少6位");
 					return;
 				}
+				if (!driver_pass.getText().toString()
+						.equals(driver_pass_again.getText().toString())) {
+					Utils.ToastMessage(EditDrvierActivity.this,
+							"确认密码与密码不一致,请重新输入");
+					return;
+				}
 				xbDriver.setLoginName(driver_user.getText().toString());
 				xbDriver.setDriverId(driverId);
 				xbDriver.setDriverName(driver_name.getText().toString());
@@ -200,6 +206,9 @@ public class EditDrvierActivity extends BaseActivity {
 							Intent intent = new Intent();
 							setResult(RESULT_OK, intent);
 							finish();
+						} else {
+							Utils.ToastMessage(EditDrvierActivity.this,
+									Utils.getKey(response, "errorMsg"+"请重新填写"));
 						}
 						super.onSuccess(statusCode, headers, response);
 					}

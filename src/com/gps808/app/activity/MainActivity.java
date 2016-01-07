@@ -43,6 +43,7 @@ import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
+import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
@@ -56,7 +57,6 @@ import android.widget.TextView;
 import android.widget.ZoomControls;
 import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
-import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity {
 	private View mMarkerLy;
 	private int handler_runnable_time;
 	private FancyButton main_person;
+	private String mCurrentCar = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -139,28 +140,16 @@ public class MainActivity extends BaseActivity {
 				// 获得marker中的数据
 				final XbVehicle xbVehicle = JSON.parseObject(marker
 						.getExtraInfo().getString("info"), XbVehicle.class);
-				OnInfoWindowClickListener onInfoWindowClickListener = new OnInfoWindowClickListener() {
-
-					@Override
-					public void onInfoWindowClick() {
-						// TODO Auto-generated method stub
-
-					}
-				};
-
+				mCurrentCar = xbVehicle.getVid();
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
 						.getPosition()));
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
 						marker.getPosition(), -100);
-				// mInfoWindow = new InfoWindow(BitmapDescriptorFactory
-				// .fromView(popupInfo(mMarkerLy, xbVehicle)), marker
-				// .getPosition(), -100, onInfoWindowClickListener);
-				// 显示InfoWindow
-
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
 		});
+		// 点击地图事件
 		mBaiduMap.setOnMapClickListener(new OnMapClickListener() {
 
 			@Override
@@ -170,7 +159,7 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onMapClick(LatLng arg0) {
-				mBaiduMap.hideInfoWindow();
+				closeInfoWindow();
 			}
 		});
 		// 底部四个按钮
@@ -197,7 +186,6 @@ public class MainActivity extends BaseActivity {
 				case R.id.main_myself:
 					cls = MyselfActivity.class;
 					break;
-
 				}
 				Intent intent = new Intent(MainActivity.this, cls);
 				startActivityForResult(intent, 0);
@@ -207,6 +195,7 @@ public class MainActivity extends BaseActivity {
 		main_police.setOnClickListener(bottomClick);
 		main_routes.setOnClickListener(bottomClick);
 		main_myself.setOnClickListener(bottomClick);
+		// 搜索刷新
 		SearchFragment searchFragment = (SearchFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.search_bar);
 		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
@@ -217,7 +206,15 @@ public class MainActivity extends BaseActivity {
 				key = k;
 				getVehicleLocation(true);
 			}
+
+			@Override
+			public void onSearchClose() {
+				// TODO Auto-generated method stub
+				key="";
+				getVehicleLocation(true);
+			}
 		});
+		// 手动刷新
 		main_refresh = (FancyButton) findViewById(R.id.main_refresh);
 		main_refresh.setOnClickListener(new OnClickListener() {
 
@@ -293,6 +290,9 @@ public class MainActivity extends BaseActivity {
 			Bundle bundle = new Bundle();
 			bundle.putString("info", JSON.toJSONString(info));
 			marker.setExtraInfo(bundle);
+			if (!StringUtils.isEmpty(mCurrentCar)) {
+				showInfoWindow();
+			}
 
 		}
 		// 缩放地图，使所有Overlay都在合适的视野内
@@ -301,9 +301,11 @@ public class MainActivity extends BaseActivity {
 
 	}
 
+	// 加载首页车辆信息
 	private void getVehicleLocation(boolean isRefresh) {
 		if (isRefresh) {
 			showProgressDialog(MainActivity.this, "正在加载车辆信息");
+			closeInfoWindow();
 		}
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
@@ -412,7 +414,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				mBaiduMap.hideInfoWindow();
+				closeInfoWindow();
 			}
 		});
 		return mMarkerLy;
@@ -431,12 +433,20 @@ public class MainActivity extends BaseActivity {
 		TextView popwindows_time;
 		TextView popwindows_position;
 		ImageView popwindows_close;
-
 		RelativeLayout popwindows_details;
 	}
 
 	/**
-	 * 定时任务
+	 * 关闭InfoWindow
+	 */
+	private void closeInfoWindow() {
+		mCurrentCar = null;
+		// 隐藏InfoWindow
+		mBaiduMap.hideInfoWindow();
+	}
+
+	/**
+	 * 定时任务,刷新首页
 	 */
 
 	Handler handler = new Handler();
@@ -485,31 +495,38 @@ public class MainActivity extends BaseActivity {
 
 	}
 
+	// 点击车辆列表后,首页显示该车
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		// TODO Auto-generated method stub
 		if (arg1 == RESULT_OK) {
 			String vid = arg2.getStringExtra("vid");
-			LogUtils.DebugLog("activity result", vid);
-			for (XbVehicle info : vehicle) {
-				if (info.getVid().equals(vid)) {
-					double[] doubleLng = Utils.getLng(info.getLocation());
-					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
-					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
-							latLng, -100);
-					mBaiduMap.showInfoWindow(mInfoWindow);
-					MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(
-							latLng, 14.0f);
-					mBaiduMap.setMapStatus(msu);
-				}
-			}
+			LogUtils.DebugLog("onActivityResult", vid);
+			mCurrentCar = vid;
+			showInfoWindow();
+
 		}
 		super.onActivityResult(arg0, arg1, arg2);
 	}
 
-	// 以apikey的方式绑定
+	private void showInfoWindow() {
+		for (XbVehicle info : vehicle) {
+			if (info.getVid().equals(mCurrentCar)) {
+				double[] doubleLng = Utils.getLng(info.getLocation());
+				LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
+				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
+						latLng, -100);
+				mBaiduMap.showInfoWindow(mInfoWindow);
+				MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(
+						latLng, 14.0f);
+				mBaiduMap.setMapStatus(msu);
+			}
+		}
+	}
+
+	// 启动Push
 	private void initWithApiKey() {
-		// Push: 无账号初始化，用api key绑定
+		// Push: 无账号初始化，用API key绑定
 		PushManager.startWork(getApplicationContext(),
 				PushConstants.LOGIN_TYPE_API_KEY,
 				PushUtils.getMetaValue(MainActivity.this, "api_key"));

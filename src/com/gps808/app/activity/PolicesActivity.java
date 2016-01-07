@@ -55,7 +55,7 @@ public class PolicesActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_police);
 		init();
-	
+		getData(false);
 
 	}
 
@@ -84,6 +84,12 @@ public class PolicesActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 
 			}
+
+			@Override
+			public void onSearchClose() {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		police_list = (PullToRefreshListView) findViewById(R.id.police_list);
 		police_list.setMode(Mode.PULL_FROM_END);
@@ -103,8 +109,9 @@ public class PolicesActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(PolicesActivity.this, DisplayPoliceActivity.class);
-				intent.putExtra("aid", xbPolices.get(arg2-1).getAid());
+				Intent intent = new Intent(PolicesActivity.this,
+						DisplayPoliceActivity.class);
+				intent.putExtra("aid", xbPolices.get(arg2 - 1).getAid());
 				startActivity(intent);
 			}
 		});
@@ -128,8 +135,7 @@ public class PolicesActivity extends BaseActivity {
 						XbPolice.class));
 				if (JSON.parseArray(response.toString(), XbPolice.class).size() < pageNum) {
 					police_list.setMode(Mode.DISABLED);
-					 Utils.ToastMessage(PolicesActivity.this,
-					 "暂无更多");
+					Utils.ToastMessage(PolicesActivity.this, "暂无更多");
 				} else {
 					startPage++;
 				}
@@ -147,10 +153,11 @@ public class PolicesActivity extends BaseActivity {
 		});
 
 	}
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		getData(false);
+
 		super.onResume();
 	}
 }

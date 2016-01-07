@@ -3,17 +3,15 @@ package com.gps808.app.activity;
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-
 import com.gps808.app.bean.XbAlarmOption;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
@@ -40,6 +38,7 @@ public class PoliceSetupActivity extends BaseActivity {
 		mPreferenceUtils = PreferenceUtils
 				.getInstance(PoliceSetupActivity.this);
 		init();
+		getData();
 	}
 
 	private void init() {
@@ -51,13 +50,6 @@ public class PoliceSetupActivity extends BaseActivity {
 		push_switch = (SwitchButton) findViewById(R.id.push_switch);
 		voice_switch = (SwitchButton) findViewById(R.id.voice_switch);
 		shock_switch = (SwitchButton) findViewById(R.id.shock_switch);
-		push_switch.setChecked(mPreferenceUtils.getPush());
-		voice_switch.setChecked(mPreferenceUtils.getVoice());
-		shock_switch.setChecked(mPreferenceUtils.getShock());
-		push_switch.setOnClickListener(check);
-		shock_switch.setOnClickListener(check);
-		voice_switch.setOnClickListener(check);
-
 		setup_message = (LinearLayout) findViewById(R.id.setup_message);
 
 		setup_message.setOnClickListener(new OnClickListener() {
@@ -73,25 +65,28 @@ public class PoliceSetupActivity extends BaseActivity {
 		});
 	}
 
-	private OnClickListener check = new OnClickListener() {
+	private OnCheckedChangeListener check = new OnCheckedChangeListener() {
+
 		@Override
-		public void onClick(View arg0) {
+		public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 			// TODO Auto-generated method stub
 			switch (arg0.getId()) {
 			case R.id.push_switch:
-				mPreferenceUtils.setPush(push_switch.isChecked());
-				alarmOption.setAcceptAlarm(push_switch.isChecked());
+				mPreferenceUtils.setPush(arg1);
+				alarmOption.setAcceptAlarm(arg1);
 				break;
 			case R.id.shock_switch:
-				mPreferenceUtils.setShock(shock_switch.isChecked());
-				alarmOption.setVibration(shock_switch.isChecked());
+				mPreferenceUtils.setShock(arg1);
+				alarmOption.setVibration(arg1);
 				break;
 			case R.id.voice_switch:
-				mPreferenceUtils.setVoice(voice_switch.isChecked());
-				alarmOption.setSound(voice_switch.isChecked());
+				mPreferenceUtils.setVoice(arg1);
+				alarmOption.setSound(arg1);
+				LogUtils.DebugLog("声音选项" + arg1 + ":"
+						+ voice_switch.isChecked());
 				break;
 			}
-			setData();
+			 setData();
 		}
 	};
 
@@ -118,15 +113,16 @@ public class PoliceSetupActivity extends BaseActivity {
 		push_switch.setChecked(alarmOption.isAcceptAlarm());
 		shock_switch.setChecked(alarmOption.isVibration());
 		voice_switch.setChecked(alarmOption.isSound());
+		push_switch.setOnCheckedChangeListener(check);
+		shock_switch.setOnCheckedChangeListener(check);
+		voice_switch.setOnCheckedChangeListener(check);
 	}
 
 	private void setData() {
 		showProgressDialog(PoliceSetupActivity.this, "正在配置您的个人设置");
 		String url = UrlConfig.getVehicleSetAlarms();
 		StringEntity entity = null;
-
 		try {
-
 			entity = new StringEntity(JSON.toJSONString(alarmOption));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -156,12 +152,5 @@ public class PoliceSetupActivity extends BaseActivity {
 		mPreferenceUtils.setVoice(alarmOption.isSound());
 		mPreferenceUtils.setShock(alarmOption.isVibration());
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		getData();
-		super.onResume();
 	}
 }

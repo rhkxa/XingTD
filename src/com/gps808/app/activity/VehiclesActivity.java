@@ -82,6 +82,13 @@ public class VehiclesActivity extends BaseActivity {
 				getData(true);
 
 			}
+
+			@Override
+			public void onSearchClose() {
+				// TODO Auto-generated method stub
+				search="";
+				getData(true);
+			}
 		});
 		vehicle_list = (PullToRefreshListView) findViewById(R.id.vehicle_list);
 		vAdapter = new VehicleListAdapter(VehiclesActivity.this, xbVehicles);
@@ -175,9 +182,7 @@ public class VehiclesActivity extends BaseActivity {
 						xbVehicles.addAll(xbVobject.getRows());
 						parseData();
 						if (xbVobject.getRows().size() < pageNum) {
-							vehicle_list.setMode(Mode.DISABLED);
-							// Utils.ToastMessage(CommentActivity.this,
-							// "暂无更多评论");
+							vehicle_list.setMode(Mode.DISABLED);						
 						} else {
 							vehicle_list.setMode(Mode.PULL_FROM_END);
 							startPage++;
@@ -197,7 +202,10 @@ public class VehiclesActivity extends BaseActivity {
 	}
 
 	private void parseData() {
-		allVehicles.addAll(xbVehicles);
+		allVehicles.clear();
+		onVehicles.clear();
+		offVehicles.clear();
+		allVehicles.addAll(xbVehicles);	
 		for (XbVehicle info : xbVehicles) {
 			if (info.isOnline()) {
 				onVehicles.add(info);

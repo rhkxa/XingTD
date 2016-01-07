@@ -28,7 +28,6 @@
                 android:id="@+id/layout_search_bar_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
                 android:background="@color/full_transparent"
                 android:gravity="left|center_vertical"
                 android:hint="请输入车牌号或手机号"
@@ -42,6 +41,7 @@
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
                 android:src="@drawable/xtd_close_gray"
                 android:visibility="gone" />
         </RelativeLayout>
