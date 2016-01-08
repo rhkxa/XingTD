@@ -42,6 +42,7 @@ import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
+import com.gps808.app.bean.XbMonitor;
 import com.gps808.app.bean.XbTrack;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.dialog.DateDialog;
@@ -74,7 +75,9 @@ public class MonitorFragment extends BaseFragment {
 	private InfoWindow mInfoWindow;
 	private String vid;
 	private ToggleButton play_toogle;
-	private TextView play_text;
+	private TextView play_mileage;
+	private TextView play_speed;
+	private TextView play_totaltime;
 	private ProgressBar play_progress;
 	private LinearLayout play_layout;
 	private TextView play_time;
@@ -82,6 +85,7 @@ public class MonitorFragment extends BaseFragment {
 	private LatLng latLng = null;
 	private double[] doubleLng;
 	private List<XbVehicle> xbVehicles;
+	private XbMonitor xbMonitor;
 
 	public static MonitorFragment newInstance(String id) {
 		MonitorFragment fragment = new MonitorFragment();
@@ -105,7 +109,7 @@ public class MonitorFragment extends BaseFragment {
 				.getSupportFragmentManager().findFragmentById(R.id.title);
 		headerFragment.setImageButtonResource(R.drawable.xtd_action_setup);
 		headerFragment.setCommentBtnListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -125,8 +129,10 @@ public class MonitorFragment extends BaseFragment {
 			}
 		}
 		play_toogle = (ToggleButton) root.findViewById(R.id.play_toogle);
-		play_text = (TextView) root.findViewById(R.id.play_text);
+		play_mileage = (TextView) root.findViewById(R.id.play_mileage);
 		play_time = (TextView) root.findViewById(R.id.play_time);
+		play_totaltime = (TextView) root.findViewById(R.id.play_totaltime);
+		play_speed = (TextView) root.findViewById(R.id.play_speed);
 		play_progress = (ProgressBar) root.findViewById(R.id.play_progress);
 		play_layout = (LinearLayout) root.findViewById(R.id.play_layout);
 
@@ -180,11 +186,14 @@ public class MonitorFragment extends BaseFragment {
 
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
-							JSONArray response) {
+							JSONObject response) {
 						// TODO Auto-generated method stub
-						xbVehicles = JSON.parseArray(response.toString(),
-								XbVehicle.class);
 						LogUtils.DebugLog("result json", response.toString());
+						xbMonitor = JSON.parseObject(response.toString(),
+								XbMonitor.class);
+						play_totaltime.setText("时长:" + xbMonitor.getTotalTime());
+						play_mileage.setText("里程:" + xbMonitor.getMileage());
+						xbVehicles = xbMonitor.getLocations();
 						if (xbVehicles.size() > 0) {
 							play_progress.setMax(xbVehicles.size());
 							play_toogle.setEnabled(true);
@@ -262,10 +271,8 @@ public class MonitorFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			playMonitor(xbVehicles.get(i));
-
-			play_text.setText("位置:" + xbVehicles.get(i).getAddr() + "时间:"
-					+ xbVehicles.get(i).getTime() + "速度:"
-					+ xbVehicles.get(i).getSpeed());
+			play_speed.setText("速度:" + xbVehicles.get(i).getSpeed()+"Km/h");
+			play_time.setText("时间:" + xbVehicles.get(i).getTime());
 			i++;
 			play_progress.setProgress(i);
 			if (i < xbVehicles.size()) {
@@ -277,8 +284,7 @@ public class MonitorFragment extends BaseFragment {
 		}
 	};
 
-
-	private void showChoseDate(){
+	private void showChoseDate() {
 		DateDialog dateDialog = new DateDialog(getActivity());
 		dateDialog.setOnTimeClickListener(new OnTimeClickListener() {
 

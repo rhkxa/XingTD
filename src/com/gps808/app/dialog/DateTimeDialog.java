@@ -27,9 +27,12 @@ public class DateTimeDialog extends Dialog implements View.OnClickListener {
 	private int index;
 	private WheelDatePicker dataPick;
 	private WheelTimePicker timePick;
+	private Context mContext
+	;
 
 	public DateTimeDialog(Context context) {
 		super(context, R.style.Dialog);
+		mContext=context;
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		getWindow().setGravity(Gravity.BOTTOM);
@@ -57,6 +60,8 @@ public class DateTimeDialog extends Dialog implements View.OnClickListener {
 		btnCancel.setOnClickListener(this);
 		dataPick = (WheelDatePicker) findViewById(R.id.datapick);
 		timePick = (WheelTimePicker) findViewById(R.id.timepick);
+		dataPick.setCurrentTextColor(mContext.getResources().getColor(R.color.app_blue));
+		timePick.setCurrentTextColor(mContext.getResources().getColor(R.color.app_blue));
 		dataPick.setOnWheelChangeListener(new OnWheelChangeListener() {
 
 			@Override

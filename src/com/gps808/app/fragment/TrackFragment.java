@@ -5,20 +5,15 @@ import java.util.List;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ZoomControls;
-
 import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
@@ -30,6 +25,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
@@ -68,6 +64,7 @@ public class TrackFragment extends BaseFragment {
 	Polyline mPolyline;
 	private int handler_runnable_time;
 	private View mMarkerLy;
+	private XbTrack xbTrack;
 
 	public static TrackFragment newInstance(String id) {
 		TrackFragment fragment = new TrackFragment();
@@ -103,6 +100,19 @@ public class TrackFragment extends BaseFragment {
 		// 对Marker的点击弹出PopWindows
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mMarkerLy = inflater.inflate(R.layout.popwindows_trace, null);
+		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+			@Override
+			public boolean onMarkerClick(final Marker marker) {
+				// 获得marker中的数据
+
+				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
+						.getPosition()));
+				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbTrack),
+						marker.getPosition(), -100);
+				mBaiduMap.showInfoWindow(mInfoWindow);
+				return true;
+			}
+		});
 		getData();
 	}
 
@@ -113,10 +123,9 @@ public class TrackFragment extends BaseFragment {
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
 				// TODO Auto-generated method stub
-				XbTrack xbTrack = JSON.parseObject(response.toString(),
-						XbTrack.class);
+				xbTrack = JSON.parseObject(response.toString(), XbTrack.class);
 				LogUtils.DebugLog("result json" + response.toString());
-				addInfosOverlay(xbTrack);
+				addInfosOverlay();
 				super.onSuccess(statusCode, headers, response);
 			}
 		});
@@ -125,7 +134,7 @@ public class TrackFragment extends BaseFragment {
 	/**
 	 * 初始化图层
 	 */
-	private void addInfosOverlay(XbTrack xbTrack) {
+	private void addInfosOverlay() {
 		doubleLng = Utils.getLng(xbTrack.getLocation());
 		// 位置
 		latLng = new LatLng(doubleLng[1], doubleLng[0]);
@@ -185,7 +194,8 @@ public class TrackFragment extends BaseFragment {
 		viewHolder = (ViewHolder) mMarkerLy.getTag();
 		viewHolder.popwindows_time.setText("时间:" + xbTrack.getTime());
 		if (xbTrack.isOnline()) {
-			viewHolder.popwindows_state.setText("在线:" + xbTrack.getSpeed());
+			viewHolder.popwindows_state.setText("在线:" + xbTrack.getSpeed()
+					+ "Km/h");
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
 		} else {
@@ -193,8 +203,16 @@ public class TrackFragment extends BaseFragment {
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.text));
 		}
+		viewHolder.popwindows_close.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mBaiduMap.hideInfoWindow();
+			}
+		});
 		viewHolder.popwindows_name.setText(xbTrack.getPlateNo());
-		viewHolder.popwindows_position.setText("位置:"+xbTrack.getAddr());
+		viewHolder.popwindows_position.setText("位置:" + xbTrack.getAddr());
 		return mMarkerLy;
 	}
 

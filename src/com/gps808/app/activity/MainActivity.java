@@ -368,7 +368,7 @@ public class MainActivity extends BaseActivity {
 		viewHolder = (ViewHolder) mMarkerLy.getTag();
 		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
 		if (xbVehicle.isOnline()) {
-			viewHolder.popwindows_state.setText("在线" + xbVehicle.getSpeed());
+			viewHolder.popwindows_state.setText("在线" + xbVehicle.getSpeed()+"Km/h");
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
 		} else {
