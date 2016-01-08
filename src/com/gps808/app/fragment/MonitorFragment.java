@@ -8,10 +8,12 @@ import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -50,6 +52,7 @@ import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
+import com.gps808.app.view.FancyButton;
 
 /**
  * 轨迹回放
@@ -64,7 +67,7 @@ public class MonitorFragment extends BaseFragment {
 	BitmapDescriptor startIcon = BitmapDescriptorFactory
 			.fromResource(R.drawable.xtd_map_start);
 	BitmapDescriptor locationIcon = BitmapDescriptorFactory
-			.fromResource(R.drawable.xtd_carlogo_on);
+			.fromResource(R.drawable.xtd_car_position);
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	Polyline mPolyline;
@@ -74,6 +77,7 @@ public class MonitorFragment extends BaseFragment {
 	private TextView play_text;
 	private ProgressBar play_progress;
 	private LinearLayout play_layout;
+	private TextView play_time;
 	private Marker marker = null;
 	private LatLng latLng = null;
 	private double[] doubleLng;
@@ -97,7 +101,17 @@ public class MonitorFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
-
+		HeaderFragment headerFragment = (HeaderFragment) getActivity()
+				.getSupportFragmentManager().findFragmentById(R.id.title);
+		headerFragment.setImageButtonResource(R.drawable.xtd_action_setup);
+		headerFragment.setCommentBtnListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				showChoseDate();
+			}
+		});
 		mMapView = (MapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
@@ -112,18 +126,10 @@ public class MonitorFragment extends BaseFragment {
 		}
 		play_toogle = (ToggleButton) root.findViewById(R.id.play_toogle);
 		play_text = (TextView) root.findViewById(R.id.play_text);
+		play_time = (TextView) root.findViewById(R.id.play_time);
 		play_progress = (ProgressBar) root.findViewById(R.id.play_progress);
 		play_layout = (LinearLayout) root.findViewById(R.id.play_layout);
-		DateDialog dateDialog = new DateDialog(getActivity());
-		dateDialog.setOnTimeClickListener(new OnTimeClickListener() {
 
-			@Override
-			public void onTimeOk(String start, String end) {
-				// TODO Auto-generated method stub
-				getData(start, end);
-			}
-		});
-		dateDialog.show();
 		play_toogle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -135,18 +141,22 @@ public class MonitorFragment extends BaseFragment {
 					Utils.ToastMessage(getActivity(), "开始回放");
 				} else {
 					handler.removeCallbacks(runnable);
-					Utils.ToastMessage(getActivity(), "暂停回放");
+
+					if (play_progress.getProgress() < xbVehicles.size()) {
+						Utils.ToastMessage(getActivity(), "暂停回放");
+					} else {
+						Utils.ToastMessage(getActivity(), "回放结束");
+					}
+
 				}
 			}
 		});
-
+		headerFragment.getCommentBtn().performClick();
 	}
 
 	// 获取服务器数据
 	private void getData(String start, String end) {
 		String url = UrlConfig.getVehicleGPSHistory();
-		String testParams = "{\"vId\":\"1010001\",\"start\":\"2015-12-22 08:00:00\",\"end\":\"2015-12-23 20:59:34\"}";
-
 		JSONObject params = new JSONObject();
 		StringEntity entity = null;
 		try {
@@ -154,7 +164,6 @@ public class MonitorFragment extends BaseFragment {
 			params.put("start", start);
 			params.put("end", end);
 			entity = new StringEntity(params.toString(), "UTF-8");
-			// entity = new StringEntity(testParams, "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,6 +171,12 @@ public class MonitorFragment extends BaseFragment {
 		LogUtils.DebugLog("post json", params.toString());
 		HttpUtil.post(getActivity(), url, entity, "application/json",
 				new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						showProgressDialog(getActivity(), "正在查询,请稍等");
+						super.onStart();
+					}
 
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
@@ -172,6 +187,8 @@ public class MonitorFragment extends BaseFragment {
 						LogUtils.DebugLog("result json", response.toString());
 						if (xbVehicles.size() > 0) {
 							play_progress.setMax(xbVehicles.size());
+							play_toogle.setEnabled(true);
+							play_progress.setProgress(0);
 							parseData();
 							play_layout.setVisibility(View.VISIBLE);
 						} else {
@@ -259,6 +276,20 @@ public class MonitorFragment extends BaseFragment {
 			}
 		}
 	};
+
+
+	private void showChoseDate(){
+		DateDialog dateDialog = new DateDialog(getActivity());
+		dateDialog.setOnTimeClickListener(new OnTimeClickListener() {
+
+			@Override
+			public void onTimeOk(String start, String end) {
+				// TODO Auto-generated method stub
+				getData(start, end);
+			}
+		});
+		dateDialog.show();
+	}
 
 	@Override
 	public void onPause() {

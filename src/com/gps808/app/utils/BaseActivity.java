@@ -72,21 +72,22 @@ public class BaseActivity extends FragmentActivity {
 	}
 
 	public void showProgressDialog(final Activity activity, CharSequence message) {
-		if (progressDialog == null) {
+		if (progressDialog == null && !activity.isFinishing()) {
 			progressDialog = new ProgressDialog(activity);
 			progressDialog.setIndeterminate(true);
-		}
-		progressDialog.setOnCancelListener(new OnCancelListener() {
 
-			@Override
-			public void onCancel(DialogInterface arg0) {
-				// TODO Auto-generated method stub
-				HttpUtil.cancelRequest(activity);
-			}
-		});
-		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.setMessage(message);
-		progressDialog.show();
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface arg0) {
+					// TODO Auto-generated method stub
+					HttpUtil.cancelRequest(activity);
+				}
+			});
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.setMessage(message);
+			progressDialog.show();
+		}
 	}
 
 	public void dismissProgressDialog() {
@@ -120,6 +121,7 @@ public class BaseActivity extends FragmentActivity {
 			// TODO Auto-generated method stub
 			LogUtils.DebugLog("failure json code=", statusCode + "throwable="
 					+ throwable.toString());
+			Utils.showSuperCardToast(BaseActivity.this, "请求失败,请重试");
 			super.onFailure(statusCode, headers, throwable, errorResponse);
 		}
 
@@ -131,6 +133,8 @@ public class BaseActivity extends FragmentActivity {
 					+ responseString + " throwable=" + throwable.toString());
 			if (("302").equals(responseString)) {
 				reLogin();
+			} else {
+				Utils.showSuperCardToast(BaseActivity.this, "请求失败,请重试");
 			}
 			super.onFailure(statusCode, headers, responseString, throwable);
 		}

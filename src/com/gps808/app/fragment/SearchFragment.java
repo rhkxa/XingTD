@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.gps808.app.R;
 import com.gps808.app.utils.BaseFragment;
+import com.gps808.app.utils.StringUtils;
 
 public class SearchFragment extends BaseFragment {
 	private Button layout_search_bar_button;
@@ -64,7 +65,7 @@ public class SearchFragment extends BaseFragment {
 							layout_search_bar_button
 									.setVisibility(View.VISIBLE);
 						} else {
-							
+
 							layout_search_bar_button.setVisibility(View.GONE);
 							InputMethodManager imm = (InputMethodManager) getActivity()
 									.getSystemService(
@@ -89,9 +90,12 @@ public class SearchFragment extends BaseFragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				layout_search_bar_edittext.clearFocus();
-				layout_search_bar_edittext.setText("");
 				layout_search_bar_close.setVisibility(View.GONE);
-				searchClickListener.onSearchClose();
+				if (StringUtils.isEmpty(layout_search_bar_edittext.getText()
+						.toString())) {
+					layout_search_bar_edittext.setText("");
+					searchClickListener.onSearchClose();
+				}
 			}
 		});
 		layout_search_bar_button.setOnClickListener(new OnClickListener() {
@@ -115,6 +119,7 @@ public class SearchFragment extends BaseFragment {
 
 	public interface OnSearchClickListener {
 		public void onSearch(String key);
+
 		public void onSearchClose();
 	}
 

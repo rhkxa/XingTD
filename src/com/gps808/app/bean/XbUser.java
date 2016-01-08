@@ -3,7 +3,7 @@ package com.gps808.app.bean;
 public class XbUser {	
 	private String userId;
 	private String userName;
-	private String userType;
+	private int userType;
 	public String getUserId() {
 		return userId;
 	}
@@ -16,11 +16,12 @@ public class XbUser {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getUserType() {
+	public int getUserType() {
 		return userType;
 	}
-	public void setUserType(String userType) {
+	public void setUserType(int userType) {
 		this.userType = userType;
 	}
+	
 	
 }

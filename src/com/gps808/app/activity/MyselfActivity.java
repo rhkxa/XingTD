@@ -124,8 +124,7 @@ public class MyselfActivity extends BaseActivity {
 		// });
 		// myself_edit = (LinearLayout) findViewById(R.id.myself_edit);
 		// my_headimage.setOnClickListener(click);
-		if (PreferenceUtils.getInstance(MyselfActivity.this).getUserState()
-				.equals("2")) {
+		if (PreferenceUtils.getInstance(MyselfActivity.this).getUserState() > 3) {
 			my_driver.setBackgroundColor(getResources().getColor(R.color.gray));
 			my_driver.setEnabled(false);
 		}
@@ -217,5 +216,4 @@ public class MyselfActivity extends BaseActivity {
 		}
 	}
 
-	
 }

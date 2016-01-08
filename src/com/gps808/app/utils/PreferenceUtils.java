@@ -109,12 +109,12 @@ public class PreferenceUtils {
 		editor.commit();
 	}
 
-	public String getUserState() {
-		return mSharedPreferences.getString(USERSTATE, "");
+	public int getUserState() {
+		return mSharedPreferences.getInt(USERSTATE, 0);
 	}
 
-	public void setUserState(String userType) {
-		editor.putString(USERSTATE, userType);
+	public void setUserState(int userType) {
+		editor.putInt(USERSTATE, userType);
 		editor.commit();
 	}
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
@@ -10,28 +10,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/app_blue"
+        android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp" >
 
-        <com.gps808.app.view.CircleImageView
-            android:id="@+id/car_detail_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/xtd_icon_gray"
-            app:border_color="@color/app_green"
-            app:border_width="2dp" />
+        <com.gps808.app.view.FancyButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            fancy:fb_borderColor="@color/tag_blue"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_defaultColor="@color/white"
+            fancy:fb_iconResource="@drawable/xtd_icon_gray"
+            fancy:fb_iconSize="20dp"
+            fancy:fb_radius="50dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" >
 
                 <TextView
                     android:id="@+id/car_detail_name"
@@ -55,6 +59,7 @@
                 android:id="@+id/car_detail_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:singleLine="true"
                 android:text="车牌号:冀J310UB"
                 android:textColor="@color/white"

@@ -2,7 +2,6 @@ package com.gps808.app.fragment;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -52,7 +51,6 @@ public class CarFragment extends BaseFragment {
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
-
 		car_detail_name = (TextView) root.findViewById(R.id.car_detail_name);
 		car_detail_num = (TextView) root.findViewById(R.id.car_detail_num);
 		car_detail_position = (TextView) root
@@ -68,19 +66,23 @@ public class CarFragment extends BaseFragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				AlterNameDialog alter = new AlterNameDialog(getActivity());
-				alter.setOnAlterClickListener(new OnAlterClickListener() {
-
-					@Override
-					public void onAlterOk(String key) {
-						// TODO Auto-generated method stub
-						setNick(key);
-					}
-				});
-				alter.show();
+				showEditDialog();
 			}
 		});
 
+	}
+
+	private void showEditDialog() {
+		AlterNameDialog alter = new AlterNameDialog(getActivity());
+		alter.setOnAlterClickListener(new OnAlterClickListener() {
+
+			@Override
+			public void onAlterOk(String key) {
+				// TODO Auto-generated method stub
+				setNick(key);
+			}
+		});
+		alter.show();
 	}
 
 	private void setValue(XbCar car) {
@@ -123,7 +125,7 @@ public class CarFragment extends BaseFragment {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 		LogUtils.DebugLog("post json", params.toString());
 		HttpUtil.post(getActivity(), url, entity, "application/json",
 				new jsonHttpResponseHandler() {
@@ -132,7 +134,7 @@ public class CarFragment extends BaseFragment {
 							JSONObject response) {
 						// TODO Auto-generated method stub
 						Utils.ToastMessage(getActivity(), "修改成功");
-						car_detail_name.setText("设备名称："+name);
+						car_detail_name.setText("设备名称：" + name);
 						super.onSuccess(statusCode, headers, response);
 					}
 				});

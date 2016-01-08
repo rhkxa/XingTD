@@ -38,7 +38,6 @@ public class PoliceSetupActivity extends BaseActivity {
 		mPreferenceUtils = PreferenceUtils
 				.getInstance(PoliceSetupActivity.this);
 		init();
-		getData();
 	}
 
 	private void init() {
@@ -60,7 +59,7 @@ public class PoliceSetupActivity extends BaseActivity {
 				Intent intent = new Intent(PoliceSetupActivity.this,
 						PoliceTypeActivity.class);
 				intent.putExtra("options", JSON.toJSONString(alarmOption));
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}
 		});
 	}
@@ -86,7 +85,7 @@ public class PoliceSetupActivity extends BaseActivity {
 						+ voice_switch.isChecked());
 				break;
 			}
-			 setData();
+			setData();
 		}
 	};
 
@@ -152,5 +151,12 @@ public class PoliceSetupActivity extends BaseActivity {
 		mPreferenceUtils.setVoice(alarmOption.isSound());
 		mPreferenceUtils.setShock(alarmOption.isVibration());
 		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		getData();
+		super.onResume();
 	}
 }

@@ -9,10 +9,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.alibaba.fastjson.JSON;
-import com.baidu.mapapi.map.BaiduMapOptions;
-import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.SupportMapFragment;
-import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.CarFragment;
@@ -49,7 +45,7 @@ public class CarDetailsActivity extends BaseActivity {
 
 	private void init() {
 		// TODO Auto-generated method stub
-		HeaderFragment headerFragment = (HeaderFragment) this
+		final HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
 		XbVehicle xbVehicle = JSON.parseObject(getIntent()
 				.getStringExtra("car"), XbVehicle.class);
@@ -57,6 +53,9 @@ public class CarDetailsActivity extends BaseActivity {
 		vid = xbVehicle.getVid();
 		flag = getIntent().getIntExtra("flag", 0);
 		final double[] doubleLng = Utils.getLng(xbVehicle.getLocation());
+		final CarFragment carFragment = CarFragment.newInstance(vid);
+		final WeatherFragment weatherFragment = WeatherFragment.newInstance(
+				doubleLng[1], doubleLng[0]);
 		car_monitor = (RadioButton) findViewById(R.id.car_monitor);
 		car_track = (RadioButton) findViewById(R.id.car_track);
 		car_details = (RadioButton) findViewById(R.id.car_details);
@@ -72,11 +71,11 @@ public class CarDetailsActivity extends BaseActivity {
 			break;
 		case 2:
 			car_details.setChecked(true);
-			mContent = CarFragment.newInstance(vid);
+			mContent = carFragment;
 			break;
 		case 3:
 			car_weather.setChecked(true);
-			mContent = WeatherFragment.newInstance(doubleLng[1], doubleLng[0]);
+			mContent = weatherFragment;
 			break;
 
 		}
@@ -89,7 +88,7 @@ public class CarDetailsActivity extends BaseActivity {
 			@Override
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
 				// TODO Auto-generated method stub
-
+				headerFragment.setCommentBtnGone();
 				switch (arg1) {
 				case R.id.car_monitor:
 					switchContent(mContent, MonitorFragment.newInstance(vid));
@@ -98,11 +97,10 @@ public class CarDetailsActivity extends BaseActivity {
 					switchContent(mContent, TrackFragment.newInstance(vid));
 					break;
 				case R.id.car_details:
-					switchContent(mContent, CarFragment.newInstance(vid));
+					switchContent(mContent, carFragment);
 					break;
 				case R.id.car_weather:
-					switchContent(mContent, WeatherFragment.newInstance(
-							doubleLng[1], doubleLng[0]));
+					switchContent(mContent, weatherFragment);
 					break;
 				}
 			}
@@ -113,14 +111,14 @@ public class CarDetailsActivity extends BaseActivity {
 		if (mContent != to) {
 			mContent = to;
 			FragmentTransaction transaction = mFragmentMan.beginTransaction();
-			// .setCustomAnimations(android.R.anim.fade_in,
-			// android.R.anim.fade_out);
-			// if (!to.isAdded()) { // 先判断是否被add过
-			// transaction.hide(from).add(R.id.content, to).commit(); //
-			// 隐藏当前的fragment，add下一个到Activity中
-			// } else {
-			// transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-			// }
+			transaction.setCustomAnimations(android.R.anim.fade_in,
+					android.R.anim.fade_out);
+//			if (!to.isAdded()) { // 先判断是否被add过
+//				transaction.hide(from).add(R.id.content, to).commit(); //
+//				// 隐藏当前的fragment，add下一个到Activity中
+//			} else {
+//				transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+//			}
 			transaction.replace(R.id.content, to).commit();
 		}
 	}

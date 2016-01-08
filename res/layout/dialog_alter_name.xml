@@ -38,7 +38,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                >
 
                 <EditText
                     android:id="@+id/dialog_content"
@@ -59,8 +60,8 @@
                     android:layout_height="16dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/xtd_close_gray"
-                    android:visibility="gone" />
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/xtd_close_gray" />
             </RelativeLayout>
 
             <LinearLayout

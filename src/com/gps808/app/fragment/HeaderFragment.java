@@ -85,6 +85,9 @@ public class HeaderFragment extends BaseFragment {
 	private void setCommentBtnVisible() {
 		commentBtn.setVisibility(View.VISIBLE);
 	}
+	public void setCommentBtnGone() {
+		commentBtn.setVisibility(View.GONE);
+	}
 
 	public void setCommentBtnListener(OnClickListener listener) {
 		setCommentBtnVisible();
@@ -99,6 +102,9 @@ public class HeaderFragment extends BaseFragment {
 	public int getHeight() {
 		// TODO Auto-generated method stub
 		return backBtn.getHeight();
+	}
+	public ImageView getCommentBtn(){
+		return commentBtn;
 	}
 
 }

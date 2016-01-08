@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -28,8 +29,8 @@
 
                 <ToggleButton
                     android:id="@+id/play_toogle"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_margin="8dp"
                     android:background="@drawable/toogle_select_pic"
                     android:textOff=""
@@ -42,17 +43,15 @@
                     android:layout_height="6dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:max="100"
-                    android:progress="80"
                     android:progressDrawable="@drawable/progress_compare_style" />
 
                 <TextView
+                    android:id="@+id/play_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="09:00"
-                    android:textColor="@color/white"
-                    android:visibility="gone" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -65,7 +64,7 @@
                     android:id="@+id/play_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="速度:100km/h"
+                    android:text="点击上面的播放按钮,开始播放"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>

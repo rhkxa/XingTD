@@ -13,13 +13,11 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -208,7 +206,7 @@ public class LoginActivity extends BaseActivity {
 							.getString(R.string.msg_login_pwd_null));
 					return;
 				}
-				HttpUtil.cancelAllRequest();
+				HttpUtil.cancelRequest(LoginActivity.this);
 				getLogin();
 			}
 		});
@@ -218,11 +216,8 @@ public class LoginActivity extends BaseActivity {
 	// 登录
 	private void getLogin() {
 		if (Utils.isNetWorkConnected(LoginActivity.this)) {
-			showProgressDialog(LoginActivity.this, "登录中，请稍等");
 			String url = UrlConfig.getLogin();
 			JSONObject params = new JSONObject();
-
-			
 			StringEntity entity = null;
 			try {
 				params.put("username", userName.getText().toString());
@@ -235,7 +230,14 @@ public class LoginActivity extends BaseActivity {
 			}
 			LogUtils.DebugLog("post json", params.toString());
 			HttpUtil.post(LoginActivity.this, url, entity, "application/json",
-					new jsonHttpResponseHandler() {
+					new JsonHttpResponseHandler() {
+						@Override
+						public void onStart() {
+							// TODO Auto-generated method stub
+							showProgressDialog(LoginActivity.this, "登录中，请稍等");
+							super.onStart();
+						}
+
 						@Override
 						public void onSuccess(int statusCode,
 								org.apache.http.Header[] headers,
@@ -276,6 +278,12 @@ public class LoginActivity extends BaseActivity {
 							super.onFailure(statusCode, headers, throwable,
 									errorResponse);
 						}
+						@Override
+						public void onFinish() {
+							// TODO Auto-generated method stub
+							dismissProgressDialog();
+							super.onFinish();
+						}
 					});
 
 		} else {
@@ -292,7 +300,7 @@ public class LoginActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			if (mPreferences.getAutoLogin()) {
-				if (!StringUtils.isEmpty(mPreferences.getUserState())) {
+				if (mPreferences.getUserState() > 0) {
 					login.performClick();
 				}
 			}
@@ -438,7 +446,7 @@ public class LoginActivity extends BaseActivity {
 								buffer.write(tmp, 0, l);
 								sendProgressMessage(count, (int) contentLength);
 							}
-							
+
 						} finally {
 							AsyncHttpClient.silentCloseInputStream(instream);
 							buffer.flush();

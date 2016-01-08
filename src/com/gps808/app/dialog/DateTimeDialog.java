@@ -104,7 +104,7 @@ public class DateTimeDialog extends Dialog implements View.OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_ok:
-			wheelClickListener.onWheelOk(index, data + " " + time);
+			wheelClickListener.onWheelOk(index, data + " " + time + ":00");
 
 			break;
 		case R.id.btn_cancel:
