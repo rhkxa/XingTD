@@ -111,8 +111,8 @@ public class CarDetailsActivity extends BaseActivity {
 		if (mContent != to) {
 			mContent = to;
 			FragmentTransaction transaction = mFragmentMan.beginTransaction();
-			transaction.setCustomAnimations(android.R.anim.fade_in,
-					android.R.anim.fade_out);
+//			transaction.setCustomAnimations(android.R.anim.fade_in,
+//					android.R.anim.fade_out);
 //			if (!to.isAdded()) { // 先判断是否被add过
 //				transaction.hide(from).add(R.id.content, to).commit(); //
 //				// 隐藏当前的fragment，add下一个到Activity中

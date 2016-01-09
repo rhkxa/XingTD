@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gps808.app"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="4"
+    android:versionName="1.4" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -197,10 +197,10 @@
         <meta-data
             android:name="api_key"
             android:value="LO7iPVuz1s5MnZniNPYD8ISr" />
-        <!-- 家XrnxWbyjML3T0b2Pb4ukY8OE 公司N8qQtsf1z2QZUtB6ViQegOWH -->
+        <!-- 家XrnxWbyjML3T0b2Pb4ukY8OE 公司N8qQtsf1z2QZUtB6ViQegOWH 打包rIbhPNnCV1NUclk1bubLfswt -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
+            android:value="XrnxWbyjML3T0b2Pb4ukY8OE" />
     </application>
 
 </manifest>

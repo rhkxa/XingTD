@@ -5,10 +5,7 @@ import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -38,22 +35,18 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
-import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbMonitor;
-import com.gps808.app.bean.XbTrack;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.dialog.DateDialog;
 import com.gps808.app.dialog.DateDialog.OnTimeClickListener;
 import com.gps808.app.utils.BaseFragment;
-import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
-import com.gps808.app.view.FancyButton;
 
 /**
  * 轨迹回放

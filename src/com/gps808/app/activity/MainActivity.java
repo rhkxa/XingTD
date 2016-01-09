@@ -105,6 +105,14 @@ public class MainActivity extends BaseActivity {
 	private FancyButton main_person;
 	private String mCurrentCar = null;
 
+	// 覆盖物相关
+	private LatLng latLng = null;
+	private OverlayOptions overlayOptions = null;
+	private Marker marker = null;
+	private double[] doubleLng;
+	private BitmapDescriptor car;
+	private List<Marker> markerList = new ArrayList<Marker>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -210,7 +218,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onSearchClose() {
 				// TODO Auto-generated method stub
-				key="";
+				key = "";
 				getVehicleLocation(true);
 			}
 		});
@@ -221,6 +229,12 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				MapStatus mapStatus = new MapStatus.Builder()
+						.target(new LatLng(38.31056, 116.844697)).zoom(10.0f)
+						.build();
+				MapStatusUpdate msu = MapStatusUpdateFactory
+						.newMapStatus(mapStatus);
+				mBaiduMap.setMapStatus(msu);
 				getVehicleLocation(true);
 			}
 		});
@@ -251,7 +265,7 @@ public class MainActivity extends BaseActivity {
 				mLocClient = new LocationClient(MainActivity.this);
 				mLocClient.registerLocationListener(myListener);
 				LocationClientOption option = new LocationClientOption();
-				option.setOpenGps(true);// 打开gps
+				option.setOpenGps(false);// 打开gps
 				option.setCoorType("bd09ll"); // 设置坐标类型
 				option.setScanSpan(1000);
 				mLocClient.setLocOption(option);
@@ -263,42 +277,55 @@ public class MainActivity extends BaseActivity {
 	/**
 	 * 初始化图层
 	 */
-	public void addInfosOverlay(List<XbVehicle> infos) {
-		mBaiduMap.clear();
-		LatLng latLng = null;
-		OverlayOptions overlayOptions = null;
-		Marker marker = null;
-		double[] doubleLng;
-		BitmapDescriptor car;
-		LatLngBounds.Builder builder = new LatLngBounds.Builder();
-		for (XbVehicle info : infos) {
+	public void addInfosOverlay() {
+		int size = vehicle.size();
+		for (int i = 0; i < size; i++) {
+			XbVehicle info = vehicle.get(i);
 			doubleLng = Utils.getLng(info.getLocation());
 			// 位置
 			latLng = new LatLng(doubleLng[1], doubleLng[0]);
-			builder.include(latLng);
 			if (info.isOnline()) {
 				car = online;
 			} else {
 				car = offline;
 			}
-			// 图标
-			overlayOptions = new MarkerOptions().position(latLng).icon(car)
-					.zIndex(5).rotate(info.getDirection());
-			// .animateType(MarkerAnimateType.drop);下降动画
-
-			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+			int markerPosition = loadMarkerPosition(info.getVid());
 			Bundle bundle = new Bundle();
 			bundle.putString("info", JSON.toJSONString(info));
-			marker.setExtraInfo(bundle);
+			bundle.putString("id", info.getVid());
+			if (markerPosition >= 0) {
+				markerList.get(markerPosition).setIcon(car);
+				markerList.get(markerPosition).setPosition(latLng);
+				markerList.get(markerPosition).setRotate(info.getDirection());
+				markerList.get(markerPosition).setExtraInfo(bundle);
+			} else {
+				overlayOptions = new MarkerOptions().position(latLng).icon(car)
+						.rotate(info.getDirection());
+				marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+				marker.setExtraInfo(bundle);
+				markerList.add(marker);
+			}
 			if (!StringUtils.isEmpty(mCurrentCar)) {
 				showInfoWindow();
 			}
 
 		}
 		// 缩放地图，使所有Overlay都在合适的视野内
+		// LatLngBounds.Builder builder = new LatLngBounds.Builder();
+		// builder.include(latLng);
 		// mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
 		// .build()));
 
+	}
+
+	private int loadMarkerPosition(String vid) {
+		int size = markerList.size();
+		for (int i = 0; i < size; i++) {
+			if (marker.getExtraInfo().getString("id").equals(vid)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	// 加载首页车辆信息
@@ -328,7 +355,7 @@ public class MainActivity extends BaseActivity {
 						vehicle = JSON.parseArray(response.toString(),
 								XbVehicle.class);
 						LogUtils.DebugLog("result json", response.toString());
-						addInfosOverlay(vehicle);
+						addInfosOverlay();
 						super.onSuccess(statusCode, headers, response);
 					}
 				});
@@ -368,7 +395,8 @@ public class MainActivity extends BaseActivity {
 		viewHolder = (ViewHolder) mMarkerLy.getTag();
 		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
 		if (xbVehicle.isOnline()) {
-			viewHolder.popwindows_state.setText("在线" + xbVehicle.getSpeed()+"Km/h");
+			viewHolder.popwindows_state.setText("在线" + xbVehicle.getSpeed()
+					+ "Km/h");
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
 		} else {
@@ -517,8 +545,7 @@ public class MainActivity extends BaseActivity {
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
 						latLng, -100);
 				mBaiduMap.showInfoWindow(mInfoWindow);
-				MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(
-						latLng, 14.0f);
+				MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
 				mBaiduMap.setMapStatus(msu);
 			}
 		}

@@ -52,8 +52,11 @@ public class TrackFragment extends BaseFragment {
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 	private String vid;
-	BitmapDescriptor locationIcon = BitmapDescriptorFactory
+	private BitmapDescriptor car;
+	BitmapDescriptor online = BitmapDescriptorFactory
 			.fromResource(R.drawable.xtd_carlogo_on);
+	BitmapDescriptor offline = BitmapDescriptorFactory
+			.fromResource(R.drawable.xtd_carlogo_off);
 	BitmapDescriptor startIcon = BitmapDescriptorFactory
 			.fromResource(R.drawable.map_start_icon);
 	LatLng latLng = null;
@@ -140,10 +143,19 @@ public class TrackFragment extends BaseFragment {
 		latLng = new LatLng(doubleLng[1], doubleLng[0]);
 		points.add(latLng);
 		if (marker == null) {
+			if (xbTrack.isOnline()) {
+				handler_runnable_time = PreferenceUtils.getInstance(
+						getActivity()).getTrackTime() * 1000;
+				handler.postDelayed(runnable, handler_runnable_time);
+				car = online;
+			} else {
+				handler.removeCallbacks(runnable);
+				Utils.ToastMessage(getActivity(), "车辆离线无法跟踪");
+				car = offline;
+			}
 			// 图标
-			overlayOptions = new MarkerOptions().position(latLng)
-					.icon(locationIcon).zIndex(5)
-					.rotate(xbTrack.getDirection())
+			overlayOptions = new MarkerOptions().position(latLng).icon(car)
+					.zIndex(5).rotate(xbTrack.getDirection())
 					.animateType(MarkerAnimateType.grow);// 生长动画
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 
@@ -241,7 +253,6 @@ public class TrackFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			getData();
-			handler.postDelayed(this, handler_runnable_time);
 		}
 	};
 
@@ -249,7 +260,6 @@ public class TrackFragment extends BaseFragment {
 	public void onPause() {
 		// TODO Auto-generated method stub
 		mMapView.onPause();
-
 		super.onPause();
 	}
 
@@ -257,9 +267,6 @@ public class TrackFragment extends BaseFragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		mMapView.onResume();
-		handler_runnable_time = PreferenceUtils.getInstance(getActivity())
-				.getTrackTime() * 1000;
-		handler.postDelayed(runnable, handler_runnable_time);
 		super.onResume();
 	}
 
@@ -268,7 +275,7 @@ public class TrackFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		mMapView.onDestroy();
 		handler.removeCallbacks(runnable);
-		locationIcon.recycle();
+		car.recycle();
 		startIcon.recycle();
 		super.onDestroy();
 	}

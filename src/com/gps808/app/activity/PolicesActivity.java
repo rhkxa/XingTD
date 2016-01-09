@@ -55,7 +55,6 @@ public class PolicesActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_police);
 		init();
-		getData(false);
 
 	}
 
@@ -88,7 +87,7 @@ public class PolicesActivity extends BaseActivity {
 			@Override
 			public void onSearchClose() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		police_list = (PullToRefreshListView) findViewById(R.id.police_list);
@@ -157,7 +156,9 @@ public class PolicesActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-
+		if (xbPolices.size() == 0) {
+			getData(false);
+		}
 		super.onResume();
 	}
 }
