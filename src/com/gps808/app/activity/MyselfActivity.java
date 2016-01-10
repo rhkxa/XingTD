@@ -128,12 +128,12 @@ public class MyselfActivity extends BaseActivity {
 			my_driver.setBackgroundColor(getResources().getColor(R.color.gray));
 			my_driver.setEnabled(false);
 		}
+		
 		mLocClient = new LocationClient(MyselfActivity.this);
 		mLocClient.registerLocationListener(myListener);
 		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);// 打开gps
+		option.setOpenGps(false);// 打开gps
 		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(1000);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
 	}

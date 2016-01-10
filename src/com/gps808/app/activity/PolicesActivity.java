@@ -33,6 +33,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 /**
  * 报警列表
@@ -139,9 +140,22 @@ public class PolicesActivity extends BaseActivity {
 					startPage++;
 				}
 				pAdapter.notifyDataSetChanged();
-
 				super.onSuccess(statusCode, headers, response);
 			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					String responseString, Throwable throwable) {
+				// TODO Auto-generated method stub
+				if (("302").equals(responseString)) {
+					Intent intent = new Intent(PolicesActivity.this,
+							LoginActivity.class);
+					intent.putExtra("reset", true);
+					startActivity(intent);
+				} else {
+					Utils.showSuperCardToast(PolicesActivity.this, "请求失败,请重试");
+				}
+		}
 
 			@Override
 			public void onFinish() {

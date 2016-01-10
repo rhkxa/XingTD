@@ -110,6 +110,7 @@ public class SearchFragment extends BaseFragment {
 		});
 
 	}
+	
 
 	private OnSearchClickListener searchClickListener;
 

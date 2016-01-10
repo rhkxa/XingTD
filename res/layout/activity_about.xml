@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="扫瞄二维码下载本软件"
+                    android:text="扫瞄二维码下载易路通"
                     android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
             </LinearLayout>
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:text="1.1"
+                    android:text="1.5"
                     android:textColor="@color/black"
                     android:textSize="@dimen/body" />
             </RelativeLayout>
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:text="2016-1-1"
+                    android:text="2016-1-10"
                     android:textColor="@color/black"
                     android:textSize="@dimen/body" />
             </RelativeLayout>

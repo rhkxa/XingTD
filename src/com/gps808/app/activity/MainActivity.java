@@ -64,6 +64,12 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 
 /**
  * 主界面
@@ -88,6 +94,8 @@ public class MainActivity extends BaseActivity {
 	private LocationMode mCurrentMode;
 	BitmapDescriptor mCurrentMarker;
 	boolean isFirstLoc = true;// 是否首次定位
+
+	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 
 	private long mExitTime = 0;
 	List<XbVehicle> vehicle = new ArrayList<XbVehicle>();
@@ -125,6 +133,7 @@ public class MainActivity extends BaseActivity {
 	private void init() {
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
+		mBaiduMap.getUiSettings().setCompassEnabled(true);
 		MapStatus mapStatus = new MapStatus.Builder()
 				.target(new LatLng(38.31056, 116.844697)).zoom(10.0f).build();
 		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(mapStatus);
@@ -137,6 +146,7 @@ public class MainActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		mBaiduMap.getUiSettings().setCompassEnabled(true);
 		// 加载数据
 		getVehicleLocation(false);
 		// 对Marker的点击弹出PopWindows
@@ -206,20 +216,47 @@ public class MainActivity extends BaseActivity {
 		// 搜索刷新
 		SearchFragment searchFragment = (SearchFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.search_bar);
+		searchFragment.setHint("请输入要搜索的地区名称,如:沧州");
 		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
 
 			@Override
 			public void onSearch(String k) {
 				// TODO Auto-generated method stub
-				key = k;
-				getVehicleLocation(true);
+				// key = k;
+				// getVehicleLocation(true);
+
+				// 初始化搜索模块，注册事件监听
+				mSearch = GeoCoder.newInstance();
+				mSearch.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+
+					@Override
+					public void onGetReverseGeoCodeResult(
+							ReverseGeoCodeResult arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onGetGeoCodeResult(GeoCodeResult result) {
+						// TODO Auto-generated method stub
+						if (result == null
+								|| result.error != SearchResult.ERRORNO.NO_ERROR) {
+							Utils.ToastMessage(MainActivity.this, "抱歉，未能找到结果");
+							return;
+						}
+						mBaiduMap.setMapStatus(MapStatusUpdateFactory
+								.newLatLng(result.getLocation()));
+					}
+				});
+				// Geo搜索
+				mSearch.geocode(new GeoCodeOption().city(k).address(k));
 			}
 
 			@Override
 			public void onSearchClose() {
 				// TODO Auto-generated method stub
-				key = "";
-				getVehicleLocation(true);
+				// key = "";
+				// getVehicleLocation(true);
 			}
 		});
 		// 手动刷新
@@ -238,20 +275,7 @@ public class MainActivity extends BaseActivity {
 				getVehicleLocation(true);
 			}
 		});
-		// 设置比例尺位置与缩小放大的按钮
-		ZoomControlView mZoomControlView = (ZoomControlView) findViewById(R.id.ZoomControlView);
-		mZoomControlView.setMapView(mMapView);
-		mBaiduMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
 
-			@Override
-			public void onMapLoaded() {
-				// TODO Auto-generated method stub
-				int x = main_refresh.getRight() + 20;
-				int y = main_refresh.getBottom() - 50;
-				Point point = new Point(x, y);
-				mMapView.setScaleControlPosition(point);
-			}
-		});
 		// 用户位置
 		main_person = (FancyButton) findViewById(R.id.main_person);
 		main_person.setOnClickListener(new OnClickListener() {
@@ -267,9 +291,24 @@ public class MainActivity extends BaseActivity {
 				LocationClientOption option = new LocationClientOption();
 				option.setOpenGps(false);// 打开gps
 				option.setCoorType("bd09ll"); // 设置坐标类型
-				option.setScanSpan(1000);
 				mLocClient.setLocOption(option);
 				mLocClient.start();
+			}
+		});
+		// 设置比例尺位置与缩小放大的按钮,指南针位置
+		ZoomControlView mZoomControlView = (ZoomControlView) findViewById(R.id.ZoomControlView);
+		mZoomControlView.setMapView(mMapView);
+		mBaiduMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
+			@Override
+			public void onMapLoaded() {
+				// TODO Auto-generated method stub
+				Point scalePoint = new Point(main_refresh.getRight() + 20,
+						main_refresh.getBottom() - 50);
+				mMapView.setScaleControlPosition(scalePoint);
+				Point compassPoint = new Point(
+						(main_refresh.getLeft() + main_refresh.getRight()) / 2,
+						(main_person.getBottom() + main_person.getTop()) / 2);
+				mBaiduMap.getUiSettings().setCompassPosition(compassPoint);
 			}
 		});
 	}
@@ -476,13 +515,11 @@ public class MainActivity extends BaseActivity {
 	/**
 	 * 定时任务,刷新首页
 	 */
-
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			// 要做的事情
 			getVehicleLocation(false);
 			handler.postDelayed(this, handler_runnable_time);
 		}
@@ -519,6 +556,9 @@ public class MainActivity extends BaseActivity {
 			mLocClient.stop();
 			// 关闭定位图层
 			mBaiduMap.setMyLocationEnabled(false);
+		}
+		if(mSearch!=null){
+			mSearch.destroy();
 		}
 
 	}

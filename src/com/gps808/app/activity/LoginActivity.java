@@ -261,7 +261,6 @@ public class LoginActivity extends BaseActivity {
 									startActivity(intent);
 								}
 								finish();
-
 							} else {
 								Utils.ToastMessage(LoginActivity.this,
 										Utils.getKey(response, "errorMsg"));

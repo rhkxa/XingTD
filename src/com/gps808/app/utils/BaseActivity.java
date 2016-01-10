@@ -224,7 +224,6 @@ public class BaseActivity extends FragmentActivity {
 
 	private void reLogin() {
 		Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-		intent.putExtra("reset", true);
 		startActivity(intent);
 	}
 
