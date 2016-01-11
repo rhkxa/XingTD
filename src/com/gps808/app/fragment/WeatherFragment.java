@@ -17,27 +17,31 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.adapter.WeatherAdapter;
+import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.bean.XbWeather;
 import com.gps808.app.bean.XbWeek;
 import com.gps808.app.utils.BaseFragment;
+import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
+import com.gps808.app.utils.Utils;
 
 public class WeatherFragment extends BaseFragment {
 	private TextView weather_city, weather_state, weather_temperature,
 			weather_week, weather_today, weather_date, weather_desc;
 	private ListView weather_list;
 	private WeatherAdapter wadapter;
-	private List<XbWeek> xbWeeks=new ArrayList<XbWeek>();
+	private List<XbWeek> xbWeeks = new ArrayList<XbWeek>();
+	private XbVehicle xbVehicle;
+	private double[] doubleLng;
+	private String vid;
 
-	private double lat, lng;
-
-	public static WeatherFragment newInstance(double lat, double lng) {
+	public static WeatherFragment newInstance(XbVehicle xbVehicle) {
 		WeatherFragment fragment = new WeatherFragment();
-		fragment.lat = lat;
-		fragment.lng = lng;
+		fragment.xbVehicle = xbVehicle;
 		return fragment;
 	}
 
@@ -47,12 +51,13 @@ public class WeatherFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		View root = inflater.inflate(R.layout.fragment_weather, null);
 		init(root);
-		getData();
 		return root;
 	}
 
 	private void init(View root) {
 		// TODO Auto-generated method stub
+		doubleLng = Utils.getLng(xbVehicle.getLocation());
+		vid = xbVehicle.getVid();
 		weather_city = (TextView) root.findViewById(R.id.weather_city);
 		weather_state = (TextView) root.findViewById(R.id.weather_state);
 		weather_temperature = (TextView) root
@@ -64,9 +69,17 @@ public class WeatherFragment extends BaseFragment {
 		weather_list = (ListView) root.findViewById(R.id.weather_list);
 		wadapter = new WeatherAdapter(getActivity(), xbWeeks);
 		weather_list.setAdapter(wadapter);
+		if (System.currentTimeMillis()-PreferenceUtils.getInstance(getActivity())
+				.getValue("Weather" + vid) > 30 * 60 * 1000) {
+			getData();
+		} else {
+			setValue(FileUtils.read(getActivity(), "FileWeather" + vid));
+		}
+
 	}
 
-	private void setValue(XbWeather xbWeather) {
+	private void setValue(String response) {
+		XbWeather xbWeather = JSON.parseObject(response, XbWeather.class);
 		weather_city.setText(xbWeather.getCityInfo());
 		weather_state.setText(xbWeather.getNow().getWeather());
 		weather_temperature.setText(xbWeather.getNow().getTemperature());
@@ -74,7 +87,7 @@ public class WeatherFragment extends BaseFragment {
 				.getWeekday()));
 		// weather_today.setText(xbWeather.getNow().get);
 		weather_date.setText(StringUtils.toDate(System.currentTimeMillis()));
-		weather_desc.setText("今天"+xbWeather.getNow().getDesc());
+		weather_desc.setText("今天" + xbWeather.getNow().getDesc());
 		xbWeeks.add(xbWeather.getF2());
 		xbWeeks.add(xbWeather.getF3());
 		xbWeeks.add(xbWeather.getF4());
@@ -85,17 +98,19 @@ public class WeatherFragment extends BaseFragment {
 	}
 
 	private void getData() {
-		String url = UrlConfig.getWeather(lng, lat);
+		showProgressDialog(getActivity(), "正在加载天气信息,请稍等");
+		String url = UrlConfig.getWeather(doubleLng[0], doubleLng[1]);
 		HttpUtil.get(getActivity(), url, new jsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
 				// TODO Auto-generated method stub
-
 				LogUtils.DebugLog("result json", response.toString());
-				XbWeather xbWeather = JSON.parseObject(response.toString(),
-						XbWeather.class);
-				setValue(xbWeather);
+				setValue(response.toString());
+				PreferenceUtils.getInstance(getActivity()).setValue(
+						"Weather" + vid, System.currentTimeMillis());
+				FileUtils.write(getActivity(), "FileWeather" + vid,
+						response.toString());
 				super.onSuccess(statusCode, headers, response);
 			}
 		});

@@ -52,7 +52,7 @@ public class XtdApplication extends Application {
 		SDKInitializer.initialize(this);
 		initImageLoader(getApplicationContext());
 		CrashHandler crashHandler = CrashHandler.getInstance();
-		crashHandler.init(getApplicationContext());
+//		crashHandler.init(getApplicationContext());
 	}
 
 	public void addActivity(Activity activity) {

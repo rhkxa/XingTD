@@ -91,7 +91,7 @@ public class SearchFragment extends BaseFragment {
 				// TODO Auto-generated method stub
 				layout_search_bar_edittext.clearFocus();
 				layout_search_bar_close.setVisibility(View.GONE);
-				if (StringUtils.isEmpty(layout_search_bar_edittext.getText()
+				if (!StringUtils.isEmpty(layout_search_bar_edittext.getText()
 						.toString())) {
 					layout_search_bar_edittext.setText("");
 					searchClickListener.onSearchClose();
@@ -104,13 +104,12 @@ public class SearchFragment extends BaseFragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				searchClickListener.onSearch(layout_search_bar_edittext
-						.getText().toString());
+						.getText().toString().trim());
 				layout_search_bar_edittext.clearFocus();
 			}
 		});
 
 	}
-	
 
 	private OnSearchClickListener searchClickListener;
 

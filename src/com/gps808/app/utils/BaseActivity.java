@@ -139,13 +139,7 @@ public class BaseActivity extends FragmentActivity {
 			super.onFailure(statusCode, headers, responseString, throwable);
 		}
 
-		@Override
-		public void onRetry(int retryNo) {
-			// TODO Auto-generated method stub
-			LogUtils.DebugLog("http请求错误正在重试");
-			retryNo = 3;
-			super.onRetry(retryNo);
-		}
+		
 
 		@Override
 		public void onFinish() {

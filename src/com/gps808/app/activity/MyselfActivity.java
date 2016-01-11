@@ -26,6 +26,7 @@ import com.gps808.app.activity.DisplayLineActivity.MyLocationListenner;
 import com.gps808.app.bean.XbWeather;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
@@ -128,14 +129,20 @@ public class MyselfActivity extends BaseActivity {
 			my_driver.setBackgroundColor(getResources().getColor(R.color.gray));
 			my_driver.setEnabled(false);
 		}
-		
-		mLocClient = new LocationClient(MyselfActivity.this);
-		mLocClient.registerLocationListener(myListener);
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(false);// 打开gps
-		option.setCoorType("bd09ll"); // 设置坐标类型
-		mLocClient.setLocOption(option);
-		mLocClient.start();
+		if (System.currentTimeMillis()
+				- PreferenceUtils.getInstance(MyselfActivity.this).getValue(
+						"NowWeather") > 60 * 60 * 1000) {
+			mLocClient = new LocationClient(MyselfActivity.this);
+			mLocClient.registerLocationListener(myListener);
+			LocationClientOption option = new LocationClientOption();
+			option.setOpenGps(false);// 打开gps
+			option.setCoorType("bd09ll"); // 设置坐标类型
+			mLocClient.setLocOption(option);
+			mLocClient.start();
+		} else {
+			my_weather.setText(FileUtils.read(MyselfActivity.this,
+					"FileNowWeather"));
+		}
 	}
 
 	private OnClickListener click = new OnClickListener() {
@@ -192,6 +199,10 @@ public class MyselfActivity extends BaseActivity {
 					JSONObject response) {
 				// TODO Auto-generated method stub
 				LogUtils.DebugLog("result json", response.toString());
+				FileUtils.write(MyselfActivity.this, "FileNowWeather",
+						Utils.getKey(response, "desc"));
+				PreferenceUtils.getInstance(MyselfActivity.this).setValue(
+						"NowWeather", System.currentTimeMillis());
 				my_weather.setText(Utils.getKey(response, "desc"));
 				if (mLocClient != null) {
 					// 退出时销毁定位

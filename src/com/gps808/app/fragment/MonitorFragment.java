@@ -184,13 +184,19 @@ public class MonitorFragment extends BaseFragment {
 						LogUtils.DebugLog("result json", response.toString());
 						xbMonitor = JSON.parseObject(response.toString(),
 								XbMonitor.class);
-						play_totaltime.setText("时长:" + xbMonitor.getTotalTime());
-						play_mileage.setText("里程:" + xbMonitor.getMileage());
+						play_totaltime.setText("行驶时长:"
+								+ xbMonitor.getTotalTime());
+						play_mileage.setText("行驶里程:" + xbMonitor.getMileage()
+								+ "Km");
 						xbVehicles = xbMonitor.getLocations();
 						if (xbVehicles.size() > 0) {
 							play_progress.setMax(xbVehicles.size());
 							play_toogle.setEnabled(true);
 							play_progress.setProgress(0);
+							play_speed.setText("速度:"
+									+ xbVehicles.get(0).getSpeed() + "Km/h");
+							play_time.setText("开始时间:"
+									+ xbVehicles.get(0).getTime());
 							parseData();
 							play_layout.setVisibility(View.VISIBLE);
 						} else {
@@ -264,7 +270,7 @@ public class MonitorFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			playMonitor(xbVehicles.get(i));
-			play_speed.setText("速度:" + xbVehicles.get(i).getSpeed()+"Km/h");
+			play_speed.setText("速度:" + xbVehicles.get(i).getSpeed() + "Km/h");
 			play_time.setText("时间:" + xbVehicles.get(i).getTime());
 			i++;
 			play_progress.setProgress(i);

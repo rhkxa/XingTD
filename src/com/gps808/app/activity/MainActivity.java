@@ -120,6 +120,7 @@ public class MainActivity extends BaseActivity {
 	private double[] doubleLng;
 	private BitmapDescriptor car;
 	private List<Marker> markerList = new ArrayList<Marker>();
+	private boolean isFirstLoad = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,9 @@ public class MainActivity extends BaseActivity {
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		mBaiduMap.getUiSettings().setCompassEnabled(true);
+		// 初始化搜索模块，注册事件监听
+		mSearch = GeoCoder.newInstance();
+		mSearch.setOnGetGeoCodeResultListener(new MyGetGeoCoderResultListener());
 		MapStatus mapStatus = new MapStatus.Builder()
 				.target(new LatLng(38.31056, 116.844697)).zoom(10.0f).build();
 		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(mapStatus);
@@ -223,31 +227,7 @@ public class MainActivity extends BaseActivity {
 			public void onSearch(String k) {
 				// TODO Auto-generated method stub
 				// key = k;
-				// getVehicleLocation(true);
-
-				// 初始化搜索模块，注册事件监听
-				mSearch = GeoCoder.newInstance();
-				mSearch.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
-
-					@Override
-					public void onGetReverseGeoCodeResult(
-							ReverseGeoCodeResult arg0) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onGetGeoCodeResult(GeoCodeResult result) {
-						// TODO Auto-generated method stub
-						if (result == null
-								|| result.error != SearchResult.ERRORNO.NO_ERROR) {
-							Utils.ToastMessage(MainActivity.this, "抱歉，未能找到结果");
-							return;
-						}
-						mBaiduMap.setMapStatus(MapStatusUpdateFactory
-								.newLatLng(result.getLocation()));
-					}
-				});
+				// getVehicleLocation(true);		
 				// Geo搜索
 				mSearch.geocode(new GeoCodeOption().city(k).address(k));
 			}
@@ -318,6 +298,7 @@ public class MainActivity extends BaseActivity {
 	 */
 	public void addInfosOverlay() {
 		int size = vehicle.size();
+		int markerPosition = -1;
 		for (int i = 0; i < size; i++) {
 			XbVehicle info = vehicle.get(i);
 			doubleLng = Utils.getLng(info.getLocation());
@@ -328,21 +309,25 @@ public class MainActivity extends BaseActivity {
 			} else {
 				car = offline;
 			}
-			int markerPosition = loadMarkerPosition(info.getVid());
+
 			Bundle bundle = new Bundle();
 			bundle.putString("info", JSON.toJSONString(info));
 			bundle.putString("id", info.getVid());
-			if (markerPosition >= 0) {
-				markerList.get(markerPosition).setIcon(car);
-				markerList.get(markerPosition).setPosition(latLng);
-				markerList.get(markerPosition).setRotate(info.getDirection());
-				markerList.get(markerPosition).setExtraInfo(bundle);
-			} else {
+			if (isFirstLoad) {
 				overlayOptions = new MarkerOptions().position(latLng).icon(car)
 						.rotate(info.getDirection());
 				marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 				marker.setExtraInfo(bundle);
 				markerList.add(marker);
+			} else {
+				markerPosition = loadMarkerPosition(info.getVid());
+				if (markerPosition >= 0) {
+					markerList.get(markerPosition).setIcon(car);
+					markerList.get(markerPosition).setPosition(latLng);
+					markerList.get(markerPosition).setRotate(
+							info.getDirection());
+					markerList.get(markerPosition).setExtraInfo(bundle);
+				}
 			}
 			if (!StringUtils.isEmpty(mCurrentCar)) {
 				showInfoWindow();
@@ -360,7 +345,7 @@ public class MainActivity extends BaseActivity {
 	private int loadMarkerPosition(String vid) {
 		int size = markerList.size();
 		for (int i = 0; i < size; i++) {
-			if (marker.getExtraInfo().getString("id").equals(vid)) {
+			if (markerList.get(i).getExtraInfo().getString("id").equals(vid)) {
 				return i;
 			}
 		}
@@ -395,6 +380,9 @@ public class MainActivity extends BaseActivity {
 								XbVehicle.class);
 						LogUtils.DebugLog("result json", response.toString());
 						addInfosOverlay();
+						if (isFirstLoad) {
+							isFirstLoad = !isFirstLoad;
+						}
 						super.onSuccess(statusCode, headers, response);
 					}
 				});
@@ -434,7 +422,7 @@ public class MainActivity extends BaseActivity {
 		viewHolder = (ViewHolder) mMarkerLy.getTag();
 		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
 		if (xbVehicle.isOnline()) {
-			viewHolder.popwindows_state.setText("在线" + xbVehicle.getSpeed()
+			viewHolder.popwindows_state.setText("在线 " + xbVehicle.getSpeed()
 					+ "Km/h");
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
@@ -557,7 +545,7 @@ public class MainActivity extends BaseActivity {
 			// 关闭定位图层
 			mBaiduMap.setMyLocationEnabled(false);
 		}
-		if(mSearch!=null){
+		if (mSearch != null) {
 			mSearch.destroy();
 		}
 
@@ -597,6 +585,31 @@ public class MainActivity extends BaseActivity {
 		PushManager.startWork(getApplicationContext(),
 				PushConstants.LOGIN_TYPE_API_KEY,
 				PushUtils.getMetaValue(MainActivity.this, "api_key"));
+	}
+
+	/**
+	 * GEO搜索监听函数
+	 */
+	public class MyGetGeoCoderResultListener implements
+			OnGetGeoCoderResultListener {
+
+		@Override
+		public void onGetGeoCodeResult(GeoCodeResult result) {
+			// TODO Auto-generated method stub
+			LogUtils.DebugLog("Geo搜索返回值" + result.error);
+			if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+				Utils.ToastMessage(MainActivity.this, "抱歉，未能找到结果");
+				return;
+			}
+			mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result
+					.getLocation()));
+		}
+
+		@Override
+		public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+			// TODO Auto-generated method stub
+		}
+
 	}
 
 	/**

@@ -379,7 +379,6 @@ public class LoginActivity extends BaseActivity {
 
 	private void showDownloadDialog(Update update) {
 		AlertDialog.Builder builder = new Builder(this);
-
 		final LayoutInflater inflater = LayoutInflater.from(this);
 		View v = inflater.inflate(R.layout.widget_update_progress, null);
 		mProgress = (ProgressBar) v.findViewById(R.id.update_progress);

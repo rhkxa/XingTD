@@ -152,6 +152,7 @@ public class TrackFragment extends BaseFragment {
 				handler.removeCallbacks(runnable);
 				Utils.ToastMessage(getActivity(), "车辆离线无法跟踪");
 				car = offline;
+				handler.removeCallbacks(runnable);
 			}
 			// 图标
 			overlayOptions = new MarkerOptions().position(latLng).icon(car)
@@ -253,6 +254,7 @@ public class TrackFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			getData();
+			handler.postDelayed(runnable, handler_runnable_time);
 		}
 	};
 
@@ -275,7 +277,9 @@ public class TrackFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		mMapView.onDestroy();
 		handler.removeCallbacks(runnable);
-		car.recycle();
+		if(car!=null){
+			car.recycle();
+		}	
 		startIcon.recycle();
 		super.onDestroy();
 	}

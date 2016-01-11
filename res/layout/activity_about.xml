@@ -109,6 +109,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:text="公司名称:"
+                    android:textSize="@dimen/body" />
+
+                <TextView
+                    android:id="@+id/about_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="沧州星达通"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/body" />
+            </RelativeLayout>
+
+            <View style="@style/blackline" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="官方网站:"
                     android:textSize="@dimen/body" />
 

@@ -215,21 +215,34 @@ public class PreferenceUtils {
 		editor.putString("currentaddress", address);
 		editor.commit();
 	}
-	public int getMonitorTime(){
+
+	public int getMonitorTime() {
 		return mSharedPreferences.getInt(AUTO_REFRESH_MONITOR, 10);
-		
+
 	}
-	public void setMonitorTime(int time){
+
+	public void setMonitorTime(int time) {
 		editor.putInt(AUTO_REFRESH_MONITOR, time);
 		editor.commit();
 	}
-	public int getTrackTime(){
+
+	public int getTrackTime() {
 		return mSharedPreferences.getInt(AUTO_REFRESH_TRACK, 10);
-		
+
 	}
-	public void setTrackTime(int time){
+
+	public void setTrackTime(int time) {
 		editor.putInt(AUTO_REFRESH_TRACK, time);
 		editor.commit();
+	}
+
+
+	public void setValue(String key,long time){
+		editor.putLong(key, time);
+		editor.commit();
+	}
+	public long getValue(String key){
+		return mSharedPreferences.getLong(key, 0);
 	}
 
 }
