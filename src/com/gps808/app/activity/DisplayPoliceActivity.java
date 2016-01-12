@@ -57,7 +57,7 @@ public class DisplayPoliceActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_police);
 		init();
-
+		getData();
 	}
 
 	private void init() {
@@ -190,7 +190,7 @@ public class DisplayPoliceActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
-		getData();
+	
 		mMapView.onResume();
 		super.onResume();
 	}

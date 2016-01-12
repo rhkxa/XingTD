@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- android:background="@drawable/corners_rect_white" -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,8 +69,8 @@
                     fancy:fb_borderWidth="1dp"
                     fancy:fb_defaultColor="@color/app_blue"
                     fancy:fb_focusColor="#8cc9f8"
+                    fancy:fb_radius="2dp"
                     fancy:fb_text="确认"
-                     fancy:fb_radius="2dp"
                     fancy:fb_textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
-    android:background="@drawable/popwindow_background"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/popwindow_background"
         android:orientation="vertical" >
 
-        <RelativeLayout
-            android:id="@+id/popwindows_details"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="200dp"
             android:layout_height="wrap_content" >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
@@ -47,7 +46,6 @@
                         android:id="@+id/popwindows_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                     
                         android:padding="2dp"
                         android:text="在线79KM/H"
                         android:textColor="@color/app_pink"
@@ -77,9 +75,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="位置:"
-                            android:visibility="gone"
                             android:textColor="@color/text"
-                            android:textSize="@dimen/caption" />
+                            android:textSize="@dimen/caption"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/popwindows_position"
@@ -94,16 +92,15 @@
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/popwindows_close"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/xtd_close_red" />
-        </RelativeLayout>
-
-
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/popwindows_close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/xtd_close_red" />
+    </RelativeLayout>
 
 </LinearLayout>

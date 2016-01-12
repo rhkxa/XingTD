@@ -55,7 +55,6 @@ public class MyselfActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_myself);
 		init();
-		// getData();
 	}
 
 	private void init() {

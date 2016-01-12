@@ -7,7 +7,6 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -63,7 +62,6 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -121,6 +119,7 @@ public class MainActivity extends BaseActivity {
 	private BitmapDescriptor car;
 	private List<Marker> markerList = new ArrayList<Marker>();
 	private boolean isFirstLoad = true;
+	private int state=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +149,7 @@ public class MainActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		//
 		mBaiduMap.getUiSettings().setCompassEnabled(true);
 		// 加载数据
 		getVehicleLocation(false);
@@ -227,7 +227,7 @@ public class MainActivity extends BaseActivity {
 			public void onSearch(String k) {
 				// TODO Auto-generated method stub
 				// key = k;
-				// getVehicleLocation(true);		
+				// getVehicleLocation(true);
 				// Geo搜索
 				mSearch.geocode(new GeoCodeOption().city(k).address(k));
 			}
@@ -329,8 +329,16 @@ public class MainActivity extends BaseActivity {
 					markerList.get(markerPosition).setExtraInfo(bundle);
 				}
 			}
-			if (!StringUtils.isEmpty(mCurrentCar)) {
-				showInfoWindow();
+		}
+		if (StringUtils.isEmpty(mCurrentCar)) {
+			for (XbVehicle info : vehicle) {
+				if (info.getVid().equals(mCurrentCar)) {
+					doubleLng = Utils.getLng(info.getLocation());
+					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
+					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
+							latLng, -100);
+					return;
+				}
 			}
 
 		}
@@ -362,6 +370,7 @@ public class MainActivity extends BaseActivity {
 		StringEntity entity = null;
 		try {
 			postData.put("search", key);
+			postData.put("state", state);
 			entity = new StringEntity(postData.toString(), "UTF-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -381,6 +390,7 @@ public class MainActivity extends BaseActivity {
 						LogUtils.DebugLog("result json", response.toString());
 						addInfosOverlay();
 						if (isFirstLoad) {
+							state=1;
 							isFirstLoad = !isFirstLoad;
 						}
 						super.onSuccess(statusCode, headers, response);
@@ -556,27 +566,22 @@ public class MainActivity extends BaseActivity {
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		// TODO Auto-generated method stub
 		if (arg1 == RESULT_OK) {
-			String vid = arg2.getStringExtra("vid");
-			LogUtils.DebugLog("onActivityResult", vid);
-			mCurrentCar = vid;
-			showInfoWindow();
+			mCurrentCar = arg2.getStringExtra("vid");
 
-		}
-		super.onActivityResult(arg0, arg1, arg2);
-	}
-
-	private void showInfoWindow() {
-		for (XbVehicle info : vehicle) {
-			if (info.getVid().equals(mCurrentCar)) {
-				double[] doubleLng = Utils.getLng(info.getLocation());
-				LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
-				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
-						latLng, -100);
-				mBaiduMap.showInfoWindow(mInfoWindow);
-				MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
-				mBaiduMap.setMapStatus(msu);
+			for (XbVehicle info : vehicle) {
+				if (info.getVid().equals(mCurrentCar)) {
+					doubleLng = Utils.getLng(info.getLocation());
+					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
+					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
+							latLng, -100);
+					MapStatusUpdate msu = MapStatusUpdateFactory
+							.newLatLng(latLng);
+					mBaiduMap.setMapStatus(msu);
+					return;
+				}
 			}
 		}
+		super.onActivityResult(arg0, arg1, arg2);
 	}
 
 	// 启动Push

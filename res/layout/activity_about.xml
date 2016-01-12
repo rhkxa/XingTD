@@ -109,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="公司名称:"
+                    android:text="版权所有:"
                     android:textSize="@dimen/body" />
 
                 <TextView
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:text="沧州星达通"
+                    android:text="沧州星通卫星定位有限公司"
                     android:textColor="@color/black"
                     android:textSize="@dimen/body" />
             </RelativeLayout>
