@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity {
 	private BitmapDescriptor car;
 	private List<Marker> markerList = new ArrayList<Marker>();
 	private boolean isFirstLoad = true;
-	private int state=0;
+	private int state = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -390,7 +390,7 @@ public class MainActivity extends BaseActivity {
 						LogUtils.DebugLog("result json", response.toString());
 						addInfosOverlay();
 						if (isFirstLoad) {
-							state=1;
+							state = 1;
 							isFirstLoad = !isFirstLoad;
 						}
 						super.onSuccess(statusCode, headers, response);
@@ -432,8 +432,14 @@ public class MainActivity extends BaseActivity {
 		viewHolder = (ViewHolder) mMarkerLy.getTag();
 		viewHolder.popwindows_time.setText("时间:" + xbVehicle.getTime());
 		if (xbVehicle.isOnline()) {
-			viewHolder.popwindows_state.setText("在线 " + xbVehicle.getSpeed()
-					+ "Km/h");
+			if (xbVehicle.getSpeed() > 1) {
+				viewHolder.popwindows_state.setText("行驶中 "
+						+ xbVehicle.getSpeed() + "Km/h");
+			} else {
+				viewHolder.popwindows_state.setText("停车中  "
+						+ xbVehicle.getSpeed() + "Km/h");
+			}
+
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
 		} else {
