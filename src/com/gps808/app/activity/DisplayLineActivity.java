@@ -25,6 +25,7 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
@@ -58,7 +59,7 @@ public class DisplayLineActivity extends BaseActivity {
 	// 定位相关
 	LocationClient mLocClient;
 	public MyLocationListenner myListener = new MyLocationListenner();
-	private LocationMode mCurrentMode;
+	private LocationMode mCurrentMode = LocationMode.FOLLOWING;
 	BitmapDescriptor mCurrentMarker;
 	boolean isFirstLoc = true;// 是否首次定位
 	String rid;
@@ -104,6 +105,9 @@ public class DisplayLineActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				// 开启定位图层
 				mBaiduMap.setMyLocationEnabled(true);
+				mBaiduMap
+						.setMyLocationConfigeration(new MyLocationConfiguration(
+								mCurrentMode, true, mCurrentMarker));
 				// 定位初始化
 				mLocClient = new LocationClient(DisplayLineActivity.this);
 				mLocClient.registerLocationListener(myListener);

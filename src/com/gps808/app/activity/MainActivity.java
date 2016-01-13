@@ -31,6 +31,7 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbVehicle;
@@ -88,10 +89,8 @@ public class MainActivity extends BaseActivity {
 
 	// 定位相关
 	LocationClient mLocClient;
-	public MyLocationListenner myListener = new MyLocationListenner();
-	private LocationMode mCurrentMode;
+	private LocationMode mCurrentMode = LocationMode.NORMAL;
 	BitmapDescriptor mCurrentMarker;
-	boolean isFirstLoc = true;// 是否首次定位
 
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 
@@ -150,8 +149,6 @@ public class MainActivity extends BaseActivity {
 		}
 		//
 		mBaiduMap.getUiSettings().setCompassEnabled(true);
-		// 加载数据
-		getVehicleLocation(false);
 		// 对Marker的点击弹出PopWindows
 		LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
 		mMarkerLy = inflater.inflate(R.layout.popwindows_show, null);
@@ -225,8 +222,6 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onSearch(String k) {
 				// TODO Auto-generated method stub
-				// key = k;
-				// getVehicleLocation(true);
 				// Geo搜索
 				mSearch.geocode(new GeoCodeOption().city(k).address(k));
 			}
@@ -234,8 +229,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onSearchClose() {
 				// TODO Auto-generated method stub
-				// key = "";
-				// getVehicleLocation(true);
+
 			}
 		});
 		// 手动刷新
@@ -262,16 +256,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				// 开启定位图层
-				mBaiduMap.setMyLocationEnabled(true);
-				// 定位初始化
-				mLocClient = new LocationClient(MainActivity.this);
-				mLocClient.registerLocationListener(myListener);
-				LocationClientOption option = new LocationClientOption();
-				option.setOpenGps(false);// 打开gps
-				option.setCoorType("bd09ll"); // 设置坐标类型
-				mLocClient.setLocOption(option);
-				mLocClient.start();
+				mBaiduMap.setTrafficEnabled(true);
 			}
 		});
 		// 设置比例尺位置与缩小放大的按钮,指南针位置
@@ -290,6 +275,9 @@ public class MainActivity extends BaseActivity {
 				mBaiduMap.getUiSettings().setCompassPosition(compassPoint);
 			}
 		});
+		// 加载数据
+		getVehicleLocation(false);
+		startLocation();
 	}
 
 	/**
@@ -329,23 +317,9 @@ public class MainActivity extends BaseActivity {
 				}
 			}
 		}
-		if (StringUtils.isEmpty(mCurrentCar)) {
-			for (XbVehicle info : vehicle) {
-				if (info.getVid().equals(mCurrentCar)) {
-					doubleLng = Utils.getLng(info.getLocation());
-					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
-					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
-							latLng, -100);
-					return;
-				}
-			}
-
+		if (!StringUtils.isEmpty(mCurrentCar)) {
+			showInfowindow();
 		}
-		// 缩放地图，使所有Overlay都在合适的视野内
-		// LatLngBounds.Builder builder = new LatLngBounds.Builder();
-		// builder.include(latLng);
-		// mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
-		// .build()));
 
 	}
 
@@ -353,6 +327,7 @@ public class MainActivity extends BaseActivity {
 		int size = markerList.size();
 		for (int i = 0; i < size; i++) {
 			if (markerList.get(i).getExtraInfo().getString("id").equals(vid)) {
+				LogUtils.DebugLog("获取到marklist中的marker" + i);
 				return i;
 			}
 		}
@@ -361,7 +336,6 @@ public class MainActivity extends BaseActivity {
 
 	// 加载首页车辆信息
 	private void getVehicleLocation(final boolean isRefresh) {
-
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
@@ -547,6 +521,7 @@ public class MainActivity extends BaseActivity {
 		// MapView的生命周期与Activity同步，当activity恢复时需调用MapView.onResume()
 		handler_runnable_time = PreferenceUtils.getInstance(MainActivity.this)
 				.getMonitorTime() * 1000;
+		LogUtils.DebugLog("main time" + handler_runnable_time);
 		handler.postDelayed(runnable, handler_runnable_time);
 		mMapView.onResume();
 		super.onResume();
@@ -578,21 +553,38 @@ public class MainActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		if (arg1 == RESULT_OK) {
 			mCurrentCar = arg2.getStringExtra("vid");
-			for (XbVehicle info : vehicle) {
-				if (info.getVid().equals(mCurrentCar)) {
-					doubleLng = Utils.getLng(info.getLocation());
-					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
-					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
-							latLng, -100);
-					mBaiduMap.showInfoWindow(mInfoWindow);
-					MapStatusUpdate msu = MapStatusUpdateFactory
-							.newLatLng(latLng);
-					mBaiduMap.setMapStatus(msu);
-					return;
-				}
-			}
+			showInfowindow();
 		}
 		super.onActivityResult(arg0, arg1, arg2);
+	}
+
+	private void showInfowindow() {
+		int markerPosition = loadMarkerPosition(mCurrentCar);
+		XbVehicle xbVehicle = JSON.parseObject(markerList.get(markerPosition)
+				.getExtraInfo().getString("info"), XbVehicle.class);
+		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(markerList.get(
+				markerPosition).getPosition()));
+		mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
+				markerList.get(markerPosition).getPosition(), -100);
+		mBaiduMap.showInfoWindow(mInfoWindow);
+	}
+
+	// 启动定位
+	private void startLocation() {
+		// 开启定位图层
+		mBaiduMap.setMyLocationEnabled(true);
+		mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
+				mCurrentMode, true, mCurrentMarker));
+		// 定位初始化
+		mLocClient = new LocationClient(MainActivity.this);
+		mLocClient.registerLocationListener(new MyLocationListenner());
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(false);// 打开GPS
+		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(60 * 60 * 1000);
+		mLocClient.setLocOption(option);
+		mLocClient.start();
+
 	}
 
 	// 启动Push
@@ -645,13 +637,6 @@ public class MainActivity extends BaseActivity {
 					.direction(100).latitude(location.getLatitude())
 					.longitude(location.getLongitude()).build();
 			mBaiduMap.setMyLocationData(locData);
-			if (isFirstLoc) {
-				isFirstLoc = false;
-				LatLng ll = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mBaiduMap.animateMapStatus(u);
-			}
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {

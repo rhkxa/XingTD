@@ -9,12 +9,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.view.View.OnClickListener;
 
 public class ZoomControlView extends RelativeLayout implements OnClickListener {
-	private Button mButtonZoomin;
-	private Button mButtonZoomout;
+	private ImageView mButtonZoomin;
+	private ImageView mButtonZoomout;
 	private MapView mapView;
 	private float maxZoomLevel;
 	private float minZoomLevel;
@@ -31,8 +32,8 @@ public class ZoomControlView extends RelativeLayout implements OnClickListener {
 	private void init() {
 		View view = LayoutInflater.from(getContext()).inflate(
 				R.layout.zoom_controls_layout, null);
-		mButtonZoomin = (Button) view.findViewById(R.id.zoomin);
-		mButtonZoomout = (Button) view.findViewById(R.id.zoomout);
+		mButtonZoomin = (ImageView) view.findViewById(R.id.zoomin);
+		mButtonZoomout = (ImageView) view.findViewById(R.id.zoomout);
 		mButtonZoomin.setOnClickListener(this);
 		mButtonZoomout.setOnClickListener(this);
 		addView(view);

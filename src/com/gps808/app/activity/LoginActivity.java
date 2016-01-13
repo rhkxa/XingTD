@@ -128,27 +128,6 @@ public class LoginActivity extends BaseActivity {
 			}
 		});
 
-		// call.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// // TODO Auto-generated method stub
-		// // 打电话
-		// Utils.callPhone(LoginActivity.this, phonenumber.getText()
-		// .toString());
-		// }
-		// });
-		// login_serve.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// // TODO Auto-generated method stub
-		// Intent intent = new Intent(LoginActiivty.this,
-		// AgreementActivity.class);
-		// startActivity(intent);
-		//
-		// }
-		// });
 		login_to_register.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -230,7 +209,7 @@ public class LoginActivity extends BaseActivity {
 			}
 			LogUtils.DebugLog("post json", params.toString());
 			HttpUtil.post(LoginActivity.this, url, entity, "application/json",
-					new JsonHttpResponseHandler() {
+					new jsonHttpResponseHandler() {
 						@Override
 						public void onStart() {
 							// TODO Auto-generated method stub
@@ -274,9 +253,9 @@ public class LoginActivity extends BaseActivity {
 								Throwable throwable, JSONObject errorResponse) {
 							// TODO Auto-generated method stub
 							Utils.ToastMessage(LoginActivity.this, "登陆失败，请重试");
-							super.onFailure(statusCode, headers, throwable,
-									errorResponse);
+
 						}
+
 						@Override
 						public void onFinish() {
 							// TODO Auto-generated method stub
@@ -309,7 +288,7 @@ public class LoginActivity extends BaseActivity {
 	// APP检查更新
 	private void checkUpdate() {
 		String url = UrlConfig.getAppVersion();
-		HttpUtil.get(LoginActivity.this,url, new jsonHttpResponseHandler() {
+		HttpUtil.get(LoginActivity.this, url, new jsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
@@ -407,67 +386,71 @@ public class LoginActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		final String apkFile = FileUtils.getSDRoot() + "/XingTD" + "/XtdApp_"
 				+ update.getReleaseTime() + ".apk";
-		HttpUtil.get(LoginActivity.this,update.getUpdateUrl(), new FileAsyncHttpResponseHandler(
-				LoginActivity.this) {
+		HttpUtil.get(LoginActivity.this, update.getUpdateUrl(),
+				new FileAsyncHttpResponseHandler(LoginActivity.this) {
 
-			@Override
-			public void onFailure(int arg0, Header[] arg1, Throwable arg2,
-					File arg3) {
-				// TODO Auto-generated method stub
-				LogUtils.DebugLog("下载失败" + arg3.toString());
-			}
-
-			public void onProgress(long bytesWritten, long totalSize) {
-				int progressPercentage = (int) (100 * bytesWritten / totalSize);
-				mProgress.setProgress(progressPercentage);
-				mProgressText.setText(progressPercentage + "%");
-			}
-
-			@Override
-			protected byte[] getResponseData(HttpEntity entity)
-					throws IOException {
-				// TODO Auto-generated method stub
-				if (entity != null) {
-					InputStream instream = entity.getContent();
-					long contentLength = entity.getContentLength();
-					FileOutputStream buffer = new FileOutputStream(
-							getTargetFile(), this.append);
-					if (instream != null) {
-						try {
-							byte[] tmp = new byte[BUFFER_SIZE];
-							int l, count = 0;
-							// do not send messages if request has been
-							// cancelled
-							while ((l = instream.read(tmp)) != -1
-									&& !Thread.currentThread().isInterrupted()) {
-								count += l;
-								buffer.write(tmp, 0, l);
-								sendProgressMessage(count, (int) contentLength);
-							}
-
-						} finally {
-							AsyncHttpClient.silentCloseInputStream(instream);
-							buffer.flush();
-							AsyncHttpClient.silentCloseOutputStream(buffer);
-						}
+					@Override
+					public void onFailure(int arg0, Header[] arg1,
+							Throwable arg2, File arg3) {
+						// TODO Auto-generated method stub
+						LogUtils.DebugLog("下载失败" + arg3.toString());
 					}
-				}
-				return null;
-			}
 
-			@Override
-			public File getTargetFile() {
-				// TODO Auto-generated method stub
-				return new File(apkFile);
-			}
+					public void onProgress(long bytesWritten, long totalSize) {
+						int progressPercentage = (int) (100 * bytesWritten / totalSize);
+						mProgress.setProgress(progressPercentage);
+						mProgressText.setText(progressPercentage + "%");
+					}
 
-			@Override
-			public void onSuccess(int arg0, Header[] arg1, File arg2) {
-				// TODO Auto-generated method stub
-				Utils.installApk(LoginActivity.this, apkFile);
-				getAppContext().exit();
-			}
-		});
+					@Override
+					protected byte[] getResponseData(HttpEntity entity)
+							throws IOException {
+						// TODO Auto-generated method stub
+						if (entity != null) {
+							InputStream instream = entity.getContent();
+							long contentLength = entity.getContentLength();
+							FileOutputStream buffer = new FileOutputStream(
+									getTargetFile(), this.append);
+							if (instream != null) {
+								try {
+									byte[] tmp = new byte[BUFFER_SIZE];
+									int l, count = 0;
+									// do not send messages if request has been
+									// cancelled
+									while ((l = instream.read(tmp)) != -1
+											&& !Thread.currentThread()
+													.isInterrupted()) {
+										count += l;
+										buffer.write(tmp, 0, l);
+										sendProgressMessage(count,
+												(int) contentLength);
+									}
+
+								} finally {
+									AsyncHttpClient
+											.silentCloseInputStream(instream);
+									buffer.flush();
+									AsyncHttpClient
+											.silentCloseOutputStream(buffer);
+								}
+							}
+						}
+						return null;
+					}
+
+					@Override
+					public File getTargetFile() {
+						// TODO Auto-generated method stub
+						return new File(apkFile);
+					}
+
+					@Override
+					public void onSuccess(int arg0, Header[] arg1, File arg2) {
+						// TODO Auto-generated method stub
+						Utils.installApk(LoginActivity.this, apkFile);
+						getAppContext().exit();
+					}
+				});
 
 	}
 
@@ -480,7 +463,7 @@ public class LoginActivity extends BaseActivity {
 						.getString(R.string.exit));
 				mExitTime = System.currentTimeMillis();
 			} else {
-				XtdApplication.getInstance().exit();
+				getAppContext().exit();
 			}
 			return true;
 		}

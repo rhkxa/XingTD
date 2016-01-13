@@ -206,8 +206,9 @@ public class BaseActivity extends FragmentActivity {
 
 	@Override
 	protected void onStop() {
-
 		super.onStop();
+		// 当Activity停止Stop时停止此Activity的所有网络请求
+		HttpUtil.cancelRequest(this);
 		// if (ScreenObserver.isApplicationBroughtToBackground(this)) {
 		// cancelAlarmManager();
 		// setAlarmManager();

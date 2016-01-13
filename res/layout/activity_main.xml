@@ -64,14 +64,14 @@
 
     <com.gps808.app.view.FancyButton
         android:id="@+id/main_refresh"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_above="@id/main_footer_layout"
         android:layout_margin="8dp"
         fancy:fb_defaultColor="@color/app_blue"
         fancy:fb_focusColor="#8cc9f8"
         fancy:fb_iconResource="@drawable/xtd_action_refresh"
-        fancy:fb_iconSize="10dp"
+        fancy:fb_iconSize="8dp"
         fancy:fb_radius="2dp" />
 
     <com.gps808.app.view.FancyButton
@@ -81,6 +81,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/search_layout"
         android:layout_margin="8dp"
+        fancy:fb_borderColor="@color/border"
+        fancy:fb_borderWidth="1dp"
         fancy:fb_defaultColor="@color/white"
         fancy:fb_focusColor="#8cc9f8"
         fancy:fb_iconResource="@drawable/xtd_icon_position"
