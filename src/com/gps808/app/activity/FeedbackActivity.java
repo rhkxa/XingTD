@@ -55,7 +55,6 @@ public class FeedbackActivity extends BaseActivity {
 
 	private void loadOrder() {
 
-		showProgressDialog(FeedbackActivity.this, "提交中，请稍等");
 		String url = UrlConfig.getUserQuestion();
 		JSONObject params = new JSONObject();
 		StringEntity entity = null;
@@ -66,9 +65,16 @@ public class FeedbackActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		LogUtils.DebugLog("post json",params.toString());
+		LogUtils.DebugLog("post json", params.toString());
 		HttpUtil.post(FeedbackActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						showProgressDialog(FeedbackActivity.this, "提交中，请稍等");
+						super.onStart();
+					}
+
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {

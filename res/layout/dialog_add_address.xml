@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/selector_button_blue"
+             
                 android:padding="8dp"
                 android:text="确定"
                 android:textColor="@color/white"

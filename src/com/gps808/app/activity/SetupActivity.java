@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;

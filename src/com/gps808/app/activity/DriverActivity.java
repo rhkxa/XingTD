@@ -89,11 +89,18 @@ public class DriverActivity extends BaseActivity {
 	}
 
 	private void getData(final boolean isFeresh) {
-		if (isFeresh) {
-			showProgressDialog(DriverActivity.this, "正在加载,请稍等");
-		}
+
 		String url = UrlConfig.getDrivers(pagenum, pageSize);
-		HttpUtil.get(url, new jsonHttpResponseHandler() {
+		HttpUtil.get(DriverActivity.this, url, new jsonHttpResponseHandler() {
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				if (isFeresh) {
+					showProgressDialog(DriverActivity.this, "正在加载,请稍等");
+				}
+				super.onStart();
+			}
+
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONArray response) {
@@ -123,7 +130,7 @@ public class DriverActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		// TODO Auto-generated method stub
-		LogUtils.DebugLog("返回"+arg1);
+		LogUtils.DebugLog("返回" + arg1);
 		if (arg1 == RESULT_OK) {
 			getData(true);
 		}

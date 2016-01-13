@@ -5,7 +5,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
-   <LinearLayout
+    <LinearLayout
         android:id="@+id/pop_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -27,10 +27,9 @@
                 android:textSize="@dimen/title" />
         </LinearLayout>
 
-        
         <EditText
             android:id="@+id/price_et"
-            android:layout_width="match_parent" 
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="8dp"
             android:background="@drawable/corners_rect_gray"
@@ -40,20 +39,20 @@
             android:textColor="@color/text"
             android:textSize="@dimen/body" />
 
-          <TextView
-                android:id="@+id/result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="您本次的金额为 "
-                android:textColor="@color/black"
-                android:textSize="@dimen/caption" />
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="您本次的金额为 "
+            android:textColor="@color/black"
+            android:textSize="@dimen/caption" />
+
         <Button
             android:id="@+id/btn_ok"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/selector_button_blue"
             android:padding="8dp"
             android:text="确定"
             android:textColor="#ffffff"

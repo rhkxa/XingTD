@@ -142,10 +142,17 @@ public class EditDrvierActivity extends BaseActivity {
 	}
 
 	private void getDriver() {
-		showProgressDialog(EditDrvierActivity.this, "正在加载司机信息");
+
 		String url = UrlConfig.getDriverInfo(driverId);
 		HttpUtil.get(EditDrvierActivity.this, url,
 				new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						showProgressDialog(EditDrvierActivity.this, "正在加载司机信息");
+						super.onStart();
+					}
+
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {

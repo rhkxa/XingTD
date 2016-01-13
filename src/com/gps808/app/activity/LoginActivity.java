@@ -309,7 +309,7 @@ public class LoginActivity extends BaseActivity {
 	// APP检查更新
 	private void checkUpdate() {
 		String url = UrlConfig.getAppVersion();
-		HttpUtil.get(url, new jsonHttpResponseHandler() {
+		HttpUtil.get(LoginActivity.this,url, new jsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
@@ -407,7 +407,7 @@ public class LoginActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		final String apkFile = FileUtils.getSDRoot() + "/XingTD" + "/XtdApp_"
 				+ update.getReleaseTime() + ".apk";
-		HttpUtil.get(update.getUpdateUrl(), new FileAsyncHttpResponseHandler(
+		HttpUtil.get(LoginActivity.this,update.getUpdateUrl(), new FileAsyncHttpResponseHandler(
 				LoginActivity.this) {
 
 			@Override

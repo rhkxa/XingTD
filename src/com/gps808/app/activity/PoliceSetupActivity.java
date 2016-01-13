@@ -90,10 +90,17 @@ public class PoliceSetupActivity extends BaseActivity {
 	};
 
 	private void getData() {
-		showProgressDialog(PoliceSetupActivity.this, "正在加载您的个人设置");
 		String url = UrlConfig.getVehicleAlarmsOtions();
 		HttpUtil.get(PoliceSetupActivity.this, url,
 				new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						showProgressDialog(PoliceSetupActivity.this,
+								"正在加载您的个人设置");
+						super.onStart();
+					}
+
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {
@@ -118,7 +125,7 @@ public class PoliceSetupActivity extends BaseActivity {
 	}
 
 	private void setData() {
-		showProgressDialog(PoliceSetupActivity.this, "正在配置您的个人设置");
+
 		String url = UrlConfig.getVehicleSetAlarms();
 		StringEntity entity = null;
 		try {
@@ -130,6 +137,14 @@ public class PoliceSetupActivity extends BaseActivity {
 		LogUtils.DebugLog("post json", JSON.toJSONString(alarmOption));
 		HttpUtil.post(PoliceSetupActivity.this, url, entity,
 				"application/json", new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						showProgressDialog(PoliceSetupActivity.this,
+								"正在配置您的个人设置");
+						super.onStart();
+					}
+
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {

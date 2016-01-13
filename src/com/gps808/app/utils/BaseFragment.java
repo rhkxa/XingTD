@@ -30,12 +30,12 @@ public class BaseFragment extends Fragment {
 	}
 
 	public void showProgressDialog(final Context context, CharSequence message) {
-		// if (progressDialog == null) {
-		progressDialog = new ProgressDialog(context);
-		progressDialog.setIndeterminate(true);
-		// }
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(context);
+			progressDialog.setIndeterminate(true);
+		}
 		progressDialog.setOnCancelListener(new OnCancelListener() {
-			
+
 			@Override
 			public void onCancel(DialogInterface arg0) {
 				// TODO Auto-generated method stub

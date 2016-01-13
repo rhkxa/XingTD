@@ -97,9 +97,15 @@ public class CarFragment extends BaseFragment {
 	}
 
 	private void getData() {
-		showProgressDialog(getActivity(), "正在加载，请稍等");
 		String url = UrlConfig.getVehicleVehInfo(vid);
-		HttpUtil.get(url, new jsonHttpResponseHandler() {
+		HttpUtil.get(getActivity(), url, new jsonHttpResponseHandler() {
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				showProgressDialog(getActivity(), "正在加载，请稍等");
+				super.onStart();
+			}
+
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {

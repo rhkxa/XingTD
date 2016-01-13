@@ -178,7 +178,7 @@ public class UpdateManager {
 		 * 下载安装包信息
 		 */
 		String url = UrlConfig.getAppVersion();
-		HttpUtil.get(url, new JsonHttpResponseHandler() {
+		HttpUtil.get(context, url, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {

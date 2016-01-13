@@ -1,7 +1,5 @@
 package com.gps808.app.view;
 
-
-
 import com.gps808.app.R;
 
 import android.content.Context;
@@ -12,7 +10,8 @@ import android.widget.RadioButton;
 
 public class PengRadioButton extends RadioButton {
 	private Drawable drawableTop, drawableBottom, drawableLeft, drawableRight;
-	private int mTopWith, mTopHeight, mBottomWith, mBottomHeight, mRightWith, mRightHeight, mLeftWith, mLeftHeight;
+	private int mTopWith, mTopHeight, mBottomWith, mBottomHeight, mRightWith,
+			mRightHeight, mLeftWith, mLeftHeight;
 
 	public PengRadioButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -32,7 +31,9 @@ public class PengRadioButton extends RadioButton {
 	private void initView(Context context, AttributeSet attrs) {
 		if (attrs != null) {
 			float scale = context.getResources().getDisplayMetrics().density;
-			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PengRadioButton);
+			scale = 3;
+			TypedArray a = context.obtainStyledAttributes(attrs,
+					R.styleable.PengRadioButton);
 			int n = a.getIndexCount();
 			for (int i = 0; i < n; i++) {
 				int attr = a.getIndex(i);
@@ -79,28 +80,40 @@ public class PengRadioButton extends RadioButton {
 				}
 			}
 			a.recycle();
-			setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
+			setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop,
+					drawableRight, drawableBottom);
 		}
 	}
 
 	// 设置Drawable定义的大小
 	@Override
-	public void setCompoundDrawablesWithIntrinsicBounds(Drawable left, Drawable top, Drawable right, Drawable bottom) {
+	public void setCompoundDrawablesWithIntrinsicBounds(Drawable left,
+			Drawable top, Drawable right, Drawable bottom) {
 
 		if (left != null) {
-			left.setBounds(0, 0, mLeftWith <= 0 ? left.getIntrinsicWidth() : mLeftWith, mLeftHeight <= 0 ? left.getMinimumHeight() : mLeftHeight);
+			left.setBounds(0, 0, mLeftWith <= 0 ? left.getIntrinsicWidth()
+					: mLeftWith, mLeftHeight <= 0 ? left.getMinimumHeight()
+					: mLeftHeight);
 		}
 		if (right != null) {
-			right.setBounds(0, 0, mRightWith <= 0 ? right.getIntrinsicWidth() : mRightWith, mRightHeight <= 0 ? right.getMinimumHeight() : mRightHeight);
+			right.setBounds(0, 0, mRightWith <= 0 ? right.getIntrinsicWidth()
+					: mRightWith, mRightHeight <= 0 ? right.getMinimumHeight()
+					: mRightHeight);
 		}
 		if (top != null) {
-			top.setBounds(0, 0, mTopWith <= 0 ? top.getIntrinsicWidth() : mTopWith, mTopHeight <= 0 ? top.getMinimumHeight() : mTopHeight);
+			top.setBounds(0, 0, mTopWith <= 0 ? top.getIntrinsicWidth()
+					: mTopWith, mTopHeight <= 0 ? top.getMinimumHeight()
+					: mTopHeight);
 		}
 		if (bottom != null) {
-			bottom.setBounds(0, 0, mBottomWith <= 0 ? bottom.getIntrinsicWidth() : mBottomWith, mBottomHeight <= 0 ? bottom.getMinimumHeight()
-					: mBottomHeight);
+			bottom.setBounds(
+					0,
+					0,
+					mBottomWith <= 0 ? bottom.getIntrinsicWidth() : mBottomWith,
+					mBottomHeight <= 0 ? bottom.getMinimumHeight()
+							: mBottomHeight);
 		}
 		setCompoundDrawables(left, top, right, bottom);
 	}
-	
+
 }

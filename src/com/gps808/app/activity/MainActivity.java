@@ -103,7 +103,6 @@ public class MainActivity extends BaseActivity {
 			.fromResource(R.drawable.xtd_carlogo_on);
 	BitmapDescriptor offline = BitmapDescriptorFactory
 			.fromResource(R.drawable.xtd_carlogo_off);
-	private String key = "";
 	private FancyButton main_refresh;
 	int flag = 0;
 	private View mMarkerLy;
@@ -361,15 +360,11 @@ public class MainActivity extends BaseActivity {
 	}
 
 	// 加载首页车辆信息
-	private void getVehicleLocation(boolean isRefresh) {
-		if (isRefresh) {
-			showProgressDialog(MainActivity.this, "正在加载车辆信息");
-			closeInfoWindow();
-		}
+	private void getVehicleLocation(final boolean isRefresh) {
+
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
-			postData.put("search", key);
 			postData.put("state", state);
 			entity = new StringEntity(postData.toString(), "UTF-8");
 		} catch (Exception e) {
@@ -380,6 +375,16 @@ public class MainActivity extends BaseActivity {
 		String url = UrlConfig.getVehicleLocations();
 		HttpUtil.post(MainActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
+
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						if (isRefresh) {
+							showProgressDialog(MainActivity.this, "正在加载车辆信息");
+							closeInfoWindow();
+						}
+						super.onStart();
+					}
 
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
@@ -573,13 +578,13 @@ public class MainActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		if (arg1 == RESULT_OK) {
 			mCurrentCar = arg2.getStringExtra("vid");
-
 			for (XbVehicle info : vehicle) {
 				if (info.getVid().equals(mCurrentCar)) {
 					doubleLng = Utils.getLng(info.getLocation());
 					LatLng latLng = new LatLng(doubleLng[1], doubleLng[0]);
 					mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, info),
 							latLng, -100);
+					mBaiduMap.showInfoWindow(mInfoWindow);
 					MapStatusUpdate msu = MapStatusUpdateFactory
 							.newLatLng(latLng);
 					mBaiduMap.setMapStatus(msu);

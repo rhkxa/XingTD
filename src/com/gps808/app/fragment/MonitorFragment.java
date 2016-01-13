@@ -278,7 +278,7 @@ public class MonitorFragment extends BaseFragment {
 				handler.postDelayed(this, 500);
 			} else {
 				play_toogle.setChecked(false);
-				play_toogle.setEnabled(false);
+				i=0;
 			}
 		}
 	};

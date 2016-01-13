@@ -80,7 +80,6 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_weight="1.0"
-           
             android:gravity="center_vertical"
             android:hint="请输入要搜索的内容"
             android:paddingLeft="5.0dp"
@@ -94,7 +93,6 @@
             android:layout_marginBottom="5.0dp"
             android:layout_marginRight="5.0dp"
             android:layout_marginTop="5.0dp"
-            android:background="@drawable/selector_button_blue"
             android:gravity="center"
             android:text="搜索"
             android:textColor="@color/white"

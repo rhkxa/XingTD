@@ -28,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/app_backgroud"
-            android:padding="8dp"  android:visibility="gone">
+            android:padding="8dp"
+            android:visibility="gone" >
 
             <com.gps808.app.view.FancyButton
                 android:id="@+id/collect_joinshop"
@@ -38,7 +39,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="3"
-                android:background="@drawable/selector_button_blue"
                 android:text="加入购物车"
                 fancy:fb_defaultColor="@color/app_green"
                 fancy:fb_focusColor="@color/app_focus_color"

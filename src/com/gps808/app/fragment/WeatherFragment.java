@@ -69,8 +69,9 @@ public class WeatherFragment extends BaseFragment {
 		weather_list = (ListView) root.findViewById(R.id.weather_list);
 		wadapter = new WeatherAdapter(getActivity(), xbWeeks);
 		weather_list.setAdapter(wadapter);
-		if (System.currentTimeMillis()-PreferenceUtils.getInstance(getActivity())
-				.getValue("Weather" + vid) > 30 * 60 * 1000) {
+		if (System.currentTimeMillis()
+				- PreferenceUtils.getInstance(getActivity()).getValue(
+						"Weather" + vid) > 30 * 60 * 1000) {
 			getData();
 		} else {
 			setValue(FileUtils.read(getActivity(), "FileWeather" + vid));
@@ -98,9 +99,16 @@ public class WeatherFragment extends BaseFragment {
 	}
 
 	private void getData() {
-		showProgressDialog(getActivity(), "正在加载天气信息,请稍等");
+
 		String url = UrlConfig.getWeather(doubleLng[0], doubleLng[1]);
 		HttpUtil.get(getActivity(), url, new jsonHttpResponseHandler() {
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				showProgressDialog(getActivity(), "正在加载天气信息,请稍等");
+				super.onStart();
+			}
+
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {

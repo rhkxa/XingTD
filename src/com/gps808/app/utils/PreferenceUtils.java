@@ -217,7 +217,7 @@ public class PreferenceUtils {
 	}
 
 	public int getMonitorTime() {
-		return mSharedPreferences.getInt(AUTO_REFRESH_MONITOR, 10);
+		return mSharedPreferences.getInt(AUTO_REFRESH_MONITOR, 30);
 
 	}
 

@@ -139,8 +139,6 @@ public class BaseActivity extends FragmentActivity {
 			super.onFailure(statusCode, headers, responseString, throwable);
 		}
 
-		
-
 		@Override
 		public void onFinish() {
 			super.onFinish();

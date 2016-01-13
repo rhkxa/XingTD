@@ -105,11 +105,7 @@ public class RoutesActivity extends BaseActivity {
 	}
 
 	private void getData(final boolean isRefresh) {
-		if (isRefresh) {
-			showProgressDialog(RoutesActivity.this, "正在加载,请稍等");
-		}
 		String url = UrlConfig.getVehicleRoutes();
-		// { "placeName":"北京","startPage":0,"startPage":10 }
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {
@@ -124,6 +120,15 @@ public class RoutesActivity extends BaseActivity {
 		LogUtils.DebugLog("post json", postData.toString());
 		HttpUtil.post(RoutesActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						if (isRefresh) {
+							showProgressDialog(RoutesActivity.this, "正在加载,请稍等");
+						}
+						super.onStart();
+					}
+
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONArray response) {

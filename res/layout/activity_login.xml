@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:button="@drawable/select_check_gift"
+                android:button="@drawable/selector_check_rect"
                 android:checked="true"
                 android:text="自动登录"
                 android:textColor="#333333" />
@@ -116,7 +116,7 @@
                 android:id="@+id/savePwdBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/select_check_gift"
+                android:button="@drawable/selector_check_rect"
                 android:checked="true"
                 android:text="记住密码"
                 android:textColor="#333333" />

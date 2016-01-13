@@ -119,7 +119,7 @@ public class DisplayLineActivity extends BaseActivity {
 		// 从本地获取
 		String content = FileUtils.read(DisplayLineActivity.this, saveFile
 				+ rid);
-		LogUtils.DebugLog("read content ",saveFile+rid+content);
+		LogUtils.DebugLog("read content ", saveFile + rid + content);
 		if (StringUtils.isEmpty(content)) {
 			getData();
 		} else {
@@ -227,10 +227,17 @@ public class DisplayLineActivity extends BaseActivity {
 	}
 
 	private void getData() {
-		showProgressDialog(DisplayLineActivity.this, "正在加载路线信息");
+
 		String url = UrlConfig.getVehicleRoutesInfo(rid);
 		HttpUtil.get(DisplayLineActivity.this, url,
 				new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						showProgressDialog(DisplayLineActivity.this, "正在加载路线信息");
+						super.onStart();
+					}
+
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {
@@ -239,7 +246,7 @@ public class DisplayLineActivity extends BaseActivity {
 						XbDisplayLine xbDisplayLine = JSON.parseObject(
 								response.toString(), XbDisplayLine.class);
 						FileUtils.write(DisplayLineActivity.this, saveFile
-								+ rid,  response.toString());
+								+ rid, response.toString());
 						parseData(xbDisplayLine);
 						super.onSuccess(statusCode, headers, response);
 					}

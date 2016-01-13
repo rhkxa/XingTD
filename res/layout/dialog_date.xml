@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:orientation="vertical" >
 
             <TextView
@@ -56,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:button="@drawable/selector_chose"
+                    android:button="@drawable/selector_check_oval"
                     android:padding="8dp" />
             </RelativeLayout>
 
@@ -80,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:button="@drawable/selector_chose"
+                    android:button="@drawable/selector_check_oval"
                     android:padding="8dp" />
             </RelativeLayout>
 
@@ -104,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:button="@drawable/selector_chose"
+                    android:button="@drawable/selector_check_oval"
                     android:padding="8dp" />
             </RelativeLayout>
 
@@ -128,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:button="@drawable/selector_chose"
+                    android:button="@drawable/selector_check_oval"
                     android:padding="8dp" />
             </RelativeLayout>
 
@@ -152,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:button="@drawable/selector_chose"
+                    android:button="@drawable/selector_check_oval"
                     android:padding="8dp" />
             </RelativeLayout>
 
@@ -208,7 +209,9 @@
                     android:textSize="@dimen/body" />
             </LinearLayout>
 
-            <View style="@style/blackline" />
+            <View
+                style="@style/blackline"
+                android:layout_marginTop="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

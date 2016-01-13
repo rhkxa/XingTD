@@ -118,13 +118,18 @@ public class PolicesActivity extends BaseActivity {
 	}
 
 	private void getData(final boolean isRefresh) {
-		if (!isRefresh) {
-			showProgressDialog(PolicesActivity.this, "正在加载,请稍等");
-		}
-		String url = UrlConfig.getVehicleAlarms(startPage, pageNum);
-		HttpUtil.get(url,
 
-		new jsonHttpResponseHandler() {
+		String url = UrlConfig.getVehicleAlarms(startPage, pageNum);
+		HttpUtil.get(PolicesActivity.this, url, new jsonHttpResponseHandler() {
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				if (!isRefresh) {
+					showProgressDialog(PolicesActivity.this, "正在加载,请稍等");
+				}
+				super.onStart();
+			}
+
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONArray response) {
@@ -154,7 +159,7 @@ public class PolicesActivity extends BaseActivity {
 				} else {
 					Utils.showSuperCardToast(PolicesActivity.this, "请求失败,请重试");
 				}
-		}
+			}
 
 			@Override
 			public void onFinish() {

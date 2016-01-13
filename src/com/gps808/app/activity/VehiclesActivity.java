@@ -86,7 +86,7 @@ public class VehiclesActivity extends BaseActivity {
 			@Override
 			public void onSearchClose() {
 				// TODO Auto-generated method stub
-				search="";
+				search = "";
 				getData(true);
 			}
 		});
@@ -143,9 +143,7 @@ public class VehiclesActivity extends BaseActivity {
 	}
 
 	private void getData(final boolean isClear) {
-		if (isClear) {
-			showProgressDialog(VehiclesActivity.this, "正在加载,请稍等");
-		}
+
 		String url = UrlConfig.getVehicleVehicleByPage();
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
@@ -162,6 +160,15 @@ public class VehiclesActivity extends BaseActivity {
 		LogUtils.DebugLog("post json" + postData.toString());
 		HttpUtil.post(VehiclesActivity.this, url, entity, "application/json",
 				new jsonHttpResponseHandler() {
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						if (isClear) {
+							showProgressDialog(VehiclesActivity.this,
+									"正在加载,请稍等");
+						}
+						super.onStart();
+					}
 
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,
@@ -182,7 +189,7 @@ public class VehiclesActivity extends BaseActivity {
 						xbVehicles.addAll(xbVobject.getRows());
 						parseData();
 						if (xbVobject.getRows().size() < pageNum) {
-							vehicle_list.setMode(Mode.DISABLED);						
+							vehicle_list.setMode(Mode.DISABLED);
 						} else {
 							vehicle_list.setMode(Mode.PULL_FROM_END);
 							startPage++;
@@ -205,7 +212,7 @@ public class VehiclesActivity extends BaseActivity {
 		allVehicles.clear();
 		onVehicles.clear();
 		offVehicles.clear();
-		allVehicles.addAll(xbVehicles);	
+		allVehicles.addAll(xbVehicles);
 		for (XbVehicle info : xbVehicles) {
 			if (info.isOnline()) {
 				onVehicles.add(info);
