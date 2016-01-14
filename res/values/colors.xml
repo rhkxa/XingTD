@@ -46,7 +46,7 @@
     <color name="lightblue">#0083FF</color>
     <color name="trans_blue">#8800bfff</color>
     <color name="full_transparent">#00000000</color>
-    <color name="half_transparent">#aa000000</color>
+    <color name="half_transparent">#44000000</color>
     <color name="holo_dark_green">#00CCCC</color>
     <color name="leftmneu_backgroud_light">#2a3744</color>
     <color name="leftmneu_backgroud">#2f3d4c</color>

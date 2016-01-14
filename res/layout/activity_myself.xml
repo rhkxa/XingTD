@@ -33,7 +33,7 @@
                 fancy:fb_borderWidth="2dp"
                 fancy:fb_defaultColor="@color/white"
                 fancy:fb_iconResource="@drawable/xtd_icon_gray"
-                fancy:fb_iconSize="20dp"
+                fancy:fb_iconSize="48dp"
                 fancy:fb_radius="50dp" />
 
             <TextView
@@ -76,7 +76,7 @@
                 fancy:fb_defaultColor="@color/app_blue"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_vehicle"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="32dp"
                 fancy:fb_radius="2dp" />
 
             <TextView
@@ -101,7 +101,7 @@
                 fancy:fb_defaultColor="@color/app_green"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_routes"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="32dp"
                 fancy:fb_radius="2dp"
                 fancy:fb_textColor="#FFFFFF" />
 
@@ -127,7 +127,7 @@
                 fancy:fb_defaultColor="@color/app_pink"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_plice"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="32dp"
                 fancy:fb_radius="2dp" />
 
             <TextView
@@ -152,7 +152,7 @@
                 fancy:fb_defaultColor="@color/app_yellow"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_driver"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="32dp"
                 fancy:fb_radius="2dp" />
 
             <TextView
@@ -194,12 +194,12 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="8dp"
+                    android:clickable="false"
                     fancy:fb_defaultColor="@color/tag_blue"
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_iconResource="@drawable/xtd_icon_question"
-                    fancy:fb_iconSize="10dp"
+                    fancy:fb_iconSize="24dp"
                     fancy:fb_radius="2dp"
-                    android:clickable="false"
                     fancy:fb_textColor="#FFFFFF" />
 
                 <TextView
@@ -234,11 +234,12 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="8dp"
+                    android:clickable="false"
                     fancy:fb_defaultColor="@color/tag_blue"
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_iconResource="@drawable/xtd_icon_about"
-                    fancy:fb_iconSize="10dp"
-                    fancy:fb_radius="2dp"  android:clickable="false"
+                    fancy:fb_iconSize="24dp"
+                    fancy:fb_radius="2dp"
                     fancy:fb_textColor="#FFFFFF" />
 
                 <TextView
@@ -277,11 +278,12 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="8dp"
+                    android:clickable="false"
                     fancy:fb_defaultColor="@color/tag_blue"
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_iconResource="@drawable/xtd_icon_setup"
-                    fancy:fb_iconSize="10dp"
-                    fancy:fb_radius="2dp"  android:clickable="false"
+                    fancy:fb_iconSize="24dp"
+                    fancy:fb_radius="2dp"
                     fancy:fb_textColor="#FFFFFF" />
 
                 <TextView

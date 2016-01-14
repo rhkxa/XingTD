@@ -36,8 +36,7 @@ public class PengButton extends TextView {
 		setClickable(true);
 		if (attrs != null) {
 			float scale = context.getResources().getDisplayMetrics().density;
-			scale = 3;
-			LogUtils.DebugLog("屏幕比例" + scale);
+			scale = scale/3;
 			TypedArray a = context.obtainStyledAttributes(attrs,
 					R.styleable.PengRadioButton);
 			int count = a.getIndexCount();

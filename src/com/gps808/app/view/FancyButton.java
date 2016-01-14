@@ -23,6 +23,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.gps808.app.R;
+import com.gps808.app.utils.LogUtils;
 
 @SuppressWarnings("unused")
 public class FancyButton extends LinearLayout {
@@ -37,7 +38,7 @@ public class FancyButton extends LinearLayout {
 	private int mDefaultTextColor = Color.WHITE;
 	private int mDefaultIconColor = Color.WHITE;
 	private int mTextPosition = 1;
-	private int mDefaultTextSize = 18;
+	private int mDefaultTextSize = 14;
 	private int mDefaultTextGravity = 0x11; // Gravity.CENTER
 	private String mText = null;
 
@@ -72,6 +73,8 @@ public class FancyButton extends LinearLayout {
 
 	private boolean mGhost = false; // Default is a solid button !
 
+	private float scale;
+
 	/**
 	 * Default constructor
 	 * 
@@ -81,7 +84,7 @@ public class FancyButton extends LinearLayout {
 	public FancyButton(Context context) {
 		super(context);
 		this.mContext = context;
-
+		scale = mContext.getResources().getDisplayMetrics().density;
 		initializeFancyButton();
 	}
 
@@ -96,7 +99,8 @@ public class FancyButton extends LinearLayout {
 	public FancyButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.mContext = context;
-
+		scale = mContext.getResources().getDisplayMetrics().density;
+		LogUtils.DebugLog("Fancybutton 屏幕比" + scale);
 		TypedArray attrsArray = context.obtainStyledAttributes(attrs,
 				R.styleable.FancyButtonsAttrs, 0, 0);
 		initAttributsArray(attrsArray);
@@ -178,7 +182,7 @@ public class FancyButton extends LinearLayout {
 			textView.setText(mText);
 			textView.setGravity(mDefaultTextGravity);
 			textView.setTextColor(mDefaultTextColor);
-			textView.setTextSize(mDefaultTextSize);
+			textView.setTextSize(sp2px(mDefaultTextSize));
 
 			textView.setLayoutParams(new LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -289,7 +293,8 @@ public class FancyButton extends LinearLayout {
 		mDefaultIconColor = attrsArray.getColor(
 				R.styleable.FancyButtonsAttrs_fb_iconColor, mDefaultTextColor);
 		mDefaultTextSize = (int) attrsArray.getDimension(
-				R.styleable.FancyButtonsAttrs_fb_textSize, mDefaultTextSize);
+				R.styleable.FancyButtonsAttrs_fb_textSize, mDefaultTextSize
+						* scale);
 		mDefaultTextGravity = attrsArray.getInt(
 				R.styleable.FancyButtonsAttrs_fb_textGravity,
 				mDefaultTextGravity);
@@ -305,7 +310,6 @@ public class FancyButton extends LinearLayout {
 				R.styleable.FancyButtonsAttrs_fb_fontIconSize, mFontIconSize);
 		mIconSize = (int) attrsArray.getDimension(
 				R.styleable.FancyButtonsAttrs_fb_iconSize, mIconSize);
-
 		mIconPaddingLeft = (int) attrsArray.getDimension(
 				R.styleable.FancyButtonsAttrs_fb_iconPaddingLeft,
 				mIconPaddingLeft);
@@ -502,7 +506,7 @@ public class FancyButton extends LinearLayout {
 	public void setTextSize(int textSize) {
 		this.mDefaultTextSize = textSize;
 		if (mTextView != null)
-			mTextView.setTextSize(textSize);
+			mTextView.setTextSize(sp2px(textSize));
 	}
 
 	/**
@@ -703,9 +707,13 @@ public class FancyButton extends LinearLayout {
 	 * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
 	 */
 	private int dip2px(float dpValue) {
-		float scale = mContext.getResources().getDisplayMetrics().density;
-		scale = 3;
-		return (int) (dpValue * scale + 0.5f);
+		// return (int) (dpValue / scale * 3 + 0.5f);
+		return (int) dpValue;
+	}
+
+	private int sp2px(float dpvalue) {
+
+		return (int) (dpvalue / scale + 0.5f);
 	}
 
 }

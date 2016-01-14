@@ -71,7 +71,7 @@
         fancy:fb_defaultColor="@color/app_blue"
         fancy:fb_focusColor="#8cc9f8"
         fancy:fb_iconResource="@drawable/xtd_action_refresh"
-        fancy:fb_iconSize="8dp"
+        fancy:fb_iconSize="24dp"
         fancy:fb_radius="2dp" />
 
     <com.gps808.app.view.FancyButton
@@ -81,13 +81,14 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/search_layout"
         android:layout_margin="8dp"
-        fancy:fb_borderColor="@color/border"
-        fancy:fb_borderWidth="1dp"
-        fancy:fb_defaultColor="@color/white"
+        fancy:fb_defaultColor="@color/half_transparent"
         fancy:fb_focusColor="#8cc9f8"
+        fancy:fb_iconPosition="top"
         fancy:fb_iconResource="@drawable/xtd_icon_position"
-        fancy:fb_iconSize="8dp"
-        fancy:fb_radius="2dp" />
+        fancy:fb_iconSize="20dp"
+        fancy:fb_radius="2dp"
+        fancy:fb_text="路况"
+        fancy:fb_textSize="10sp" />
 
     <com.gps808.app.map.ZoomControlView
         android:id="@+id/ZoomControlView"

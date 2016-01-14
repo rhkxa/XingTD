@@ -26,10 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp" >
+        android:padding="8dp" >
 
         <com.gps808.app.view.PengRadioButton
             android:id="@+id/car_track"
@@ -41,10 +38,10 @@
             android:gravity="center"
             android:text="跟踪"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/car_monitor_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
 
         <com.gps808.app.view.PengRadioButton
             android:id="@+id/car_monitor"
@@ -56,10 +53,10 @@
             android:gravity="center"
             android:text="轨迹回放"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/car_track_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
 
         <com.gps808.app.view.PengRadioButton
             android:id="@+id/car_details"
@@ -71,10 +68,10 @@
             android:gravity="center"
             android:text="详情"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/car_details_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
 
         <com.gps808.app.view.PengRadioButton
             android:id="@+id/car_weather"
@@ -86,10 +83,10 @@
             android:gravity="center"
             android:text="天气"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/car_weather_secetor"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
     </RadioGroup>
 
 </LinearLayout>

@@ -42,7 +42,7 @@
             fancy:fb_borderWidth="2dp"
             fancy:fb_defaultColor="@color/app_backgroud"
             fancy:fb_iconResource="@drawable/xtd_icon_gray"
-            fancy:fb_iconSize="20dp"
+            fancy:fb_iconSize="48dp"
             fancy:fb_radius="50dp" />
 
         <LinearLayout
@@ -109,6 +109,7 @@
                 android:layout_alignParentRight="true"
                 android:button="@drawable/selector_check_rect"
                 android:checked="true"
+                android:padding="4dp"
                 android:text="自动登录"
                 android:textColor="#333333" />
 
@@ -119,6 +120,7 @@
                 android:button="@drawable/selector_check_rect"
                 android:checked="true"
                 android:text="记住密码"
+                android:padding="4dp"
                 android:textColor="#333333" />
         </RelativeLayout>
 

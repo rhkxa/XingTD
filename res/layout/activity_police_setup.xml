@@ -35,7 +35,7 @@
                 fancy:fb_defaultColor="@color/app_yellow"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_arlam"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="24dp"
                 fancy:fb_radius="2dp"
                 fancy:fb_textColor="#FFFFFF" />
 
@@ -75,7 +75,7 @@
                 fancy:fb_defaultColor="@color/app_green"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_voice"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="24dp"
                 fancy:fb_radius="2dp"
                 fancy:fb_textColor="#FFFFFF" />
 
@@ -115,7 +115,7 @@
                 fancy:fb_defaultColor="@color/tag_blue"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_shock"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="24dp"
                 fancy:fb_radius="2dp"
                 fancy:fb_textColor="#FFFFFF" />
 
@@ -160,7 +160,7 @@
                 fancy:fb_defaultColor="@color/app_yellow"
                 fancy:fb_focusColor="#8cc9f8"
                 fancy:fb_iconResource="@drawable/xtd_icon_type"
-                fancy:fb_iconSize="10dp"
+                fancy:fb_iconSize="24dp"
                 fancy:fb_radius="2dp"
                 fancy:fb_textColor="#FFFFFF" />
 

@@ -26,10 +26,10 @@
             android:gravity="center"
             android:text="车辆"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/main_vihecle_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
 
         <com.gps808.app.view.PengButton
             android:id="@+id/main_routes"
@@ -41,10 +41,10 @@
             android:gravity="center"
             android:text="线路"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/main_routes_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
 
         <com.gps808.app.view.PengButton
             android:id="@+id/main_police"
@@ -56,10 +56,10 @@
             android:gravity="center"
             android:text="报警"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/main_police_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
 
         <com.gps808.app.view.PengButton
             android:id="@+id/main_myself"
@@ -71,10 +71,10 @@
             android:gravity="center"
             android:text="我的"
             android:textColor="@drawable/tab_text"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:peng_drawableTop="@drawable/main_my_selector"
-            app:peng_drawableTopHeight="8dp"
-            app:peng_drawableTopWith="8dp" />
+            app:peng_drawableTopHeight="24dp"
+            app:peng_drawableTopWith="24dp" />
     </LinearLayout>
 
 </LinearLayout>

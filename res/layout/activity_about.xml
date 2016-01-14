@@ -225,7 +225,7 @@
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_iconPosition="left"
                     fancy:fb_iconResource="@drawable/xtd_icon_comment"
-                    fancy:fb_iconSize="10dp"
+                    fancy:fb_iconSize="24dp"
                     fancy:fb_text="评论"
                     fancy:fb_textColor="@color/app_blue" />
 
@@ -244,7 +244,7 @@
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_iconPosition="left"
                     fancy:fb_iconResource="@drawable/xtd_action_share"
-                    fancy:fb_iconSize="10dp"
+                    fancy:fb_iconSize="24dp"
                     fancy:fb_text="分享"
                     fancy:fb_textColor="@color/app_blue" />
             </LinearLayout>

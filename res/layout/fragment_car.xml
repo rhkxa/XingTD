@@ -22,7 +22,7 @@
             fancy:fb_borderWidth="2dp"
             fancy:fb_defaultColor="@color/white"
             fancy:fb_iconResource="@drawable/xtd_icon_gray"
-            fancy:fb_iconSize="20dp"
+            fancy:fb_iconSize="48dp"
             fancy:fb_radius="50dp" />
 
         <LinearLayout

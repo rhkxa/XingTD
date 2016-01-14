@@ -200,7 +200,7 @@
         <!-- 家XrnxWbyjML3T0b2Pb4ukY8OE 公司N8qQtsf1z2QZUtB6ViQegOWH 打包rIbhPNnCV1NUclk1bubLfswt -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
+            android:value="rIbhPNnCV1NUclk1bubLfswt" />
     </application>
 
 </manifest>

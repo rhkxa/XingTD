@@ -17,7 +17,7 @@
         fancy:fb_defaultColor="@color/border"
         fancy:fb_focusColor="#8cc9f8"
         fancy:fb_iconResource="@drawable/xtd_icon_gray"
-        fancy:fb_iconSize="10dp"
+        fancy:fb_iconSize="36dp"
         fancy:fb_radius="2dp"
         fancy:fb_textColor="#FFFFFF" />
 
