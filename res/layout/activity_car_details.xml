@@ -24,9 +24,9 @@
     <RadioGroup
         android:id="@+id/main_linearlayout_footer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp" >
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
         <com.gps808.app.view.PengRadioButton
             android:id="@+id/car_track"

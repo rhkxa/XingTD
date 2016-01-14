@@ -185,7 +185,7 @@ public class LoginActivity extends BaseActivity {
 							.getString(R.string.msg_login_pwd_null));
 					return;
 				}
-				HttpUtil.cancelRequest(LoginActivity.this);
+			    handler.removeCallbacks(runnable);
 				getLogin();
 			}
 		});

@@ -31,7 +31,7 @@ public class PengRadioButton extends RadioButton {
 	private void initView(Context context, AttributeSet attrs) {
 		if (attrs != null) {
 			float scale = context.getResources().getDisplayMetrics().density;
-			scale = scale/3;
+			scale = 1;
 			TypedArray a = context.obtainStyledAttributes(attrs,
 					R.styleable.PengRadioButton);
 			int n = a.getIndexCount();
