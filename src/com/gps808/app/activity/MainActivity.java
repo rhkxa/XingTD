@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity {
 	int flag = 0;
 	private View mMarkerLy;
 	private int handler_runnable_time;
-	private FancyButton main_person;
+	private FancyButton main_traffic;
 	private String mCurrentCar = null;
 
 	// 覆盖物相关
@@ -118,6 +118,8 @@ public class MainActivity extends BaseActivity {
 	private List<Marker> markerList = new ArrayList<Marker>();
 	private boolean isFirstLoad = true;
 	private int state = 0;
+	// 是否打开交通图
+	private boolean isTraffic = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -250,13 +252,14 @@ public class MainActivity extends BaseActivity {
 		});
 
 		// 用户位置
-		main_person = (FancyButton) findViewById(R.id.main_person);
-		main_person.setOnClickListener(new OnClickListener() {
+		main_traffic = (FancyButton) findViewById(R.id.main_traffic);
+		main_traffic.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				mBaiduMap.setTrafficEnabled(true);
+				isTraffic = !isTraffic;
+				mBaiduMap.setTrafficEnabled(isTraffic);
 			}
 		});
 		// 设置比例尺位置与缩小放大的按钮,指南针位置
@@ -271,7 +274,7 @@ public class MainActivity extends BaseActivity {
 				mMapView.setScaleControlPosition(scalePoint);
 				Point compassPoint = new Point(
 						(main_refresh.getLeft() + main_refresh.getRight()) / 2,
-						(main_person.getBottom() + main_person.getTop()) / 2);
+						(main_traffic.getBottom() + main_traffic.getTop()) / 2);
 				mBaiduMap.getUiSettings().setCompassPosition(compassPoint);
 			}
 		});

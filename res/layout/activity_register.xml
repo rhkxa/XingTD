@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent"  xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -186,15 +186,17 @@
                 android:textColor="#333333" />
         </RelativeLayout>
 
-        <Button
+      
+            <com.gps808.app.view.FancyButton
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="立即注册"
-            android:textColor="@color/white"
-            android:textSize="@dimen/button" />
+            android:layout_marginTop="24dp"
+            fancy:fb_defaultColor="@color/tag_blue"
+            fancy:fb_focusColor="@color/app_blue"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="立即注册"
+            fancy:fb_textColor="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"

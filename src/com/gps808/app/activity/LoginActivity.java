@@ -143,9 +143,9 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				CustomOkDialog register = new CustomOkDialog(
-						LoginActivity.this, "忘记密码", "请电话联系", null);
-				register.show();
+				Intent intent = new Intent(LoginActivity.this,
+						ForgetPassActivity.class);
+				startActivity(intent);
 			}
 		});
 		userName.addTextChangedListener(new TextWatcher() {
@@ -185,7 +185,7 @@ public class LoginActivity extends BaseActivity {
 							.getString(R.string.msg_login_pwd_null));
 					return;
 				}
-			    handler.removeCallbacks(runnable);
+				handler.removeCallbacks(runnable);
 				getLogin();
 			}
 		});

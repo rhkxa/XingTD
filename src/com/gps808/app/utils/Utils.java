@@ -31,6 +31,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -232,7 +233,7 @@ public class Utils {
 		oks.setSiteUrl(path);
 		oks.setSilent(false);
 		oks.setDialogMode();// 显示为弹窗效果
-		// oks.setTheme(OnekeyShareTheme.SKYBLUE);蓝色主题
+		oks.setTheme(OnekeyShareTheme.CLASSIC);
 		// 启动分享GUI
 		oks.show(context);
 	}

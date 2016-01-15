@@ -65,13 +65,13 @@
                     android:layout_marginRight="20dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    fancy:fb_borderColor="@color/graywhite"
+                    fancy:fb_borderColor="@color/app_blue"
                     fancy:fb_borderWidth="1dp"
-                    fancy:fb_defaultColor="@color/app_blue"
+                    fancy:fb_defaultColor="@color/white"
                     fancy:fb_focusColor="#8cc9f8"
                     fancy:fb_radius="2dp"
                     fancy:fb_text="确认"
-                    fancy:fb_textColor="@color/white" />
+                    fancy:fb_textColor="@color/app_blue" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

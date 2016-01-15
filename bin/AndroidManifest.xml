@@ -84,6 +84,7 @@
         <activity android:name="com.gps808.app.activity.EditDrvierActivity" />
         <activity android:name="com.gps808.app.activity.DisplayPoliceActivity" />
         <activity android:name="com.gps808.app.activity.MessageActivity" />
+        <activity android:name="com.gps808.app.activity.ForgetPassActivity" />
 
         <service android:name="com.gps808.app.timeout.TimeoutService" >
         </service>

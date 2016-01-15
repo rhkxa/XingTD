@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.Header;
-import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,24 +12,24 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.adapter.PoliceListViewAdapter;
 import com.gps808.app.bean.XbPolice;
-import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
 /**
  * 报警列表
@@ -42,12 +39,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
  */
 public class PolicesActivity extends BaseActivity {
 
+	private final String CacheName = "PoliceCache";
 	private PullToRefreshListView police_list;
 	private HeaderFragment headerFragment;
 	private PoliceListViewAdapter pAdapter;
 	private int startPage = 0;
 	private final int pageNum = 10;
 	private List<XbPolice> xbPolices = new ArrayList<XbPolice>();
+	private boolean isPush;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +59,7 @@ public class PolicesActivity extends BaseActivity {
 
 	private void init() {
 		// TODO Auto-generated method stub
+		isPush = getIntent().getBooleanExtra("push", false);
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("报警列表");
@@ -91,17 +91,29 @@ public class PolicesActivity extends BaseActivity {
 			}
 		});
 		police_list = (PullToRefreshListView) findViewById(R.id.police_list);
-		police_list.setMode(Mode.PULL_FROM_END);
+		police_list.setMode(Mode.BOTH);
 		pAdapter = new PoliceListViewAdapter(PolicesActivity.this, xbPolices);
 		police_list.setAdapter(pAdapter);
-		police_list.setOnRefreshListener(new OnRefreshListener<ListView>() {
+
+		police_list.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 
 			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+			public void onPullDownToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				// TODO Auto-generated method stub
+				startPage = 0;
+				getData(true);
+			}
+
+			@Override
+			public void onPullUpToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
 				getData(true);
 			}
+
 		});
+
 		police_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -114,6 +126,16 @@ public class PolicesActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
+		if (!isPush) {
+			String cacheStr = FileUtils.read(PolicesActivity.this, CacheName);
+			if (StringUtils.isEmpty(cacheStr)) {
+				getData(false);
+			} else {
+				xbPolices.addAll(JSON.parseArray(cacheStr.toString(),
+						XbPolice.class));
+				pAdapter.notifyDataSetChanged();
+			}
+		}
 
 	}
 
@@ -135,6 +157,11 @@ public class PolicesActivity extends BaseActivity {
 					JSONArray response) {
 				// TODO Auto-generated method stub
 				LogUtils.DebugLog("result json", response.toString());
+				if (startPage == 0) {
+					FileUtils.write(PolicesActivity.this, CacheName,
+							response.toString());
+					xbPolices.clear();
+				}
 				xbPolices.addAll(JSON.parseArray(response.toString(),
 						XbPolice.class));
 				if (JSON.parseArray(response.toString(), XbPolice.class).size() < pageNum) {
@@ -174,9 +201,11 @@ public class PolicesActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		if (xbPolices.size() == 0) {
+		// 数据为空并且是推送
+		if (xbPolices.size() == 0 && isPush) {
 			getData(false);
 		}
+
 		super.onResume();
 	}
 }

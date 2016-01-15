@@ -325,6 +325,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 		// context.getApplicationContext().startActivity(intent);
 		Intent intent = new Intent();
 		intent.setClass(context.getApplicationContext(), PolicesActivity.class);
+		intent.putExtra("push", true);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.getApplicationContext().startActivity(intent);
 

@@ -75,7 +75,7 @@
         fancy:fb_radius="2dp" />
 
     <com.gps808.app.view.FancyButton
-        android:id="@+id/main_person"
+        android:id="@+id/main_traffic"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
@@ -84,7 +84,7 @@
         fancy:fb_defaultColor="@color/half_transparent"
         fancy:fb_focusColor="#8cc9f8"
         fancy:fb_iconPosition="top"
-        fancy:fb_iconResource="@drawable/xtd_icon_position"
+        fancy:fb_iconResource="@drawable/xtd_icon_traffic"
         fancy:fb_iconSize="20dp"
         fancy:fb_radius="2dp"
         fancy:fb_text="路况"

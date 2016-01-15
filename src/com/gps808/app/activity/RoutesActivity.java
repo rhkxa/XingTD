@@ -18,23 +18,26 @@ import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.adapter.RoutesListViewAdapter;
-import com.gps808.app.adapter.XbDriver;
+import com.gps808.app.bean.XbPolice;
 import com.gps808.app.bean.XbRoute;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
+import com.gps808.app.utils.Utils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
 public class RoutesActivity extends BaseActivity {
-
+	private final String CacheName = "RoutesCache";
 	private PullToRefreshListView routes_list;
 	private HeaderFragment headerFragment;
 	private RoutesListViewAdapter rAdapter;
@@ -49,7 +52,6 @@ public class RoutesActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_routes);
 		init();
-		getData(true);
 
 	}
 
@@ -80,15 +82,25 @@ public class RoutesActivity extends BaseActivity {
 		routes_list = (PullToRefreshListView) findViewById(R.id.routes_list);
 		rAdapter = new RoutesListViewAdapter(RoutesActivity.this, xbRoutes);
 		routes_list.setAdapter(rAdapter);
-		routes_list.setMode(Mode.DISABLED);
-		routes_list.setOnRefreshListener(new OnRefreshListener<ListView>() {
+		routes_list.setMode(Mode.BOTH);
+		routes_list.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 
 			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+			public void onPullDownToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				// TODO Auto-generated method stub
+				startPage = 0;
+				getData(false);
+			}
+
+			@Override
+			public void onPullUpToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
 				getData(false);
 			}
 		});
+
 		routes_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -101,6 +113,13 @@ public class RoutesActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
+		String cacheStr = FileUtils.read(RoutesActivity.this, CacheName);
+		if (StringUtils.isEmpty(cacheStr)) {
+			getData(false);
+		} else {
+			xbRoutes.addAll(JSON.parseArray(cacheStr.toString(), XbRoute.class));
+			rAdapter.notifyDataSetChanged();
+		}
 
 	}
 
@@ -134,8 +153,9 @@ public class RoutesActivity extends BaseActivity {
 							JSONArray response) {
 						// TODO Auto-generated method stub
 						LogUtils.DebugLog("result json", response.toString());
-
-						if (isRefresh) {
+						if (startPage == 0) {
+							FileUtils.write(RoutesActivity.this, CacheName,
+									response.toString());
 							xbRoutes.clear();
 						}
 						xbRoutes.addAll(JSON.parseArray(response.toString(),
@@ -143,10 +163,9 @@ public class RoutesActivity extends BaseActivity {
 						if (JSON.parseArray(response.toString(),
 								XbVehicle.class).size() < pageNum) {
 							routes_list.setMode(Mode.DISABLED);
-							// Utils.ToastMessage(CommentActivity.this,
-							// "暂无更多评论");
+							Utils.ToastMessage(RoutesActivity.this, "暂无更多路线信息");
 						} else {
-							routes_list.setMode(Mode.PULL_FROM_END);
+							routes_list.setMode(Mode.BOTH);
 							startPage++;
 						}
 						rAdapter.notifyDataSetChanged();
