@@ -85,7 +85,7 @@
         fancy:fb_focusColor="#8cc9f8"
         fancy:fb_iconPosition="top"
         fancy:fb_iconResource="@drawable/xtd_icon_traffic"
-        fancy:fb_iconSize="20dp"
+        fancy:fb_iconSize="24dp"
         fancy:fb_radius="2dp"
         fancy:fb_text="路况"
         fancy:fb_textSize="10sp" />
