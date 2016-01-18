@@ -149,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="账号注册"
+            android:text="用户注册"
             android:textColor="@color/tag_blue"
             android:textSize="@dimen/button" />
 

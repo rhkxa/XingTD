@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.gps808.app.R;
 import com.gps808.app.activity.LoginActivity;
 import com.gps808.app.timeout.ScreenObserver;
 import com.gps808.app.timeout.TimeoutService;
@@ -75,7 +76,7 @@ public class BaseActivity extends FragmentActivity {
 		if (progressDialog == null && !activity.isFinishing()) {
 			progressDialog = new ProgressDialog(activity);
 			progressDialog.setIndeterminate(true);
-
+            progressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.progress_compare_style));
 			progressDialog.setOnCancelListener(new OnCancelListener() {
 
 				@Override

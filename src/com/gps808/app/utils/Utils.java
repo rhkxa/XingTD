@@ -220,7 +220,6 @@ public class Utils {
 		// oks.setImagePath("/storage/emulated/0/picture/default_.jpg");//
 		// 确保SDcard下面存在此张图片
 		oks.setImagePath(imagePath);// 确保SDcard下面存在此张图片
-
 		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
 		oks.setTitleUrl(path);
 		// url仅在微信（包括好友和朋友圈）中使用

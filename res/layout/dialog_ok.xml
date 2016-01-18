@@ -38,15 +38,17 @@
             android:layout_margin="8dp"
             android:orientation="vertical" >
 
-            <TextView
+            <com.gps808.app.view.LinkView
                 android:id="@+id/dialog_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:autoLink="all"
                 android:gravity="center"
                 android:padding="16dp"
                 android:text="显示的内容"
                 android:textColor="@color/black"
+                android:textColorLink="@color/tag_blue"
                 android:textSize="@dimen/subhead" />
 
             <LinearLayout
@@ -59,7 +61,7 @@
                 <com.gps808.app.view.FancyButton
                     android:id="@+id/dialog_ok"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="40dp"
                     android:layout_margin="8dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"

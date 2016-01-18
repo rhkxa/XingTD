@@ -8,13 +8,15 @@ import android.widget.TextView;
 
 import com.gps808.app.R;
 import com.gps808.app.view.FancyButton;
+import com.gps808.app.view.LinkView;
 
 public class CustomOkDialog extends Dialog {
 
 	private Context context;
 	private View.OnClickListener okClickListener;
 	private String title, content;
-	private TextView dialog_title, dialog_content;
+	private TextView dialog_title;
+	private LinkView dialog_content;
 	private FancyButton dialog_ok;
 
 	public CustomOkDialog(Context context, String title, String content,
@@ -47,12 +49,12 @@ public class CustomOkDialog extends Dialog {
 
 	private void init() {
 		// TODO Auto-generated method stub
-		dialog_content = (TextView) findViewById(R.id.dialog_content);
+		dialog_content = (LinkView) findViewById(R.id.dialog_content);
 		dialog_title = (TextView) findViewById(R.id.dialog_title);
 		dialog_ok = (FancyButton) findViewById(R.id.dialog_ok);
 	
 		dialog_title.setText(title);
-		dialog_content.setText(content);
+		dialog_content.setLinkText(content);
 
 		if (okClickListener == null) {
 			okClickListener = close;
@@ -66,7 +68,7 @@ public class CustomOkDialog extends Dialog {
 	}
 
 	public void setContent(String content) {
-		dialog_content.setText(content);
+		dialog_content.setLinkText(content);
 	}
 
 	public void setOkClick(android.view.View.OnClickListener listener) {

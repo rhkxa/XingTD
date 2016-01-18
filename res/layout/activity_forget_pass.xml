@@ -73,6 +73,7 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入验证码"
+                android:maxLength="4"
                 android:inputType="number"
                 android:textSize="@dimen/body" />
         </LinearLayout>
