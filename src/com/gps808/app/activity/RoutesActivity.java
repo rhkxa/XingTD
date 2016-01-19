@@ -2,23 +2,19 @@ package com.gps808.app.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.adapter.RoutesListViewAdapter;
-import com.gps808.app.bean.XbPolice;
 import com.gps808.app.bean.XbRoute;
 import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.HeaderFragment;
@@ -162,7 +158,7 @@ public class RoutesActivity extends BaseActivity {
 								XbRoute.class));
 						if (JSON.parseArray(response.toString(),
 								XbVehicle.class).size() < pageNum) {
-							routes_list.setMode(Mode.DISABLED);
+							routes_list.setMode(Mode.PULL_FROM_START);
 							Utils.ToastMessage(RoutesActivity.this, "暂无更多路线信息");
 						} else {
 							routes_list.setMode(Mode.BOTH);

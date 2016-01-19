@@ -165,7 +165,7 @@ public class PolicesActivity extends BaseActivity {
 				xbPolices.addAll(JSON.parseArray(response.toString(),
 						XbPolice.class));
 				if (JSON.parseArray(response.toString(), XbPolice.class).size() < pageNum) {
-					police_list.setMode(Mode.DISABLED);
+					police_list.setMode(Mode.PULL_FROM_START);
 					Utils.ToastMessage(PolicesActivity.this, "暂无更多");
 				} else {
 					startPage++;
