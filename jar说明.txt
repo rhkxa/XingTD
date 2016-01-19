@@ -1,0 +1,4 @@
+arm64-v8a,armeabi,armeabi-v7a,x86,x86-64代表是各种手机框架下的百度地图的so文件.
+mips,armeabi-v7a,armeabi下是百度推送的so文件
+alipaySDK支付宝的.jar文件
+libammsdk.jar微信支付的.jar文件

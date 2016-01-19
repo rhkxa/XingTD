@@ -150,7 +150,7 @@ public class LoginActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				String showStr="1、忘记密码请易路通管理员联系，联系电话：0317-4227916。";
 				CustomOkDialog register = new CustomOkDialog(
-						LoginActivity.this, "新用户", showStr, null);
+						LoginActivity.this, "找回密码", showStr, null);
 				register.show();
 			}
 		});

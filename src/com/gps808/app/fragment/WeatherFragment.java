@@ -89,6 +89,7 @@ public class WeatherFragment extends BaseFragment {
 		// weather_today.setText(xbWeather.getNow().get);
 		weather_date.setText(StringUtils.toDate(System.currentTimeMillis()));
 		weather_desc.setText("今天" + xbWeather.getNow().getDesc());
+		xbWeeks.clear();
 		xbWeeks.add(xbWeather.getF2());
 		xbWeeks.add(xbWeather.getF3());
 		xbWeeks.add(xbWeather.getF4());

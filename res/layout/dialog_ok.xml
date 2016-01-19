@@ -44,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:autoLink="all"
-                android:gravity="center"
                 android:padding="16dp"
                 android:text="显示的内容"
                 android:textColor="@color/black"
