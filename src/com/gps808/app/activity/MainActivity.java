@@ -40,6 +40,7 @@ import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.map.ZoomControlView;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
@@ -164,7 +165,7 @@ public class MainActivity extends BaseActivity {
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
 						.getPosition()));
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
-						marker.getPosition(), -100);
+						marker.getPosition(), Common.INFOWINDOW_POSITION);
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
@@ -371,7 +372,7 @@ public class MainActivity extends BaseActivity {
 								XbVehicle.class);
 						LogUtils.DebugLog("result json", response.toString());
 						addInfosOverlay();
-						if (isFirstLoad) {
+						if (isFirstLoad && vehicle.size() > 0) {
 							state = 1;
 							isFirstLoad = !isFirstLoad;
 						}
@@ -568,7 +569,8 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(markerList.get(
 				markerPosition).getPosition()));
 		mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
-				markerList.get(markerPosition).getPosition(), -100);
+				markerList.get(markerPosition).getPosition(),
+				Common.INFOWINDOW_POSITION);
 		mBaiduMap.showInfoWindow(mInfoWindow);
 	}
 

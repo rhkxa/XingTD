@@ -33,6 +33,7 @@ import com.gps808.app.R;
 import com.gps808.app.bean.XbPolice;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.UrlConfig;
@@ -86,7 +87,7 @@ public class DisplayPoliceActivity extends BaseActivity {
 			public boolean onMarkerClick(Marker arg0) {
 				// TODO Auto-generated method stub
 				InfoWindow mInfoWindow = new InfoWindow(popupInfo(mMarkerLy,
-						xbPolice), arg0.getPosition(), -100);
+						xbPolice), arg0.getPosition(), Common.INFOWINDOW_POSITION);
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
@@ -122,7 +123,7 @@ public class DisplayPoliceActivity extends BaseActivity {
 
 		Marker marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 		InfoWindow mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbPolice),
-				latLng, -100);
+				latLng, Common.INFOWINDOW_POSITION);
 		mBaiduMap.showInfoWindow(mInfoWindow);
 		MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(latLng,
 				14.0f);
