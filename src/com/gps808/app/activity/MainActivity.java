@@ -40,6 +40,7 @@ import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.map.ZoomControlView;
 import com.gps808.app.push.PushUtils;
 import com.gps808.app.utils.BaseActivity;
+import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
@@ -120,6 +121,8 @@ public class MainActivity extends BaseActivity {
 	private int state = 0;
 	// 是否打开交通图
 	private boolean isTraffic = false;
+	// 是否首次定位
+	boolean isFirstLoc = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +140,10 @@ public class MainActivity extends BaseActivity {
 		// 初始化搜索模块，注册事件监听
 		mSearch = GeoCoder.newInstance();
 		mSearch.setOnGetGeoCodeResultListener(new MyGetGeoCoderResultListener());
-		MapStatus mapStatus = new MapStatus.Builder()
-				.target(new LatLng(38.31056, 116.844697)).zoom(10.0f).build();
-		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(mapStatus);
-		mBaiduMap.setMapStatus(msu);
+		// MapStatus mapStatus = new MapStatus.Builder()
+		// .target(new LatLng(38.31056, 116.844697)).zoom(10.0f).build();
+		// MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(mapStatus);
+		// mBaiduMap.setMapStatus(msu);
 		// 隐藏百度logo和 ZoomControl
 		int count = mMapView.getChildCount();
 		for (int i = 0; i < count; i++) {
@@ -164,7 +167,7 @@ public class MainActivity extends BaseActivity {
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
 						.getPosition()));
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
-						marker.getPosition(), -50);
+						marker.getPosition(), Common.INFOWINDOW_POSITION);
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
@@ -241,12 +244,6 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				MapStatus mapStatus = new MapStatus.Builder()
-						.target(new LatLng(38.31056, 116.844697)).zoom(10.0f)
-						.build();
-				MapStatusUpdate msu = MapStatusUpdateFactory
-						.newMapStatus(mapStatus);
-				mBaiduMap.setMapStatus(msu);
 				getVehicleLocation(true);
 			}
 		});
@@ -278,9 +275,10 @@ public class MainActivity extends BaseActivity {
 				mBaiduMap.getUiSettings().setCompassPosition(compassPoint);
 			}
 		});
+		startLocation();
 		// 加载数据
 		getVehicleLocation(false);
-		startLocation();
+
 	}
 
 	/**
@@ -568,7 +566,8 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(markerList.get(
 				markerPosition).getPosition()));
 		mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbVehicle),
-				markerList.get(markerPosition).getPosition(), -50);
+				markerList.get(markerPosition).getPosition(),
+				Common.INFOWINDOW_POSITION);
 		mBaiduMap.showInfoWindow(mInfoWindow);
 	}
 
@@ -584,15 +583,19 @@ public class MainActivity extends BaseActivity {
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(false);// 打开GPS
 		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(60 * 60 * 1000);
+		option.setScanSpan(60 * 1000);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
-
 	}
 
 	// 启动Push
 	private void initWithApiKey() {
 		// Push: 无账号初始化，用API key绑定
+		if (PreferenceUtils.getInstance(MainActivity.this).getUserId()
+				.equals("59")) {
+			LogUtils.DebugLog("体验用户不启动push");
+			return;
+		}
 		PushManager.startWork(getApplicationContext(),
 				PushConstants.LOGIN_TYPE_API_KEY,
 				PushUtils.getMetaValue(MainActivity.this, "api_key"));
@@ -640,6 +643,13 @@ public class MainActivity extends BaseActivity {
 					.direction(100).latitude(location.getLatitude())
 					.longitude(location.getLongitude()).build();
 			mBaiduMap.setMyLocationData(locData);
+			if (isFirstLoc) {
+				isFirstLoc = false;
+				LatLng ll = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				mBaiduMap.animateMapStatus(u);
+			}
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {

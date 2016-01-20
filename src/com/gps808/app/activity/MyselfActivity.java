@@ -99,7 +99,7 @@ public class MyselfActivity extends BaseActivity {
 		my_help.setOnClickListener(click);
 		mynickname = (TextView) findViewById(R.id.my_nickname);
 		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
-				.getUserName());
+				.getUserNick());
 		my_weather = (TextView) findViewById(R.id.my_weather);
 		// my_headimage = (CircleImageView) findViewById(R.id.my_headimage);
 

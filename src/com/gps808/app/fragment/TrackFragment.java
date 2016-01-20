@@ -34,6 +34,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbTrack;
 import com.gps808.app.utils.BaseFragment;
+import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
@@ -111,7 +112,7 @@ public class TrackFragment extends BaseFragment {
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(marker
 						.getPosition()));
 				mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbTrack),
-						marker.getPosition(), -100);
+						marker.getPosition(), Common.INFOWINDOW_POSITION);
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
@@ -176,7 +177,7 @@ public class TrackFragment extends BaseFragment {
 			}
 		}
 		mInfoWindow = new InfoWindow(popupInfo(mMarkerLy, xbTrack),
-				marker.getPosition(), -100);
+				marker.getPosition(), Common.INFOWINDOW_POSITION);
 		mBaiduMap.showInfoWindow(mInfoWindow);
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(latLng));
 

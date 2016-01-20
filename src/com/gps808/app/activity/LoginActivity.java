@@ -24,10 +24,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -49,11 +47,9 @@ import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
-import com.gps808.app.utils.XtdApplication;
 import com.gps808.app.view.FancyButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 /**
  * 登录界面
@@ -75,6 +71,8 @@ public class LoginActivity extends BaseActivity {
 	private TextView login_forget_pass;
 	private boolean isReLogin;
 	private PreferenceUtils mPreferences;
+	private TextView login_test;
+	private boolean isTest = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +97,7 @@ public class LoginActivity extends BaseActivity {
 		// login_serve = (TextView) findViewById(R.id.login_serve);
 		login_to_register = (TextView) findViewById(R.id.login_to_register);
 		login_forget_pass = (TextView) findViewById(R.id.login_forget_pass);
+		login_test = (TextView) findViewById(R.id.login_test);
 		autoLoginBox.setChecked(mPreferences.getAutoLogin());
 		savePwdBox.setChecked(mPreferences.getSavePassWord());
 
@@ -133,7 +132,7 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				String showStr="1、安装我公司的车辆定位设备，将免费使用该应用；<br>2、购买、安装设备请与我们联系，联系电话：0317-4227916。";
+				String showStr = "1、安装我公司的车辆定位设备，将免费使用该应用。<br>2、购买、安装设备请与我们联系，联系电话：0317-4227916。";
 				CustomOkDialog register = new CustomOkDialog(
 						LoginActivity.this, "新用户", showStr, null);
 				register.show();
@@ -144,14 +143,22 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-//				Intent intent = new Intent(LoginActivity.this,
-//						ForgetPassActivity.class);
-//				startActivity(intent);
-				// TODO Auto-generated method stub
-				String showStr="1、忘记密码请易路通管理员联系，联系电话：0317-4227916。";
+				// Intent intent = new Intent(LoginActivity.this,
+				// ForgetPassActivity.class);
+				// startActivity(intent);
+				String showStr = "1、忘记密码请易路通管理员联系，联系电话：0317-4227916。";
 				CustomOkDialog register = new CustomOkDialog(
 						LoginActivity.this, "找回密码", showStr, null);
 				register.show();
+			}
+		});
+		login_test.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				isTest = true;
+				getLogin("ty", "123123");
 			}
 		});
 		userName.addTextChangedListener(new TextWatcher() {
@@ -192,22 +199,22 @@ public class LoginActivity extends BaseActivity {
 					return;
 				}
 				handler.removeCallbacks(runnable);
-				getLogin();
+				getLogin(userName.getText().toString(), passWord.getText()
+						.toString());
 			}
 		});
 
 	}
 
 	// 登录
-	private void getLogin() {
+	private void getLogin(final String userName, final String passWord) {
 		if (Utils.isNetWorkConnected(LoginActivity.this)) {
 			String url = UrlConfig.getLogin();
 			JSONObject params = new JSONObject();
 			StringEntity entity = null;
 			try {
-				params.put("username", userName.getText().toString());
-				params.put("password",
-						CyptoUtils.MD5(passWord.getText().toString()));
+				params.put("username", userName);
+				params.put("password", CyptoUtils.MD5(passWord));
 				entity = new StringEntity(params.toString(), "UTF-8");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -228,17 +235,19 @@ public class LoginActivity extends BaseActivity {
 								org.apache.http.Header[] headers,
 								JSONObject response) {
 							if (Utils.requestOk(response)) {
-
 								XbUser xbUser = JSON.parseObject(
 										response.toString(), XbUser.class);
 								Utils.ToastMessage(LoginActivity.this, "登录成功");
 								mPreferences.setUserNick(xbUser.getUserName());
 								mPreferences.setUserId(xbUser.getUserId());
-								mPreferences.setUserState(xbUser.getUserType());
-								mPreferences.setUserPW(passWord.getText()
-										.toString());
-								mPreferences.setUserName(userName.getText()
-										.toString());
+								if (!isTest) {
+									mPreferences.setUserState(xbUser
+											.getUserType());
+									mPreferences.setUserPW(passWord);
+									mPreferences.setUserName(userName);
+								}
+								mPreferences.setUserNick(xbUser.getUserName());
+
 								if (!isReLogin) {
 									Intent intent = new Intent(
 											LoginActivity.this,
@@ -300,7 +309,6 @@ public class LoginActivity extends BaseActivity {
 					JSONObject response) {
 				// TODO Auto-generated method stub
 				LogUtils.DebugLog("result", response.toString());
-
 				Update update = JSON.parseObject(response.toString(),
 						Update.class);
 				int currentVersion = Utils

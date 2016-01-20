@@ -22,6 +22,7 @@ import com.gps808.app.activity.PolicesActivity;
 import com.gps808.app.activity.WelcomeActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -84,6 +85,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 
 		if (errorCode == 0) {
 			// 绑定成功
+
 			toUploadPush(context, channelId, appid, userId);
 		}
 		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
@@ -334,7 +336,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 	private void toUploadPush(Context context, String channelId, String appId,
 			String userId) {
 		String url = UrlConfig.getPush();
-
 		JSONObject postData = new JSONObject();
 		StringEntity entity = null;
 		try {

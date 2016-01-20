@@ -167,6 +167,21 @@
             android:text="忘记密码"
             android:textColor="@color/tag_blue"
             android:textSize="@dimen/button" />
+        
+        <View
+            android:layout_width="1px"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:background="@color/tag_blue" />
+
+        <TextView
+            android:id="@+id/login_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="立即体验"
+            android:textColor="@color/tag_blue"
+            android:textSize="@dimen/button" />
     </LinearLayout>
 
 </RelativeLayout>

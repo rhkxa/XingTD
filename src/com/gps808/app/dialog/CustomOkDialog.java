@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gps808.app.R;
+import com.gps808.app.utils.Utils;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.LinkView;
+import com.gps808.app.view.LinkView.OnLinkClickListener;
 
 public class CustomOkDialog extends Dialog {
 
@@ -52,14 +54,20 @@ public class CustomOkDialog extends Dialog {
 		dialog_content = (LinkView) findViewById(R.id.dialog_content);
 		dialog_title = (TextView) findViewById(R.id.dialog_title);
 		dialog_ok = (FancyButton) findViewById(R.id.dialog_ok);
-	
 		dialog_title.setText(title);
 		dialog_content.setLinkText(content);
-
 		if (okClickListener == null) {
 			okClickListener = close;
 		}
 		dialog_ok.setOnClickListener(okClickListener);
+		dialog_content.setLinkClickListener(new OnLinkClickListener() {
+			
+			@Override
+			public void onLinkClick() {
+				// TODO Auto-generated method stub
+				Utils.callPhone(context, "0317-4227916");
+			}
+		});
 
 	}
 
@@ -74,7 +82,7 @@ public class CustomOkDialog extends Dialog {
 	public void setOkClick(android.view.View.OnClickListener listener) {
 		dialog_ok.setOnClickListener(listener);
 	}
-
+	
 	
 
 	private android.view.View.OnClickListener close = new View.OnClickListener() {
