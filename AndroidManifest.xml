@@ -197,11 +197,10 @@
         <!-- 在百度开发者中心查询应用的API Key -->
         <meta-data
             android:name="api_key"
-            android:value="LO7iPVuz1s5MnZniNPYD8ISr" />
-        <!-- 家XrnxWbyjML3T0b2Pb4ukY8OE 公司N8qQtsf1z2QZUtB6ViQegOWH 打包rIbhPNnCV1NUclk1bubLfswt -->
+            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />      
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="rIbhPNnCV1NUclk1bubLfswt" />
+            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />
     </application>
 
 </manifest>

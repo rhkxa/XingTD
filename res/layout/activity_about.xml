@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="扫瞄二维码下载易路通"
+                    android:text="扫描二维码下载易路通"
                     android:textColor="@color/text"
                     android:textSize="@dimen/subhead" />
             </LinearLayout>

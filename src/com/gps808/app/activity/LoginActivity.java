@@ -380,6 +380,7 @@ public class LoginActivity extends BaseActivity {
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				HttpUtil.cancelRequest(LoginActivity.this);
 				dialog.dismiss();
 
 			}

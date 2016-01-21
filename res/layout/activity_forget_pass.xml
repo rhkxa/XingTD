@@ -38,6 +38,7 @@
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入手机号"
                 android:inputType="number"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
 
             <com.gps808.app.view.TimeButton
@@ -73,8 +74,9 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入验证码"
-                android:maxLength="4"
                 android:inputType="number"
+                android:maxLength="4"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -98,6 +100,7 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请输入密码"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
@@ -121,6 +124,7 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/corners_rect_gray"
                 android:hint="请再次输入密码"
+                android:padding="4dp"
                 android:textSize="@dimen/body" />
         </LinearLayout>
 
