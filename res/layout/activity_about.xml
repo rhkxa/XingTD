@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:text="1.8"
+                    android:text="2.0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/body" />
             </RelativeLayout>
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:text="2016-01-20"
+                    android:text="2016-01-22"
                     android:textColor="@color/black"
                     android:textSize="@dimen/body" />
             </RelativeLayout>

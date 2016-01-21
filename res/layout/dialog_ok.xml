@@ -23,8 +23,9 @@
                 android:id="@+id/dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:padding="8dp"
-                android:text="显示的内容 "
+                android:text="标题 "
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/title" />
 
@@ -44,10 +45,10 @@
                 android:layout_margin="8dp"
                 android:autoLink="phone"
                 android:linksClickable="true"
-                android:textColorLink="@color/tag_blue"
                 android:padding="16dp"
                 android:text="显示的内容"
                 android:textColor="@color/black"
+                android:textColorLink="@color/tag_blue"
                 android:textSize="@dimen/subhead" />
 
             <LinearLayout
