@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="10dip" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="已下载城市 " />
+
+    <TextView
+        android:id="@+id/update"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text=""
+        android:textColor="#FF0000" />
+
+    <TextView
+        android:id="@+id/ratio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="" />
+
+    <com.gps808.app.view.FancyButton
+        android:id="@+id/display"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:onClick="clickLocalMapListButton"
+        fancy:fb_defaultColor="@color/app_blue"
+        fancy:fb_focusColor="#8cc9f8"
+        fancy:fb_radius="2dp"
+        fancy:fb_text="查看"
+        fancy:fb_textColor="@color/white" />
+
+    <com.gps808.app.view.FancyButton
+        android:id="@+id/remove"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:onClick="clickLocalMapListButton"
+        fancy:fb_defaultColor="@color/app_blue"
+        fancy:fb_focusColor="#8cc9f8"
+        fancy:fb_radius="2dp"
+        fancy:fb_text="删除"
+        fancy:fb_textColor="@color/white" />
+
+</LinearLayout>
