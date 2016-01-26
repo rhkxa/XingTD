@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ZoomControls;
 
@@ -56,10 +58,9 @@ public class DisplayLineActivity extends BaseActivity {
 	// 定位相关
 	LocationClient mLocClient;
 	public MyLocationListenner myListener = new MyLocationListenner();
-	private LocationMode mCurrentMode = LocationMode.FOLLOWING;
+	private LocationMode mCurrentMode = LocationMode.NORMAL;
 	BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
 			.fromResource(R.drawable.xtd_line_car);;
-	boolean isFirstLoc = true;// 是否首次定位
 	String rid;
 	private final String saveFile = "Routes";
 	private int handler_runnable_time;
@@ -68,6 +69,8 @@ public class DisplayLineActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_display_line);
 		init();
 
@@ -292,13 +295,12 @@ public class DisplayLineActivity extends BaseActivity {
 					.direction(100).latitude(location.getLatitude())
 					.longitude(location.getLongitude()).build();
 			mBaiduMap.setMyLocationData(locData);
-			if (isFirstLoc) {
-				isFirstLoc = false;
-				LatLng ll = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mBaiduMap.animateMapStatus(u);
-			}
+
+			LatLng ll = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+			mBaiduMap.animateMapStatus(u);
+
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {

@@ -19,14 +19,16 @@ public class HttpUtil {
 		//
 		// client.setUserAgent(arg0)
 		// client.setBasicAuth(arg0, arg1);
-		client.setTimeout(30000); // 设置链接超时，如果不设置，默认为10s
 		// client.getHttpClient().getParams()
 		// .setParameter("http.protocol.allow-circular-redirects", true);// 重定向
 		// getClient().getHttpClient().getConnectionManager().shutdown();
+		client.setTimeout(30000); // 设置链接超时，如果不设置，默认为10s
+
 	}
 
 	// 用一个完整url获取一个string对象,可以拉取进度
-	public static void get(Context mContext,String urlString, AsyncHttpResponseHandler res) {
+	public static void get(Context mContext, String urlString,
+			AsyncHttpResponseHandler res) {
 		LogUtils.DebugLog("http get", urlString);
 		if (!Utils.isNetWorkConnected(mContext)) {
 			Utils.ToastMessage(
@@ -37,8 +39,6 @@ public class HttpUtil {
 		}
 		client.get(urlString, res);
 	}
-
-
 
 	// url里面带参数
 	public static void post(Context mContext, String urlString,
@@ -62,7 +62,8 @@ public class HttpUtil {
 	}
 
 	// 下载文件使用
-	public static void get(Context mContext,String uString, FileAsyncHttpResponseHandler bHandler) {
+	public static void get(Context mContext, String uString,
+			FileAsyncHttpResponseHandler bHandler) {
 		LogUtils.DebugLog("下载文件" + uString);
 		if (!Utils.isNetWorkConnected(mContext)) {
 			Utils.ToastMessage(
@@ -71,7 +72,7 @@ public class HttpUtil {
 							R.string.network_not_connected));
 			return;
 		}
-		client.get(mContext,uString, bHandler);
+		client.get(mContext, uString, bHandler);
 
 	}
 
@@ -91,8 +92,8 @@ public class HttpUtil {
 	}
 
 	// 带参数，获取json对象或者数组
-	public static void post(Context mContext,String urlString, RequestParams params,
-			JsonHttpResponseHandler res) {
+	public static void post(Context mContext, String urlString,
+			RequestParams params, JsonHttpResponseHandler res) {
 		LogUtils.DebugLog("http post", urlString);
 		if (!Utils.isNetWorkConnected(mContext)) {
 			Utils.ToastMessage(
@@ -101,7 +102,7 @@ public class HttpUtil {
 							R.string.network_not_connected));
 			return;
 		}
-		client.post(mContext,urlString, params, res);
+		client.post(mContext, urlString, params, res);
 	}
 
 	/**
