@@ -20,20 +20,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:clickable="true" />
-
-        <com.gps808.app.view.FancyButton
-            android:id="@+id/main_person"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="8dp"
-            fancy:fb_borderColor="@color/border"
-            fancy:fb_borderWidth="1dp"
-            fancy:fb_defaultColor="@color/white"
-            fancy:fb_focusColor="#8cc9f8"
-            fancy:fb_iconResource="@drawable/xtd_icon_position"
-            fancy:fb_iconSize="24dp"
-            fancy:fb_radius="2dp" />
     </RelativeLayout>
 
 </LinearLayout>

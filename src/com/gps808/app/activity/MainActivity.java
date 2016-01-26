@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity {
 
 	// 定位相关
 	LocationClient mLocClient;
-	private LocationMode mCurrentMode = LocationMode.NORMAL;
+	private LocationMode mCurrentMode = LocationMode.FOLLOWING;
 	BitmapDescriptor mCurrentMarker;
 
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
@@ -303,7 +303,7 @@ public class MainActivity extends BaseActivity {
 			bundle.putString("id", info.getVid());
 			if (isFirstLoad) {
 				overlayOptions = new MarkerOptions().position(latLng).icon(car)
-						.rotate(info.getDirection());
+						.rotate(360 - info.getDirection());
 				marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 				marker.setExtraInfo(bundle);
 				markerList.add(marker);
@@ -313,7 +313,7 @@ public class MainActivity extends BaseActivity {
 					markerList.get(markerPosition).setIcon(car);
 					markerList.get(markerPosition).setPosition(latLng);
 					markerList.get(markerPosition).setRotate(
-							info.getDirection());
+							360 - info.getDirection());
 					markerList.get(markerPosition).setExtraInfo(bundle);
 				}
 			}

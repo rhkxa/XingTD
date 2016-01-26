@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ZoomControls;
 
@@ -34,17 +32,16 @@ import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
-import com.gps808.app.activity.MainActivity.MyLocationListenner;
 import com.gps808.app.bean.XbDisplayLine;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
-import com.gps808.app.view.FancyButton;
 
 public class DisplayLineActivity extends BaseActivity {
 
@@ -60,10 +57,12 @@ public class DisplayLineActivity extends BaseActivity {
 	LocationClient mLocClient;
 	public MyLocationListenner myListener = new MyLocationListenner();
 	private LocationMode mCurrentMode = LocationMode.FOLLOWING;
-	BitmapDescriptor mCurrentMarker;
+	BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
+			.fromResource(R.drawable.xtd_line_car);;
 	boolean isFirstLoc = true;// 是否首次定位
 	String rid;
 	private final String saveFile = "Routes";
+	private int handler_runnable_time;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +79,8 @@ public class DisplayLineActivity extends BaseActivity {
 		HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
 		headerFragment.setTitleText("路线详情");
+		handler_runnable_time = PreferenceUtils.getInstance(
+				DisplayLineActivity.this).getTrackTime() * 1000;
 		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.map_end_icon);
 		startIcon = BitmapDescriptorFactory
 				.fromResource(R.drawable.map_start_icon);
@@ -96,30 +97,6 @@ public class DisplayLineActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
-		// 用户位置
-		FancyButton main_person = (FancyButton) findViewById(R.id.main_person);
-		main_person.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				// 开启定位图层
-				mBaiduMap.setMyLocationEnabled(true);
-				mBaiduMap
-						.setMyLocationConfigeration(new MyLocationConfiguration(
-								mCurrentMode, true, mCurrentMarker));
-				// 定位初始化
-				mLocClient = new LocationClient(DisplayLineActivity.this);
-				mLocClient.registerLocationListener(myListener);
-				LocationClientOption option = new LocationClientOption();
-				option.setOpenGps(true);// 打开gps
-				option.setCoorType("bd09ll"); // 设置坐标类型
-				option.setScanSpan(1000);
-				mLocClient.setLocOption(option);
-				mLocClient.start();
-			}
-		});
-
 		// 从本地获取
 		String content = FileUtils.read(DisplayLineActivity.this, saveFile
 				+ rid);
@@ -131,6 +108,7 @@ public class DisplayLineActivity extends BaseActivity {
 					XbDisplayLine.class);
 			parseData(xbDisplayLine);
 		}
+		startLocation();
 	}
 
 	/**
@@ -257,6 +235,22 @@ public class DisplayLineActivity extends BaseActivity {
 				});
 	}
 
+	private void startLocation() {
+		// 开启定位图层
+		mBaiduMap.setMyLocationEnabled(true);
+		mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
+				mCurrentMode, true, mCurrentMarker));
+		// 定位初始化
+		mLocClient = new LocationClient(DisplayLineActivity.this);
+		mLocClient.registerLocationListener(myListener);
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);// 打开gps
+		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(handler_runnable_time);
+		mLocClient.setLocOption(option);
+		mLocClient.start();
+	}
+
 	private void parseData(XbDisplayLine xbDisplayLine) {
 		List<LatLng> points = new ArrayList<LatLng>();
 		String[] strLng = Utils.getSplit(xbDisplayLine.getTrack(), ";");
@@ -329,6 +323,7 @@ public class DisplayLineActivity extends BaseActivity {
 		// mRedTexture.recycle();
 		// mBlueTexture.recycle();
 		// mGreenTexture.recycle();
+		mCurrentMarker.recycle();
 		endIcon.recycle();
 		startIcon.recycle();
 		if (mLocClient != null) {

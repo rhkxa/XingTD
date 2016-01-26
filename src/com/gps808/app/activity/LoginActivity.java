@@ -50,6 +50,7 @@ import com.gps808.app.utils.Utils;
 import com.gps808.app.view.FancyButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 /**
  * 登录界面
@@ -303,7 +304,7 @@ public class LoginActivity extends BaseActivity {
 	// APP检查更新
 	private void checkUpdate() {
 		String url = UrlConfig.getAppVersion();
-		HttpUtil.get(LoginActivity.this, url, new jsonHttpResponseHandler() {
+		HttpUtil.get(LoginActivity.this, url, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
