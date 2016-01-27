@@ -42,7 +42,7 @@ public class MyselfActivity extends BaseActivity {
 	private ImageView alter;
 	private TextView mynickname;
 	private CircleImageView my_headimage;
-	private LinearLayout my_setup, my_about, my_help;
+	private LinearLayout my_setup, my_about, my_help,my_map;
 	private FancyButton my_driver, my_police, my_routes, my_car;
 	private TextView my_weather;
 	// 定位
@@ -62,30 +62,12 @@ public class MyselfActivity extends BaseActivity {
 		headerFragment = (HeaderFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.title);
 		headerFragment.setTitleText("个人中心");
-		// headerFragment.setImageButtonResource(R.drawable.xtd_action_talk);
-		// headerFragment.setCommentBtnListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// // TODO Auto-generated method stub
-		// Intent intent = new Intent(MyselfActivity.this,
-		// MessageActivity.class);
-		// startActivity(intent);
-		// }
-		// });
-		// alter = (ImageView) findViewById(R.id.alter_person);
-		// alter.setOnClickListener(click);
-		//
-
 		my_driver = (FancyButton) findViewById(R.id.my_driver);
 		my_driver.setOnClickListener(click);
-
 		my_police = (FancyButton) findViewById(R.id.my_police);
 		my_police.setOnClickListener(click);
-
 		my_routes = (FancyButton) findViewById(R.id.my_routes);
 		my_routes.setOnClickListener(click);
-
 		my_car = (FancyButton) findViewById(R.id.my_car);
 		my_car.setOnClickListener(click);
 
@@ -97,6 +79,8 @@ public class MyselfActivity extends BaseActivity {
 		my_about.setOnClickListener(click);
 		my_help = (LinearLayout) findViewById(R.id.my_help);
 		my_help.setOnClickListener(click);
+		my_map = (LinearLayout) findViewById(R.id.my_map);
+		my_map.setOnClickListener(click);
 		mynickname = (TextView) findViewById(R.id.my_nickname);
 		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
 				.getUserNick());
@@ -173,6 +157,9 @@ public class MyselfActivity extends BaseActivity {
 				break;
 			case R.id.my_car:
 				cls = VehiclesActivity.class;
+				break;
+			case R.id.my_map:
+				cls = DownloadMapActivity.class;
 				break;
 			}
 			intent.setClass(MyselfActivity.this, cls);

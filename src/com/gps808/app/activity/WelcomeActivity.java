@@ -37,7 +37,7 @@ public class WelcomeActivity extends Activity {
 			public void onAnimationEnd(Animation arg0) {
 
 				Intent intent = new Intent(WelcomeActivity.this,
-						LoginActivity.class);
+						DownloadMapActivity.class);
 				// Intent intent = new Intent(WelcomeActivity.this,
 				// MainActivity.class);
 				startActivity(intent);
