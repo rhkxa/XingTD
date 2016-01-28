@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity {
 
 	// 定位相关
 	LocationClient mLocClient;
-	private LocationMode mCurrentMode = LocationMode.FOLLOWING;
+	private LocationMode mCurrentMode = LocationMode.NORMAL;
 	BitmapDescriptor mCurrentMarker;
 
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
@@ -640,7 +640,7 @@ public class MainActivity extends BaseActivity {
 			MyLocationData locData = new MyLocationData.Builder()
 					.accuracy(location.getRadius())
 					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(100).latitude(location.getLatitude())
+					.direction(location.getDirection()).latitude(location.getLatitude())
 					.longitude(location.getLongitude()).build();
 			mBaiduMap.setMyLocationData(locData);
 			if (isFirstLoc) {

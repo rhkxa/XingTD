@@ -248,12 +248,12 @@ public class MonitorFragment extends BaseFragment {
 			// 图标
 			OverlayOptions overlayOptions = new MarkerOptions()
 					.position(latLng).icon(locationIcon).zIndex(5)
-					.rotate(car.getDirection());
+					.rotate(360-car.getDirection());
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 
 		} else {
 			marker.setPosition(latLng);
-			marker.setRotate(car.getDirection());
+			marker.setRotate(360-car.getDirection());
 		}
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(latLng));
 

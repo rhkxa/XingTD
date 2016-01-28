@@ -157,13 +157,13 @@ public class TrackFragment extends BaseFragment {
 			}
 			// 图标
 			overlayOptions = new MarkerOptions().position(latLng).icon(car)
-					.zIndex(5).rotate(xbTrack.getDirection())
+					.zIndex(5).rotate(360-xbTrack.getDirection())
 					.animateType(MarkerAnimateType.grow);// 生长动画
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 
 		} else {
 			marker.setPosition(latLng);
-			marker.setRotate(xbTrack.getDirection());
+			marker.setRotate(360-xbTrack.getDirection());
 
 			if (mPolyline == null) {
 				OverlayOptions ooPolyline = new PolylineOptions().width(10)
