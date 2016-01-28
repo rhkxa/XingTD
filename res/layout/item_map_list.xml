@@ -16,6 +16,15 @@
         android:textColor="@color/black"
         android:textSize="@dimen/body" />
 
+    <TextView
+        android:id="@+id/item_map_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+       android:layout_toRightOf="@id/item_map_name"
+        android:text="已下载:--"
+        android:textSize="@dimen/caption" />
+
     <ToggleButton
         android:id="@+id/item_map_play"
         android:layout_width="24dp"
@@ -27,12 +36,12 @@
         android:textOn="" />
 
     <TextView
-        android:id="@+id/item_map_state"
+        android:id="@+id/item_map_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/item_map_play"
-        android:text="已下载:--"
+        android:text="50M"
         android:textSize="@dimen/caption" />
 
 </RelativeLayout>

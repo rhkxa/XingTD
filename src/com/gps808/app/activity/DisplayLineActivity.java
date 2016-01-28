@@ -244,10 +244,11 @@ public class DisplayLineActivity extends BaseActivity {
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
 				mCurrentMode, true, mCurrentMarker));
 		// 定位初始化
-		mLocClient = new LocationClient(DisplayLineActivity.this);
+		mLocClient = new LocationClient(getApplicationContext());
 		mLocClient.registerLocationListener(myListener);
 		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);// 打开gps
+		option.setNeedDeviceDirect(true);
+		option.setOpenGps(false);// 打开gps
 		option.setCoorType("bd09ll"); // 设置坐标类型
 		option.setScanSpan(handler_runnable_time);
 		mLocClient.setLocOption(option);
@@ -294,8 +295,8 @@ public class DisplayLineActivity extends BaseActivity {
 					// 此处设置开发者获取到的方向信息，顺时针0-360
 					.direction(location.getDirection()).latitude(location.getLatitude())
 					.longitude(location.getLongitude()).build();
+			LogUtils.DebugLog("方向"+location.getDirection()+location.getLocType());
 			mBaiduMap.setMyLocationData(locData);
-
 			LatLng ll = new LatLng(location.getLatitude(),
 					location.getLongitude());
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);

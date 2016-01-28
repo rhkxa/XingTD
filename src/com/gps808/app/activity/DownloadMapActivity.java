@@ -18,20 +18,25 @@ import com.baidu.mapapi.map.offline.MKOfflineMapListener;
 import com.gps808.app.R;
 import com.gps808.app.adapter.LocalMapAdapter;
 import com.gps808.app.adapter.LocalMapAdapter.OnLocalMapListener;
-import com.gps808.app.adapter.RemoteMapListViewAdapter;
-import com.gps808.app.adapter.RemoteMapListViewAdapter.RemoteMapListener;
-import com.gps808.app.bean.XbMap;
+import com.gps808.app.adapter.OffMapListViewAdapter;
+import com.gps808.app.adapter.OffMapListViewAdapter.RemoteMapListener;
+import com.gps808.app.bean.XbOfflineMapCityBean;
+import com.gps808.app.bean.XbOfflineMapCityBean.Flag;
 import com.gps808.app.fragment.HeaderFragment;
 
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.Utils;
 
-public class DownloadMapActivity extends BaseActivity {
+public class DownloadMapActivity extends BaseActivity implements
+		MKOfflineMapListener {
 	private RadioGroup map_rg;
 	private ListView offline_map_list, online_map_list;
 	private MKOfflineMap mOffline = null;
-	private LocalMapAdapter lAdapter;
+
 	private ArrayList<MKOLUpdateElement> localMapList;
+	private LocalMapAdapter localMapAdapter;
+	private ArrayList<XbOfflineMapCityBean> allCities;
+	private OffMapListViewAdapter offMapListViewAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +52,7 @@ public class DownloadMapActivity extends BaseActivity {
 				.getSupportFragmentManager().findFragmentById(R.id.title);
 		headerFragment.setTitleText("地图下载");
 		mOffline = new MKOfflineMap();
-		mOffline.init(new MKOfflineMapListener() {
-
-			@Override
-			public void onGetOfflineMapState(int arg0, int arg1) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		mOffline.init(this);
 		map_rg = (RadioGroup) findViewById(R.id.map_rg);
 		offline_map_list = (ListView) findViewById(R.id.offline_map_list);
 		online_map_list = (ListView) findViewById(R.id.online_map_list);
@@ -78,41 +76,28 @@ public class DownloadMapActivity extends BaseActivity {
 			}
 		});
 		// 获取所有支持离线地图的城市
-		ArrayList<XbMap> allCities = new ArrayList<XbMap>();
+		allCities = new ArrayList<XbOfflineMapCityBean>();
 		ArrayList<MKOLSearchRecord> records2 = mOffline.getOfflineCityList();
 		for (MKOLSearchRecord r : records2) {
-			XbMap xbMap = new XbMap();
+			XbOfflineMapCityBean xbMap = new XbOfflineMapCityBean();
 			xbMap.setId(r.cityID);
 			xbMap.setName(r.cityName);
 			xbMap.setSize(this.formatDataSize(r.size));
 			allCities.add(xbMap);
 		}
-		RemoteMapListViewAdapter mAdapter = new RemoteMapListViewAdapter(
+		offMapListViewAdapter = new OffMapListViewAdapter(
 				DownloadMapActivity.this, allCities);
-		mAdapter.setRemoteMapListener(new RemoteMapListener() {
 
-			@Override
-			public void onStart(TextView textView, int cityid) {
-				// TODO Auto-generated method stub
-				start(cityid);
-			}
+		online_map_list.setAdapter(offMapListViewAdapter);
 
-			@Override
-			public void onStop(TextView textView, int cityid) {
-				// TODO Auto-generated method stub
-				stop(cityid);
-			}
-		});
-		online_map_list.setAdapter(mAdapter);
 		// 获取已下过的离线地图信息
 		localMapList = mOffline.getAllUpdateInfo();
 		if (localMapList == null) {
 			localMapList = new ArrayList<MKOLUpdateElement>();
 		}
-
-		LocalMapAdapter lAdapter = new LocalMapAdapter(
-				DownloadMapActivity.this, localMapList);
-		lAdapter.setOnLocalMapListener(new OnLocalMapListener() {
+		localMapAdapter = new LocalMapAdapter(DownloadMapActivity.this,
+				localMapList);
+		localMapAdapter.setOnLocalMapListener(new OnLocalMapListener() {
 
 			@Override
 			public void onRemove(int cityId) {
@@ -120,7 +105,7 @@ public class DownloadMapActivity extends BaseActivity {
 				remove(cityId);
 			}
 		});
-		offline_map_list.setAdapter(lAdapter);
+		offline_map_list.setAdapter(localMapAdapter);
 
 	}
 
@@ -168,7 +153,7 @@ public class DownloadMapActivity extends BaseActivity {
 		if (localMapList == null) {
 			localMapList = new ArrayList<MKOLUpdateElement>();
 		}
-		lAdapter.notifyDataSetChanged();
+		localMapAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -203,6 +188,38 @@ public class DownloadMapActivity extends BaseActivity {
 		 */
 		mOffline.destroy();
 		super.onDestroy();
+	}
+
+	@Override
+	public void onGetOfflineMapState(int type, int state) {
+		// TODO Auto-generated method stub
+		switch (type) {
+		case MKOfflineMap.TYPE_DOWNLOAD_UPDATE: {
+			MKOLUpdateElement update = mOffline.getUpdateInfo(state);
+			// 处理下载进度更新提示
+			for (XbOfflineMapCityBean bean : allCities) {
+				if (bean.getId() == state) {
+					bean.setProgress(update.ratio);
+					bean.setFlag(Flag.DOWNLOADING);
+					break;
+				}
+			}
+			offMapListViewAdapter.notifyDataSetChanged();
+
+		}
+			break;
+		case MKOfflineMap.TYPE_NEW_OFFLINE:
+			// 有新离线地图安装
+			Log.d("OfflineDemo", String.format("add offlinemap num:%d", state));
+			break;
+		case MKOfflineMap.TYPE_VER_UPDATE:
+			// 版本更新提示
+			// MKOLUpdateElement e = mOffline.getUpdateInfo(state);
+
+			break;
+		default:
+			break;
+		}
 	}
 
 }

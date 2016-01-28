@@ -47,15 +47,15 @@
         android:id="@+id/offline_map_list"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:gravity="fill" >
+        android:gravity="fill"
+        android:visibility="gone" >
     </ListView>
 
     <ListView
         android:id="@+id/online_map_list"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:gravity="fill"
-        android:visibility="gone" >
+        android:gravity="fill" >
     </ListView>
 
 </LinearLayout>

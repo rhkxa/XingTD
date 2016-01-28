@@ -578,9 +578,10 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
 				mCurrentMode, true, mCurrentMarker));
 		// 定位初始化
-		mLocClient = new LocationClient(MainActivity.this);
+		mLocClient = new LocationClient(getApplicationContext());
 		mLocClient.registerLocationListener(new MyLocationListenner());
 		LocationClientOption option = new LocationClientOption();
+		option.setNeedDeviceDirect(true);
 		option.setOpenGps(false);// 打开GPS
 		option.setCoorType("bd09ll"); // 设置坐标类型
 		option.setScanSpan(60 * 1000);

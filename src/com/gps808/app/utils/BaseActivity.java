@@ -73,7 +73,7 @@ public class BaseActivity extends FragmentActivity {
 	}
 
 	public void showProgressDialog(final Activity activity, CharSequence message) {
-		if (progressDialog == null && !activity.isFinishing()) {
+		if (!activity.isFinishing()) {
 			progressDialog = new ProgressDialog(activity);
 			progressDialog.setIndeterminate(true);
 			progressDialog.setOnCancelListener(new OnCancelListener() {

@@ -12,13 +12,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbMap;
+import com.gps808.app.bean.XbOfflineMapCityBean;
+import com.gps808.app.bean.XbOfflineMapCityBean.Flag;
 
-public class RemoteMapListViewAdapter extends BaseAdapter {
+public class OffMapListViewAdapter extends BaseAdapter {
 	private Context mContext;
-	private List<XbMap> datalist;
+	private List<XbOfflineMapCityBean> datalist;
 
-	public RemoteMapListViewAdapter(Context mContext, List<XbMap> datalist) {
+	public OffMapListViewAdapter(Context mContext,
+			List<XbOfflineMapCityBean> datalist) {
 		this.mContext = mContext;
 		this.datalist = datalist;
 	}
@@ -46,7 +48,6 @@ public class RemoteMapListViewAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		final ViewHolder vh;
 		if (arg1 == null) {
-
 			arg1 = LayoutInflater.from(mContext).inflate(
 					R.layout.item_map_list, null);
 			vh = new ViewHolder(arg1);
@@ -54,8 +55,32 @@ public class RemoteMapListViewAdapter extends BaseAdapter {
 		} else {
 			vh = (ViewHolder) arg1.getTag();
 		}
-		vh.item_map_name.setText(datalist.get(arg0).getName());
-		vh.item_map_state.setText(datalist.get(arg0).getSize());
+		XbOfflineMapCityBean bean = datalist.get(arg0);
+		vh.item_map_name.setText(bean.getName());
+		vh.item_map_size.setText(bean.getSize());
+		int progress = bean.getProgress();
+		String progressMsg = "";
+		// 根据进度情况，设置显示
+		if (progress == 0) {
+			progressMsg = "未下载";
+		} else if (progress == 100) {
+			bean.setFlag(Flag.NO_STATUS);
+			progressMsg = "已下载";
+		} else {
+			progressMsg = progress + "%";
+		}
+		// 根据当前状态，设置显示
+		switch (bean.getFlag()) {
+		case PAUSE:
+			progressMsg += "【等待下载】";
+			break;
+		case DOWNLOADING:
+			progressMsg += "【正在下载】";
+			break;
+		default:
+			break;
+		}
+		vh.item_map_state.setText(progressMsg);
 		vh.item_map_play
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -64,11 +89,11 @@ public class RemoteMapListViewAdapter extends BaseAdapter {
 							boolean arg1) {
 						// TODO Auto-generated method stub
 						if (arg1) {
-							remoteMapListener.onStart(vh.item_map_state, datalist
-									.get(arg0).getId());
+							remoteMapListener.onStart(datalist.get(arg0)
+									.getId());
 						} else {
-							remoteMapListener.onStop(vh.item_map_state, datalist
-									.get(arg0).getId());
+							remoteMapListener
+									.onStop(datalist.get(arg0).getId());
 						}
 					}
 				});
@@ -80,12 +105,14 @@ public class RemoteMapListViewAdapter extends BaseAdapter {
 
 		TextView item_map_name;
 		TextView item_map_state;
+		TextView item_map_size;
 		ToggleButton item_map_play;
 
 		public ViewHolder(View arg1) {
 
 			item_map_name = (TextView) arg1.findViewById(R.id.item_map_name);
 			item_map_state = (TextView) arg1.findViewById(R.id.item_map_state);
+			item_map_size = (TextView) arg1.findViewById(R.id.item_map_size);
 			item_map_play = (ToggleButton) arg1
 					.findViewById(R.id.item_map_play);
 		}
@@ -93,9 +120,11 @@ public class RemoteMapListViewAdapter extends BaseAdapter {
 	}
 
 	RemoteMapListener remoteMapListener;
+
 	public interface RemoteMapListener {
-		public void onStart(TextView textView, int cityid);
-		public void onStop(TextView textView, int cityid);
+		public void onStart(int cityid);
+
+		public void onStop(int cityid);
 	}
 
 	public void setRemoteMapListener(RemoteMapListener listener) {
