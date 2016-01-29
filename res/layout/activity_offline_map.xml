@@ -43,19 +43,10 @@
 
     <View style="@style/blackline" />
 
-    <ListView
-        android:id="@+id/offline_map_list"
+    <FrameLayout
+        android:id="@+id/show_map"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:gravity="fill"
-        android:visibility="gone" >
-    </ListView>
-
-    <ListView
-        android:id="@+id/online_map_list"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:gravity="fill" >
-    </ListView>
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
 </LinearLayout>

@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="16dp" >
+    android:padding="8dp" >
 
     <TextView
         android:id="@+id/item_map_name"
@@ -21,26 +20,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-       android:layout_toRightOf="@id/item_map_name"
-        android:text="已下载:--"
+        android:layout_toRightOf="@id/item_map_name"
+        android:text=""
         android:textSize="@dimen/caption" />
 
-    <ToggleButton
-        android:id="@+id/item_map_play"
+    <ImageView
+        android:id="@+id/item_map_download"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/toogle_select_pic"
-        android:textOff=""
-        android:textOn="" />
+        android:src="@drawable/zoomin_normal" />
 
     <TextView
         android:id="@+id/item_map_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/item_map_play"
+        android:layout_toLeftOf="@id/item_map_download"
         android:text="50M"
         android:textSize="@dimen/caption" />
 
