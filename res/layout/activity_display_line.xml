@@ -20,6 +20,19 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:clickable="true" />
+
+        <com.gps808.app.view.FancyButton
+            android:id="@+id/line_navi"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+           android:layout_alignParentBottom="true"
+            android:layout_margin="8dp"
+            fancy:fb_defaultColor="@color/tag_blue"
+            fancy:fb_iconPosition="top"
+            fancy:fb_iconSize="24dp"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="开始导航"
+            fancy:fb_textSize="10sp" />
     </RelativeLayout>
 
 </LinearLayout>

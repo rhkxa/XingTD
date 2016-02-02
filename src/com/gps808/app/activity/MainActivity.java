@@ -257,6 +257,11 @@ public class MainActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				isTraffic = !isTraffic;
 				mBaiduMap.setTrafficEnabled(isTraffic);
+				if(isTraffic){
+					main_traffic.setIconResource(R.drawable.xtd_icon_traffic_pr);
+				}else{
+					main_traffic.setIconResource(R.drawable.xtd_icon_traffic);
+				}
 			}
 		});
 		// 设置比例尺位置与缩小放大的按钮,指南针位置

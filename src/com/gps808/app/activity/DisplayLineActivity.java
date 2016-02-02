@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -44,6 +45,7 @@ import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
+import com.gps808.app.view.FancyButton;
 
 public class DisplayLineActivity extends BaseActivity {
 
@@ -64,6 +66,8 @@ public class DisplayLineActivity extends BaseActivity {
 	String rid;
 	private final String saveFile = "Routes";
 	private int handler_runnable_time;
+	private FancyButton line_navi;
+	private boolean isNavi = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,25 @@ public class DisplayLineActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		// 开始导航
+		line_navi = (FancyButton) findViewById(R.id.line_navi);
+		line_navi.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				isNavi = !isNavi;
+				if (isNavi) {
+					startLocation();
+					line_navi.setText("结束导航");
+					Utils.ToastMessage(DisplayLineActivity.this, "正在为您开启导航");
+				} else {
+					stopLocation();
+					line_navi.setText("开始导航");
+					Utils.ToastMessage(DisplayLineActivity.this, "导航已关闭");
+				}
+			}
+		});
 		// 从本地获取
 		String content = FileUtils.read(DisplayLineActivity.this, saveFile
 				+ rid);
@@ -111,7 +134,7 @@ public class DisplayLineActivity extends BaseActivity {
 					XbDisplayLine.class);
 			parseData(xbDisplayLine);
 		}
-		startLocation();
+
 	}
 
 	/**
@@ -255,6 +278,15 @@ public class DisplayLineActivity extends BaseActivity {
 		mLocClient.start();
 	}
 
+	private void stopLocation() {
+		if (mLocClient != null) {
+			// 退出时销毁定位
+			mLocClient.stop();
+			// 关闭定位图层
+			mBaiduMap.setMyLocationEnabled(false);
+		}
+	}
+
 	private void parseData(XbDisplayLine xbDisplayLine) {
 		List<LatLng> points = new ArrayList<LatLng>();
 		String[] strLng = Utils.getSplit(xbDisplayLine.getTrack(), ";");
@@ -293,9 +325,11 @@ public class DisplayLineActivity extends BaseActivity {
 			MyLocationData locData = new MyLocationData.Builder()
 					.accuracy(location.getRadius())
 					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(location.getDirection()).latitude(location.getLatitude())
+					.direction(location.getDirection())
+					.latitude(location.getLatitude())
 					.longitude(location.getLongitude()).build();
-			LogUtils.DebugLog("方向"+location.getDirection()+location.getLocType());
+			LogUtils.DebugLog("方向" + location.getDirection()
+					+ location.getLocType());
 			mBaiduMap.setMyLocationData(locData);
 			LatLng ll = new LatLng(location.getLatitude(),
 					location.getLongitude());
@@ -329,12 +363,7 @@ public class DisplayLineActivity extends BaseActivity {
 		mCurrentMarker.recycle();
 		endIcon.recycle();
 		startIcon.recycle();
-		if (mLocClient != null) {
-			// 退出时销毁定位
-			mLocClient.stop();
-			// 关闭定位图层
-			mBaiduMap.setMyLocationEnabled(false);
-		}
+		stopLocation();
 		super.onDestroy();
 	}
 
