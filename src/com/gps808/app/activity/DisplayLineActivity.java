@@ -62,7 +62,7 @@ public class DisplayLineActivity extends BaseActivity {
 	public MyLocationListenner myListener = new MyLocationListenner();
 	private LocationMode mCurrentMode = LocationMode.NORMAL;
 	BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
-			.fromResource(R.drawable.xtd_line_car);;
+			.fromResource(R.drawable.xtd_car_position);;
 	String rid;
 	private final String saveFile = "Routes";
 	private int handler_runnable_time;

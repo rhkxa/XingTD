@@ -209,7 +209,7 @@ public class TrackFragment extends BaseFragment {
 		viewHolder.popwindows_time.setText("时间:" + xbTrack.getTime());
 		if (xbTrack.isOnline()) {
 			viewHolder.popwindows_state.setText("在线:" + xbTrack.getSpeed()
-					+ "Km/h");
+					+ "km/h");
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
 					R.color.app_green));
 		} else {

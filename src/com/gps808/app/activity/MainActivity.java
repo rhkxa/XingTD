@@ -257,10 +257,13 @@ public class MainActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				isTraffic = !isTraffic;
 				mBaiduMap.setTrafficEnabled(isTraffic);
-				if(isTraffic){
-					main_traffic.setIconResource(R.drawable.xtd_icon_traffic_pr);
-				}else{
+				if (isTraffic) {
+					main_traffic
+							.setIconResource(R.drawable.xtd_icon_traffic_pr);
+					Utils.ToastMessage(MainActivity.this, "实时路况已开启");
+				} else {
 					main_traffic.setIconResource(R.drawable.xtd_icon_traffic);
+					Utils.ToastMessage(MainActivity.this, "实时路况已关闭");
 				}
 			}
 		});
@@ -419,10 +422,10 @@ public class MainActivity extends BaseActivity {
 		if (xbVehicle.isOnline()) {
 			if (xbVehicle.getSpeed() > 1) {
 				viewHolder.popwindows_state.setText("行驶中 "
-						+ xbVehicle.getSpeed() + "Km/h");
+						+ xbVehicle.getSpeed() + "km/h");
 			} else {
 				viewHolder.popwindows_state.setText("停车中  "
-						+ xbVehicle.getSpeed() + "Km/h");
+						+ xbVehicle.getSpeed() + "km/h");
 			}
 
 			viewHolder.popwindows_state.setTextColor(getResources().getColor(
@@ -646,7 +649,8 @@ public class MainActivity extends BaseActivity {
 			MyLocationData locData = new MyLocationData.Builder()
 					.accuracy(location.getRadius())
 					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(location.getDirection()).latitude(location.getLatitude())
+					.direction(location.getDirection())
+					.latitude(location.getLatitude())
 					.longitude(location.getLongitude()).build();
 			mBaiduMap.setMyLocationData(locData);
 			if (isFirstLoc) {
