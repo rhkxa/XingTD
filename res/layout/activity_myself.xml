@@ -268,8 +268,7 @@
                 android:background="@drawable/layout_backgroud_selector"
                 android:descendantFocusability="blocksDescendants"
                 android:orientation="horizontal"
-                android:padding="8dp"
-                android:visibility="gone" >
+                android:padding="8dp" >
 
                 <com.gps808.app.view.FancyButton
                     android:layout_width="40dp"

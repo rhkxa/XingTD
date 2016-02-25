@@ -1,52 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/gray"
     android:orientation="vertical" >
 
-    <fragment
-        android:id="@+id/title"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_backgroud" >
+
+        <ImageView
+            android:id="@+id/back_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/offline_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" >
+
+            <TextView
+                android:id="@+id/download_list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/offlinearrow_tab1_pressed"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:text="所有城市"
+                android:textSize="@dimen/body" />
+
+            <TextView
+                android:id="@+id/downloaded_list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/offlinearrow_tab2_normal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:text="下载管理"
+                android:textSize="@dimen/body" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        class="com.gps808.app.fragment.HeaderFragment" />
-
-    <RadioGroup
-        android:id="@+id/map_rg"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_marginBottom="5dip"
+        android:layout_marginTop="5dip"
+        android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
-        <RadioButton
-            android:id="@+id/online_map"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/selector_radiobutton_line"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center"
-            android:text="未下载"
-            android:textColor="@drawable/tab_text" />
+        <Button
+            android:id="@+id/but_all_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/offline_common_title_btn_selector"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:text="全部取消"
+            android:textColor="@color/text"
+            android:textSize="@dimen/caption" />
 
-        <RadioButton
-            android:id="@+id/offline_map"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/selector_radiobutton_line"
-            android:button="@null"
-            android:gravity="center"
-            android:text="已下载"
-            android:textColor="@drawable/tab_text" />
-    </RadioGroup>
+        <Button
+            android:id="@+id/but_all_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/offline_common_title_btn_selector"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:text="全部暂停"
+            android:textColor="@color/text"
+            android:textSize="@dimen/caption" />
 
-    <View style="@style/blackline" />
+        <Button
+            android:id="@+id/but_all_continue"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/offline_common_title_btn_selector"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:text="全部继续"
+            android:textColor="@color/text"
+            android:textSize="@dimen/caption" />
 
-    <FrameLayout
-        android:id="@+id/show_map"
+        <Button
+            android:id="@+id/but_all_updata"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/offline_common_title_btn_selector"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:text="全部更新"
+            android:textColor="@color/text"
+            android:textSize="@dimen/caption" />
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/content_viewpage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1.0"
+        android:background="#000000"
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation" />
 
 </LinearLayout>
