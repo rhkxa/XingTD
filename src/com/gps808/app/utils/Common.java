@@ -9,6 +9,6 @@ public class Common {
 	public static final int HANDLER_RUNNABLE_TIME = 10000;
 	public static int auto_refresh_monitor = 10;
 	public static int auto_refresh_track = 10;
-	public static int  INFOWINDOW_POSITION=-50;
+	public static int  INFOWINDOW_POSITION=-20;
 
 }

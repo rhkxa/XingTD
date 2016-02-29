@@ -30,6 +30,7 @@ import com.baidu.mapapi.map.MarkerOptions.MarkerAnimateType;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
 import com.gps808.app.bean.XbTrack;
@@ -49,7 +50,7 @@ import com.gps808.app.utils.Utils;
  */
 public class TrackFragment extends BaseFragment {
 
-	private MapView mMapView;
+	private TextureMapView mMapView;
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 	private String vid;
@@ -89,7 +90,7 @@ public class TrackFragment extends BaseFragment {
 	private void init(View root) {
 		// TODO Auto-generated method stub
 
-		mMapView = (MapView) root.findViewById(R.id.bmapView);
+		mMapView = (TextureMapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
 		mBaiduMap.setMapStatus(msu);

@@ -35,6 +35,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.gps808.app.R;
@@ -62,7 +63,7 @@ public class MonitorFragment extends BaseFragment {
 			.fromResource(R.drawable.xtd_map_start);
 	BitmapDescriptor locationIcon = BitmapDescriptorFactory
 			.fromResource(R.drawable.xtd_car_position);
-	private MapView mMapView;
+	private TextureMapView mMapView;
 	private BaiduMap mBaiduMap;
 	Polyline mPolyline;
 	private InfoWindow mInfoWindow;
@@ -109,7 +110,7 @@ public class MonitorFragment extends BaseFragment {
 				showChoseDate();
 			}
 		});
-		mMapView = (MapView) root.findViewById(R.id.bmapView);
+		mMapView = (TextureMapView) root.findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
 		mBaiduMap.setMapStatus(msu);
