@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
 	// private BadgeView badge;
 	// 初始化全局 bitmap 信息，不用时及时 recycle
 	BitmapDescriptor online = BitmapDescriptorFactory
-			.fromResource(R.drawable.xtd_line_car);
+			.fromResource(R.drawable.xtd_carlogo_on);
 	BitmapDescriptor offline = BitmapDescriptorFactory
 			.fromResource(R.drawable.xtd_carlogo_off);
 	private FancyButton main_refresh;
