@@ -271,9 +271,9 @@ public class DisplayLineActivity extends BaseActivity {
 		mLocClient.registerLocationListener(myListener);
 		LocationClientOption option = new LocationClientOption();
 		option.setNeedDeviceDirect(true);
-		option.setOpenGps(false);// 打开gps
+		option.setOpenGps(true);// 打开gps
 		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(handler_runnable_time);
+		option.setScanSpan(5000);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
 	}
