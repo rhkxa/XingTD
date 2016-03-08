@@ -299,5 +299,9 @@ public class UrlConfig {
 	public static final String getNowWeather(double lng, double lat) {
 		return SERVER + "info/nowWeather?lng=" + lng + "&lat=" + lat;
 	}
+	
+	public static final String getMatchVichcle(String loc){
+		return SERVER + "vehicle/matchingVehicle?location=" + loc;	
+	}
 
 }

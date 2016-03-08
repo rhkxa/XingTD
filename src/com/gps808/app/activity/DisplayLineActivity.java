@@ -2,6 +2,8 @@ package com.gps808.app.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -46,6 +48,7 @@ import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.FancyButton;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class DisplayLineActivity extends BaseActivity {
 
@@ -67,7 +70,8 @@ public class DisplayLineActivity extends BaseActivity {
 	private final String saveFile = "Routes";
 	private int handler_runnable_time;
 	private FancyButton line_navi;
-	private boolean isNavi = false;
+	private boolean isNavi = true;
+	private boolean isMatch = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +115,11 @@ public class DisplayLineActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				isNavi = !isNavi;
+
 				if (isNavi) {
+					showProgressDialog(DisplayLineActivity.this, "正在匹配导航车辆，请稍等");
 					startLocation();
-					line_navi.setText("结束导航");
-					Utils.ToastMessage(DisplayLineActivity.this, "正在为您开启导航");
+
 				} else {
 					stopLocation();
 					line_navi.setText("开始导航");
@@ -322,6 +326,7 @@ public class DisplayLineActivity extends BaseActivity {
 			if (location == null || mMapView == null) {
 				return;
 			}
+			getMatch(location.getLatitude() + "," + location.getLatitude());
 			MyLocationData locData = new MyLocationData.Builder()
 					.accuracy(location.getRadius())
 					// 此处设置开发者获取到的方向信息，顺时针0-360
@@ -330,7 +335,9 @@ public class DisplayLineActivity extends BaseActivity {
 					.longitude(location.getLongitude()).build();
 			LogUtils.DebugLog("方向" + location.getDirection()
 					+ location.getLocType());
-			mBaiduMap.setMyLocationData(locData);
+			if (isMatch) {
+				mBaiduMap.setMyLocationData(locData);
+			}
 			LatLng ll = new LatLng(location.getLatitude(),
 					location.getLongitude());
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
@@ -365,6 +372,38 @@ public class DisplayLineActivity extends BaseActivity {
 		startIcon.recycle();
 		stopLocation();
 		super.onDestroy();
+	}
+
+	int i = 0;
+
+	private void getMatch(String loc) {
+		i++;
+		if (i <= 12) {
+
+			String url = UrlConfig.getMatchVichcle(loc);
+			HttpUtil.get(DisplayLineActivity.this, url,
+					new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(int statusCode, Header[] headers,
+								JSONObject response) {
+							// TODO Auto-generated method stub
+							if (Utils.requestOk(response)) {
+								dismissProgressDialog();
+								isMatch = true;
+								isNavi = !isNavi;
+								line_navi.setText("结束导航");
+							}
+							super.onSuccess(statusCode, headers, response);
+						}
+					});
+		} else {
+			if (!isMatch) {
+				dismissProgressDialog();
+				stopLocation();
+				Utils.ToastMessage(DisplayLineActivity.this, "匹配失败，附近没有可导航的车辆");
+			}
+		}
+
 	}
 
 }
