@@ -119,7 +119,6 @@ public class DisplayLineActivity extends BaseActivity {
 				if (isNavi) {
 					showProgressDialog(DisplayLineActivity.this, "正在匹配导航车辆，请稍等");
 					startLocation();
-
 				} else {
 					stopLocation();
 					line_navi.setText("开始导航");
@@ -326,22 +325,21 @@ public class DisplayLineActivity extends BaseActivity {
 			if (location == null || mMapView == null) {
 				return;
 			}
-			getMatch(location.getLatitude() + "," + location.getLatitude());
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
-					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(location.getDirection())
-					.latitude(location.getLatitude())
-					.longitude(location.getLongitude()).build();
-			LogUtils.DebugLog("方向" + location.getDirection()
-					+ location.getLocType());
-			if (isMatch) {
+			if (!isMatch) {
+				getMatch(location.getLatitude() + "," + location.getLatitude());
+			} else {
+				MyLocationData locData = new MyLocationData.Builder()
+						.accuracy(location.getRadius())
+						// 此处设置开发者获取到的方向信息，顺时针0-360
+						.direction(location.getDirection())
+						.latitude(location.getLatitude())
+						.longitude(location.getLongitude()).build();
 				mBaiduMap.setMyLocationData(locData);
+				LatLng ll = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				mBaiduMap.animateMapStatus(u);
 			}
-			LatLng ll = new LatLng(location.getLatitude(),
-					location.getLongitude());
-			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-			mBaiduMap.animateMapStatus(u);
 
 		}
 
@@ -379,7 +377,6 @@ public class DisplayLineActivity extends BaseActivity {
 	private void getMatch(String loc) {
 		i++;
 		if (i <= 12) {
-
 			String url = UrlConfig.getMatchVichcle(loc);
 			HttpUtil.get(DisplayLineActivity.this, url,
 					new JsonHttpResponseHandler() {
@@ -397,11 +394,10 @@ public class DisplayLineActivity extends BaseActivity {
 						}
 					});
 		} else {
-			if (!isMatch) {
-				dismissProgressDialog();
-				stopLocation();
-				Utils.ToastMessage(DisplayLineActivity.this, "匹配失败，附近没有可导航的车辆");
-			}
+			i = 0;
+			stopLocation();
+			dismissProgressDialog();
+			Utils.ToastMessage(DisplayLineActivity.this, "对不起，附近没有可导航的车辆");
 		}
 
 	}
