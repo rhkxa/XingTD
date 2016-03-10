@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
@@ -72,6 +73,8 @@ public class DisplayLineActivity extends BaseActivity {
 	private FancyButton line_navi;
 	private boolean isNavi = true;
 	private boolean isMatch = false;
+	private TextView show;
+	int macthNum = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +111,7 @@ public class DisplayLineActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		show = (TextView) findViewById(R.id.show);
 		// 开始导航
 		line_navi = (FancyButton) findViewById(R.id.line_navi);
 		line_navi.setOnClickListener(new OnClickListener() {
@@ -123,6 +127,8 @@ public class DisplayLineActivity extends BaseActivity {
 					stopLocation();
 					line_navi.setText("开始导航");
 					Utils.ToastMessage(DisplayLineActivity.this, "导航已关闭");
+					isMatch = false;
+					macthNum=0;
 				}
 			}
 		});
@@ -326,20 +332,19 @@ public class DisplayLineActivity extends BaseActivity {
 				return;
 			}
 			if (!isMatch) {
-				getMatch(location.getLatitude() + "," + location.getLatitude());
-			} else {
-				MyLocationData locData = new MyLocationData.Builder()
-						.accuracy(location.getRadius())
-						// 此处设置开发者获取到的方向信息，顺时针0-360
-						.direction(location.getDirection())
-						.latitude(location.getLatitude())
-						.longitude(location.getLongitude()).build();
-				mBaiduMap.setMyLocationData(locData);
-				LatLng ll = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mBaiduMap.animateMapStatus(u);
+				getMatch(location.getLongitude() + "," + location.getLatitude());
 			}
+			MyLocationData locData = new MyLocationData.Builder()
+					.accuracy(location.getRadius())
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(location.getDirection())
+					.latitude(location.getLatitude())
+					.longitude(location.getLongitude()).build();
+			mBaiduMap.setMyLocationData(locData);
+			LatLng ll = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+			mBaiduMap.animateMapStatus(u);
 
 		}
 
@@ -372,11 +377,14 @@ public class DisplayLineActivity extends BaseActivity {
 		super.onDestroy();
 	}
 
-	int i = 0;
+	
+	String showStr = "";
 
 	private void getMatch(String loc) {
-		i++;
-		if (i <= 12) {
+		showStr = showStr + "   " + loc;
+		show.setText(showStr);
+		macthNum++;
+		if (macthNum <= 12) {
 			String url = UrlConfig.getMatchVichcle(loc);
 			HttpUtil.get(DisplayLineActivity.this, url,
 					new JsonHttpResponseHandler() {
@@ -394,7 +402,7 @@ public class DisplayLineActivity extends BaseActivity {
 						}
 					});
 		} else {
-			i = 0;
+			macthNum = 0;
 			stopLocation();
 			dismissProgressDialog();
 			Utils.ToastMessage(DisplayLineActivity.this, "对不起，附近没有可导航的车辆");
