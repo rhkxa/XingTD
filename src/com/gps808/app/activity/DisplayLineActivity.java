@@ -119,7 +119,6 @@ public class DisplayLineActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
 				if (isNavi) {
 					showProgressDialog(DisplayLineActivity.this, "正在匹配导航车辆，请稍等");
 					startLocation();
@@ -128,7 +127,8 @@ public class DisplayLineActivity extends BaseActivity {
 					line_navi.setText("开始导航");
 					Utils.ToastMessage(DisplayLineActivity.this, "导航已关闭");
 					isMatch = false;
-					macthNum=0;
+					macthNum = 0;
+					isNavi=true;
 				}
 			}
 		});
@@ -161,90 +161,9 @@ public class DisplayLineActivity extends BaseActivity {
 			mBaiduMap.addOverlay(new MarkerOptions().position(
 					points.get(points.size() - 1)).icon(endIcon));
 		}
-		// 添加多颜色分段的折线绘制
-		// LatLng p11 = new LatLng(39.965, 116.444);
-		// LatLng p21 = new LatLng(39.925, 116.494);
-		// LatLng p31 = new LatLng(39.955, 116.534);
-		// LatLng p41 = new LatLng(39.905, 116.594);
-		// LatLng p51 = new LatLng(39.965, 116.644);
-		// List<LatLng> points1 = new ArrayList<LatLng>();
-		// points1.add(p11);
-		// points1.add(p21);
-		// points1.add(p31);
-		// points1.add(p41);
-		// points1.add(p51);
-		// List<Integer> colorValue = new ArrayList<Integer>();
-		// colorValue.add(0xAAFF0000);
-		// colorValue.add(0xAA00FF00);
-		// colorValue.add(0xAA0000FF);
-		// OverlayOptions ooPolyline1 = new PolylineOptions().width(10)
-		// .color(0xAAFF0000).points(points1).colorsValues(colorValue);
-		// mColorfulPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline1);
-
-		// 添加多纹理分段的折线绘制
-		// LatLng p111 = new LatLng(39.865, 116.444);
-		// LatLng p211 = new LatLng(39.825, 116.494);
-		// LatLng p311 = new LatLng(39.855, 116.534);
-		// LatLng p411 = new LatLng(39.805, 116.594);
-		// List<LatLng> points11 = new ArrayList<LatLng>();
-		// points11.add(p111);
-		// points11.add(p211);
-		// points11.add(p311);
-		// points11.add(p411);
-		// List<BitmapDescriptor> textureList = new
-		// ArrayList<BitmapDescriptor>();
-		// textureList.add(mRedTexture);
-		// textureList.add(mBlueTexture);
-		// textureList.add(mGreenTexture);
-		// List<Integer> textureIndexs = new ArrayList<Integer>();
-		// textureIndexs.add(0);
-		// textureIndexs.add(1);
-		// textureIndexs.add(2);
-		// OverlayOptions ooPolyline11 = new PolylineOptions().width(20)
-		// .points(points11).dottedLine(true)
-		// .customTextureList(textureList).textureIndex(textureIndexs);
-		// mTexturePolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline11);
-		//
-		// // 添加弧线
-		// OverlayOptions ooArc = new ArcOptions().color(0xAA00FF00).width(4)
-		// .points(p1, p2, p3);
-		// mBaiduMap.addOverlay(ooArc);
-		// // 添加圆
-		// LatLng llCircle = new LatLng(39.90923, 116.447428);
-		// OverlayOptions ooCircle = new CircleOptions().fillColor(0x000000FF)
-		// .center(llCircle).stroke(new Stroke(5, 0xAA000000))
-		// .radius(1400);
-		// mBaiduMap.addOverlay(ooCircle);
-		//
-		// LatLng llDot = new LatLng(39.98923, 116.397428);
-		// OverlayOptions ooDot = new DotOptions().center(llDot).radius(6)
-		// .color(0xFF0000FF);
-		// mBaiduMap.addOverlay(ooDot);
-		// // 添加多边形
-		// LatLng pt1 = new LatLng(39.93923, 116.357428);
-		// LatLng pt2 = new LatLng(39.91923, 116.327428);
-		// LatLng pt3 = new LatLng(39.89923, 116.347428);
-		// LatLng pt4 = new LatLng(39.89923, 116.367428);
-		// LatLng pt5 = new LatLng(39.91923, 116.387428);
-		// List<LatLng> pts = new ArrayList<LatLng>();
-		// pts.add(pt1);
-		// pts.add(pt2);
-		// pts.add(pt3);
-		// pts.add(pt4);
-		// pts.add(pt5);
-		// OverlayOptions ooPolygon = new PolygonOptions().points(pts)
-		// .stroke(new Stroke(5, 0xAA00FF00)).fillColor(0xAAFFFF00);
-		// mBaiduMap.addOverlay(ooPolygon);
-		// // 添加文字
-		// LatLng llText = new LatLng(39.86923, 116.397428);
-		// OverlayOptions ooText = new TextOptions().bgColor(0xAAFFFF00)
-		// .fontSize(24).fontColor(0xFFFF00FF).text("百度地图SDK").rotate(-30)
-		// .position(llText);
-		// mBaiduMap.addOverlay(ooText);
 	}
 
 	private void getData() {
-
 		String url = UrlConfig.getVehicleRoutesInfo(rid);
 		HttpUtil.get(DisplayLineActivity.this, url,
 				new jsonHttpResponseHandler() {
@@ -367,9 +286,6 @@ public class DisplayLineActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		mMapView.onDestroy();
-		// mRedTexture.recycle();
-		// mBlueTexture.recycle();
-		// mGreenTexture.recycle();
 		mCurrentMarker.recycle();
 		endIcon.recycle();
 		startIcon.recycle();
@@ -377,12 +293,9 @@ public class DisplayLineActivity extends BaseActivity {
 		super.onDestroy();
 	}
 
-	
 	String showStr = "";
 
 	private void getMatch(String loc) {
-		showStr = showStr + "   " + loc;
-		show.setText(showStr);
 		macthNum++;
 		if (macthNum <= 12) {
 			String url = UrlConfig.getMatchVichcle(loc);
@@ -395,7 +308,7 @@ public class DisplayLineActivity extends BaseActivity {
 							if (Utils.requestOk(response)) {
 								dismissProgressDialog();
 								isMatch = true;
-								isNavi = !isNavi;
+								isNavi = false;
 								line_navi.setText("结束导航");
 							}
 							super.onSuccess(statusCode, headers, response);
