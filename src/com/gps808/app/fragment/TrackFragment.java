@@ -158,13 +158,13 @@ public class TrackFragment extends BaseFragment {
 			}
 			// 图标
 			overlayOptions = new MarkerOptions().position(latLng).icon(car)
-					.zIndex(5).rotate(360-xbTrack.getDirection())
+					.zIndex(5).rotate(360 - xbTrack.getDirection())
 					.animateType(MarkerAnimateType.grow);// 生长动画
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 
 		} else {
 			marker.setPosition(latLng);
-			marker.setRotate(360-xbTrack.getDirection());
+			marker.setRotate(360 - xbTrack.getDirection());
 
 			if (mPolyline == null) {
 				OverlayOptions ooPolyline = new PolylineOptions().width(10)
@@ -256,7 +256,9 @@ public class TrackFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			// 要做的事情
 			getData();
-			handler.postDelayed(runnable, handler_runnable_time);
+			if (handler_runnable_time != 0) {
+				handler.postDelayed(runnable, handler_runnable_time);
+			}
 		}
 	};
 
@@ -279,9 +281,9 @@ public class TrackFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		mMapView.onDestroy();
 		handler.removeCallbacks(runnable);
-		if(car!=null){
+		if (car != null) {
 			car.recycle();
-		}	
+		}
 		startIcon.recycle();
 		super.onDestroy();
 	}

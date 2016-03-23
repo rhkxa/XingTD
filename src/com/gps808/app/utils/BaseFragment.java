@@ -7,6 +7,7 @@ import java.util.List;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.tendcloud.tenddata.TCAgent;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -83,6 +84,21 @@ public class BaseFragment extends Fragment {
 				}
 			}
 		}
+	}
+	
+	
+	
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		TCAgent.onPageStart(getActivity(), getClass().getName());
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		TCAgent.onPageEnd(getActivity(), getClass().getName());
 	}
 
 }

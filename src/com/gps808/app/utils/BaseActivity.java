@@ -29,6 +29,7 @@ import com.gps808.app.timeout.ScreenObserver.ScreenStateListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.tendcloud.tenddata.TCAgent;
 
 /**
  * 
@@ -38,33 +39,12 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 public class BaseActivity extends FragmentActivity {
 	public XtdApplication xtdApplication;
 	private ProgressDialog progressDialog = null;
-	private ScreenObserver mScreenObserver;
-	private boolean activityIsActive;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		xtdApplication = (XtdApplication) getApplication();
 		XtdApplication.getInstance().addActivity(this);
-		// mScreenObserver = new ScreenObserver(this);
-		// mScreenObserver.requestScreenStateUpdate(new ScreenStateListener() {
-		// @Override
-		// public void onScreenOn() {
-		// if (!ScreenObserver
-		// .isApplicationBroughtToBackground(BaseActivity.this)) {
-		// cancelAlarmManager();
-		// }
-		// }
-		//
-		// @Override
-		// public void onScreenOff() {
-		// if (!ScreenObserver
-		// .isApplicationBroughtToBackground(BaseActivity.this)) {
-		// cancelAlarmManager();
-		// setAlarmManager();
-		// }
-		// }
-		// });
 	}
 
 	public XtdApplication getAppContext() {
@@ -166,42 +146,16 @@ public class BaseActivity extends FragmentActivity {
 		}
 	}
 
-	/**
-	 * 设置定时器管理器
-	 */
-	private void setAlarmManager() {
-		long numTimeout = 60 * 1000 * 30;// 半小时
-		LogUtils.DebugLog("isTimeOutMode=yes,timeout=" + numTimeout);
-		Intent alarmIntent = new Intent(getBaseContext(), TimeoutService.class);
-		alarmIntent.putExtra("action", "timeout"); // 自定义参数
-		PendingIntent pi = PendingIntent.getService(getBaseContext(), 1024,
-				alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		long triggerAtTime = (System.currentTimeMillis() + numTimeout);
-		am.set(AlarmManager.RTC_WAKEUP, triggerAtTime, pi); // 设定的一次性闹钟，这里决定是否使用绝对时间
-		LogUtils.DebugLog("----->设置定时器");
-	}
-
-	/**
-	 * 取消定时管理器
-	 */
-	private void cancelAlarmManager() {
-		AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent(getBaseContext(), TimeoutService.class);
-		PendingIntent pi = PendingIntent.getService(getBaseContext(), 1024,
-				intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		// 与上面的intent匹配（filterEquals(intent)）的闹钟会被取消
-		alarmMgr.cancel(pi);
-		LogUtils.DebugLog("----->取消定时器");
+	@Override
+	protected void onResume() {
+		super.onResume();
+		TCAgent.onResume(this);
 	}
 
 	@Override
-	protected void onResume() {
-
-		super.onResume();
-		// cancelAlarmManager();
-		// activityIsActive = true;
-		// LogUtils.DebugLog("activityIsActive=" + activityIsActive);
+	protected void onPause() {
+		super.onPause();
+		TCAgent.onPause(this);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.gps808.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,7 @@ import com.gps808.app.R;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.StringUtils;
 
-public class SearchFragment extends BaseFragment {
+public class SearchFragment extends Fragment {
 	private Button layout_search_bar_button;
 	private ImageView layout_search_bar_close;
 	private EditText layout_search_bar_edittext;

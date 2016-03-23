@@ -662,10 +662,10 @@ int id btn_spotify 0x7f060194
 int id btn_spotify_follow 0x7f060196
 int id btn_spotify_pause 0x7f060195
 int id btn_upload 0x7f06019d
-int id but_all_cancel 0x7f060088
-int id but_all_continue 0x7f06008a
-int id but_all_pause 0x7f060089
-int id but_all_updata 0x7f06008b
+int id but_all_cancel 0x7f060089
+int id but_all_continue 0x7f06008b
+int id but_all_pause 0x7f06008a
+int id but_all_updata 0x7f06008c
 int id button1 0x7f06005a
 int id call_phone 0x7f0600b0
 int id car_detail_edits 0x7f0600f0
@@ -714,7 +714,7 @@ int id comment_et 0x7f0600e3
 int id comment_list 0x7f060042
 int id container 0x7f060084
 int id content 0x7f060038
-int id content_viewpage 0x7f06008c
+int id content_viewpage 0x7f060088
 int id curved 0x7f060020
 int id custom_end_time 0x7f0600ec
 int id custom_start_time 0x7f0600eb

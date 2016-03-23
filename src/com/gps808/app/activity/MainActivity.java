@@ -513,7 +513,9 @@ public class MainActivity extends BaseActivity {
 		public void run() {
 			// TODO Auto-generated method stub
 			getVehicleLocation(false);
-			handler.postDelayed(this, handler_runnable_time);
+			if (handler_runnable_time != 0) {
+				handler.postDelayed(this, handler_runnable_time);
+			}
 		}
 	};
 

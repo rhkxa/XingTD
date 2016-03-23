@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.tendcloud.tenddata.TCAgent;
 
 import android.app.Activity;
 import android.app.Application;
@@ -51,8 +52,10 @@ public class XtdApplication extends Application {
 		// initLocation(getApplicationContext());
 		SDKInitializer.initialize(this);
 		initImageLoader(getApplicationContext());
-		CrashHandler crashHandler = CrashHandler.getInstance();
-//		crashHandler.init(getApplicationContext());
+		TCAgent.LOG_ON = true;
+		TCAgent.init(this);
+		TCAgent.setReportUncaughtExceptions(true);
+
 	}
 
 	public void addActivity(Activity activity) {
@@ -64,10 +67,6 @@ public class XtdApplication extends Application {
 			activity.finish();
 		}
 		System.exit(0);
-	}
-
-	private void initLocation(Context context) {
-
 	}
 
 	public static void initImageLoader(Context context) {
