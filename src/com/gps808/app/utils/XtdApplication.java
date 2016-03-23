@@ -76,9 +76,9 @@ public class XtdApplication extends Application {
 		// ImageLoaderConfiguration.createDefault(this);
 		// method.
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.public_pic)
-				.showImageForEmptyUri(R.drawable.public_pic)
-				.showImageOnFail(R.drawable.public_pic).cacheInMemory(true)
+				.showImageOnLoading(R.drawable.ic_launcher)
+				.showImageForEmptyUri(R.drawable.ic_launcher)
+				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 				.cacheOnDisk(true).considerExifParams(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(

@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gps808.app.R;
-import com.gps808.app.bean.XbPolice;
-import com.gps808.app.bean.XbVehicle;
+import com.gps808.app.models.XbPolice;
+import com.gps808.app.models.XbVehicle;
 import com.gps808.app.view.FancyButton;
 
 public class PoliceListViewAdapter extends BaseAdapter {

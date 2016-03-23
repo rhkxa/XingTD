@@ -1,4 +1,4 @@
-package com.gps808.app.bean;
+package com.gps808.app.models;
 
 public class XbAlarmOption {
 	private boolean inArea;

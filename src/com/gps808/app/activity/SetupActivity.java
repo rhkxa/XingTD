@@ -17,12 +17,12 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbOption;
 import com.gps808.app.dialog.AlterPassWordDialog;
 import com.gps808.app.dialog.AlterPassWordDialog.OnAlterClickListener;
 import com.gps808.app.dialog.WheelDialog;
 import com.gps808.app.dialog.WheelDialog.OnWheelClickListener;
 import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.models.XbOption;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.CyptoUtils;
 import com.gps808.app.utils.HttpUtil;

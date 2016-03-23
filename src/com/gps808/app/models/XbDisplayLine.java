@@ -1,7 +1,7 @@
-package com.gps808.app.bean;
+package com.gps808.app.models;
 
-public class XbRoute {
-	private String rid;
+public class XbDisplayLine {
+	private int rid;
 
 	private String routeName;
 
@@ -11,13 +11,15 @@ public class XbRoute {
 
 	private String time;
 
+	private String track;
 
+	
 
-	public String getRid() {
+	public int getRid() {
 		return rid;
 	}
 
-	public void setRid(String rid) {
+	public void setRid(int rid) {
 		this.rid = rid;
 	}
 
@@ -51,6 +53,14 @@ public class XbRoute {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public String getTrack() {
+		return track;
+	}
+
+	public void setTrack(String track) {
+		this.track = track;
 	}
 	
 }

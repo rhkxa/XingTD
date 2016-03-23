@@ -26,13 +26,12 @@
     <dimen name="space88">88dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    
-      <!--通用尺寸-->
-    <!--General sizes-->
+
+    <!-- 通用尺寸 -->
+    <!-- General sizes -->
     <dimen name="WheelItemSpace">8dp</dimen>
     <dimen name="WheelPadding">8dp</dimen>
     <dimen name="WheelTextSize">20sp</dimen>
-
     <dimen name="WheelLabelTextSize">12sp</dimen>
 
 </resources>

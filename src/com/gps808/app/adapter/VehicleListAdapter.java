@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbVehicle;
+import com.gps808.app.models.XbVehicle;
 import com.gps808.app.view.FancyButton;
 
 import java.util.List;

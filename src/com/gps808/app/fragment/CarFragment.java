@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbCar;
 import com.gps808.app.dialog.AlterNameDialog;
 import com.gps808.app.dialog.AlterNameDialog.OnAlterClickListener;
+import com.gps808.app.models.XbCar;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;

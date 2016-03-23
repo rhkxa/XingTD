@@ -10,12 +10,12 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbVehicle;
 import com.gps808.app.fragment.CarFragment;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.fragment.TrackFragment;
 import com.gps808.app.fragment.MonitorFragment;
 import com.gps808.app.fragment.WeatherFragment;
+import com.gps808.app.models.XbVehicle;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.Utils;
 

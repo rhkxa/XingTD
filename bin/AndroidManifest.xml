@@ -102,7 +102,7 @@
         <activity android:name="com.gps808.app.activity.DisplayPoliceActivity" />
         <activity android:name="com.gps808.app.activity.MessageActivity" />
         <activity android:name="com.gps808.app.activity.ForgetPassActivity" />
-        <activity android:name="com.gps808.app.activity.DownloadMapActivity" />
+        <activity android:name="com.gps808.app.activity.OfflineMapActivity" />
 
         <service android:name="com.gps808.app.timeout.TimeoutService" >
         </service>
@@ -215,11 +215,11 @@
         <!-- 在百度开发者中心查询应用的API Key -->
         <meta-data
             android:name="api_key"
-            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />
-        <!-- 公司测试N8qQtsf1z2QZUtB6ViQegOWH -->
+            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
+        <!-- 公司测试N8qQtsf1z2QZUtB6ViQegOWH    89W8c1mbtaA2qLGMBXDoTtoU-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />
+            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
         <meta-data
             android:name="TD_APP_ID"
             android:value="3341D151609B67AA2C9BF37AFE9DD279" />

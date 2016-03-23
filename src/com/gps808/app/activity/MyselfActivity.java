@@ -23,8 +23,8 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
 import com.gps808.app.activity.DisplayLineActivity.MyLocationListenner;
-import com.gps808.app.bean.XbWeather;
 import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.models.XbWeather;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
@@ -159,7 +159,7 @@ public class MyselfActivity extends BaseActivity {
 				cls = VehiclesActivity.class;
 				break;
 			case R.id.my_map:
-				cls = DownloadMapActivity.class;
+			
 				break;
 			}
 			intent.setClass(MyselfActivity.this, cls);

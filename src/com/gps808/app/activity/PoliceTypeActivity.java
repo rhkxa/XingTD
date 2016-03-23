@@ -9,8 +9,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbAlarmOption;
 import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.models.XbAlarmOption;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;

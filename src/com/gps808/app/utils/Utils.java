@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
 import com.gps808.app.activity.LoginActivity;
 import com.gps808.app.activity.MainActivity;
-import com.gps808.app.bean.XbUser;
+import com.gps808.app.models.XbUser;
 import com.gps808.app.utils.BaseActivity.jsonHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

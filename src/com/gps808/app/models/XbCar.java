@@ -1,4 +1,4 @@
-package com.gps808.app.bean;
+package com.gps808.app.models;
 
 public class XbCar {
 	private String vid;

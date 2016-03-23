@@ -34,10 +34,10 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.bean.Update;
-import com.gps808.app.bean.XbUser;
 import com.gps808.app.dialog.CustomChoseDialog;
 import com.gps808.app.dialog.CustomOkDialog;
+import com.gps808.app.models.Update;
+import com.gps808.app.models.XbUser;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.CyptoUtils;
 import com.gps808.app.utils.FileUtils;

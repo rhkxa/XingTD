@@ -33,7 +33,7 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbTrack;
+import com.gps808.app.models.XbTrack;
 import com.gps808.app.utils.BaseFragment;
 import com.gps808.app.utils.Common;
 import com.gps808.app.utils.HttpUtil;

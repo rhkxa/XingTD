@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbMap;
-import com.gps808.app.bean.XbMap.Flag;
-import com.gps808.app.bean.XbMapCityBean;
+import com.gps808.app.models.XbMap;
+import com.gps808.app.models.XbMapCityBean;
+import com.gps808.app.models.XbMap.Flag;
 
 public class HotMapListViewAdapter extends BaseAdapter {
 	private Context mContext;

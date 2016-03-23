@@ -14,9 +14,9 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.bean.Update;
 import com.gps808.app.dialog.CustomChoseDialog;
 import com.gps808.app.dialog.TextDialog;
+import com.gps808.app.models.Update;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import android.app.AlertDialog;

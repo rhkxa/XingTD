@@ -3,9 +3,9 @@ package com.gps808.app.adapter;
 import java.util.List;
 
 import com.gps808.app.R;
-import com.gps808.app.bean.XbMap;
-import com.gps808.app.bean.XbMap.Flag;
-import com.gps808.app.bean.XbMapCityBean;
+import com.gps808.app.models.XbMap;
+import com.gps808.app.models.XbMapCityBean;
+import com.gps808.app.models.XbMap.Flag;
 
 import android.content.Context;
 import android.view.LayoutInflater;

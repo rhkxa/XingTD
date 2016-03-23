@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.gps808.app.R;
-import com.gps808.app.bean.XbWeek;
+import com.gps808.app.models.XbWeek;
 import com.gps808.app.utils.StringUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
