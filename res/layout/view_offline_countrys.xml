@@ -6,6 +6,13 @@
 
     <!-- 搜索部分 -->
 
+    <fragment
+        android:id="@+id/svAll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        class="com.gps808.app.fragment.SearchFragment" />
+
     <ExpandableListView
         android:id="@+id/lvWholeCountry"
         android:layout_width="match_parent"

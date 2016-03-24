@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gps808.app"
-    android:versionCode="16"
-    android:versionName="2.5.1" >
+    android:versionCode="17"
+    android:versionName="2.5.2" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -215,11 +215,11 @@
         <!-- 在百度开发者中心查询应用的API Key -->
         <meta-data
             android:name="api_key"
-            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
+            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />
         <!-- 公司测试N8qQtsf1z2QZUtB6ViQegOWH    89W8c1mbtaA2qLGMBXDoTtoU-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
+            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />
         <meta-data
             android:name="TD_APP_ID"
             android:value="3341D151609B67AA2C9BF37AFE9DD279" />

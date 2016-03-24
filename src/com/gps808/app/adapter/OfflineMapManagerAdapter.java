@@ -28,6 +28,7 @@ import com.gps808.app.R;
 import com.gps808.app.interfaces.OnOfflineItemStatusChangeListener;
 import com.gps808.app.models.OfflineMapItem;
 import com.gps808.app.utils.FileUtils;
+import com.gps808.app.view.FancyButton;
 
 public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 
@@ -116,8 +117,8 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
         View lyEditPanel;
         ProgressBar pbDownload;
         TextView tvStatus;
-        Button btnDown;
-        Button btnRemove;
+        FancyButton btnDown;
+        FancyButton btnRemove;
         
         private OfflineMapItem data;
 
@@ -129,8 +130,8 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
         	lyEditPanel = convertView.findViewById(R.id.lyEditPanel);
         	pbDownload = (ProgressBar) convertView.findViewById(R.id.pbDownload);
         	tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-        	btnDown = (Button) convertView.findViewById(R.id.btnDown);
-        	btnRemove = (Button) convertView.findViewById(R.id.btnRemove);
+        	btnDown = (FancyButton) convertView.findViewById(R.id.btnDown);
+        	btnRemove = (FancyButton) convertView.findViewById(R.id.btnRemove);
         	
         	lyCityInfo.setOnClickListener(this);
         	btnDown.setOnClickListener(this);
@@ -147,10 +148,10 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 			
 			if(expandedCityIds.contains(data.getCityId())){
 				lyEditPanel.setVisibility(View.VISIBLE);
-				ivExpande.setImageResource(R.drawable.ssdk_recomm_plats_more);
+				ivExpande.setImageResource(R.drawable.ssdk_recomm_plats_less);
 			}else{
 				lyEditPanel.setVisibility(View.GONE);
-				ivExpande.setImageResource(R.drawable.ssdk_recomm_plats_less);
+				ivExpande.setImageResource(R.drawable.ssdk_recomm_plats_more);
 			}
 			
 			if(data.getStatus() == MKOLUpdateElement.DOWNLOADING){

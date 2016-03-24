@@ -320,7 +320,7 @@ public class UpdateManager {
 				String storageState = Environment.getExternalStorageState();
 				if (storageState.equals(Environment.MEDIA_MOUNTED)) {
 					savePath = Environment.getExternalStorageDirectory()
-							.getAbsolutePath() + "/HuaShi/Update/";
+							.getAbsolutePath() + "/XingTD/Update/";
 					File file = new File(savePath);
 					if (!file.exists()) {
 						file.mkdirs();

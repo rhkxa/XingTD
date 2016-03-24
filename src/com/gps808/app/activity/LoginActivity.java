@@ -45,6 +45,7 @@ import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
+import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.FancyButton;
@@ -82,6 +83,7 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.activity_login);
 		init();
 		checkUpdate();
+//		UpdateManager.getUpdateManager().checkAppUpdate(LoginActivity.this, false);
 	}
 
 	private void init() {
@@ -402,6 +404,7 @@ public class LoginActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		final String apkFile = FileUtils.getSDRoot() + "/XingTD" + "/XtdApp_"
 				+ update.getReleaseTime() + ".apk";
+		LogUtils.DebugLog(apkFile);
 		HttpUtil.get(LoginActivity.this, update.getUpdateUrl(),
 				new FileAsyncHttpResponseHandler(LoginActivity.this) {
 

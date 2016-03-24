@@ -861,7 +861,7 @@ int id login_to_register 0x7f060061
 int id logoImageView 0x7f06017f
 int id lvDown 0x7f060185
 int id lvSearchResult 0x7f060184
-int id lvWholeCountry 0x7f060182
+int id lvWholeCountry 0x7f060183
 int id lyCityInfo 0x7f060145
 int id lyEditPanel 0x7f060149
 int id lyRoot 0x7f06014f
@@ -1007,7 +1007,7 @@ int id state 0x7f060079
 int id stop 0x7f06007a
 int id straight 0x7f06001f
 int id submit_ok 0x7f0600c5
-int id svAll 0x7f060183
+int id svAll 0x7f060182
 int id textCounterTextView 0x7f060175
 int id textEditText 0x7f060173
 int id timepick 0x7f060190

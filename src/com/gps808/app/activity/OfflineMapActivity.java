@@ -29,10 +29,13 @@ import com.baidu.mapapi.map.offline.MKOLSearchRecord;
 import com.baidu.mapapi.map.offline.MKOLUpdateElement;
 import com.baidu.mapapi.map.offline.MKOfflineMap;
 import com.baidu.mapapi.map.offline.MKOfflineMapListener;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.gps808.app.R;
 import com.gps808.app.adapter.OfflineExpandableListAdapter;
 import com.gps808.app.adapter.OfflineMapAdapter;
 import com.gps808.app.adapter.OfflineMapManagerAdapter;
+import com.gps808.app.fragment.SearchFragment;
+import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.interfaces.OnOfflineItemStatusChangeListener;
 import com.gps808.app.models.OfflineMapItem;
 import com.gps808.app.utils.BackgroundTask;
@@ -54,7 +57,7 @@ public class OfflineMapActivity extends BaseActivity implements
 	// private MySearchView svDown;
 	private ListView lvDown;
 
-	// private MySearchView svAll;
+	private SearchFragment svAll;
 	private ExpandableListView lvWholeCountry;
 	private ListView lvSearchResult;
 
@@ -220,6 +223,23 @@ public class OfflineMapActivity extends BaseActivity implements
 
 		viewpager.setOffscreenPageLimit(2);
 		viewpager.setAdapter(new MyPagerAdapter());
+		SearchFragment searchFragment = (SearchFragment) this
+				.getSupportFragmentManager().findFragmentById(R.id.svAll);
+		searchFragment.setHint("请输入要搜索的地区名称,如:沧州");
+		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
+
+			@Override
+			public void onSearch(String k) {
+				// TODO Auto-generated method stub
+				refreshAllSearchList(k);
+			}
+
+			@Override
+			public void onSearchClose() {
+				// TODO Auto-generated method stub
+				refreshAllSearchList("");
+			}
+		});
 
 		// svDown.setSearchListener(new MySearchView.SearchListener() {
 		// @Override
@@ -281,8 +301,8 @@ public class OfflineMapActivity extends BaseActivity implements
 	/**
 	 * 刷新所有城市搜索结果
 	 */
-	private void refreshAllSearchList() {
-		String key = "";
+	private void refreshAllSearchList(String key) {
+
 		if (key == null || key.length() < 1) {
 			lvSearchResult.setVisibility(View.GONE);
 			lvWholeCountry.setVisibility(View.VISIBLE);
@@ -449,7 +469,7 @@ public class OfflineMapActivity extends BaseActivity implements
 			protected void onResult(Void result) {
 				// TODO Auto-generated method stub
 				refreshDownList();
-				refreshAllSearchList();
+				refreshAllSearchList("");
 
 				allCountryAdapter.setDatas(itemsProvince, itemsProvinceCity);
 			}

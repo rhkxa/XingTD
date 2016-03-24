@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.baidu.mapapi.map.offline.MKOLUpdateElement;
 import com.baidu.mapapi.map.offline.MKOfflineMap;
 import com.gps808.app.R;
+import com.gps808.app.activity.OfflineMapActivity;
 import com.gps808.app.interfaces.OnOfflineItemStatusChangeListener;
 import com.gps808.app.models.OfflineMapItem;
 import com.gps808.app.utils.FileUtils;
@@ -139,9 +140,9 @@ public class OfflineMapAdapter extends ArrayListAdapter<OfflineMapItem> {
 					
 				}else{
 					//跳转下载界面
-//					if(context instanceof BaiduOfflineMapActivity){
-//						((BaiduOfflineMapActivity)context).toDownloadPage();
-//					}
+					if(context instanceof OfflineMapActivity){
+						((OfflineMapActivity)context).toDownloadPage();
+					}
 				}
 				break;
 			default:
