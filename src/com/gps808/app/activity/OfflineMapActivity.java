@@ -54,7 +54,7 @@ public class OfflineMapActivity extends BaseActivity implements
 	private TextView mDownloadText;
 	private TextView mDownloadedText;
 
-	// private MySearchView svDown;
+	private SearchFragment svDown;
 	private ListView lvDown;
 
 	private SearchFragment svAll;
@@ -138,7 +138,7 @@ public class OfflineMapActivity extends BaseActivity implements
 					Collections.sort(itemsDown);
 				}
 
-				refreshDownList();
+				refreshDownList("");
 
 			} else {
 				downAdapter.notifyDataSetChanged();
@@ -178,7 +178,7 @@ public class OfflineMapActivity extends BaseActivity implements
 					itemsDown.remove(i);
 				}
 			}
-			refreshDownList();
+			refreshDownList("");
 
 		} else {
 			downAdapter.notifyDataSetChanged();
@@ -207,12 +207,14 @@ public class OfflineMapActivity extends BaseActivity implements
 
 		LayoutInflater inf = LayoutInflater.from(this);
 		View v1 = inf.inflate(R.layout.view_offline_download, null, false);
-
+		svDown = (SearchFragment) this.getSupportFragmentManager()
+				.findFragmentById(R.id.svDown);
 		lvDown = (ListView) v1.findViewById(R.id.lvDown);
 		views.add(v1);
 
 		View v2 = inf.inflate(R.layout.view_offline_countrys, null, false);
-
+		svAll = (SearchFragment) this.getSupportFragmentManager()
+				.findFragmentById(R.id.svAll);
 		lvWholeCountry = (ExpandableListView) v2
 				.findViewById(R.id.lvWholeCountry);
 		lvSearchResult = (ListView) v2.findViewById(R.id.lvSearchResult);
@@ -223,10 +225,9 @@ public class OfflineMapActivity extends BaseActivity implements
 
 		viewpager.setOffscreenPageLimit(2);
 		viewpager.setAdapter(new MyPagerAdapter());
-		SearchFragment searchFragment = (SearchFragment) this
-				.getSupportFragmentManager().findFragmentById(R.id.svAll);
-		searchFragment.setHint("请输入要搜索的地区名称,如:沧州");
-		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
+		svDown.setHint("请输入要搜索的地区名称,如:沧州");
+		svAll.setHint("请输入要搜索的地区名称,如:沧州");
+		svAll.setOnSearchClickListener(new OnSearchClickListener() {
 
 			@Override
 			public void onSearch(String k) {
@@ -238,6 +239,20 @@ public class OfflineMapActivity extends BaseActivity implements
 			public void onSearchClose() {
 				// TODO Auto-generated method stub
 				refreshAllSearchList("");
+			}
+		});
+		svDown.setOnSearchClickListener(new OnSearchClickListener() {
+
+			@Override
+			public void onSearchClose() {
+				// TODO Auto-generated method stub
+				refreshDownList("");
+			}
+
+			@Override
+			public void onSearch(String key) {
+				// TODO Auto-generated method stub
+				refreshDownList(key);
 			}
 		});
 
@@ -278,9 +293,8 @@ public class OfflineMapActivity extends BaseActivity implements
 	/**
 	 * 刷新下载列表, 根据搜索关键字及itemsDown 下载管理数量变动时调用
 	 */
-	private void refreshDownList() {
-		// String key = svDown.getInputText();
-		String key = "";
+	private void refreshDownList(String key) {
+
 		if (key == null || key.length() < 1) {
 			downAdapter.setDatas(itemsDown);
 
@@ -468,7 +482,7 @@ public class OfflineMapActivity extends BaseActivity implements
 			@Override
 			protected void onResult(Void result) {
 				// TODO Auto-generated method stub
-				refreshDownList();
+				refreshDownList("");
 				refreshAllSearchList("");
 
 				allCountryAdapter.setDatas(itemsProvince, itemsProvinceCity);

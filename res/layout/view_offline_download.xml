@@ -6,11 +6,17 @@
     android:orientation="vertical" >
 
     <!-- 搜索部分 -->
-   
+
+    <fragment
+        android:id="@+id/svDown"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        class="com.gps808.app.fragment.SearchFragment" />
     <!-- 下载列表 & 搜索结果 -->
+
     <ListView
         android:id="@+id/lvDown"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible" />
