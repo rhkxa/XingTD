@@ -837,7 +837,7 @@ int id item_weather_heat 0x7f060142
 int id item_weather_image 0x7f060144
 int id item_weather_week 0x7f060141
 int id ivDownload 0x7f060150
-int id ivExpande 0x7f060146
+int id ivExpande 0x7f060147
 int id jq_code 0x7f0600aa
 int id key_list 0x7f0600b6
 int id key_single 0x7f0600b5
@@ -863,7 +863,7 @@ int id lvDown 0x7f060185
 int id lvSearchResult 0x7f060184
 int id lvWholeCountry 0x7f060183
 int id lyCityInfo 0x7f060145
-int id lyEditPanel 0x7f060149
+int id lyEditPanel 0x7f06014b
 int id lyRoot 0x7f06014f
 int id mainRelLayout 0x7f06016e
 int id main_dialog_container 0x7f060187
@@ -1017,10 +1017,10 @@ int id titleLayout 0x7f06016f
 int id titleText 0x7f06005c
 int id top 0x7f060013
 int id triangle 0x7f060024
-int id tvCityname 0x7f060148
+int id tvCityname 0x7f060146
 int id tvProvince 0x7f06014e
-int id tvSize 0x7f060147
-int id tvStatus 0x7f06014b
+int id tvSize 0x7f060148
+int id tvStatus 0x7f060149
 int id underline 0x7f060025
 int id update 0x7f060155
 int id update_progress 0x7f06018d
