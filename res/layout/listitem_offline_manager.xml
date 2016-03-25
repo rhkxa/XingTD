@@ -29,10 +29,11 @@
 
         <ImageView
             android:id="@+id/ivExpande"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:padding="4dp"
             android:scaleType="centerInside"
             android:src="@drawable/ssdk_recomm_plats_more" />
 
@@ -48,17 +49,6 @@
             android:textColor="@color/text"
             android:textSize="@dimen/body" />
 
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/ivExpande"
-            android:text="暂停"
-            android:layout_alignBottom="@id/ivExpande"
-            android:textColor="@color/red"
-            android:textSize="10dp"
-            android:visibility="visible" />
-
         <ProgressBar
             android:id="@+id/pbDownload"
             style="?android:attr/progressBarStyleHorizontal"
@@ -66,8 +56,20 @@
             android:layout_height="4dp"
             android:layout_below="@id/tvCityname"
             android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@id/ivExpande"
             android:max="100"
             android:progressDrawable="@drawable/progress_compare_style" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/pbDownload"
+            android:layout_toLeftOf="@id/ivExpande"
+            android:text="暂停"   android:layout_centerVertical="true"
+            android:textColor="@color/red"
+            android:textSize="@dimen/caption"
+            android:visibility="visible" />
     </RelativeLayout>
 
     <!-- 下载进度及管理部分 -->
@@ -88,12 +90,12 @@
 
             <com.gps808.app.view.FancyButton
                 android:id="@+id/btnDown"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="8dp"
-                android:text="加入购物车"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
                 fancy:fb_defaultColor="@color/tag_blue"
                 fancy:fb_focusColor="@color/app_focus_color"
                 fancy:fb_radius="2dp"
@@ -103,11 +105,12 @@
 
             <com.gps808.app.view.FancyButton
                 android:id="@+id/btnRemove"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_weight="1"
                 android:background="@color/app_pink"
                 fancy:fb_defaultColor="#ff5f69"
                 fancy:fb_focusColor="#ff838b"
