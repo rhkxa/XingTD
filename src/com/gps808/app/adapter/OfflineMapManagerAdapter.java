@@ -145,9 +145,10 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 			this.data = data;
 
 			tvCityname.setText(data.getCityName());
-			tvCityname.setTextColor(Color.BLACK);
+			tvCityname.setTextColor(mContext.getResources().getColor(
+					R.color.black));
 
-			tvSize.setText(FileUtils.formatFileSize(data.getSize()));
+			tvSize.setText("(" + FileUtils.formatFileSize(data.getSize()) + ")");
 			btnDown.setVisibility(View.VISIBLE);
 			btnRemove.setVisibility(View.VISIBLE);
 
@@ -191,7 +192,8 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 			} else if (data.getStatus() == MKOLUpdateElement.SUSPENDED
 					|| data.getStatus() == MKOLUpdateElement.UNDEFINED
 					|| data.getStatus() >= MKOLUpdateElement.eOLDSMd5Error) {
-				tvCityname.setTextColor(Color.BLUE);
+				tvCityname.setTextColor(mContext.getResources().getColor(
+						R.color.app_blue));
 
 				// 暂停、未知、错误，都是继续下载
 				tvStatus.setText("暂停");
@@ -203,8 +205,8 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 				tvStatus.setVisibility(View.VISIBLE);
 
 			} else if (data.getStatus() == MKOLUpdateElement.WAITING) {
-				tvCityname.setTextColor(Color.BLUE);
-
+				tvCityname.setTextColor(mContext.getResources().getColor(
+						R.color.app_blue));
 				tvStatus.setText("等待");
 				btnDown.setText("暂停");
 				pbDownload.setProgress(data.getProgress());

@@ -5,14 +5,42 @@
     android:background="@color/white"
     android:padding="16dp" >
 
-    <TextView
-        android:id="@+id/tvProvince"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:drawableRight="@drawable/offlinearrow_down"
-        android:gravity="center_vertical"
-        android:textColor="@color/black"
-        android:textSize="@dimen/body"
-        android:visibility="visible" />
+        android:layout_height="wrap_content"
+        android:visibility="visible" >
+
+        <ImageView
+            android:id="@+id/ivExpande"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ssdk_recomm_plats_more" />
+
+        <TextView
+            android:id="@+id/tvProvince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:text="河北省"
+            android:textColor="@color/black"
+            android:textSize="@dimen/body" />
+
+        <TextView
+            android:id="@+id/tvSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/tvProvince"
+            android:gravity="center_vertical"
+            android:text="30M"
+            android:textColor="@color/text"
+            android:textSize="@dimen/body" />
+    </RelativeLayout>
 
 </LinearLayout>
