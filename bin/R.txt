@@ -829,7 +829,6 @@ int id layout_search_bar_edittext 0x7f0600b0
 int id layout_search_bar_layout 0x7f0600b2
 int id layout_search_bar_spinner 0x7f0600b3
 int id left 0x7f060011
-int id line_navi 0x7f060044
 int id linearLayout1 0x7f0600df
 int id localButton 0x7f06007e
 int id localmap_layout 0x7f060082
@@ -873,6 +872,7 @@ int id my_weather 0x7f06006d
 int id nameTextView 0x7f060171
 int id none 0x7f060023
 int id normal 0x7f06000f
+int id normal_navi 0x7f060044
 int id off 0x7f06000e
 int id okImageView 0x7f06016e
 int id on 0x7f06000c
@@ -978,7 +978,6 @@ int id setup_update 0x7f060037
 int id setup_user 0x7f060030
 int id shape_id 0x7f0601a2
 int id shock_switch 0x7f06009b
-int id show 0x7f060045
 int id single_select_chk 0x7f06017c
 int id single_select_root 0x7f06017e
 int id sn_pos2 0x7f06018a
@@ -1014,6 +1013,7 @@ int id vehicle_rg 0x7f0600c5
 int id vercode 0x7f060052
 int id vertical 0x7f060022
 int id viewpager 0x7f060087
+int id voice_navi 0x7f060045
 int id voice_switch 0x7f06009a
 int id weather_city 0x7f0600fe
 int id weather_date 0x7f060103

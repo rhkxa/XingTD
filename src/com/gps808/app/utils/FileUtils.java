@@ -94,6 +94,8 @@ public class FileUtils {
 		}
 		return new File(folderPath, fileName + fileName);
 	}
+	
+	
 
 	/**
 	 * 向手机写图片
