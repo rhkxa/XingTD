@@ -3,8 +3,6 @@ package com.gps808.app.activity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -16,10 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
@@ -34,7 +29,6 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
@@ -50,12 +44,12 @@ import com.baidu.navisdk.adapter.BaiduNaviManager.NaviInitListener;
 import com.baidu.navisdk.adapter.BaiduNaviManager.RoutePlanListener;
 import com.gps808.app.R;
 import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.models.MatchInfo;
 import com.gps808.app.models.XbDisplayLine;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
-import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
@@ -72,28 +66,22 @@ public class DisplayLineActivity extends BaseActivity {
 	MapView mMapView;
 	BaiduMap mBaiduMap;
 	Polyline mPolyline;
-	Polyline mColorfulPolyline;
-	Polyline mTexturePolyline;
+
 	BitmapDescriptor endIcon = null;
 	BitmapDescriptor startIcon = null;
 	// 定位相关
 	LocationClient mLocClient;
 	public MyLocationListenner myListener = new MyLocationListenner();
-	private LocationMode mCurrentMode = LocationMode.NORMAL;
-	BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
-			.fromResource(R.drawable.xtd_car_position);;
 	String rid;
 	private final String saveFile = "Routes";
-	private int handler_runnable_time;
+
+	private XbDisplayLine xbDisplayLine;
 	private FancyButton normal_navi;
 	private FancyButton voice_navi;
-	private boolean isNavi = true;
+	private int guideType = 0;
 	private boolean isMatch = false;
 	int macthNum = 0;
-	
-	
-	
-	
+
 	BNRoutePlanNode oneNode = new BNRoutePlanNode(116.822153, 38.585029, "第一",
 			null, CoordinateType.BD09LL);
 	BNRoutePlanNode twoNode = new BNRoutePlanNode(116.820955, 38.591473, "第二",
@@ -107,12 +95,11 @@ public class DisplayLineActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_display_line);
 		init();
 
 	}
+
 	private String getSdcardDir() {
 		if (Environment.getExternalStorageState().equalsIgnoreCase(
 				Environment.MEDIA_MOUNTED)) {
@@ -120,7 +107,8 @@ public class DisplayLineActivity extends BaseActivity {
 		}
 		return null;
 	}
-private boolean initDirs() {
+
+	private boolean initDirs() {
 		mSDCardPath = getSdcardDir();
 		if (mSDCardPath == null) {
 			return false;
@@ -143,8 +131,6 @@ private boolean initDirs() {
 		HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
 		headerFragment.setTitleText("路线详情");
-		handler_runnable_time = PreferenceUtils.getInstance(
-				DisplayLineActivity.this).getTrackTime() * 1000;
 		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.map_end_icon);
 		startIcon = BitmapDescriptorFactory
 				.fromResource(R.drawable.map_start_icon);
@@ -162,39 +148,12 @@ private boolean initDirs() {
 			}
 		}
 
-		//语音导航
-		voice_navi=(FancyButton) findViewById(R.id.voice_navi);
-		voice_navi.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(initDirs()){
-					initNavi();
-				}
-			}
-		});
-		
-		//普通导航
+		// 语音导航
+		voice_navi = (FancyButton) findViewById(R.id.voice_navi);
+		voice_navi.setOnClickListener(guideClick);
+		// 普通导航
 		normal_navi = (FancyButton) findViewById(R.id.normal_navi);
-		normal_navi.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if (isNavi) {
-					showProgressDialog(DisplayLineActivity.this, "正在匹配导航车辆，请稍等");
-					startLocation();
-				} else {
-					stopLocation();
-					normal_navi.setText("开始导航");
-					Utils.ToastMessage(DisplayLineActivity.this, "导航已关闭");
-					isMatch = false;
-					macthNum = 0;
-					isNavi = true;
-				}
-			}
-		});
+		normal_navi.setOnClickListener(guideClick);
 		// 从本地获取
 		String content = FileUtils.read(DisplayLineActivity.this, saveFile
 				+ rid);
@@ -202,9 +161,8 @@ private boolean initDirs() {
 		if (StringUtils.isEmpty(content)) {
 			getData();
 		} else {
-			XbDisplayLine xbDisplayLine = JSON.parseObject(content,
-					XbDisplayLine.class);
-			parseData(xbDisplayLine);
+			xbDisplayLine = JSON.parseObject(content, XbDisplayLine.class);
+			parseData();
 		}
 
 	}
@@ -242,43 +200,17 @@ private boolean initDirs() {
 							JSONObject response) {
 						// TODO Auto-generated method stub
 						LogUtils.DebugLog("result json", response.toString());
-						XbDisplayLine xbDisplayLine = JSON.parseObject(
-								response.toString(), XbDisplayLine.class);
+						xbDisplayLine = JSON.parseObject(response.toString(),
+								XbDisplayLine.class);
 						FileUtils.write(DisplayLineActivity.this, saveFile
 								+ rid, response.toString());
-						parseData(xbDisplayLine);
+						parseData();
 						super.onSuccess(statusCode, headers, response);
 					}
 				});
 	}
 
-	private void startLocation() {
-		// 开启定位图层
-		mBaiduMap.setMyLocationEnabled(true);
-		mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
-				mCurrentMode, true, mCurrentMarker));
-		// 定位初始化
-		mLocClient = new LocationClient(getApplicationContext());
-		mLocClient.registerLocationListener(myListener);
-		LocationClientOption option = new LocationClientOption();
-		option.setNeedDeviceDirect(true);
-		option.setOpenGps(true);// 打开gps
-		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(5000);
-		mLocClient.setLocOption(option);
-		mLocClient.start();
-	}
-
-	private void stopLocation() {
-		if (mLocClient != null) {
-			// 退出时销毁定位
-			mLocClient.stop();
-			// 关闭定位图层
-			mBaiduMap.setMyLocationEnabled(false);
-		}
-	}
-
-	private void parseData(XbDisplayLine xbDisplayLine) {
+	private void parseData() {
 		List<LatLng> points = new ArrayList<LatLng>();
 		String[] strLng = Utils.getSplit(xbDisplayLine.getTrack(), ";");
 		int size = strLng.length;
@@ -295,6 +227,27 @@ private boolean initDirs() {
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
 				.build()));
 		addCustomElementsDemo(points);
+	}
+
+	private void startLocation() {
+		// 定位初始化
+		mLocClient = new LocationClient(getApplicationContext());
+		mLocClient.registerLocationListener(myListener);
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);// 打开gps
+		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(5000);
+		mLocClient.setLocOption(option);
+		mLocClient.start();
+	}
+
+	private void stopLocation() {
+		if (mLocClient != null) {
+			// 退出时销毁定位
+			mLocClient.stop();
+			// 关闭定位图层
+			mBaiduMap.setMyLocationEnabled(false);
+		}
 	}
 
 	public void clearClick() {
@@ -316,18 +269,6 @@ private boolean initDirs() {
 			if (!isMatch) {
 				getMatch(location.getLongitude() + "," + location.getLatitude());
 			}
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
-					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(location.getDirection())
-					.latitude(location.getLatitude())
-					.longitude(location.getLongitude()).build();
-			mBaiduMap.setMyLocationData(locData);
-			LatLng ll = new LatLng(location.getLatitude(),
-					location.getLongitude());
-			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-			mBaiduMap.animateMapStatus(u);
-
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {
@@ -349,7 +290,6 @@ private boolean initDirs() {
 	@Override
 	protected void onDestroy() {
 		mMapView.onDestroy();
-		mCurrentMarker.recycle();
 		endIcon.recycle();
 		startIcon.recycle();
 		stopLocation();
@@ -361,19 +301,21 @@ private boolean initDirs() {
 	private void getMatch(String loc) {
 		macthNum++;
 		if (macthNum <= 12) {
-			String url = UrlConfig.getMatchVichcle(loc);
+			String url = UrlConfig.getMatchVichcle(loc, rid);
 			HttpUtil.get(DisplayLineActivity.this, url,
 					new JsonHttpResponseHandler() {
 						@Override
 						public void onSuccess(int statusCode, Header[] headers,
 								JSONObject response) {
 							// TODO Auto-generated method stub
-							if (Utils.requestOk(response)) {
+							MatchInfo matchInfo = JSON.parseObject(
+									response.toString(), MatchInfo.class);
+							if (matchInfo.isSuccess()) {
 								dismissProgressDialog();
 								isMatch = true;
-								isNavi = false;
-								normal_navi.setText("结束导航");
+								toGuide();
 							}
+
 							super.onSuccess(statusCode, headers, response);
 						}
 					});
@@ -451,14 +393,12 @@ private boolean initDirs() {
 		}
 	};
 
-
-
 	private void routeplanToNavi() {
 		List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
-        list.add(oneNode);
-        list.add(twoNode);
-        list.add(threeNode);
-        list.add(fourNode);
+		list.add(oneNode);
+		list.add(twoNode);
+		list.add(threeNode);
+		list.add(fourNode);
 		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, false,
 				new RoutePlanListener() {
 
@@ -473,10 +413,43 @@ private boolean initDirs() {
 						// TODO Auto-generated method stub
 						LogUtils.DebugLog("算路成功");
 						Intent intent = new Intent(DisplayLineActivity.this,
-								GuideActivity.class);
+								GuideVoiceActivity.class);
 						startActivity(intent);
 					}
 				});
+	}
+
+	private OnClickListener guideClick = new OnClickListener() {
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			startLocation();
+			switch (arg0.getId()) {
+			case R.id.voice_navi:
+				guideType = 1;
+				break;
+			case R.id.normal_navi:
+				guideType = 0;
+				break;
+			}
+			toGuide();
+		}
+	};
+
+	private void toGuide() {
+		switch (guideType) {
+		case 0:
+			Intent intent = new Intent(DisplayLineActivity.this,
+					GuideNormalActivity.class);
+			intent.putExtra("route", JSON.toJSONString(xbDisplayLine));
+			startActivity(intent);
+			break;
+
+		case 1:
+			break;
+		}
+
 	}
 
 }

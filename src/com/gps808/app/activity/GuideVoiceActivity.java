@@ -8,7 +8,7 @@ import com.baidu.navisdk.adapter.BNRouteGuideManager.OnNavigationListener;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.LogUtils;
 
-public class GuideActivity extends BaseActivity {
+public class GuideVoiceActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

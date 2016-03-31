@@ -1,40 +1,27 @@
 package com.gps808.app.activity;
-
 import org.apache.http.Header;
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.model.LatLng;
 import com.gps808.app.R;
-import com.gps808.app.activity.DisplayLineActivity.MyLocationListenner;
 import com.gps808.app.fragment.HeaderFragment;
-import com.gps808.app.models.XbWeather;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.UrlConfig;
-import com.gps808.app.utils.BaseFragment.jsonHttpResponseHandler;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.CircleImageView;
-import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.FancyButton;
 
 public class MyselfActivity extends BaseActivity {
@@ -42,8 +29,9 @@ public class MyselfActivity extends BaseActivity {
 	private ImageView alter;
 	private TextView mynickname;
 	private CircleImageView my_headimage;
-	private LinearLayout my_setup, my_about, my_help,my_map;
-	private FancyButton my_driver, my_police, my_routes, my_car;
+	private LinearLayout my_setup, my_about, my_help;
+	private FancyButton my_driver, my_police, my_routes, my_car, my_map,
+			my_dog;
 	private TextView my_weather;
 	// 定位
 	LocationClient mLocClient;
@@ -79,8 +67,10 @@ public class MyselfActivity extends BaseActivity {
 		my_about.setOnClickListener(click);
 		my_help = (LinearLayout) findViewById(R.id.my_help);
 		my_help.setOnClickListener(click);
-		my_map = (LinearLayout) findViewById(R.id.my_map);
+		my_map = (FancyButton) findViewById(R.id.my_map);
 		my_map.setOnClickListener(click);
+		my_dog = (FancyButton) findViewById(R.id.my_dog);
+		my_dog.setOnClickListener(click);
 		mynickname = (TextView) findViewById(R.id.my_nickname);
 		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
 				.getUserNick());
@@ -159,7 +149,10 @@ public class MyselfActivity extends BaseActivity {
 				cls = VehiclesActivity.class;
 				break;
 			case R.id.my_map:
-			
+				cls = OfflineMapActivity.class;
+				break;
+			case R.id.my_dog:
+				cls = EdogActivity.class;
 				break;
 			}
 			intent.setClass(MyselfActivity.this, cls);

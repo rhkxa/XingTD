@@ -300,8 +300,8 @@ public class UrlConfig {
 		return SERVER + "info/nowWeather?lng=" + lng + "&lat=" + lat;
 	}
 	
-	public static final String getMatchVichcle(String loc){
-		return SERVER + "vehicle/matchingVehicle?location=" + loc;	
+	public static final String getMatchVichcle(String loc,String eId){
+		return SERVER + "vehicle/matchingVehicle?location=" + loc+"&eId"+eId;	
 	}
 
 }

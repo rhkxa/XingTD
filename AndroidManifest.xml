@@ -125,7 +125,9 @@
         <activity android:name="com.gps808.app.activity.MessageActivity" />
         <activity android:name="com.gps808.app.activity.ForgetPassActivity" />
         <activity android:name="com.gps808.app.activity.OfflineMapActivity" />
-        <activity android:name="com.gps808.app.activity.GuideActivity" />
+        <activity android:name="com.gps808.app.activity.GuideVoiceActivity" />
+        <activity android:name="com.gps808.app.activity.GuideNormalActivity" />
+        <activity android:name="com.gps808.app.activity.EdogActivity" />
 
         <service android:name="com.gps808.app.timeout.TimeoutService" >
         </service>

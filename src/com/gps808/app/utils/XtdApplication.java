@@ -52,7 +52,7 @@ public class XtdApplication extends Application {
 		// initLocation(getApplicationContext());
 		SDKInitializer.initialize(this);
 		initImageLoader(getApplicationContext());
-		TCAgent.LOG_ON = true;
+		TCAgent.LOG_ON = false;
 		TCAgent.init(this);
 		TCAgent.setReportUncaughtExceptions(true);
 
