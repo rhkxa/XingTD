@@ -124,6 +124,7 @@ public class BaseActivity extends FragmentActivity {
 			super.onFinish();
 			dismissProgressDialog();
 		}
+
 	}
 
 	public static class AnimateFirstDisplayListener extends

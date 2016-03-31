@@ -29,11 +29,9 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.navisdk.adapter.BNRoutePlanNode;
@@ -82,8 +80,6 @@ public class DisplayLineActivity extends BaseActivity {
 	private boolean isMatch = false;
 	int macthNum = 0;
 
-	BNRoutePlanNode oneNode = new BNRoutePlanNode(116.822153, 38.585029, "第一",
-			null, CoordinateType.BD09LL);
 	BNRoutePlanNode twoNode = new BNRoutePlanNode(116.820955, 38.591473, "第二",
 			null, CoordinateType.BD09LL);
 	BNRoutePlanNode threeNode = new BNRoutePlanNode(116.809637, 38.592197,
@@ -308,12 +304,13 @@ public class DisplayLineActivity extends BaseActivity {
 						public void onSuccess(int statusCode, Header[] headers,
 								JSONObject response) {
 							// TODO Auto-generated method stub
+							LogUtils.DebugLog("result"+response.toString());
 							MatchInfo matchInfo = JSON.parseObject(
 									response.toString(), MatchInfo.class);
 							if (matchInfo.isSuccess()) {
 								dismissProgressDialog();
 								isMatch = true;
-								toGuide();
+								toGuide(matchInfo);
 							}
 
 							super.onSuccess(statusCode, headers, response);
@@ -330,7 +327,10 @@ public class DisplayLineActivity extends BaseActivity {
 
 	String authinfo = null;
 
-	private void initNavi() {
+	private void initNavi(final List<BNRoutePlanNode> list) {
+		if (!initDirs()) {
+			return;
+		}
 		BaiduNaviManager.getInstance().init(this, mSDCardPath, APP_FOLDER_NAME,
 				new NaviInitListener() {
 					@Override
@@ -355,16 +355,14 @@ public class DisplayLineActivity extends BaseActivity {
 								.setPowerSaveMode(BNaviSettingManager.PowerSaveMode.DISABLE_MODE);
 						BNaviSettingManager
 								.setRealRoadCondition(BNaviSettingManager.RealRoadCondition.NAVI_ITS_ON);
-						routeplanToNavi();
+						routeplanToNavi(list);
 					}
 
 					public void initStart() {
-
 						LogUtils.DebugLog("导航引擎初始化开始");
 					}
 
 					public void initFailed() {
-
 						LogUtils.DebugLog("导航引擎初始化失败");
 					}
 
@@ -393,12 +391,7 @@ public class DisplayLineActivity extends BaseActivity {
 		}
 	};
 
-	private void routeplanToNavi() {
-		List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
-		list.add(oneNode);
-		list.add(twoNode);
-		list.add(threeNode);
-		list.add(fourNode);
+	private void routeplanToNavi(List<BNRoutePlanNode> list) {
 		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, false,
 				new RoutePlanListener() {
 
@@ -433,11 +426,10 @@ public class DisplayLineActivity extends BaseActivity {
 				guideType = 0;
 				break;
 			}
-			toGuide();
 		}
 	};
 
-	private void toGuide() {
+	private void toGuide(MatchInfo matchInfo) {
 		switch (guideType) {
 		case 0:
 			Intent intent = new Intent(DisplayLineActivity.this,
@@ -447,6 +439,18 @@ public class DisplayLineActivity extends BaseActivity {
 			break;
 
 		case 1:
+			List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
+			String[] strLng = Utils.getSplit(matchInfo.getWayPoints(), ";");
+			int size = strLng.length;
+			BNRoutePlanNode node = null;
+			double[] doubleLng;
+			for (int i = 0; i < size; i++) {
+				doubleLng = Utils.getLng(strLng[i]);
+				node = new BNRoutePlanNode(doubleLng[0], doubleLng[1], "",
+						null, CoordinateType.BD09LL);
+				list.add(node);
+			}
+			initNavi(list);
 			break;
 		}
 
