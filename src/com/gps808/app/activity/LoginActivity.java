@@ -83,7 +83,8 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.activity_login);
 		init();
 		checkUpdate();
-//		UpdateManager.getUpdateManager().checkAppUpdate(LoginActivity.this, false);
+		// UpdateManager.getUpdateManager().checkAppUpdate(LoginActivity.this,
+		// false);
 	}
 
 	private void init() {
@@ -146,13 +147,9 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				// Intent intent = new Intent(LoginActivity.this,
-				// ForgetPassActivity.class);
-				// startActivity(intent);
-				String showStr = "1、忘记密码请易路通管理员联系，联系电话：0317-4227916。";
-				CustomOkDialog register = new CustomOkDialog(
-						LoginActivity.this, "找回密码", showStr, null);
-				register.show();
+				Utils.openBrowser(
+						LoginActivity.this,
+						"http://mokebao.molink.cn/index.php?g=Wap&m=Index&a=index&token=bldbtc1458693848");
 			}
 		});
 		login_test.setOnClickListener(new OnClickListener() {

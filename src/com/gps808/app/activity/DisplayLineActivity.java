@@ -42,7 +42,6 @@ import com.baidu.navisdk.adapter.BaiduNaviManager.NaviInitListener;
 import com.baidu.navisdk.adapter.BaiduNaviManager.RoutePlanListener;
 import com.gps808.app.R;
 import com.gps808.app.fragment.HeaderFragment;
-import com.gps808.app.models.MatchInfo;
 import com.gps808.app.models.XbDisplayLine;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
@@ -305,12 +304,10 @@ public class DisplayLineActivity extends BaseActivity {
 								JSONObject response) {
 							// TODO Auto-generated method stub
 							LogUtils.DebugLog("result"+response.toString());
-							MatchInfo matchInfo = JSON.parseObject(
-									response.toString(), MatchInfo.class);
-							if (matchInfo.isSuccess()) {
+							if (Utils.requestOk(response)) {
 								dismissProgressDialog();
 								isMatch = true;
-								toGuide(matchInfo);
+								toGuide(Utils.getKey(response, "wayPoints"));
 							}
 
 							super.onSuccess(statusCode, headers, response);
@@ -429,7 +426,7 @@ public class DisplayLineActivity extends BaseActivity {
 		}
 	};
 
-	private void toGuide(MatchInfo matchInfo) {
+	private void toGuide(String wayPoints) {
 		switch (guideType) {
 		case 0:
 			Intent intent = new Intent(DisplayLineActivity.this,
@@ -440,7 +437,7 @@ public class DisplayLineActivity extends BaseActivity {
 
 		case 1:
 			List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
-			String[] strLng = Utils.getSplit(matchInfo.getWayPoints(), ";");
+			String[] strLng = Utils.getSplit(wayPoints, ";");
 			int size = strLng.length;
 			BNRoutePlanNode node = null;
 			double[] doubleLng;

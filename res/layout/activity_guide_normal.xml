@@ -31,7 +31,7 @@
             fancy:fb_defaultColor="@color/tag_blue"
             fancy:fb_iconPosition="top"
             fancy:fb_iconSize="24dp"
-            fancy:fb_radius="50dp"
+            fancy:fb_radius="2dp"
             fancy:fb_text="暂停"
             fancy:fb_textSize="10sp" />
     </RelativeLayout>

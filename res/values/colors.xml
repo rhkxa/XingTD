@@ -2,6 +2,8 @@
 <resources>
 
     <color name="tag_blue">#35acff </color>
+    <color name="backgroud_blue1">#09c6b1 </color>
+    <color name="backgroud_blue2">#0abee6 </color>
     <color name="app_blue">#0093f5 </color>
     <color name="footer_text">#6a6a6a </color>
     <color name="sign_backgroud">#febf10</color>

@@ -1,4 +1,5 @@
 package com.gps808.app.activity;
+
 import org.apache.http.Header;
 import org.json.JSONObject;
 import android.content.Intent;
@@ -75,29 +76,6 @@ public class MyselfActivity extends BaseActivity {
 		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
 				.getUserNick());
 		my_weather = (TextView) findViewById(R.id.my_weather);
-		// my_headimage = (CircleImageView) findViewById(R.id.my_headimage);
-
-		// alter.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// // TODO Auto-generated method stub
-		// Intent intent = new Intent(getActivity(), SetupActivity.class);
-		// startActivity(intent);
-		// }
-		// });
-		// myself_call = (LinearLayout) findViewById(R.id.myself_call);
-		// myself_call.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		// Utils.callPhone(getActivity(),
-		// getResources().getString(R.string.server_call));
-		// }
-		// });
-		// myself_edit = (LinearLayout) findViewById(R.id.myself_edit);
-		// my_headimage.setOnClickListener(click);
 		if (PreferenceUtils.getInstance(MyselfActivity.this).getUserState() > 3) {
 			my_driver.setBackgroundColor(getResources().getColor(R.color.gray));
 			my_driver.setEnabled(false);

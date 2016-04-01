@@ -301,7 +301,7 @@ public class UrlConfig {
 	}
 	
 	public static final String getMatchVichcle(String loc,String eId){
-		return SERVER + "vehicle/matchingVehicle?location=" + loc+"&eId"+eId;	
+		return SERVER + "vehicle/matchingVehicle?location=" + loc+"&eId="+eId;	
 	}
 
 }

@@ -53,7 +53,9 @@ public class GuideNormalActivity extends BaseActivity {
 			.fromResource(R.drawable.xtd_car_position);
 	private XbDisplayLine xbDisplayLine;
 	private FancyButton normal_navi;
-	private boolean isNavi = true;
+	private boolean isNavi = false;
+	BitmapDescriptor mBlueTexture = BitmapDescriptorFactory
+			.fromResource(R.drawable.icon_road_blue_arrow);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class GuideNormalActivity extends BaseActivity {
 				XbDisplayLine.class);
 		HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
-		headerFragment.setTitleText("");
+		headerFragment.setTitleText("普通模式导航");
 		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.map_end_icon);
 		startIcon = BitmapDescriptorFactory
 				.fromResource(R.drawable.map_start_icon);
@@ -99,10 +101,12 @@ public class GuideNormalActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if (isNavi) {
-					normal_navi.setText("暂停");
+					normal_navi.setText("继续导航");
+					Utils.ToastMessage(GuideNormalActivity.this, "导航功能开启");
 					startLocation();
 				} else {
-					normal_navi.setText("继续");
+					normal_navi.setText("暂停导航");
+					Utils.ToastMessage(GuideNormalActivity.this, "导航功能关闭");
 					stopLocation();
 
 				}
@@ -117,8 +121,8 @@ public class GuideNormalActivity extends BaseActivity {
 	public void addCustomElementsDemo(List<LatLng> points) {
 		if (points.size() >= 2) {
 			// 添加普通折线绘制
-			OverlayOptions ooPolyline = new PolylineOptions().width(10)
-					.color(getResources().getColor(R.color.app_green))
+			OverlayOptions ooPolyline = new PolylineOptions().width(15)
+					.customTexture(mBlueTexture).dottedLine(true)
 					.points(points);
 			mPolyline = (Polyline) mBaiduMap.addOverlay(ooPolyline);
 			mBaiduMap.addOverlay(new MarkerOptions().position(points.get(0))
@@ -225,6 +229,7 @@ public class GuideNormalActivity extends BaseActivity {
 		mCurrentMarker.recycle();
 		endIcon.recycle();
 		startIcon.recycle();
+		mBlueTexture.recycle();
 		stopLocation();
 		super.onDestroy();
 	}

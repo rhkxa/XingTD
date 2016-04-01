@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="16dp"
             android:max="100"
-            android:progressDrawable="@drawable/progress_drawable" />
+            android:progressDrawable="@drawable/progress_compare_style" />
 
         <TextView
             android:id="@+id/tvStatus"
