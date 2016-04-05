@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/ivExpande"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
@@ -34,7 +34,7 @@
             android:layout_toLeftOf="@+id/ivExpande"
             android:gravity="center_vertical"
             android:text="30M"
-            android:textColor="@color/black"
+            android:textColor="@color/text"
             android:textSize="@dimen/body" />
 
         <TextView
@@ -62,19 +62,19 @@
             android:id="@+id/pbDownload"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="12dp"
             android:max="100"
             android:progressDrawable="@drawable/progress_compare_style" />
 
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
-            android:layout_height="16dp"
+            android:layout_height="12dp"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text=""
             android:textColor="@android:color/white"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:visibility="visible" />
 
         <LinearLayout
@@ -92,12 +92,27 @@
                 android:orientation="horizontal" >
 
                 <com.gps808.app.view.FancyButton
+                    android:id="@+id/btnLook"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    fancy:fb_defaultColor="@color/tag_blue"
+                    fancy:fb_focusColor="@color/app_focus_color"
+                    fancy:fb_radius="2dp"
+                    fancy:fb_text="查看地图"
+                    fancy:fb_textColor="@color/white"
+                    fancy:fb_textSize="@dimen/caption" />
+
+                <com.gps808.app.view.FancyButton
                     android:id="@+id/btnDown"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     fancy:fb_defaultColor="@color/tag_blue"
                     fancy:fb_focusColor="@color/app_focus_color"
@@ -111,12 +126,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
-                    android:background="@color/app_pink"
-                    fancy:fb_defaultColor="#ff5f69"
-                    fancy:fb_focusColor="#ff838b"
+                    fancy:fb_defaultColor="@color/app_pink"
+                    fancy:fb_focusColor="@color/app_focus_color"
                     fancy:fb_radius="2dp"
                     fancy:fb_text="删除"
                     fancy:fb_textColor="@color/white"

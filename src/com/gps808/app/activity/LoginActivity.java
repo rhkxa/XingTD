@@ -147,7 +147,7 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Utils.openBrowser(
+				Utils.toExploer(
 						LoginActivity.this,
 						"http://mokebao.molink.cn/index.php?g=Wap&m=Index&a=index&token=bldbtc1458693848");
 			}
@@ -369,6 +369,7 @@ public class LoginActivity extends BaseActivity {
 	 */
 	private ProgressBar mProgress;
 	private TextView mProgressText;
+	private TextView mUpdataBrower;
 
 	private void showDownloadDialog(Update update) {
 		AlertDialog.Builder builder = new Builder(this);
@@ -376,6 +377,8 @@ public class LoginActivity extends BaseActivity {
 		View v = inflater.inflate(R.layout.widget_update_progress, null);
 		mProgress = (ProgressBar) v.findViewById(R.id.update_progress);
 		mProgressText = (TextView) v.findViewById(R.id.update_progress_text);
+		mUpdataBrower = (TextView) v.findViewById(R.id.update_to_brower);
+
 		builder.setView(v);
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			@Override
@@ -389,6 +392,15 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onCancel(DialogInterface dialog) {
 				HttpUtil.cancelRequest(LoginActivity.this);
+			}
+		});
+		mUpdataBrower.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Utils.toExploer(LoginActivity.this,
+						"http://app.gps808.com/update.jsp");
 			}
 		});
 		Dialog downloadDialog = builder.create();

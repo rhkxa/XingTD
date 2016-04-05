@@ -31,6 +31,9 @@ import android.util.Log;
  * @created 2012-3-21
  */
 public class FileUtils {
+	
+	public static final String APP_FOLDER_NAME="XingTD";
+	
 	/**
 	 * 写文本文件 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
 	 * 
@@ -94,7 +97,7 @@ public class FileUtils {
 		}
 		return new File(folderPath, fileName + fileName);
 	}
-	
+
 	
 
 	/**

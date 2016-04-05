@@ -40,4 +40,14 @@
         android:layout_margin="8dp"
         android:textColor="@color/black" />
 
+    <TextView
+        android:id="@+id/update_to_brower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="8dp"
+        android:text="下载遇到问题，请戳这里>>>>>"
+        android:textColor="@color/tag_blue"
+        android:textSize="@dimen/body" />
+
 </LinearLayout>

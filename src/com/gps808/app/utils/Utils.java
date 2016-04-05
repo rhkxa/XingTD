@@ -469,11 +469,5 @@ public class Utils {
 		context.startActivity(i);
 	}
 
-	public static void openBrowser(Context context,String url){
-		 Intent intent= new Intent();        
-		    intent.setAction("android.intent.action.VIEW");    
-		    Uri content_url = Uri.parse(url);   
-		    intent.setData(content_url);  
-		    context. startActivity(intent);
-	}
+	
 }

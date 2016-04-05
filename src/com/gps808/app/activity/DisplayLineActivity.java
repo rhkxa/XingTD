@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -54,21 +53,15 @@ import com.gps808.app.view.FancyButton;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class DisplayLineActivity extends BaseActivity {
-
-	private static final String APP_FOLDER_NAME = "XingTD";
-
 	private String mSDCardPath = null;
-
 	// 地图相关
 	MapView mMapView;
 	BaiduMap mBaiduMap;
 	Polyline mPolyline;
-
 	BitmapDescriptor endIcon = null;
 	BitmapDescriptor startIcon = null;
 	// 定位相关
 	LocationClient mLocClient;
-	public MyLocationListenner myListener = new MyLocationListenner();
 	String rid;
 	private final String saveFile = "Routes";
 
@@ -76,15 +69,8 @@ public class DisplayLineActivity extends BaseActivity {
 	private FancyButton normal_navi;
 	private FancyButton voice_navi;
 	private int guideType = 0;
-	private boolean isMatch = false;
 	int macthNum = 0;
-
-	BNRoutePlanNode twoNode = new BNRoutePlanNode(116.820955, 38.591473, "第二",
-			null, CoordinateType.BD09LL);
-	BNRoutePlanNode threeNode = new BNRoutePlanNode(116.809637, 38.592197,
-			"第三", null, CoordinateType.BD09LL);
-	BNRoutePlanNode fourNode = new BNRoutePlanNode(116.810925, 38.579453, "第四",
-			null, CoordinateType.BD09LL);
+	private String currentNode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,23 +78,14 @@ public class DisplayLineActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_line);
 		init();
-
-	}
-
-	private String getSdcardDir() {
-		if (Environment.getExternalStorageState().equalsIgnoreCase(
-				Environment.MEDIA_MOUNTED)) {
-			return Environment.getExternalStorageDirectory().toString();
-		}
-		return null;
 	}
 
 	private boolean initDirs() {
-		mSDCardPath = getSdcardDir();
+		mSDCardPath = FileUtils.getSDRoot();
 		if (mSDCardPath == null) {
 			return false;
 		}
-		File f = new File(mSDCardPath, APP_FOLDER_NAME);
+		File f = new File(mSDCardPath, FileUtils.APP_FOLDER_NAME);
 		if (!f.exists()) {
 			try {
 				f.mkdir();
@@ -134,7 +111,7 @@ public class DisplayLineActivity extends BaseActivity {
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
 		mBaiduMap.setMapStatus(msu);
-		// 隐藏百度logo和 ZoomControl
+		// 隐藏百度LOGO和 ZoomControl
 		int count = mMapView.getChildCount();
 		for (int i = 0; i < count; i++) {
 			View child = mMapView.getChildAt(i);
@@ -179,6 +156,7 @@ public class DisplayLineActivity extends BaseActivity {
 		}
 	}
 
+	// 加载路线信息
 	private void getData() {
 		String url = UrlConfig.getVehicleRoutesInfo(rid);
 		HttpUtil.get(DisplayLineActivity.this, url,
@@ -224,49 +202,45 @@ public class DisplayLineActivity extends BaseActivity {
 		addCustomElementsDemo(points);
 	}
 
+	int matchNum = 0;
+
 	private void startLocation() {
+		showProgressDialog(DisplayLineActivity.this, "正在搜索附近车辆，等稍等");
 		// 定位初始化
 		mLocClient = new LocationClient(getApplicationContext());
-		mLocClient.registerLocationListener(myListener);
 		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);// 打开gps
+		option.setOpenGps(true);// 打开GPS
 		option.setCoorType("bd09ll"); // 设置坐标类型
 		option.setScanSpan(5000);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
+		mLocClient.registerLocationListener(new BDLocationListener() {
+			@Override
+			public void onReceiveLocation(BDLocation location) {
+				matchNum++;
+				// map view 销毁后不在处理新接收的位置
+				if (location == null || mMapView == null) {
+					return;
+				}
+				if (macthNum < 12) {
+					currentNode = location.getLongitude() + ","
+							+ location.getLatitude();
+					getMatch();
+				} else {
+					stopLocation();
+					dismissProgressDialog();
+					matchNum = 0;
+					Utils.ToastMessage(DisplayLineActivity.this,
+							"对不起，附近没有可导航的车辆");
+				}
+			}
+		});
 	}
 
 	private void stopLocation() {
 		if (mLocClient != null) {
 			// 退出时销毁定位
 			mLocClient.stop();
-			// 关闭定位图层
-			mBaiduMap.setMyLocationEnabled(false);
-		}
-	}
-
-	public void clearClick() {
-		// 清除所有图层
-		mMapView.getMap().clear();
-	}
-
-	/**
-	 * 定位SDK监听函数
-	 */
-	public class MyLocationListenner implements BDLocationListener {
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-			// map view 销毁后不在处理新接收的位置
-			if (location == null || mMapView == null) {
-				return;
-			}
-			if (!isMatch) {
-				getMatch(location.getLongitude() + "," + location.getLatitude());
-			}
-		}
-
-		public void onReceivePoi(BDLocation poiLocation) {
 		}
 	}
 
@@ -291,53 +265,45 @@ public class DisplayLineActivity extends BaseActivity {
 		super.onDestroy();
 	}
 
-	String showStr = "";
+	// 车辆匹配
+	private void getMatch() {
 
-	private void getMatch(String loc) {
-		macthNum++;
-		if (macthNum <= 12) {
-			String url = UrlConfig.getMatchVichcle(loc, rid);
-			HttpUtil.get(DisplayLineActivity.this, url,
-					new JsonHttpResponseHandler() {
-						@Override
-						public void onSuccess(int statusCode, Header[] headers,
-								JSONObject response) {
-							// TODO Auto-generated method stub
-							LogUtils.DebugLog("result"+response.toString());
-							if (Utils.requestOk(response)) {
-								dismissProgressDialog();
-								isMatch = true;
-								toGuide(Utils.getKey(response, "wayPoints"));
-							}
+		String url = UrlConfig.getMatchVichcle(currentNode, rid);
+		HttpUtil.get(DisplayLineActivity.this, url,
+				new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONObject response) {
+						// TODO Auto-generated method stub
+						LogUtils.DebugLog("result" + response.toString());
+						if (Utils.requestOk(response)) {
 
-							super.onSuccess(statusCode, headers, response);
+							stopLocation();
+							dismissProgressDialog();
+							matchNum = 0;
+							toGuide(Utils.getKey(response, "wayPoints"));
 						}
-					});
-		} else {
-			macthNum = 0;
-			stopLocation();
-			dismissProgressDialog();
-			Utils.ToastMessage(DisplayLineActivity.this, "对不起，附近没有可导航的车辆");
-		}
+						super.onSuccess(statusCode, headers, response);
+					}
+				});
 
 	}
-
-	String authinfo = null;
 
 	private void initNavi(final List<BNRoutePlanNode> list) {
 		if (!initDirs()) {
 			return;
 		}
-		BaiduNaviManager.getInstance().init(this, mSDCardPath, APP_FOLDER_NAME,
-				new NaviInitListener() {
+
+		BaiduNaviManager.getInstance().init(this, mSDCardPath,
+				FileUtils.APP_FOLDER_NAME, new NaviInitListener() {
 					@Override
 					public void onAuthResult(int status, String msg) {
 						if (0 == status) {
-							authinfo = "key校验成功!";
+							LogUtils.DebugLog("key校验成功!");
 						} else {
-							authinfo = "key校验失败, " + msg;
+							LogUtils.DebugLog("key校验失败, " + msg);
 						}
-						LogUtils.DebugLog(authinfo);
+
 					}
 
 					public void initSuccess() {
@@ -356,10 +322,15 @@ public class DisplayLineActivity extends BaseActivity {
 					}
 
 					public void initStart() {
+						showProgressDialog(DisplayLineActivity.this,
+								"正在启动语音导航……");
 						LogUtils.DebugLog("导航引擎初始化开始");
 					}
 
 					public void initFailed() {
+						dismissProgressDialog();
+						Utils.ToastMessage(DisplayLineActivity.this,
+								"语音导航初始化失败");
 						LogUtils.DebugLog("导航引擎初始化失败");
 					}
 
@@ -388,19 +359,22 @@ public class DisplayLineActivity extends BaseActivity {
 		}
 	};
 
+	// 路线规划
 	private void routeplanToNavi(List<BNRoutePlanNode> list) {
 		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, false,
 				new RoutePlanListener() {
-
 					@Override
 					public void onRoutePlanFailed() {
 						// TODO Auto-generated method stub
+						dismissProgressDialog();
+						Utils.ToastMessage(DisplayLineActivity.this, "对不起算路失败!");
 						LogUtils.DebugLog("算路失败");
 					}
 
 					@Override
 					public void onJumpToNavigator() {
 						// TODO Auto-generated method stub
+						dismissProgressDialog();
 						LogUtils.DebugLog("算路成功");
 						Intent intent = new Intent(DisplayLineActivity.this,
 								GuideVoiceActivity.class);
@@ -436,11 +410,17 @@ public class DisplayLineActivity extends BaseActivity {
 			break;
 
 		case 1:
+			if (StringUtils.isEmpty(wayPoints)) {
+				LogUtils.DebugLog("途经点为空");
+				return;
+			}
 			List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
+			double[] doubleLng = Utils.getLng(currentNode);
+			BNRoutePlanNode node = new BNRoutePlanNode(doubleLng[0],
+					doubleLng[1], "", null, CoordinateType.BD09LL);
+			list.add(node);
 			String[] strLng = Utils.getSplit(wayPoints, ";");
 			int size = strLng.length;
-			BNRoutePlanNode node = null;
-			double[] doubleLng;
 			for (int i = 0; i < size; i++) {
 				doubleLng = Utils.getLng(strLng[i]);
 				node = new BNRoutePlanNode(doubleLng[0], doubleLng[1], "",

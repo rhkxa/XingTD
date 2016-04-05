@@ -74,7 +74,7 @@ public class GuideNormalActivity extends BaseActivity {
 				XbDisplayLine.class);
 		HeaderFragment headerFragment = (HeaderFragment) this
 				.getSupportFragmentManager().findFragmentById(R.id.title);
-		headerFragment.setTitleText("普通模式导航");
+		headerFragment.setTitleText("普通导航");
 		endIcon = BitmapDescriptorFactory.fromResource(R.drawable.map_end_icon);
 		startIcon = BitmapDescriptorFactory
 				.fromResource(R.drawable.map_start_icon);
@@ -83,7 +83,7 @@ public class GuideNormalActivity extends BaseActivity {
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
 		mBaiduMap.setMapStatus(msu);
-		// 隐藏百度logo和 ZoomControl
+		// 隐藏百度LOGO和 ZoomControl
 		int count = mMapView.getChildCount();
 		for (int i = 0; i < count; i++) {
 			View child = mMapView.getChildAt(i);
@@ -96,7 +96,6 @@ public class GuideNormalActivity extends BaseActivity {
 		// 普通导航
 		normal_navi = (FancyButton) findViewById(R.id.normal_navi);
 		normal_navi.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -177,11 +176,6 @@ public class GuideNormalActivity extends BaseActivity {
 		addCustomElementsDemo(points);
 	}
 
-	public void clearClick() {
-		// 清除所有图层
-		mMapView.getMap().clear();
-	}
-
 	/**
 	 * 定位SDK监听函数
 	 */
@@ -205,9 +199,6 @@ public class GuideNormalActivity extends BaseActivity {
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
 
-		}
-
-		public void onReceivePoi(BDLocation poiLocation) {
 		}
 	}
 

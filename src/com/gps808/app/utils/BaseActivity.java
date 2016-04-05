@@ -163,12 +163,6 @@ public class BaseActivity extends FragmentActivity {
 	protected void onStop() {
 		HttpUtil.cancelRequest(this);
 		super.onStop();
-		// 当Activity停止Stop时停止此Activity的所有网络请求
-
-		// if (ScreenObserver.isApplicationBroughtToBackground(this)) {
-		// cancelAlarmManager();
-		// setAlarmManager();
-		// }
 	}
 
 	private void reLogin() {
