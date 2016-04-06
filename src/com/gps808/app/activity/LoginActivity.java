@@ -29,7 +29,6 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -45,7 +44,6 @@ import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
 import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
-import com.gps808.app.utils.UpdateManager;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.gps808.app.view.FancyButton;
@@ -62,13 +60,11 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 public class LoginActivity extends BaseActivity {
 	private long mExitTime = 0;
 	private FancyButton login;
-	private TextView phonenumber;
+
 	private EditText userName;
 	private EditText passWord;
 	private CheckBox autoLoginBox;
 	private CheckBox savePwdBox;
-	private RelativeLayout call;
-	// /private TextView login_serve;
 	private TextView login_to_register;
 	private TextView login_forget_pass;
 	private boolean isReLogin;
@@ -96,9 +92,7 @@ public class LoginActivity extends BaseActivity {
 		autoLoginBox = (CheckBox) findViewById(R.id.autoLoginBox);
 		savePwdBox = (CheckBox) findViewById(R.id.savePwdBox);
 		login = (FancyButton) findViewById(R.id.login);
-		phonenumber = (TextView) findViewById(R.id.phonenumber);
-		// call = (RelativeLayout) findViewById(R.id.call_phone);
-		// login_serve = (TextView) findViewById(R.id.login_serve);
+
 		login_to_register = (TextView) findViewById(R.id.login_to_register);
 		login_forget_pass = (TextView) findViewById(R.id.login_forget_pass);
 		login_test = (TextView) findViewById(R.id.login_test);

@@ -128,6 +128,7 @@
         <activity android:name="com.gps808.app.activity.GuideVoiceActivity" />
         <activity android:name="com.gps808.app.activity.GuideNormalActivity" />
         <activity android:name="com.gps808.app.activity.EdogActivity" />
+        <activity android:name="com.gps808.app.activity.ShowMapActivity" />
 
         <service android:name="com.gps808.app.timeout.TimeoutService" >
         </service>

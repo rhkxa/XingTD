@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,7 +28,6 @@ import com.baidu.mapapi.map.offline.MKOLSearchRecord;
 import com.baidu.mapapi.map.offline.MKOLUpdateElement;
 import com.baidu.mapapi.map.offline.MKOfflineMap;
 import com.baidu.mapapi.map.offline.MKOfflineMapListener;
-import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.gps808.app.R;
 import com.gps808.app.adapter.OfflineExpandableListAdapter;
 import com.gps808.app.adapter.OfflineMapAdapter;
@@ -80,6 +78,8 @@ public class OfflineMapActivity extends BaseActivity implements
 
 	// -------- Methods for/from SuperClass/Interfaces -----------
 
+	private ImageView backBtn;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -92,6 +92,15 @@ public class OfflineMapActivity extends BaseActivity implements
 		initViews();
 
 		viewpager.setCurrentItem(1);
+		backBtn=(ImageView) findViewById(R.id.backBtn);
+		backBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
 	}
 
 	private boolean isResumed = false;
@@ -255,28 +264,6 @@ public class OfflineMapActivity extends BaseActivity implements
 				refreshDownList(key);
 			}
 		});
-
-		// svDown.setSearchListener(new MySearchView.SearchListener() {
-		// @Override
-		// public void afterTextChanged(Editable text) {
-		// refreshDownList();
-		// }
-		//
-		// @Override
-		// public void search(String text) {
-		// }
-		// });
-		//
-		// svAll.setSearchListener(new MySearchView.SearchListener() {
-		// @Override
-		// public void afterTextChanged(Editable text) {
-		// refreshAllSearchList();
-		// }
-		//
-		// @Override
-		// public void search(String text) {
-		// }
-		// });
 
 		downAdapter = new OfflineMapManagerAdapter(this, mOffline, this);
 		lvDown.setAdapter(downAdapter);

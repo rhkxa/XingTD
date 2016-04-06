@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_margin="8dp"
+        android:text="8"
         android:textColor="@color/black" />
 
     <TextView

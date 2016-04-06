@@ -92,7 +92,7 @@
                 android:orientation="horizontal" >
 
                 <com.gps808.app.view.FancyButton
-                    android:id="@+id/btnLook"
+                    android:id="@+id/btnDisplay"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

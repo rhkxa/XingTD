@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.PengButton;
+import com.gps808.app.view.TimeButton;
 
 import android.widget.Button;
 import android.widget.ImageView;
@@ -108,6 +110,7 @@ public class MainActivity extends BaseActivity {
 	private View mMarkerLy;
 	private int handler_runnable_time;
 	private FancyButton main_traffic;
+	private TextView countDown;
 	private String mCurrentCar = null;
 
 	// 覆盖物相关
@@ -140,10 +143,6 @@ public class MainActivity extends BaseActivity {
 		// 初始化搜索模块，注册事件监听
 		mSearch = GeoCoder.newInstance();
 		mSearch.setOnGetGeoCodeResultListener(new MyGetGeoCoderResultListener());
-		// MapStatus mapStatus = new MapStatus.Builder()
-		// .target(new LatLng(38.31056, 116.844697)).zoom(10.0f).build();
-		// MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(mapStatus);
-		// mBaiduMap.setMapStatus(msu);
 		// 隐藏百度logo和 ZoomControl
 		int count = mMapView.getChildCount();
 		for (int i = 0; i < count; i++) {
@@ -185,6 +184,8 @@ public class MainActivity extends BaseActivity {
 				closeInfoWindow();
 			}
 		});
+		countDown = (TextView) findViewById(R.id.countDown);
+		
 		// 底部四个按钮
 		PengButton main_vehicles = (PengButton) findViewById(R.id.main_vehicles);
 		PengButton main_police = (PengButton) findViewById(R.id.main_police);
@@ -281,9 +282,10 @@ public class MainActivity extends BaseActivity {
 						(main_refresh.getLeft() + main_refresh.getRight()) / 2,
 						(main_traffic.getBottom() + main_traffic.getTop()) / 2);
 				mBaiduMap.getUiSettings().setCompassPosition(compassPoint);
+				startLocation();
 			}
 		});
-		startLocation();
+
 		// 加载数据
 		getVehicleLocation(false);
 
@@ -512,8 +514,10 @@ public class MainActivity extends BaseActivity {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
+			
 			getVehicleLocation(false);
 			if (handler_runnable_time != 0) {
+				
 				handler.postDelayed(this, handler_runnable_time);
 			}
 		}
@@ -659,7 +663,8 @@ public class MainActivity extends BaseActivity {
 				isFirstLoc = false;
 				LatLng ll = new LatLng(location.getLatitude(),
 						location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll,
+						14.0f);
 				mBaiduMap.animateMapStatus(u);
 			}
 		}
@@ -683,4 +688,6 @@ public class MainActivity extends BaseActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	
 }

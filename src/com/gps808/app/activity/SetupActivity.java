@@ -35,7 +35,6 @@ import com.gps808.app.view.wheelview.WheelCurvedPicker;
 
 public class SetupActivity extends BaseActivity {
 
-	private XbOption option = new XbOption();
 	private TextView setup_monitor_time;
 	private TextView setup_track_time;
 	private LinearLayout setup_monitor, setup_track;
@@ -164,17 +163,15 @@ public class SetupActivity extends BaseActivity {
 					JSONObject response) {
 				// TODO Auto-generated method stub
 				LogUtils.DebugLog("result json", response.toString());
-				option = JSON.parseObject(response.toString(), XbOption.class);
+				XbOption option = JSON.parseObject(response.toString(),
+						XbOption.class);
 				setup_monitor_time.setText(data.get(getPosition(option
 						.getMonitorInterval())));
 				setup_track_time.setText(data.get(getPosition(option
 						.getTrackInterval())));
 				mTime = option.getMonitorInterval();
 				tTime = option.getTrackInterval();
-				PreferenceUtils.getInstance(SetupActivity.this).setMonitorTime(
-						option.getMonitorInterval());
-				PreferenceUtils.getInstance(SetupActivity.this).setTrackTime(
-						option.getTrackInterval());
+
 				super.onSuccess(statusCode, headers, response);
 			}
 		});
@@ -218,7 +215,6 @@ public class SetupActivity extends BaseActivity {
 	}
 
 	private void setIntervalTime() {
-		// {"monitorInterval":10,"trackInterval":10}
 		String url = UrlConfig.getUserSetOptions();
 		JSONObject params = new JSONObject();
 		StringEntity entity = null;
@@ -237,6 +233,15 @@ public class SetupActivity extends BaseActivity {
 					public void onSuccess(int statusCode, Header[] headers,
 							JSONObject response) {
 						// TODO Auto-generated method stub
+						LogUtils.DebugLog("result json" + response);
+						if (Utils.requestOk(response)) {
+							Utils.ToastMessage(SetupActivity.this, "操作成功");
+							PreferenceUtils.getInstance(SetupActivity.this)
+									.setMonitorTime(mTime);
+							PreferenceUtils.getInstance(SetupActivity.this)
+									.setTrackTime(tTime);
+
+						}
 						super.onSuccess(statusCode, headers, response);
 					}
 				});

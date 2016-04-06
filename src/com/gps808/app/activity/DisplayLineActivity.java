@@ -361,7 +361,7 @@ public class DisplayLineActivity extends BaseActivity {
 
 	// 路线规划
 	private void routeplanToNavi(List<BNRoutePlanNode> list) {
-		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, false,
+		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, true,
 				new RoutePlanListener() {
 					@Override
 					public void onRoutePlanFailed() {
@@ -420,7 +420,7 @@ public class DisplayLineActivity extends BaseActivity {
 					doubleLng[1], "", null, CoordinateType.BD09LL);
 			list.add(node);
 			String[] strLng = Utils.getSplit(wayPoints, ";");
-			int size = strLng.length;
+			int size = strLng.length > 4 ? 4 : strLng.length;
 			for (int i = 0; i < size; i++) {
 				doubleLng = Utils.getLng(strLng[i]);
 				node = new BNRoutePlanNode(doubleLng[0], doubleLng[1], "",

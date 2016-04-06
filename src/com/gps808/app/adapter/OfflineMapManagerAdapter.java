@@ -13,6 +13,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import com.baidu.mapapi.map.offline.MKOLUpdateElement;
 import com.baidu.mapapi.map.offline.MKOfflineMap;
 import com.gps808.app.R;
+import com.gps808.app.activity.ShowMapActivity;
 import com.gps808.app.interfaces.OnOfflineItemStatusChangeListener;
 import com.gps808.app.models.OfflineMapItem;
 import com.gps808.app.utils.FileUtils;
@@ -121,6 +123,7 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 		TextView tvStatus;
 		FancyButton btnDown;
 		FancyButton btnRemove;
+		FancyButton btnDisplay;
 
 		private OfflineMapItem data;
 
@@ -135,10 +138,13 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 			tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
 			btnDown = (FancyButton) convertView.findViewById(R.id.btnDown);
 			btnRemove = (FancyButton) convertView.findViewById(R.id.btnRemove);
+			btnDisplay = (FancyButton) convertView
+					.findViewById(R.id.btnDisplay);
 
 			lyCityInfo.setOnClickListener(this);
 			btnDown.setOnClickListener(this);
 			btnRemove.setOnClickListener(this);
+			btnDisplay.setOnClickListener(this);
 		}
 
 		public void setData(OfflineMapItem data) {
@@ -309,6 +315,13 @@ public class OfflineMapManagerAdapter extends ArrayListAdapter<OfflineMapItem> {
 				dialog.show();
 				break;
 			default:
+				break;
+			case R.id.btnDisplay:
+				Intent intent = new Intent();
+				intent.putExtra("x", data.getDownInfo().geoPt.longitude);
+				intent.putExtra("y", data.getDownInfo().geoPt.latitude);
+				intent.setClass(context, ShowMapActivity.class);
+				context.startActivity(intent);
 				break;
 			}
 		}
