@@ -193,6 +193,7 @@ public class LoginActivity extends BaseActivity {
 					return;
 				}
 				handler.removeCallbacks(runnable);
+				HttpUtil.cancelAllRequest();
 				getLogin(userName.getText().toString(), passWord.getText()
 						.toString());
 			}
