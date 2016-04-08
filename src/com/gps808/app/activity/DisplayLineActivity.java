@@ -41,6 +41,8 @@ import com.baidu.navisdk.adapter.BaiduNaviManager.NaviInitListener;
 import com.baidu.navisdk.adapter.BaiduNaviManager.RoutePlanListener;
 import com.gps808.app.R;
 import com.gps808.app.fragment.HeaderFragment;
+import com.gps808.app.fragment.SearchFragment;
+import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
 import com.gps808.app.models.XbDisplayLine;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
@@ -119,6 +121,26 @@ public class DisplayLineActivity extends BaseActivity {
 				child.setVisibility(View.INVISIBLE);
 			}
 		}
+		SearchFragment searchFragment = (SearchFragment) this
+				.getSupportFragmentManager().findFragmentById(R.id.search_bar);
+		searchFragment.setHint("输入经纬度：116.358549,39.903066");
+		searchFragment.setOnSearchClickListener(new OnSearchClickListener() {
+
+			@Override
+			public void onSearch(String key) {
+				// TODO Auto-generated method stub
+				guideType = 1;
+				currentNode = key;
+				getMatch();
+
+			}
+
+			@Override
+			public void onSearchClose() {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		// 语音导航
 		voice_navi = (FancyButton) findViewById(R.id.voice_navi);
@@ -194,8 +216,10 @@ public class DisplayLineActivity extends BaseActivity {
 			doubleLng = Utils.getLng(strLng[i]);
 			latLng = new LatLng(doubleLng[1], doubleLng[0]);
 			points.add(latLng);
-			builder.include(latLng);
+			
 		}
+		builder.include(points.get(0));
+		builder.include(points.get(size-1));
 		// 缩放地图，使所有Overlay都在合适的视野内
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
 				.build()));
@@ -361,7 +385,7 @@ public class DisplayLineActivity extends BaseActivity {
 
 	// 路线规划
 	private void routeplanToNavi(List<BNRoutePlanNode> list) {
-		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, true,
+		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, false,
 				new RoutePlanListener() {
 					@Override
 					public void onRoutePlanFailed() {

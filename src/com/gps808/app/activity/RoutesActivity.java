@@ -11,14 +11,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+
 import com.alibaba.fastjson.JSON;
 import com.gps808.app.R;
-import com.gps808.app.adapter.RoutesListViewAdapter;
+import com.gps808.app.adapter.RoutesExpandableListAdapter;
 import com.gps808.app.fragment.HeaderFragment;
 import com.gps808.app.fragment.SearchFragment;
 import com.gps808.app.fragment.SearchFragment.OnSearchClickListener;
-import com.gps808.app.models.XbRoute;
+import com.gps808.app.models.RoutesInfo;
 import com.gps808.app.models.XbVehicle;
 import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
@@ -28,19 +30,20 @@ import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
 public class RoutesActivity extends BaseActivity {
 	private final String CacheName = "RoutesCache";
-	private PullToRefreshListView routes_list;
+	private PullToRefreshExpandableListView routes_expandablelist;
+	private ExpandableListView mExpandableListView;
 	private HeaderFragment headerFragment;
-	private RoutesListViewAdapter rAdapter;
 	private String place = "";
 	private int startPage = 0;
 	private final int pageNum = 10;
-	private List<XbRoute> xbRoutes = new ArrayList<XbRoute>();
+	private List<RoutesInfo> routesList = new ArrayList<RoutesInfo>();
+	private RoutesExpandableListAdapter routesExpandableListAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,46 +78,53 @@ public class RoutesActivity extends BaseActivity {
 				getData(true);
 			}
 		});
-		routes_list = (PullToRefreshListView) findViewById(R.id.routes_list);
-		rAdapter = new RoutesListViewAdapter(RoutesActivity.this, xbRoutes);
-		routes_list.setAdapter(rAdapter);
-		routes_list.setMode(Mode.BOTH);
-		routes_list.setOnRefreshListener(new OnRefreshListener2<ListView>() {
+		routes_expandablelist = (PullToRefreshExpandableListView) findViewById(R.id.routes_expandablelist);
+		routesExpandableListAdapter = new RoutesExpandableListAdapter(
+				RoutesActivity.this, routesList);
+		mExpandableListView = routes_expandablelist.getRefreshableView();
+		mExpandableListView.setAdapter(routesExpandableListAdapter);
+		mExpandableListView.setGroupIndicator(null);
+		routes_expandablelist.setMode(Mode.BOTH);
+		routes_expandablelist
+				.setOnRefreshListener(new OnRefreshListener2<ExpandableListView>() {
+
+					@Override
+					public void onPullDownToRefresh(
+							PullToRefreshBase<ExpandableListView> refreshView) {
+						// TODO Auto-generated method stub
+						startPage = 0;
+						getData(false);
+					}
+
+					@Override
+					public void onPullUpToRefresh(
+							PullToRefreshBase<ExpandableListView> refreshView) {
+						// TODO Auto-generated method stub
+						getData(false);
+					}
+				});
+		mExpandableListView.setOnChildClickListener(new OnChildClickListener() {
 
 			@Override
-			public void onPullDownToRefresh(
-					PullToRefreshBase<ListView> refreshView) {
-				// TODO Auto-generated method stub
-				startPage = 0;
-				getData(false);
-			}
-
-			@Override
-			public void onPullUpToRefresh(
-					PullToRefreshBase<ListView> refreshView) {
-				// TODO Auto-generated method stub
-				getData(false);
-			}
-		});
-
-		routes_list.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public boolean onChildClick(ExpandableListView arg0, View arg1,
+					int arg2, int arg3, long arg4) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(RoutesActivity.this,
 						DisplayLineActivity.class);
-				intent.putExtra("rid", xbRoutes.get(arg2 - 1).getRid());
+				intent.putExtra("rid",
+						routesList.get(arg2 - 1).getSub().get(arg3).getRid());
 				startActivity(intent);
+				return true;
 			}
 		});
+
 		String cacheStr = FileUtils.read(RoutesActivity.this, CacheName);
 		if (StringUtils.isEmpty(cacheStr)) {
 			getData(false);
 		} else {
-			xbRoutes.addAll(JSON.parseArray(cacheStr.toString(), XbRoute.class));
-			rAdapter.notifyDataSetChanged();
+			routesList.addAll(JSON.parseArray(cacheStr.toString(),
+					RoutesInfo.class));
+			refreshList();
 		}
 
 	}
@@ -152,19 +162,19 @@ public class RoutesActivity extends BaseActivity {
 						if (startPage == 0) {
 							FileUtils.write(RoutesActivity.this, CacheName,
 									response.toString());
-							xbRoutes.clear();
+							routesList.clear();
 						}
-						xbRoutes.addAll(JSON.parseArray(response.toString(),
-								XbRoute.class));
+						routesList.addAll(JSON.parseArray(response.toString(),
+								RoutesInfo.class));
 						if (JSON.parseArray(response.toString(),
 								XbVehicle.class).size() < pageNum) {
-							routes_list.setMode(Mode.PULL_FROM_START);
+							routes_expandablelist.setMode(Mode.PULL_FROM_START);
 							Utils.ToastMessage(RoutesActivity.this, "暂无更多路线信息");
 						} else {
-							routes_list.setMode(Mode.BOTH);
+							routes_expandablelist.setMode(Mode.BOTH);
 							startPage++;
 						}
-						rAdapter.notifyDataSetChanged();
+						refreshList();
 
 						super.onSuccess(statusCode, headers, response);
 					}
@@ -172,10 +182,17 @@ public class RoutesActivity extends BaseActivity {
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
-						routes_list.onRefreshComplete();
+						routes_expandablelist.onRefreshComplete();
 						super.onFinish();
 					}
 				});
 
+	}
+
+	private void refreshList() {
+		if (routesList.size() > 0) {
+			routesExpandableListAdapter.notifyDataSetChanged();
+			mExpandableListView.expandGroup(0);
+		}
 	}
 }

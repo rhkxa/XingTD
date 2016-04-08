@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -51,7 +50,8 @@ import com.gps808.app.utils.Utils;
 import com.gps808.app.utils.XtdApplication;
 import com.gps808.app.view.FancyButton;
 import com.gps808.app.view.PengButton;
-import com.gps808.app.view.TimeButton;
+import com.gps808.app.view.Countdown.CountdownView;
+import com.gps808.app.view.Countdown.CountdownView.OnCountdownEndListener;
 
 import android.widget.Button;
 import android.widget.ImageView;
@@ -126,6 +126,8 @@ public class MainActivity extends BaseActivity {
 	private boolean isTraffic = false;
 	// 是否首次定位
 	boolean isFirstLoc = true;
+	// 倒计时控件
+	private CountdownView show_countdown;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -184,8 +186,16 @@ public class MainActivity extends BaseActivity {
 				closeInfoWindow();
 			}
 		});
-		countDown = (TextView) findViewById(R.id.countDown);
-		
+		show_countdown = (CountdownView) findViewById(R.id.show_countdown);
+		show_countdown.setOnCountdownEndListener(new OnCountdownEndListener() {
+
+			@Override
+			public void onEnd(CountdownView cv) {
+				// TODO Auto-generated method stub
+				startCountdown();
+			}
+		});
+
 		// 底部四个按钮
 		PengButton main_vehicles = (PengButton) findViewById(R.id.main_vehicles);
 		PengButton main_police = (PengButton) findViewById(R.id.main_police);
@@ -514,10 +524,8 @@ public class MainActivity extends BaseActivity {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			
 			getVehicleLocation(false);
 			if (handler_runnable_time != 0) {
-				
 				handler.postDelayed(this, handler_runnable_time);
 			}
 		}
@@ -538,6 +546,7 @@ public class MainActivity extends BaseActivity {
 				.getMonitorTime() * 1000;
 		LogUtils.DebugLog("main time" + handler_runnable_time);
 		handler.postDelayed(runnable, handler_runnable_time);
+		startCountdown();
 		mMapView.onResume();
 		super.onResume();
 	}
@@ -641,6 +650,14 @@ public class MainActivity extends BaseActivity {
 
 	}
 
+	private void startCountdown() {
+		if (handler_runnable_time != 0) {
+			show_countdown.start(handler_runnable_time);
+		} else {
+			show_countdown.setVisibility(View.GONE);
+		}
+	}
+
 	/**
 	 * 定位SDK监听函数
 	 */
@@ -688,6 +705,5 @@ public class MainActivity extends BaseActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	
+
 }

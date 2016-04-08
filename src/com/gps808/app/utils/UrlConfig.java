@@ -122,7 +122,7 @@ public class UrlConfig {
 	 */
 
 	public static final String getVehicleRoutes() {
-		return SERVER + "vehicle/routes";
+		return SERVER + "vehicle/routesByGroup";
 	}
 
 	/**
