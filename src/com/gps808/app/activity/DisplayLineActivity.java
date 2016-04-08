@@ -13,7 +13,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ZoomControls;
 
 import com.alibaba.fastjson.JSON;
@@ -48,6 +50,7 @@ import com.gps808.app.utils.BaseActivity;
 import com.gps808.app.utils.FileUtils;
 import com.gps808.app.utils.HttpUtil;
 import com.gps808.app.utils.LogUtils;
+import com.gps808.app.utils.PreferenceUtils;
 import com.gps808.app.utils.StringUtils;
 import com.gps808.app.utils.UrlConfig;
 import com.gps808.app.utils.Utils;
@@ -73,6 +76,8 @@ public class DisplayLineActivity extends BaseActivity {
 	private int guideType = 0;
 	int macthNum = 0;
 	private String currentNode;
+	private CheckBox navi_check;
+	private LinearLayout search_layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +146,8 @@ public class DisplayLineActivity extends BaseActivity {
 
 			}
 		});
-
+		navi_check = (CheckBox) findViewById(R.id.navi_check);
+		search_layout = (LinearLayout) findViewById(R.id.search_layout);
 		// 语音导航
 		voice_navi = (FancyButton) findViewById(R.id.voice_navi);
 		voice_navi.setOnClickListener(guideClick);
@@ -157,6 +163,11 @@ public class DisplayLineActivity extends BaseActivity {
 		} else {
 			xbDisplayLine = JSON.parseObject(content, XbDisplayLine.class);
 			parseData();
+		}
+		if (PreferenceUtils.getInstance(DisplayLineActivity.this).getUserName()
+				.equals("tf")) {
+			navi_check.setVisibility(View.VISIBLE);
+			search_layout.setVisibility(View.VISIBLE);
 		}
 
 	}
@@ -216,10 +227,10 @@ public class DisplayLineActivity extends BaseActivity {
 			doubleLng = Utils.getLng(strLng[i]);
 			latLng = new LatLng(doubleLng[1], doubleLng[0]);
 			points.add(latLng);
-			
+
 		}
 		builder.include(points.get(0));
-		builder.include(points.get(size-1));
+		builder.include(points.get(size - 1));
 		// 缩放地图，使所有Overlay都在合适的视野内
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLngBounds(builder
 				.build()));
@@ -385,8 +396,9 @@ public class DisplayLineActivity extends BaseActivity {
 
 	// 路线规划
 	private void routeplanToNavi(List<BNRoutePlanNode> list) {
-		BaiduNaviManager.getInstance().launchNavigator(this, list, 1, false,
-				new RoutePlanListener() {
+		LogUtils.DebugLog("实时导航"+navi_check.isChecked());
+		BaiduNaviManager.getInstance().launchNavigator(this, list, 1,
+				navi_check.isChecked(), new RoutePlanListener() {
 					@Override
 					public void onRoutePlanFailed() {
 						// TODO Auto-generated method stub

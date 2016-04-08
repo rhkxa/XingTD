@@ -53,12 +53,30 @@
             fancy:fb_text="语音导航"
             fancy:fb_textSize="10sp" />
 
-        <fragment
-            android:id="@+id/search_bar"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:id="@+id/search_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+            <fragment
+                android:id="@+id/search_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                class="com.gps808.app.fragment.SearchFragment" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/navi_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
             android:layout_margin="8dp"
-            class="com.gps808.app.fragment.SearchFragment" />
+            android:text="实时导航"
+            android:checked="true"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>

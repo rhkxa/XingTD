@@ -112,8 +112,9 @@ public class RoutesActivity extends BaseActivity {
 				Intent intent = new Intent(RoutesActivity.this,
 						DisplayLineActivity.class);
 				intent.putExtra("rid",
-						routesList.get(arg2 - 1).getSub().get(arg3).getRid());
+						routesList.get(arg2).getSub().get(arg3).getRid());
 				startActivity(intent);
+				LogUtils.DebugLog("位置一"+arg2+"位置二"+arg3);
 				return true;
 			}
 		});

@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="一小时前"
+                android:visibility="gone"
                 android:textColor="@color/text"
                 android:textSize="@dimen/caption" />
         </RelativeLayout>
