@@ -99,16 +99,17 @@ public class GuideNormalActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+
 				if (isNavi) {
-					normal_navi.setText("继续导航");
+					normal_navi.setText("结束导航");
 					Utils.ToastMessage(GuideNormalActivity.this, "导航功能开启");
 					startLocation();
 				} else {
-					normal_navi.setText("暂停导航");
+					normal_navi.setText("开始导航");
 					Utils.ToastMessage(GuideNormalActivity.this, "导航功能关闭");
 					stopLocation();
-
 				}
+				isNavi = !isNavi;
 			}
 		});
 

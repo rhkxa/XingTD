@@ -50,7 +50,6 @@
         android:layout_above="@id/main_refresh"
         android:layout_gravity="center_horizontal"
         android:layout_margin="8dp"
-        android:layout_marginTop="20dp"
         app:isHideTimeBackground="false"
         app:isShowDay="false"
         app:isShowHour="false"

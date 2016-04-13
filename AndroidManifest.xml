@@ -244,11 +244,11 @@
             android:value="48ae76de3f" />
         <meta-data
             android:name="api_key"
-            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
+            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />
         <!-- 公司测试N8qQtsf1z2QZUtB6ViQegOWH    89W8c1mbtaA2qLGMBXDoTtoU-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="N8qQtsf1z2QZUtB6ViQegOWH" />
+            android:value="89W8c1mbtaA2qLGMBXDoTtoU" />
         <meta-data
             android:name="TD_APP_ID"
             android:value="3341D151609B67AA2C9BF37AFE9DD279" />

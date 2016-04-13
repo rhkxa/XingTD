@@ -96,21 +96,20 @@
             android:orientation="vertical" >
 
             <com.gps808.app.view.FancyButton
-                android:id="@+id/my_routes"
+                android:id="@+id/my_map"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                fancy:fb_defaultColor="@color/app_green"
+                fancy:fb_defaultColor="@color/backgroud_blue1"
                 fancy:fb_focusColor="@color/app_focus_color"
-                fancy:fb_iconResource="@drawable/xtd_icon_routes"
+                fancy:fb_iconResource="@drawable/xtd_icon_map"
                 fancy:fb_iconSize="32dp"
-                fancy:fb_radius="2dp"
-                fancy:fb_textColor="#FFFFFF" />
+                fancy:fb_radius="2dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:text="路线"
+                android:text="离线地图"
                 android:textColor="@color/app_text"
                 android:textSize="@dimen/body" />
         </LinearLayout>
@@ -173,33 +172,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="8dp" >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <com.gps808.app.view.FancyButton
-                android:id="@+id/my_map"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                fancy:fb_defaultColor="@color/backgroud_blue1"
-                fancy:fb_focusColor="@color/app_focus_color"
-                fancy:fb_iconResource="@drawable/xtd_icon_map"
-                fancy:fb_iconSize="32dp"
-                fancy:fb_radius="2dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="离线地图"
-                android:textColor="@color/app_text"
-                android:textSize="@dimen/body" />
-        </LinearLayout>
+        android:padding="8dp"
+        android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="0dp"

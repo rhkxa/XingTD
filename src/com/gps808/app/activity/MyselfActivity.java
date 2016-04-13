@@ -31,7 +31,7 @@ public class MyselfActivity extends BaseActivity {
 	private TextView mynickname;
 	private CircleImageView my_headimage;
 	private LinearLayout my_setup, my_about, my_help;
-	private FancyButton my_driver, my_police, my_routes, my_car, my_map,
+	private FancyButton my_driver, my_police, my_car, my_map,
 			my_dog;
 	private TextView my_weather;
 	// 定位
@@ -55,8 +55,7 @@ public class MyselfActivity extends BaseActivity {
 		my_driver.setOnClickListener(click);
 		my_police = (FancyButton) findViewById(R.id.my_police);
 		my_police.setOnClickListener(click);
-		my_routes = (FancyButton) findViewById(R.id.my_routes);
-		my_routes.setOnClickListener(click);
+	
 		my_car = (FancyButton) findViewById(R.id.my_car);
 		my_car.setOnClickListener(click);
 
@@ -119,9 +118,6 @@ public class MyselfActivity extends BaseActivity {
 				break;
 			case R.id.my_help:
 				cls = HelpActivity.class;
-				break;
-			case R.id.my_routes:
-				cls = RoutesActivity.class;
 				break;
 			case R.id.my_car:
 				cls = VehiclesActivity.class;

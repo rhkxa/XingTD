@@ -32,7 +32,7 @@
             fancy:fb_iconPosition="top"
             fancy:fb_iconSize="24dp"
             fancy:fb_radius="2dp"
-            fancy:fb_text="暂停"
+            fancy:fb_text="结束导航"
             fancy:fb_textSize="10sp" />
     </RelativeLayout>
 
