@@ -650,7 +650,7 @@ int drawable zoomout_normal 0x7f02012d
 int drawable zoomout_press 0x7f02012e
 int drawable zoomout_seletor 0x7f02012f
 int id LinearLayout1 0x7f060183
-int id ZoomControlView 0x7f06006d
+int id ZoomControlView 0x7f06006c
 int id about_brower 0x7f06002b
 int id about_comment 0x7f06002e
 int id about_company 0x7f06002a
@@ -880,13 +880,13 @@ int id lyEditPanel 0x7f060132
 int id lyRoot 0x7f060139
 int id mainRelLayout 0x7f060154
 int id main_dialog_container 0x7f06016e
-int id main_footer_layout 0x7f060069
+int id main_footer_layout 0x7f06006d
 int id main_linearlayout_footer 0x7f060039
 int id main_myself 0x7f06013e
 int id main_police 0x7f06013d
-int id main_refresh 0x7f06006a
+int id main_refresh 0x7f060069
 int id main_routes 0x7f06013c
-int id main_traffic 0x7f06006c
+int id main_traffic 0x7f06006b
 int id main_vehicles 0x7f06013b
 int id manualOnly 0x7f060004
 int id mini 0x7f060010
@@ -1009,7 +1009,7 @@ int id setup_update 0x7f060037
 int id setup_user 0x7f060030
 int id shape_id 0x7f060198
 int id shock_switch 0x7f06008d
-int id show_countdown 0x7f06006b
+int id show_countdown 0x7f06006a
 int id single_select_chk 0x7f060171
 int id single_select_root 0x7f060173
 int id sn_pos2 0x7f060180

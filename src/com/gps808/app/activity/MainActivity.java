@@ -72,6 +72,7 @@ import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.baidu.navisdk.adapter.BaiduNaviManager;
 
 /**
  * 主界面
@@ -291,7 +292,7 @@ public class MainActivity extends BaseActivity {
 				Point compassPoint = new Point(
 						(main_refresh.getLeft() + main_refresh.getRight()) / 2,
 						(main_traffic.getBottom() + main_traffic.getTop()) / 2);
-				mBaiduMap.getUiSettings().setCompassPosition(compassPoint);
+				mBaiduMap.setCompassPosition(compassPoint);
 				startLocation();
 			}
 		});
@@ -325,6 +326,7 @@ public class MainActivity extends BaseActivity {
 				overlayOptions = new MarkerOptions().position(latLng).icon(car)
 						.rotate(360 - info.getDirection());
 				marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+
 				marker.setExtraInfo(bundle);
 				markerList.add(marker);
 			} else {
@@ -699,6 +701,7 @@ public class MainActivity extends BaseActivity {
 						.getString(R.string.exit));
 				mExitTime = System.currentTimeMillis();
 			} else {
+				BaiduNaviManager.getInstance().uninit();
 				XtdApplication.getInstance().exit();
 			}
 			return true;

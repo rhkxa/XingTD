@@ -169,6 +169,9 @@ public class DisplayLineActivity extends BaseActivity {
 			navi_check.setVisibility(View.VISIBLE);
 			search_layout.setVisibility(View.VISIBLE);
 		}
+		if (!BaiduNaviManager.isNaviInited()) {
+			initNavi();
+		}
 
 	}
 
@@ -216,6 +219,7 @@ public class DisplayLineActivity extends BaseActivity {
 				});
 	}
 
+	// 解析路线数据
 	private void parseData() {
 		List<LatLng> points = new ArrayList<LatLng>();
 		String[] strLng = Utils.getSplit(xbDisplayLine.getTrack(), ";");
@@ -237,8 +241,7 @@ public class DisplayLineActivity extends BaseActivity {
 		addCustomElementsDemo(points);
 	}
 
-	int matchNum = 0;
-
+	// 开启定位
 	private void startLocation() {
 		showProgressDialog(DisplayLineActivity.this, "正在搜索附近车辆，等稍等");
 		// 定位初始化
@@ -252,7 +255,8 @@ public class DisplayLineActivity extends BaseActivity {
 		mLocClient.registerLocationListener(new BDLocationListener() {
 			@Override
 			public void onReceiveLocation(BDLocation location) {
-				matchNum++;
+				macthNum++;
+				LogUtils.DebugLog("定位次数：" + macthNum);
 				// map view 销毁后不在处理新接收的位置
 				if (location == null || mMapView == null) {
 					return;
@@ -262,9 +266,10 @@ public class DisplayLineActivity extends BaseActivity {
 							+ location.getLatitude();
 					getMatch();
 				} else {
+					LogUtils.DebugLog("停止定位，关闭弹窗" + macthNum);
 					stopLocation();
 					dismissProgressDialog();
-					matchNum = 0;
+					macthNum = 0;
 					Utils.ToastMessage(DisplayLineActivity.this,
 							"对不起，附近没有可导航的车辆");
 				}
@@ -302,7 +307,6 @@ public class DisplayLineActivity extends BaseActivity {
 
 	// 车辆匹配
 	private void getMatch() {
-
 		String url = UrlConfig.getMatchVichcle(currentNode, rid);
 		HttpUtil.get(DisplayLineActivity.this, url,
 				new JsonHttpResponseHandler() {
@@ -312,10 +316,9 @@ public class DisplayLineActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						LogUtils.DebugLog("result" + response.toString());
 						if (Utils.requestOk(response)) {
-
 							stopLocation();
 							dismissProgressDialog();
-							matchNum = 0;
+							macthNum = 0;
 							toGuide(Utils.getKey(response, "wayPoints"));
 						}
 						super.onSuccess(statusCode, headers, response);
@@ -324,7 +327,7 @@ public class DisplayLineActivity extends BaseActivity {
 
 	}
 
-	private void initNavi(final List<BNRoutePlanNode> list) {
+	private void initNavi() {
 		if (!initDirs()) {
 			return;
 		}
@@ -344,28 +347,22 @@ public class DisplayLineActivity extends BaseActivity {
 					public void initSuccess() {
 						LogUtils.DebugLog("导航引擎初始化成功");
 						BNaviSettingManager
-								.setDayNightMode(BNaviSettingManager.DayNightMode.DAY_NIGHT_MODE_DAY);
+								.setDayNightMode(BNaviSettingManager.DayNightMode.DAY_NIGHT_MODE_AUTO);
 						BNaviSettingManager
 								.setShowTotalRoadConditionBar(BNaviSettingManager.PreViewRoadCondition.ROAD_CONDITION_BAR_SHOW_ON);
 						BNaviSettingManager
-								.setVoiceMode(BNaviSettingManager.VoiceMode.Veteran);
+								.setVoiceMode(BNaviSettingManager.VoiceMode.Novice);
 						BNaviSettingManager
-								.setPowerSaveMode(BNaviSettingManager.PowerSaveMode.DISABLE_MODE);
+								.setPowerSaveMode(BNaviSettingManager.PowerSaveMode.AUTO_MODE);
 						BNaviSettingManager
 								.setRealRoadCondition(BNaviSettingManager.RealRoadCondition.NAVI_ITS_ON);
-						routeplanToNavi(list);
 					}
 
 					public void initStart() {
-						showProgressDialog(DisplayLineActivity.this,
-								"正在启动语音导航……");
 						LogUtils.DebugLog("导航引擎初始化开始");
 					}
 
 					public void initFailed() {
-						dismissProgressDialog();
-						Utils.ToastMessage(DisplayLineActivity.this,
-								"语音导航初始化失败");
 						LogUtils.DebugLog("导航引擎初始化失败");
 					}
 
@@ -396,14 +393,15 @@ public class DisplayLineActivity extends BaseActivity {
 
 	// 路线规划
 	private void routeplanToNavi(List<BNRoutePlanNode> list) {
-		LogUtils.DebugLog("实时导航"+navi_check.isChecked());
+		showProgressDialog(DisplayLineActivity.this, "正在启动语音导航……");
 		BaiduNaviManager.getInstance().launchNavigator(this, list, 1,
 				navi_check.isChecked(), new RoutePlanListener() {
 					@Override
 					public void onRoutePlanFailed() {
 						// TODO Auto-generated method stub
 						dismissProgressDialog();
-						Utils.ToastMessage(DisplayLineActivity.this, "对不起算路失败!");
+						Utils.ToastMessage(DisplayLineActivity.this,
+								"对不起导航启动失败!");
 						LogUtils.DebugLog("算路失败");
 					}
 
@@ -448,6 +446,7 @@ public class DisplayLineActivity extends BaseActivity {
 		case 1:
 			if (StringUtils.isEmpty(wayPoints)) {
 				LogUtils.DebugLog("途经点为空");
+				Utils.ToastMessage(DisplayLineActivity.this, "对不起,当前路线不能进行导航");
 				return;
 			}
 			List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
@@ -463,7 +462,9 @@ public class DisplayLineActivity extends BaseActivity {
 						null, CoordinateType.BD09LL);
 				list.add(node);
 			}
-			initNavi(list);
+			if (BaiduNaviManager.isNaviInited()) {
+				routeplanToNavi(list);
+			}
 			break;
 		}
 

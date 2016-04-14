@@ -1,28 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res/com.gps808.app"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/bmapView"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
 
-    <LinearLayout
-        android:id="@+id/search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <fragment
-            android:id="@+id/search_bar"
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent" />
+
+        <LinearLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <fragment
+                android:id="@+id/search_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                class="com.gps808.app.fragment.SearchFragment" />
+        </LinearLayout>
+
+        <com.gps808.app.view.FancyButton
+            android:id="@+id/main_refresh"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
             android:layout_margin="8dp"
-            class="com.gps808.app.fragment.SearchFragment" />
-    </LinearLayout>
+            fancy:fb_defaultColor="@color/tag_blue"
+            fancy:fb_focusColor="#8cc9f8"
+            fancy:fb_iconResource="@drawable/xtd_action_refresh"
+            fancy:fb_iconSize="24dp"
+            fancy:fb_radius="2dp" />
+
+        <com.gps808.app.view.Countdown.CountdownView
+            android:id="@+id/show_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/main_refresh"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            app:isHideTimeBackground="false"
+            app:isShowDay="false"
+            app:isShowHour="false"
+            app:isShowMillisecond="false"
+            app:isShowMinute="false"
+            app:isShowSecond="true"
+            app:isShowTimeBgDivisionLine="false"
+            app:suffixGravity="center"
+            app:suffixTextColor="@color/white"
+            app:suffixTextSize="20sp"
+            app:timeBgColor="#FF5000"
+            app:timeBgRadius="3dp"
+            app:timeTextColor="#FFFFFF"
+            app:timeTextSize="20sp" />
+
+        <com.gps808.app.view.FancyButton
+            android:id="@+id/main_traffic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/search_layout"
+            android:layout_margin="8dp"
+            fancy:fb_defaultColor="@color/half_transparent"
+            fancy:fb_focusColor="#8cc9f8"
+            fancy:fb_iconPosition="top"
+            fancy:fb_iconResource="@drawable/xtd_icon_traffic"
+            fancy:fb_iconSize="24dp"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="路况"
+            fancy:fb_textSize="10sp" />
+
+        <com.gps808.app.map.ZoomControlView
+            android:id="@+id/ZoomControlView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <include
         android:id="@+id/main_footer_layout"
@@ -31,62 +96,4 @@
         android:layout_alignParentBottom="true"
         layout="@layout/main_footer" />
 
-    <com.gps808.app.view.FancyButton
-        android:id="@+id/main_refresh"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_above="@id/main_footer_layout"
-        android:layout_margin="8dp"
-        fancy:fb_defaultColor="@color/tag_blue"
-        fancy:fb_focusColor="#8cc9f8"
-        fancy:fb_iconResource="@drawable/xtd_action_refresh"
-        fancy:fb_iconSize="24dp"
-        fancy:fb_radius="2dp" />
-
-    <com.gps808.app.view.Countdown.CountdownView
-        android:id="@+id/show_countdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/main_refresh"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        app:isHideTimeBackground="false"
-        app:isShowDay="false"
-        app:isShowHour="false"
-        app:isShowMillisecond="false"
-        app:isShowMinute="false"
-        app:isShowSecond="true"
-        app:isShowTimeBgDivisionLine="false"
-        app:suffixGravity="center"
-        app:suffixTextColor="@color/white"
-        app:suffixTextSize="20sp"
-        app:timeBgColor="#FF5000"
-        app:timeBgRadius="3dp"
-        app:timeTextColor="#FFFFFF"
-        app:timeTextSize="20sp" />
-
-    <com.gps808.app.view.FancyButton
-        android:id="@+id/main_traffic"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/search_layout"
-        android:layout_margin="8dp"
-        fancy:fb_defaultColor="@color/half_transparent"
-        fancy:fb_focusColor="#8cc9f8"
-        fancy:fb_iconPosition="top"
-        fancy:fb_iconResource="@drawable/xtd_icon_traffic"
-        fancy:fb_iconSize="24dp"
-        fancy:fb_radius="2dp"
-        fancy:fb_text="路况"
-        fancy:fb_textSize="10sp" />
-
-    <com.gps808.app.map.ZoomControlView
-        android:id="@+id/ZoomControlView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/main_footer_layout"
-        android:layout_alignParentRight="true"
-        android:layout_margin="8dp" />
-
-</RelativeLayout>
+</LinearLayout>
