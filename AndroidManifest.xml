@@ -255,6 +255,9 @@
         <meta-data
             android:name="TD_CHANNEL_ID"
             android:value="yilutong" />
+          <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="ccb35622a01ca4ecc12f7d113eb96871"/>
     </application>
 
 </manifest>

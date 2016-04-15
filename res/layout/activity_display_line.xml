@@ -23,8 +23,8 @@
 
         <com.gps808.app.view.FancyButton
             android:id="@+id/normal_navi"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="8dp"
@@ -34,13 +34,13 @@
             fancy:fb_iconPosition="top"
             fancy:fb_iconSize="24dp"
             fancy:fb_radius="50dp"
-            fancy:fb_text="普通导航"
-            fancy:fb_textSize="10sp" />
+            fancy:fb_text="普通"
+            fancy:fb_textSize="14sp" />
 
         <com.gps808.app.view.FancyButton
             android:id="@+id/voice_navi"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_above="@id/normal_navi"
             android:layout_alignParentRight="true"
             android:layout_margin="8dp"
@@ -50,8 +50,8 @@
             fancy:fb_iconPosition="top"
             fancy:fb_iconSize="24dp"
             fancy:fb_radius="50dp"
-            fancy:fb_text="语音导航"
-            fancy:fb_textSize="10sp" />
+            fancy:fb_text="语音"
+            fancy:fb_textSize="14sp" />
 
         <LinearLayout
             android:id="@+id/search_layout"
@@ -74,8 +74,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_margin="8dp"
-            android:text="实时导航"
             android:checked="true"
+            android:text="实时"
             android:visibility="gone" />
     </RelativeLayout>
 

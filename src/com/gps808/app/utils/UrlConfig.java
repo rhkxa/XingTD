@@ -1,8 +1,11 @@
 package com.gps808.app.utils;
 
 public class UrlConfig {
-	private static final String SERVER = "http://app.gps808.com/ws/0.1/";
 
+	public static String SERVER = "";
+	
+	
+	
 	// private static final String SERVER = "http://139.129.23.31/shop-api/";
 
 	/**
@@ -299,9 +302,10 @@ public class UrlConfig {
 	public static final String getNowWeather(double lng, double lat) {
 		return SERVER + "info/nowWeather?lng=" + lng + "&lat=" + lat;
 	}
-	
-	public static final String getMatchVichcle(String loc,String eId){
-		return SERVER + "vehicle/matchingVehicle?location=" + loc+"&eId="+eId;	
+
+	public static final String getMatchVichcle(String loc, String eId) {
+		return SERVER + "vehicle/matchingVehicle?location=" + loc + "&eId="
+				+ eId;
 	}
 
 }

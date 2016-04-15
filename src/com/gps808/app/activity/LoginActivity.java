@@ -29,6 +29,8 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -71,6 +73,9 @@ public class LoginActivity extends BaseActivity {
 	private PreferenceUtils mPreferences;
 	private TextView login_test;
 	private boolean isTest = false;
+	private FancyButton logo_beidou, logo_gps;
+	private String beidou = "http://app.bdgps808.com/ws/0.1/";
+	private String gps = "http://app.gps808.com/ws/0.1/";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +203,60 @@ public class LoginActivity extends BaseActivity {
 						.toString());
 			}
 		});
+		logo_beidou = (FancyButton) findViewById(R.id.logo_beidou);
+		logo_gps = (FancyButton) findViewById(R.id.logo_gps);
+		logo_beidou.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mPreferences.setPingTai(0);
+				logo_beidou.setBackgroundColor(getResources().getColor(
+						R.color.app_blue));
+				logo_beidou.setIconResource(R.drawable.xtd_icon_blue);
+				logo_beidou
+						.setTextColor(getResources().getColor(R.color.white));
+				logo_gps.setBackgroundColor(getResources().getColor(
+						R.color.app_backgroud));
+				logo_gps.setIconResource(R.drawable.xtd_icon_gray);
+				logo_gps.setTextColor(getResources().getColor(R.color.text));
+				UrlConfig.SERVER = beidou;
+
+			}
+		});
+
+		logo_gps.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mPreferences.setPingTai(1);
+				logo_gps.setBackgroundColor(getResources().getColor(
+						R.color.app_blue));
+				logo_gps.setIconResource(R.drawable.xtd_icon_blue);
+				logo_gps.setTextColor(getResources().getColor(R.color.white));
+
+				logo_beidou.setBackgroundColor(getResources().getColor(
+						R.color.app_backgroud));
+				logo_beidou.setIconResource(R.drawable.xtd_icon_gray);
+				logo_beidou.setTextColor(getResources().getColor(R.color.text));
+				UrlConfig.SERVER = gps;
+			}
+		});
+
+		if (mPreferences.getPingTai() == 0) {
+			logo_beidou.setBackgroundColor(getResources().getColor(
+					R.color.app_blue));
+			logo_beidou.setIconResource(R.drawable.xtd_icon_blue);
+			logo_beidou.setTextColor(getResources().getColor(R.color.white));
+			UrlConfig.SERVER = beidou;
+		} else {
+			logo_gps.setBackgroundColor(getResources().getColor(
+					R.color.app_blue));
+			logo_gps.setIconResource(R.drawable.xtd_icon_blue);
+			logo_gps.setTextColor(getResources().getColor(R.color.white));
+			UrlConfig.SERVER = gps;
+		}
 
 	}
 

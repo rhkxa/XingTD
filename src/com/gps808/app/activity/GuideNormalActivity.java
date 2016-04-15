@@ -81,6 +81,7 @@ public class GuideNormalActivity extends BaseActivity {
 		// 初始化地图
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
+		mMapView.showZoomControls(false);
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
 		mBaiduMap.setMapStatus(msu);
 		// 隐藏百度LOGO和 ZoomControl

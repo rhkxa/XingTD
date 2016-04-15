@@ -31,18 +31,42 @@
         android:orientation="vertical"
         android:padding="16dp" >
 
-        <com.gps808.app.view.FancyButton
-            android:id="@+id/btn_android"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            fancy:fb_borderColor="@color/graywhite"
-            fancy:fb_borderWidth="2dp"
-            fancy:fb_defaultColor="@color/app_backgroud"
-            fancy:fb_iconResource="@drawable/xtd_icon_gray"
-            fancy:fb_iconSize="48dp"
-            fancy:fb_radius="50dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <com.gps808.app.view.FancyButton
+                android:id="@+id/logo_beidou"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="16dp"
+                fancy:fb_borderColor="@color/graywhite"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="@color/app_backgroud"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/xtd_icon_gray"
+                fancy:fb_iconSize="48dp"
+                fancy:fb_radius="50dp"
+                fancy:fb_text="北斗"
+                fancy:fb_textColor="@color/text" />
+
+            <com.gps808.app.view.FancyButton
+                android:id="@+id/logo_gps"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="16dp"
+                fancy:fb_borderColor="@color/graywhite"
+                fancy:fb_borderWidth="2dp"
+                fancy:fb_defaultColor="@color/app_backgroud"
+                fancy:fb_iconPosition="top"
+                fancy:fb_iconResource="@drawable/xtd_icon_gray"
+                fancy:fb_iconSize="48dp"
+                fancy:fb_radius="50dp"
+                fancy:fb_text="Gps"
+                fancy:fb_textColor="@color/text" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

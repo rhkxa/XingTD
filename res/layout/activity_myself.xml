@@ -129,7 +129,8 @@
                 fancy:fb_focusColor="@color/app_focus_color"
                 fancy:fb_iconResource="@drawable/xtd_icon_plice"
                 fancy:fb_iconSize="32dp"
-                fancy:fb_radius="2dp" />
+                fancy:fb_radius="2dp"
+                fancy:fb_textColor="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -167,91 +168,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:visibility="gone" >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <com.gps808.app.view.FancyButton
-                android:id="@+id/my_dog"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                fancy:fb_defaultColor="@color/backgroud_blue2"
-                fancy:fb_focusColor="@color/app_focus_color"
-                fancy:fb_iconResource="@drawable/xtd_icon_edog"
-                fancy:fb_iconSize="32dp"
-                fancy:fb_radius="2dp"
-                fancy:fb_textColor="#FFFFFF" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="电子狗"
-                android:textColor="@color/app_text"
-                android:textSize="@dimen/body" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="invisible" >
-
-            <com.gps808.app.view.FancyButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                fancy:fb_defaultColor="@color/app_pink"
-                fancy:fb_focusColor="#8cc9f8"
-                fancy:fb_iconResource="@drawable/xtd_icon_plice"
-                fancy:fb_iconSize="32dp"
-                fancy:fb_radius="2dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="报警"
-                android:textColor="@color/app_text" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="invisible" >
-
-            <com.gps808.app.view.FancyButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                fancy:fb_defaultColor="@color/app_yellow"
-                fancy:fb_focusColor="#8cc9f8"
-                fancy:fb_iconResource="@drawable/xtd_icon_driver"
-                fancy:fb_iconSize="32dp"
-                fancy:fb_radius="2dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="司机"
-                android:textColor="@color/app_text" />
-        </LinearLayout>
-    </LinearLayout>
+   
 
     <View style="@style/blackline" />
 

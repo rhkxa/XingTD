@@ -31,8 +31,8 @@ public class MyselfActivity extends BaseActivity {
 	private TextView mynickname;
 	private CircleImageView my_headimage;
 	private LinearLayout my_setup, my_about, my_help;
-	private FancyButton my_driver, my_police, my_car, my_map,
-			my_dog;
+	private FancyButton my_driver, my_car, my_map,
+			my_police;
 	private TextView my_weather;
 	// 定位
 	LocationClient mLocClient;
@@ -53,8 +53,7 @@ public class MyselfActivity extends BaseActivity {
 		headerFragment.setTitleText("个人中心");
 		my_driver = (FancyButton) findViewById(R.id.my_driver);
 		my_driver.setOnClickListener(click);
-		my_police = (FancyButton) findViewById(R.id.my_police);
-		my_police.setOnClickListener(click);
+	
 	
 		my_car = (FancyButton) findViewById(R.id.my_car);
 		my_car.setOnClickListener(click);
@@ -69,8 +68,8 @@ public class MyselfActivity extends BaseActivity {
 		my_help.setOnClickListener(click);
 		my_map = (FancyButton) findViewById(R.id.my_map);
 		my_map.setOnClickListener(click);
-		my_dog = (FancyButton) findViewById(R.id.my_dog);
-		my_dog.setOnClickListener(click);
+		my_police = (FancyButton) findViewById(R.id.my_police);
+		my_police.setOnClickListener(click);
 		mynickname = (TextView) findViewById(R.id.my_nickname);
 		mynickname.setText(PreferenceUtils.getInstance(MyselfActivity.this)
 				.getUserNick());
@@ -113,9 +112,7 @@ public class MyselfActivity extends BaseActivity {
 			case R.id.my_driver:
 				cls = DriverActivity.class;
 				break;
-			case R.id.my_police:
-				cls = PolicesActivity.class;
-				break;
+			
 			case R.id.my_help:
 				cls = HelpActivity.class;
 				break;
@@ -125,8 +122,8 @@ public class MyselfActivity extends BaseActivity {
 			case R.id.my_map:
 				cls = OfflineMapActivity.class;
 				break;
-			case R.id.my_dog:
-				cls = EdogActivity.class;
+			case R.id.my_police:
+				cls = PolicesActivity.class;
 				break;
 			}
 			intent.setClass(MyselfActivity.this, cls);

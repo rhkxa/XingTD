@@ -244,5 +244,12 @@ public class PreferenceUtils {
 	public long getValue(String key){
 		return mSharedPreferences.getLong(key, 0);
 	}
+	public void setPingTai(int key){
+		editor.putInt("pingtai",key);
+		editor.commit();
+	}
+	public int getPingTai(){
+		return mSharedPreferences.getInt("pingtai", 0);
+	}
 
 }

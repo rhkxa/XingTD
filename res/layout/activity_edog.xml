@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_backgroud"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:tools="http://schemas.android.com/tools" tools:context=".activity.EdogActivity">
 
     <fragment
         android:id="@+id/title"
@@ -36,7 +36,7 @@
                 fancy:fb_radius="50dp" />
 
             <TextView
-                android:id="@+id/my_nickname"
+                android:id="@+id/navi_voice_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -53,5 +53,7 @@
                 android:textSize="@dimen/body" />
         </LinearLayout>
     </LinearLayout>
+
+   
 
 </LinearLayout>
